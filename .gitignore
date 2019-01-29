@@ -1,0 +1,17 @@
+MassiveEditor
+MassiveEngine
+MassiveEngine2
+MassiveEditor2
+packages
+ArtTextures
+MassiveTest2
+*/bin
+*/obj
+*/Deploy
+dlls/old
+dlls/64Andres
+*/Platforms
+*/ExamplesChat.WPF
+*/ExamplesConsole
+*.pdb
+*.msi

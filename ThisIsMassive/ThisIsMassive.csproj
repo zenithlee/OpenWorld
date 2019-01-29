@@ -1,0 +1,951 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{52FB141E-8066-4031-AEBF-05E5005D296E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ThisIsMassive</RootNamespace>
+    <AssemblyName>ThisIsMassive</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <PublisherName>BigFun</PublisherName>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Deploy\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Deploy\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>sunrise_sun_sunny_shower_showers_sunny_cloudy_fog_day_time_1458.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release32|AnyCPU'">
+    <OutputPath>bin\Release32\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release32|x86'">
+    <OutputPath>bin\x86\Release32\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>718F1275817A0A8ECFC7D57FA377C7D193AAFF24</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>ThisIsMassive_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release32|x64'">
+    <OutputPath>bin\x64\Release32\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AssimpNet, Version=3.3.2.0, Culture=neutral, PublicKeyToken=3edc10cb77b1bca2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AssimpNet.3.3.2\lib\net45\AssimpNet.dll</HintPath>
+    </Reference>
+    <Reference Include="FastColoredTextBox, Version=2.16.21.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCTB.2.16.21.0\lib\FastColoredTextBox.dll</HintPath>
+    </Reference>
+    <Reference Include="irrKlang.NET4, Version=1.0.6617.18810, Culture=neutral, PublicKeyToken=a854741bd80517c7, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\64\irrKlang.NET4.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\64\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl">
+      <HintPath>..\dlls\64\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.0\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Audio\street.wav" />
+    <Content Include="Assets\Models\Construction\Foundation01.png" />
+    <Content Include="Assets\Models\earth_3.3ds" />
+    <Content Include="Assets\Models\floortri01.3ds" />
+    <Content Include="Assets\Models\door01.3ds" />
+    <Content Include="Assets\Models\tree01.3ds" />
+    <Content Include="Assets\Models\foliage\clovetree.3ds" />
+    <Content Include="Assets\Models\foliage\clovetree.dae" />
+    <Content Include="Assets\Models\stairs01_collider.3ds" />
+    <Content Include="Assets\Models\shopfront01.3ds" />
+    <Content Include="Assets\Models\floor02.3ds" />
+    <Content Include="Assets\Models\glass01.3ds" />
+    <Content Include="Assets\Models\glass02.3ds" />
+    <Content Include="Assets\Models\light02.3ds" />
+    <Content Include="Assets\Models\tree02.3ds" />
+    <Content Include="Assets\Models\tree03.3ds" />
+    <Content Include="Assets\Models\barrier01.3ds" />
+    <Content Include="Assets\Models\banner02.3ds" />
+    <Content Include="Assets\Models\arrow02.3ds" />
+    <Content Include="Assets\Models\buildings\building01.3ds" />
+    <Content Include="Assets\Models\buildings\building02.3ds" />
+    <Content Include="Assets\Models\buildings\building03.3ds" />
+    <Content Include="Assets\Models\floor03.3ds" />
+    <Content Include="Assets\Models\buildings\spacestation01.3ds" />
+    <None Include="Assets\Models\floor04.3ds" />
+    <None Include="Assets\Models\people\casual2.obj" />
+    <None Include="Assets\Models\people\casual5.obj" />
+    <None Include="Assets\Models\people\casual7.obj" />
+    <None Include="Assets\Models\people\Person_16.obj" />
+    <None Include="Assets\Models\people\Person_17.obj" />
+    <None Include="Assets\Models\people\Person_22.obj" />
+    <Content Include="Assets\Models\picture05.3ds" />
+    <Content Include="Assets\Models\pillar01.3ds" />
+    <None Include="Assets\Models\pillar02.3ds" />
+    <Content Include="Assets\Models\planets\asteroid01.3ds" />
+    <Content Include="Assets\Models\planets\asteroid02.3ds" />
+    <None Include="Assets\Models\props\ocean_liner_01.3ds" />
+    <Content Include="Assets\Shaders\instanced_f.glsl" />
+    <Content Include="Assets\Shaders\instanced_v.glsl" />
+    <Content Include="Assets\Shaders\sky_f.glsl" />
+    <Content Include="Assets\Shaders\terrain.shader" />
+    <Content Include="Assets\Shaders\Terrain\control.glsl" />
+    <Content Include="Assets\Shaders\Terrain\eval.glsl" />
+    <Content Include="Assets\Shaders\Terrain\vertex.glsl" />
+    <Content Include="Assets\Shaders\_ref.glsl" />
+    <Content Include="Assets\Shaders\trees_vs.glsl" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="src\BuildParts.cs" />
+    <Compile Include="src\Controls\CButtonBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CButtonBar.Designer.cs">
+      <DependentUpon>CButtonBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\CTableControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CTableControl.Designer.cs">
+      <DependentUpon>CTableControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\CTabSwitcher.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CTabSwitcher.Designer.cs">
+      <DependentUpon>CTabSwitcher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\CUserNameControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CUserNameControl.Designer.cs">
+      <DependentUpon>CUserNameControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\AdminTools.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\AdminTools.Designer.cs">
+      <DependentUpon>AdminTools.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\AssetsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\AssetsForm.Designer.cs">
+      <DependentUpon>AssetsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\BuildForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\BuildForm.Designer.cs">
+      <DependentUpon>BuildForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\DebugWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\DebugWindow.Designer.cs">
+      <DependentUpon>DebugWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\DFormBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\DFormBase.Designer.cs">
+      <DependentUpon>DFormBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\CacheControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CacheControl.Designer.cs">
+      <DependentUpon>CacheControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\CBuildPartSelecter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CBuildPartSelecter.Designer.cs">
+      <DependentUpon>CBuildPartSelecter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\CChatControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CChatControl.Designer.cs">
+      <DependentUpon>CChatControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\CCloseButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CCloseButton.Designer.cs">
+      <DependentUpon>CCloseButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\CZoneExploreControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CZoneExploreControl.Designer.cs">
+      <DependentUpon>CZoneExploreControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\CFriendsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CFriendsControl.Designer.cs">
+      <DependentUpon>CFriendsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\CPosition.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CPosition.Designer.cs">
+      <DependentUpon>CPosition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\CObjectInspector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CObjectInspector.Designer.cs">
+      <DependentUpon>CObjectInspector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\ChatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\ChatForm.Designer.cs">
+      <DependentUpon>ChatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\DoorConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\DoorConfigForm.Designer.cs">
+      <DependentUpon>DoorConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\DToolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\DToolForm.Designer.cs">
+      <DependentUpon>DToolForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\ImageUploader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\ImageUploader.Designer.cs">
+      <DependentUpon>ImageUploader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\InfoOverlayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\InfoOverlayForm.Designer.cs">
+      <DependentUpon>InfoOverlayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\MapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\MapForm.Designer.cs">
+      <DependentUpon>MapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\CMotionTypeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CMotionTypeControl.Designer.cs">
+      <DependentUpon>CMotionTypeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\ProductInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\ProductInfoForm.Designer.cs">
+      <DependentUpon>ProductInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\SalesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\SalesForm.Designer.cs">
+      <DependentUpon>SalesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\ShaderEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\ShaderEditor.Designer.cs">
+      <DependentUpon>ShaderEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\TableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\TableForm.Designer.cs">
+      <DependentUpon>TableForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\TeleporterConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\TeleporterConfigForm.Designer.cs">
+      <DependentUpon>TeleporterConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\TermsOfService.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\TermsOfService.Designer.cs">
+      <DependentUpon>TermsOfService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\UserInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\UserInfoForm.Designer.cs">
+      <DependentUpon>UserInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\UserMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\UserMessage.Designer.cs">
+      <DependentUpon>UserMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\ZoneEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\ZoneEditForm.Designer.cs">
+      <DependentUpon>ZoneEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\ZoneExploreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\ZoneExploreForm.Designer.cs">
+      <DependentUpon>ZoneExploreForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Handlers\MAsteroidField.cs" />
+    <Compile Include="src\Handlers\MLightHandler.cs" />
+    <Compile Include="src\Handlers\MNavigationPointer.cs" />
+    <Compile Include="src\Handlers\MPlanetHandler.cs" />
+    <Compile Include="src\Handlers\MServerDataHandler.cs" />
+    <Compile Include="src\Handlers\MStateHandler.cs" />
+    <Compile Include="src\Handlers\MTeleportHandler.cs" />
+    <Compile Include="src\Handlers\MSpawnHandler.cs" />
+    <Compile Include="src\Handlers\MUpdateApplicationHandler.cs" />
+    <Compile Include="src\Handlers\MZoneService.cs" />
+    <Compile Include="src\Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Handlers\MKeyboardHandler.cs" />
+    <Compile Include="src\Handlers\MCameraHandler.cs" />
+    <Compile Include="src\Handlers\MMouseHandler.cs" />
+    <Compile Include="src\Widgets\MBookWidget.cs" />
+    <Compile Include="src\Widgets\MDoorWidget.cs" />
+    <Compile Include="src\Widgets\MSalesmanWidget.cs" />
+    <Compile Include="src\Widgets\MTeleporterWidget.cs" />
+    <Compile Include="src\Widgets\MWidget.cs" />
+    <Compile Include="src\MWorld.cs" />
+    <Compile Include="src\Network\LoginService.cs" />
+    <Compile Include="src\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\MStateMachine.cs" />
+    <AdditionalFiles Include="version.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <Compile Include="src\Version.cs" />
+    <EmbeddedResource Include="src\Controls\CButtonBar.resx">
+      <DependentUpon>CButtonBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\CTableControl.resx">
+      <DependentUpon>CTableControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\CTabSwitcher.resx">
+      <DependentUpon>CTabSwitcher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\CUserNameControl.resx">
+      <DependentUpon>CUserNameControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\CacheControl.resx">
+      <DependentUpon>CacheControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\CBuildPartSelecter.resx">
+      <DependentUpon>CBuildPartSelecter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\CChatControl.resx">
+      <DependentUpon>CChatControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\CCloseButton.resx">
+      <DependentUpon>CCloseButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\CZoneExploreControl.resx">
+      <DependentUpon>CZoneExploreControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\CFriendsControl.resx">
+      <DependentUpon>CFriendsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\CObjectInspector.resx">
+      <DependentUpon>CObjectInspector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\CPosition.resx">
+      <DependentUpon>CPosition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\AdminTools.resx">
+      <DependentUpon>AdminTools.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\AssetsForm.resx">
+      <DependentUpon>AssetsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\BuildForm.resx">
+      <DependentUpon>BuildForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\ChatForm.resx">
+      <DependentUpon>ChatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\DebugWindow.resx">
+      <DependentUpon>DebugWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\DFormBase.resx">
+      <DependentUpon>DFormBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\DoorConfigForm.resx">
+      <DependentUpon>DoorConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\DToolForm.resx">
+      <DependentUpon>DToolForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\ImageUploader.resx">
+      <DependentUpon>ImageUploader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\InfoOverlayForm.resx">
+      <DependentUpon>InfoOverlayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\MapForm.resx">
+      <DependentUpon>MapForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\CMotionTypeControl.resx">
+      <DependentUpon>CMotionTypeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\ProductInfoForm.resx">
+      <DependentUpon>ProductInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\SalesForm.resx">
+      <DependentUpon>SalesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\ShaderEditor.resx">
+      <DependentUpon>ShaderEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\TableForm.resx">
+      <DependentUpon>TableForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\TeleporterConfigForm.resx">
+      <DependentUpon>TeleporterConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\TermsOfService.resx">
+      <DependentUpon>TermsOfService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\UserInfoForm.resx">
+      <DependentUpon>UserInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\UserMessage.resx">
+      <DependentUpon>UserMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\ZoneEditForm.resx">
+      <DependentUpon>ZoneEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\ZoneExploreForm.resx">
+      <DependentUpon>ZoneExploreForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Content Include="Assets\Models\avatar01.3ds" />
+    <Content Include="Assets\Models\avatar02.3ds" />
+    <Content Include="Assets\Models\ceiling01.3ds" />
+    <Content Include="Assets\Models\clouds.3ds" />
+    <Content Include="Assets\Models\cube01.3ds" />
+    <Content Include="Assets\Models\doorway01.3ds" />
+    <Content Include="Assets\Models\earth.3ds" />
+    <Content Include="Assets\Models\earth_group.3ds" />
+    <Content Include="Assets\Models\floor01.3ds" />
+    <Content Include="Assets\Models\Construction\foundation01.3ds" />
+    <Content Include="Assets\Models\picture01.3ds" />
+    <Content Include="Assets\Models\picture02.3ds" />
+    <Content Include="Assets\Models\roads\straight01.png" />
+    <Content Include="Assets\Models\sphere01.3ds" />
+    <Content Include="Assets\Models\teleport01.3ds" />
+    <Content Include="Assets\Models\terrain01.3ds" />
+    <Content Include="Assets\Models\wall01.3ds" />
+    <Content Include="Assets\Models\wall03.3ds" />
+    <Content Include="Assets\Models\wedge01.3ds" />
+    <Content Include="Assets\Models\window01.3ds" />
+    <Content Include="Assets\Shaders\debug_quad_f.glsl" />
+    <Content Include="Assets\Shaders\debug_quad_v.glsl" />
+    <Content Include="Assets\Shaders\default_f - Copy.glsl" />
+    <Content Include="Assets\Shaders\default_f.glsl" />
+    <Content Include="Assets\Shaders\default_v.glsl" />
+    <Content Include="Assets\Shaders\gui_f.glsl" />
+    <Content Include="Assets\Shaders\gui_v.glsl" />
+    <Content Include="Assets\Shaders\ocean_fs.glsl" />
+    <Content Include="Assets\Shaders\ocean_vs.glsl" />
+    <Content Include="Assets\Shaders\outline_f.glsl" />
+    <Content Include="Assets\Shaders\pick_select_f.glsl" />
+    <Content Include="Assets\Shaders\shadow_mapping_depth_f.glsl" />
+    <Content Include="Assets\Shaders\shadow_mapping_depth_v.glsl" />
+    <Content Include="Assets\Shaders\sun2_f.glsl" />
+    <Content Include="Assets\Shaders\sun_f.glsl" />
+    <Content Include="Assets\Shaders\sun_v.glsl" />
+    <Content Include="Assets\Shaders\swirl_vs.glsl" />
+    <Content Include="Assets\Shaders\unlit_f.glsl" />
+    <Content Include="Assets\Models\table01.3ds" />
+    <Content Include="Assets\Shaders\clouds_f.glsl" />
+    <Content Include="Assets\Models\roads\straight01.3ds" />
+    <Content Include="Assets\Models\planet_sphere.3ds" />
+    <Content Include="Assets\Models\planet_sphere_lo.3ds" />
+    <Content Include="Assets\Models\sky.3ds" />
+    <Content Include="Assets\Models\picture03.3ds" />
+    <Content Include="Assets\Shaders\framebuffer_f.glsl" />
+    <Content Include="Assets\Shaders\framebuffer_v.glsl" />
+    <Content Include="Assets\Models\picture04.3ds" />
+    <Content Include="Assets\Models\banner01.3ds" />
+    <Content Include="Assets\Models\block3x1.3ds" />
+    <Content Include="Assets\Models\book01.3ds" />
+    <Content Include="Assets\Models\earth_lo.3ds" />
+    <Content Include="Assets\Models\Bob.md5mesh" />
+    <Content Include="Assets\Models\Looking.md5anim" />
+    <Content Include="Assets\Models\block1x3.3ds" />
+    <Content Include="Assets\Models\wedge3x1.3ds" />
+    <Content Include="Assets\Models\stairs01.3ds" />
+    <Content Include="Assets\Shaders\tesselation_control.glsl" />
+    <Content Include="Assets\Shaders\tesselation_eval.glsl" />
+    <Content Include="Assets\Models\shops\counter01.3ds" />
+    <Content Include="Assets\Models\shops\counter02.3ds" />
+    <Content Include="Assets\Models\shopfront02.3ds" />
+    <Content Include="Assets\Models\shopfront03.3ds" />
+    <Content Include="Assets\Models\vehicles\swallow01.fbx" />
+    <None Include="Assets\Shaders\Terrain\terrain_f.glsl" />
+    <None Include="Assets\Textures\roads\asphalt01.jpg" />
+    <Content Include="Assets\Textures\buildings\building01.jpg" />
+    <Content Include="Assets\Textures\buildings\building02.jpg" />
+    <Content Include="Assets\Textures\buildings\building03.jpg" />
+    <Content Include="Assets\Textures\buildings\BuildingsHighRise0495_13_S.jpg" />
+    <Content Include="Assets\Textures\buildings\Building_Atlas2_Normal.jpg" />
+    <Content Include="Assets\Textures\buildings\HighRiseResidential0125_5_S.jpg" />
+    <Content Include="Assets\Textures\buildings\RooftilesBitumen0006_S.jpg" />
+    <Content Include="Assets\Textures\buildings\spacestation01.jpg" />
+    <Content Include="Assets\Textures\construction\beige01.jpg" />
+    <Content Include="Assets\Textures\construction\black01.jpg" />
+    <Content Include="Assets\Textures\construction\blue01.jpg" />
+    <Content Include="Assets\Textures\construction\brick01.jpg" />
+    <Content Include="Assets\Textures\construction\brown01.jpg" />
+    <Content Include="Assets\Textures\construction\floor02.jpg" />
+    <Content Include="Assets\Textures\construction\floor03.jpg" />
+    <Content Include="Assets\Textures\construction\floor04.jpg" />
+    <Content Include="Assets\Textures\construction\gray01.jpg" />
+    <Content Include="Assets\Textures\construction\gray02.jpg" />
+    <Content Include="Assets\Textures\construction\green01.jpg" />
+    <Content Include="Assets\Textures\construction\greytex.jpg" />
+    <Content Include="Assets\Textures\construction\pink01.jpg" />
+    <Content Include="Assets\Textures\construction\purple01.jpg" />
+    <Content Include="Assets\Textures\construction\red01.jpg" />
+    <Content Include="Assets\Textures\construction\wall01.jpg" />
+    <Content Include="Assets\Textures\construction\wall02.jpg" />
+    <Content Include="Assets\Textures\construction\wall03.jpg" />
+    <Content Include="Assets\Textures\construction\worktops001.jpg" />
+    <Content Include="Assets\Textures\planets\8k_stars_milky_way.jpg" />
+    <Content Include="Assets\Textures\planets\asteroid02.jpg" />
+    <Content Include="Assets\Textures\planets\asteroid01.jpg" />
+    <Content Include="Assets\Textures\planets\asteroid03.jpg" />
+    <Content Include="Assets\UI\icons\icons8-search-80.png" />
+    <Content Include="Assets\Textures\construction\door01.jpg" />
+    <Content Include="Assets\Textures\construction\door02.jpg" />
+    <Content Include="Assets\Textures\construction\door03.jpg" />
+    <Content Include="Assets\Textures\construction\door04.jpg" />
+    <Content Include="Assets\Textures\construction\glass01.png" />
+    <Content Include="Assets\Textures\foliage\clovetree.png" />
+    <Content Include="Assets\Textures\foliage\fir01.png" />
+    <Content Include="Assets\Textures\foliage\pine01.png" />
+    <Content Include="Assets\Textures\foliage\pine02.png" />
+    <Content Include="Assets\Textures\foliage\pine03.png" />
+    <Content Include="Assets\Textures\people\LWPG0003.jpg" />
+    <Content Include="Assets\Textures\people\LWPG0024.JPG" />
+    <Content Include="Assets\Textures\people\lwpg0042.jpg" />
+    <Content Include="Assets\Textures\people\lwpg0048.jpg" />
+    <Content Include="Assets\Textures\people\lwpg0057.jpg" />
+    <Content Include="Assets\Textures\people\lwpg0062.jpg" />
+    <Content Include="Assets\Textures\planets\Clouds.png" />
+    <Content Include="Assets\Textures\planets\Clouds_2048.jpg" />
+    <Content Include="Assets\Textures\planets\Clouds_2048.png" />
+    <Content Include="Assets\Textures\planets\geography-class_1ee24a.png" />
+    <Content Include="Assets\Textures\planets\sky.jpg" />
+    <Content Include="Assets\Textures\planets\sky2.jpg" />
+    <Content Include="Assets\Textures\roads\asphalt02.jpg" />
+    <Content Include="Assets\Textures\roads\asphalt03.jpg" />
+    <Content Include="Assets\Textures\roads\asphalt04.jpg" />
+    <Content Include="Assets\Textures\roads\dirt2.jpg" />
+    <Content Include="Assets\Textures\roads\grnd06.jpg" />
+    <Content Include="Assets\Textures\roads\grnd06b.jpg" />
+    <Content Include="Assets\Textures\roads\grnd08b.jpg" />
+    <Content Include="Assets\Textures\stars02.jpg" />
+    <None Include="Assets\UI\art\globe-1849404_960_720.png" />
+    <None Include="Assets\UI\art\crosshair.png" />
+    <None Include="Assets\UI\art\reticle_by_gonein10seconds-dakmga2.png" />
+    <Content Include="Assets\Textures\terrain\dirt.jpg" />
+    <Content Include="Assets\Textures\terrain\dirt3.jpg" />
+    <Content Include="Assets\Textures\terrain\grass01.jpg" />
+    <Content Include="Assets\Textures\terrain\sand01b.jpg" />
+    <Content Include="Assets\Textures\terrain\water.jpg" />
+    <Content Include="Assets\Textures\terrain\water2.jpg" />
+    <Content Include="Assets\Textures\default.jpg" />
+    <Content Include="Assets\UI\icons\icons8-airplane-take-off-80.png" />
+    <Content Include="Assets\UI\icons\icons8-astronaut-helmet-80.png" />
+    <Content Include="Assets\UI\icons\icons8-compass-80.png" />
+    <Content Include="Assets\UI\icons\icons8-footsteps-80 %281%29.png" />
+    <Content Include="Assets\UI\icons\icons8-footsteps-80.png" />
+    <Content Include="Assets\UI\icons\icons8-globe-80.png" />
+    <Content Include="Assets\UI\icons\icons8-handball-40.png" />
+    <Content Include="Assets\UI\icons\icons8-heart-balloon-80.png" />
+    <Content Include="Assets\UI\icons\icons8-marker-80.png" />
+    <Content Include="Assets\UI\icons\icons8-search-80 %281%29.png" />
+    <Content Include="Assets\UI\icons\icons8-search-property-80.png" />
+    <Content Include="Assets\UI\icons\icons8-skydive-80.png" />
+    <Content Include="Assets\UI\icons\icons8-skydiving-40.png" />
+    <Content Include="Assets\UI\icons\icons8-space-shuttle-80 %281%29.png" />
+    <Content Include="Assets\UI\icons\icons8-space-shuttle-80.png" />
+    <Content Include="Assets\UI\icons\icons8-user-location-80.png" />
+    <Content Include="Assets\UI\icons\icons8-waypoint-map-80.png" />
+    <None Include="Assets\UI\panel_bg.png" />
+    <Content Include="BulletSharp.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ikpMP3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libSDL2.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Models\earth_dynamic.3ds" />
+    <Content Include="Assets\Models\planet_rings.3ds" />
+    <Content Include="Assets\Models\arrow01.3ds" />
+    <Content Include="Assets\Models\cube03.3ds" />
+    <None Include="OpenTK.dll.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Content Include="Assets\Shaders\fs.glsl" />
+    <Content Include="Assets\Shaders\fs_lit.glsl" />
+    <Content Include="Assets\Shaders\fs_tex.glsl" />
+    <Content Include="Assets\Resources\bg_800.jpg" />
+    <Content Include="Assets\Resources\icons8-circled-play-32.png" />
+    <Content Include="Assets\Resources\icons8-circled-play-50.png" />
+    <Content Include="Assets\Resources\icons8-pause-32.png" />
+    <Content Include="Assets\Resources\icons8-pause-321.png" />
+    <Content Include="Assets\Resources\icons8-pause-50.png" />
+    <Content Include="Assets\Resources\icons8-settings-50.png" />
+    <Content Include="Assets\Resources\settings_24.png" />
+    <Content Include="Assets\Resources\settings_32.png" />
+    <Content Include="Assets\Resources\thisismassive.png" />
+    <Content Include="Assets\Shaders\fs_text2d.glsl" />
+    <Content Include="Assets\Shaders\fs_text3d.glsl" />
+    <Content Include="Assets\Shaders\vs.glsl" />
+    <Content Include="Assets\Shaders\vs_combines.glsl" />
+    <Content Include="Assets\Shaders\vs_lit.glsl" />
+    <Content Include="Assets\Shaders\vs_modelview.glsl" />
+    <Content Include="Assets\Shaders\vs_tex.glsl" />
+    <Content Include="Assets\Shaders\vs_text2d.glsl" />
+    <Content Include="Assets\Shaders\vs_text3d.glsl" />
+    <Content Include="Assets\Textures\planetbump.jpg" />
+    <Content Include="Assets\UI\icons\icons8-3d-glasses-48.png" />
+    <Content Include="Assets\UI\icons\icons8-beach-ball-16.png" />
+    <Content Include="Assets\UI\icons\icons8-beach-ball-40.png" />
+    <Content Include="Assets\UI\icons\icons8-brick-wall-16.png" />
+    <Content Include="Assets\UI\icons\icons8-charity-50.png" />
+    <Content Include="Assets\UI\icons\icons8-communicator-16.png" />
+    <Content Include="Assets\UI\icons\icons8-communicator-30.png" />
+    <Content Include="Assets\UI\icons\icons8-connected-16.png" />
+    <Content Include="Assets\UI\icons\icons8-connected-40.png" />
+    <Content Include="Assets\UI\icons\icons8-disconnected-16.png" />
+    <Content Include="Assets\UI\icons\icons8-disconnected-40.png" />
+    <Content Include="Assets\UI\icons\icons8-door-40.png" />
+    <Content Include="Assets\UI\icons\icons8-home-64.png" />
+    <Content Include="Assets\UI\icons\icons8-light-on-64.png" />
+    <Content Include="Assets\UI\icons\icons8-neural-network.png" />
+    <Content Include="Assets\UI\icons\icons8-octahedron-16.png" />
+    <Content Include="Assets\UI\icons\icons8-octahedron-80.png" />
+    <Content Include="Assets\UI\icons\icons8-open-window-16.png" />
+    <Content Include="Assets\UI\icons\icons8-picture-64.png" />
+    <Content Include="Assets\UI\icons\icons8-roofing-16.png" />
+    <Content Include="Assets\UI\icons\icons8-roofing-64.png" />
+    <Content Include="Assets\UI\icons\icons8-sugar-cube-40.png" />
+    <Content Include="Assets\UI\icons\icons8-user-female-skin-type-5-16.png" />
+    <Content Include="Assets\UI\icons\icons8-user-male-skin-type-4-16.png" />
+    <Content Include="Assets\UI\icons\icons8-wooden-floor-64.png" />
+    <Content Include="Assets\UI\icons\icons8-xlarge-icons-64.png" />
+    <Content Include="Assets\UI\icons\sunrise_sun_sunny_shower_showers_sunny_cloudy_fog_day_time_1458.ico" />
+    <Content Include="Assets\UI\icons\sun_icon-icons.com_56396.ico" />
+    <Content Include="Assimp32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assimp64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\UI\icons\icons8-cake-64.png" />
+    <Content Include="ThisIsMassive.exe.manifest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Audio\beep.wav" />
+    <Content Include="Assets\Audio\beepm.wav" />
+    <Content Include="Assets\Audio\bounce.wav" />
+    <Content Include="Assets\Audio\click.wav" />
+    <Content Include="Assets\Audio\hover.wav" />
+    <Content Include="Assets\Audio\hoverm.wav" />
+    <Content Include="Assets\TermsConditions.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\avatar01.jpg" />
+    <Content Include="Assets\Textures\avatar02.jpg" />
+    <Content Include="Assets\Textures\planets\Albedo.jpg" />
+    <Content Include="Assets\Textures\scifi\hull45l7nzmediumst5.jpg" />
+    <Content Include="Assets\Textures\scifi\hull45l7nzmediumst5_bw.jpg" />
+    <Content Include="Assets\Textures\scifi\shiphull_b.jpg1970e5ee-9b0a-4433-a92a-ab5df985d81bLarger.jpg" />
+    <Content Include="Assets\Textures\white.jpg" />
+    <Content Include="Assets\UI\icons\icons8-copy-64.png" />
+    <Content Include="Assets\UI\icons\icons8-paste-64.png" />
+    <Content Include="Assets\UI\icons\icons8-ask-question-40.png" />
+    <Content Include="Assets\UI\icons\icons8-code-40.png" />
+    <Content Include="Assets\UI\icons\icons8-world-map-64.png" />
+    <Content Include="Assets\UI\icons\icons8-fog-40.png" />
+    <Content Include="Assets\UI\icons\icons8-shadow-photography-48.png" />
+    <Content Include="Assets\UI\icons\icons8-walking-40.png" />
+    <Content Include="Assets\UI\icons\icons8-long-jump-50.png" />
+    <Content Include="sunrise_sun_sunny_shower_showers_sunny_cloudy_fog_day_time_1458.ico" />
+    <Content Include="sun_icon-icons.com_56396.ico" />
+    <Content Include="Assets\Resources\icons8-user-16.png" />
+    <Content Include="Assets\Shaders\swirl_fs.hlsl" />
+    <Content Include="Assets\UI\art\bgtest.png" />
+    <Content Include="Assets\UI\art\button-bg-default.png" />
+    <Content Include="Assets\UI\art\grey-bg.jpg" />
+    <Content Include="Assets\UI\icons\icons8-edit-image.png" />
+    <Content Include="Assets\Textures\unwrap_helper_1024.jpg" />
+    <Content Include="Assets\Textures\unwrap_helper.jpg" />
+    <Content Include="Assets\Textures\Starsinthesky_1024.jpg" />
+    <Content Include="Assets\Textures\Stained_Glass_Mary.jpg" />
+    <Content Include="Assets\Textures\ShutHull.jpg" />
+    <Content Include="Assets\Textures\images_frontpage_border.png" />
+    <Content Include="Assets\Textures\font.png" />
+    <Content Include="Assets\Textures\2k_stars_milky_way.jpg" />
+    <Content Include="d3dcompiler_46.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libEGL.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libGLESv2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="openal32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SDL2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Massive2\Massive2.csproj">
+      <Project>{F997DFC2-B75C-4871-BEDA-CD4711066019}</Project>
+      <Name>Massive2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MassiveNetwork\MassiveNetwork.csproj">
+      <Project>{81395f7c-9bec-4a66-ba15-55bc628a0a82}</Project>
+      <Name>MassiveNetwork</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Visual.C++.14.0.x64">
+      <Visible>False</Visible>
+      <ProductName>Visual C++ "14" Runtime Libraries %28x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Deploy\" />
+    <Folder Include="src\Events\" />
+    <Folder Include="src\UI\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+</Project>
