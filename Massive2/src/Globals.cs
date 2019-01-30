@@ -23,6 +23,7 @@ namespace Massive
     public static bool ApplicationExiting = false; //true when we're shutting down. Threads will monitor this 
 
     public static Control GUIThreadOwner;
+    public static MScene _scene;
 
     public static bool RenderSelectedOnly = false;
     //when set, all objects will render with this shader. Set to null to disable override

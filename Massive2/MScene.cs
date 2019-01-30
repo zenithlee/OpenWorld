@@ -88,6 +88,7 @@ namespace Massive
     public MScene(bool AddPlanets, bool AddBackdrop) : base(EType.Other, "Scene")
     {
       _AddPlanets = AddPlanets;
+      Globals._scene = this;
       // Globals.SetProjectPath(@"I:\root\dev\_Massive_64bit\Massive\MassiveTest2");
     }
 
@@ -367,6 +368,12 @@ namespace Massive
         MMessageBus.NotifyUpdate(this);
       Overlay.Update();
       MMessageBus.NotifyLateUpdate(this);
+    }
+
+    public void ClearBackBuffer()
+    {
+      GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+      GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
     }
 
     /**

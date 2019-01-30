@@ -83,9 +83,7 @@ namespace Massive
     //public string SettingsFile = @"settings.txt";
 
     //private string serverIP = "127.0.0.1";
-    private string serverIP = "192.168.56.1";
-    //private string serverIP = "34.228.116.45";
-    //private string serverIP = "52.91.98.229";
+    private string serverIP = "10.0.0.3";    
     public string ServerIP { get => serverIP; set => serverIP = value; }
     public string LocalIP = "127.0.0.1";
 
@@ -225,10 +223,11 @@ namespace Massive
       //Console.WriteLine("Disposing Network");
       Status(false, false, "Network Reset");
 
-      NetworkComms.OnCommsShutdown -= NetworkComms_OnCommsShutdown;
+      //NetworkComms.OnCommsShutdown -= NetworkComms_OnCommsShutdown;
       NetworkComms.RemoveGlobalConnectionEstablishHandler(HandleConnection);
       NetworkComms.RemoveGlobalConnectionCloseHandler(HandleDisConnection);
       NetworkComms.RemoveGlobalIncomingPacketHandler<string>("Message", Receive);
+      NetworkComms.CloseAllConnections();
 
       //Connection.StopListening();      
       //NetworkComms.CloseAllConnections();
@@ -243,6 +242,11 @@ namespace Massive
         {
           Console.WriteLine("MassiveNetwork Exception : " + e.Message);
         }
+      }
+
+      if (ConnectedToServerHandler != null)
+      {
+        ConnectedToServerHandler(this, new StatusEvent(false, "Disconnected"));
       }
 
       base.Dispose();
@@ -331,10 +335,11 @@ namespace Massive
     private void NetworkComms_OnCommsShutdown(object sender, EventArgs e)
     {
       Connected = false;
-      if (ConnectedToLobbyHandler != null)
+      if (ConnectedToServerHandler != null)
       {
         ConnectedToServerHandler(this, new StatusEvent(false, "Disconnected"));
       }
+      NetworkComms.OnCommsShutdown -= NetworkComms_OnCommsShutdown;
     }
 
     private void HandleConnection(Connection connection)
