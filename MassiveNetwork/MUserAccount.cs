@@ -20,7 +20,7 @@ namespace Massive.Network
     public string Phone;
     public string ServerIP;
     public string ClientIP;
-    public string AvatarID;
+    public string AvatarID = "AVATAR01";
     public double Credit = 0;
     public int MaxObjects = 100;
     public int MaxFoundations = 1;

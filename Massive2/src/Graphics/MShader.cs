@@ -151,14 +151,14 @@ namespace Massive
       ProgramID = GL.CreateProgram();
 
       int vertexShader = GL.CreateShader(ShaderType.VertexShader);
-      string sVertexPath = Path.Combine(Globals.ResourcePath, VertexShaderPath);
+      string sVertexPath = Path.Combine(Globals.AssetsPath, VertexShaderPath);
       if (!File.Exists(sVertexPath))
       {
         Log(vertexShader + " : File not found:" + sVertexPath + ". Needs AppPathConfig?");
       }
       else
       {
-        GL.ShaderSource(vertexShader, File.ReadAllText(Path.Combine(Globals.ResourcePath, VertexShaderPath)));
+        GL.ShaderSource(vertexShader, File.ReadAllText(Path.Combine(Globals.AssetsPath, VertexShaderPath)));
         GL.CompileShader(vertexShader);
       }
 
@@ -170,14 +170,14 @@ namespace Massive
       }
 
       int fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
-      string sFragmentPath = Path.Combine(Globals.ResourcePath, FragmentShaderPath);
+      string sFragmentPath = Path.Combine(Globals.AssetsPath, FragmentShaderPath);
       if (!File.Exists(sFragmentPath))
       {
         Log(sFragmentPath + " : File not found");
       }
       else
       {
-        GL.ShaderSource(fragmentShader, File.ReadAllText(Path.Combine(Globals.ResourcePath, FragmentShaderPath)));
+        GL.ShaderSource(fragmentShader, File.ReadAllText(Path.Combine(Globals.AssetsPath, FragmentShaderPath)));
         GL.CompileShader(fragmentShader);
       }
 
@@ -268,7 +268,7 @@ namespace Massive
 
     public string LoadFromString(string sVertexShader, string sFragmentShader)
     {
-      if (ProgramID >= 0)
+      if (ProgramID > 0)
       {
         GL.DeleteProgram(ProgramID);
       }

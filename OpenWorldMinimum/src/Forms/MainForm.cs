@@ -1,4 +1,5 @@
-﻿using OpenWorld.controllers;
+﻿using Massive;
+using OpenWorld.controllers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace OpenWorld
     public MainForm()
     {
       InitializeComponent();
+      Globals.GUIThreadOwner = this;
       timer1.Tick += Timer1_Tick;
     }
 

@@ -42,7 +42,7 @@ namespace Massive
 
     public override void Setup()
     {
-      string sFile = Path.Combine(Globals.ResourcePath ,currentFile);      
+      string sFile = Path.Combine(Globals.AssetsPath, currentFile);      
       if (!File.Exists(sFile))
       {
         Error = "File not found:" + sFile;

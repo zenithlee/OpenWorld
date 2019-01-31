@@ -60,8 +60,9 @@ namespace Massive
     public static MAvatar Avatar;
     public static MUserAccount UserAccount = new MUserAccount();
 
+    public static string LobbyDataURL = "http://bigfun.co.za/massive/lobby/";
     public static string ProjectPath = @".\";
-    public static string ResourcePath = @".\Assets\";
+    public static string AssetsPath = @".\Assets\";
     public static string AppDataPath = @".\Assets\UserData";
     public static string CachePath = @".\Assets\UserData\Cache";
     
@@ -74,7 +75,7 @@ namespace Massive
     {
       if (!path.EndsWith("\\")) path += "\\";
       ProjectPath = path;
-      ResourcePath = Path.Combine(path, "Assets\\");
+      AssetsPath = Path.Combine(path, "Assets\\");
       AppDataPath = Path.Combine(path, @"UserData");
       CachePath = Path.Combine(path, @"UserData\Cache");
       if (!Directory.Exists(AppDataPath)) Directory.CreateDirectory(AppDataPath);

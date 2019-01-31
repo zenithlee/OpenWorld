@@ -37,7 +37,7 @@ namespace Massive
     public virtual void Load(string sPath)
     {
       Filename = sPath;
-      string sFullPath = Path.Combine(Globals.ResourcePath, sPath);
+      string sFullPath = Path.Combine(Globals.AssetsPath, sPath);
       //string sFullPath =  sPath;
       if (!File.Exists(sFullPath))
       {

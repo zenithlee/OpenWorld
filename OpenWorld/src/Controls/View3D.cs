@@ -21,7 +21,7 @@ namespace OpenWorld
 
     public void Setup()
     {
-      AddDemoData();
+     // AddDemoData();
     }
 
     void AddDemoData()

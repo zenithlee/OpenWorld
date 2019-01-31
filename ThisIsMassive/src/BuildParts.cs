@@ -243,6 +243,61 @@ namespace ThisIsMassive
 
       MNPC npc = new MNPC(s);
       s.Add(npc);
+
+
+      MShader WallShader = (MShader)MScene.MaterialRoot.FindModuleByName("WallShader");
+
+      MMaterial AvatarMat = new MMaterial("AVATAR01T");
+      AvatarMat.AddShader(WallShader);
+      AvatarMat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar01.jpg"));
+      MScene.MaterialRoot.Add(AvatarMat);
+
+      MMaterial Avatar2Mat = new MMaterial("AVATAR02T");
+      Avatar2Mat.AddShader(WallShader);
+      Avatar2Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar02.jpg"));
+      MScene.MaterialRoot.Add(Avatar2Mat);
+
+      MMaterial Avatar3Mat = new MMaterial("AVATAR03T");
+      Avatar3Mat.AddShader(WallShader);
+      Avatar3Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar02.jpg"));
+      MScene.MaterialRoot.Add(Avatar3Mat);
+
+
+      ////////////////// AVATARS /////////////////////
+
+      MModel s1 = Helper.CreateModel(MScene.TemplateRoot, BuildParts.AVATAR01, @"Models\avatar01.3ds", new Vector3d(0, 0, 0));
+      s1.InstanceID = BuildParts.AVATAR01;
+      s1.TemplateID = BuildParts.AVATAR01;
+      s1.IsAvatar = true;
+      s1.SetMaterial(AvatarMat);
+      MPhysicsObject poa1 = new MPhysicsObject(s1, "Physics", 5f, MPhysicsObject.EShape.Capsule, true, new Vector3d(0.3, 1.2, 0.5));
+      poa1.SetDamping(0.7, 0.5);
+      poa1.SetRestitution(0.5);
+      poa1.SetSleep(15);
+      poa1.SetAngularFactor(0.0, 0.0, 0.0);
+
+
+      MModel s2 = Helper.CreateModel(MScene.TemplateRoot, BuildParts.AVATAR01, @"Models\avatar02.3ds", new Vector3d(0, 0, 0));
+      s2.InstanceID = BuildParts.AVATAR02;
+      s2.TemplateID = BuildParts.AVATAR02;
+      s2.IsAvatar = true;
+      s2.SetMaterial(Avatar2Mat);
+      MPhysicsObject poa2 = new MPhysicsObject(s2, "Physics", 5f, MPhysicsObject.EShape.Capsule, true, new Vector3d(0.3, 1.2, 0.5));
+      poa2.SetDamping(0.7, 0.5);
+      poa2.SetRestitution(0.5);
+      poa2.SetAngularFactor(0.0, 0.0, 0.0);
+      poa2.SetSleep(15);
+
+      MModel s3 = Helper.CreateModel(MScene.TemplateRoot, BuildParts.AVATAR03, @"Models\Vehicles\eagle.3ds", new Vector3d(0, 0, 0));
+      s3.InstanceID = BuildParts.AVATAR03;
+      s3.TemplateID = BuildParts.AVATAR03;
+      s3.IsAvatar = true;
+      s3.SetMaterial(Avatar3Mat);
+      MPhysicsObject poa3 = new MPhysicsObject(s3, "Physics", 10.5f, MPhysicsObject.EShape.Sphere, true, new Vector3d(0.3, 1.2, 0.5));
+      poa3.SetDamping(0.02, 0.02);
+      poa3.SetRestitution(0.1);
+      poa3.SetAngularFactor(1, 1, 1);
+      poa3.SetSleep(15);
     }
 
     public static void AddBuildings()

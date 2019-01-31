@@ -308,6 +308,17 @@ namespace Massive
       return WallShader;
     }
 
+    public static MSceneObject LoadTemplate(string TemplateID)
+    {
+      MSceneObject o = Helper.CreateCube(MScene.TemplateRoot, TemplateID);
+      o.TemplateID = TemplateID;
+      o.Setup();
+      //o.OwnerID = m.OwnerID;
+      //o.SetPosition(m.transform.Position);
+      //o.SetRotation(m.transform.Rotation);
+      return o;
+    }
+
     /**
      * Creates a copy of an existing object from the TemplateRoot
      * */
@@ -318,7 +329,14 @@ namespace Massive
       Vector3d Pos, Quaterniond Rot)
     {
       MSceneObject m = (MSceneObject)MScene.TemplateRoot.FindModuleByInstanceID(TemplateID);
-      if (m == null) return null;
+      if (m == null)
+      {
+        m = LoadTemplate(TemplateID);
+        if ( m == null )
+        {
+          return null;
+        }        
+      }
 
       MSceneObject t = null;
 

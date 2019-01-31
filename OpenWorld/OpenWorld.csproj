@@ -8,9 +8,10 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>OpenWorld</RootNamespace>
     <AssemblyName>OpenWorld</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,7 +33,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>sunrise_sun_sunny_shower_showers_sunny_cloudy_fog_day_time_1458.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\64\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\dlls\64\OpenTK.dll</HintPath>
     </Reference>
@@ -53,11 +61,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\Controllers\COpenWorld.cs" />
+    <Compile Include="src\Controllers\LobbyController.cs" />
+    <Compile Include="src\Controllers\LobbyEntry.cs" />
     <Compile Include="src\Controls\ConnectControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="src\Controls\ConnectControl.Designer.cs">
       <DependentUpon>ConnectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\PositionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\PositionControl.Designer.cs">
+      <DependentUpon>PositionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\LobbyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\LobbyForm.Designer.cs">
+      <DependentUpon>LobbyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -67,6 +89,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\Handlers\MKeyboardHandler.cs" />
+    <Compile Include="src\Handlers\MSpawnHandler.cs" />
+    <Compile Include="src\MBuildingBlock.cs" />
+    <Compile Include="src\MBuildParts.cs" />
     <Compile Include="Version.cs" />
     <Compile Include="src\Controls\View3D.cs">
       <SubType>UserControl</SubType>
@@ -76,6 +102,12 @@
     </Compile>
     <EmbeddedResource Include="src\Controls\ConnectControl.resx">
       <DependentUpon>ConnectControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\PositionControl.resx">
+      <DependentUpon>PositionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\LobbyForm.resx">
+      <DependentUpon>LobbyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -88,6 +120,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="src\Controls\View3D.resx">
       <DependentUpon>View3D.cs</DependentUpon>
@@ -107,18 +140,20 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Massive2\Massive2.csproj">
-      <Project>{F997DFC2-B75C-4871-BEDA-CD4711066019}</Project>
+      <Project>{f997dfc2-b75c-4871-beda-cd4711066019}</Project>
       <Name>Massive2</Name>
     </ProjectReference>
     <ProjectReference Include="..\MassiveNetwork\MassiveNetwork.csproj">
-      <Project>{81395F7C-9BEC-4A66-BA15-55BC628A0A82}</Project>
+      <Project>{81395f7c-9bec-4a66-ba15-55bc628a0a82}</Project>
       <Name>MassiveNetwork</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Deploy\" />
-    <Folder Include="src\Handlers\" />
     <Folder Include="src\Widgets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="sunrise_sun_sunny_shower_showers_sunny_cloudy_fog_day_time_1458.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -83,7 +83,7 @@ namespace Massive
     //public string SettingsFile = @"settings.txt";
 
     //private string serverIP = "127.0.0.1";
-    private string serverIP = "10.0.0.3";    
+    private string serverIP = "127.0.0.1";    
     public string ServerIP { get => serverIP; set => serverIP = value; }
     public string LocalIP = "127.0.0.1";
 
@@ -125,7 +125,7 @@ namespace Massive
     {
       if ( Settings.DebugNetwork == true)
       {
-        Console.WriteLine(m.Command);
+        Console.WriteLine(m.Command + " :: " + m.Payload);
       }
 
       switch (m.Command)
@@ -272,8 +272,7 @@ namespace Massive
 
     public void SetUserID(string sID)
     {
-      Globals.UserAccount.UserID = sID;
-      //File.WriteAllText(SettingsFile, Globals.UserAccount.UserID);
+      Globals.UserAccount.UserID = sID;      
     }
 
     public override void Setup()
@@ -810,6 +809,16 @@ namespace Massive
       Send(mn);
     }
 
+    public void Teleport(MNetMessage m)
+    {
+      MTeleportMessage tm = MTeleportMessage.Deserialize<MTeleportMessage>(m.Payload);
+      Vector3d pos = new Vector3d(tm.Locus[0], tm.Locus[1], tm.Locus[2]);
+      Quaterniond rot = new Quaterniond(tm.Rotation[0], tm.Rotation[1], tm.Rotation[2], tm.Rotation[3]);
+      //if a teleport handler is connected, use that, otherwise move it directly
+
+      TeleportHandler?.Invoke(this, new MoveEvent(tm.InstanceID, pos, rot));
+    }
+
     public void ChangeProperty(MNetMessage m)
     {
       MChangeProperty cp = IMSerializable.Deserialize<MChangeProperty>(m.Payload);
@@ -823,15 +832,7 @@ namespace Massive
       MMessageBus.AvatarChanged(this, m.UserID, mr.AvatarID);
     }
 
-    public void Teleport(MNetMessage m)
-    {
-      MTeleportMessage tm = MTeleportMessage.Deserialize<MTeleportMessage>(m.Payload);
-      Vector3d pos = new Vector3d(tm.Locus[0], tm.Locus[1], tm.Locus[2]);
-      Quaterniond rot = new Quaterniond(tm.Rotation[0], tm.Rotation[1], tm.Rotation[2], tm.Rotation[3]);
-      //if a teleport handler is connected, use that, otherwise move it directly
-
-      TeleportHandler?.Invoke(this, new MoveEvent(tm.InstanceID, pos, rot));      
-    }
+   
 
     public void MoveObject(MNetMessage mn)
     {      

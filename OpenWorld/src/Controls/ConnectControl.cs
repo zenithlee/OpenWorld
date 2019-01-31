@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Massive;
+using Massive.Events;
 
 namespace OpenWorld.src.Controls
 {
@@ -39,9 +40,10 @@ namespace OpenWorld.src.Controls
 
     private void Network_ErrorEventHandler(object sender, Massive.Events.ErrorEvent e)
     {
-      ConnectedCheck.BackColor = Color.Red;
-      ConnectedCheck.Checked = false;
-      ConnectedCheck.ImageIndex = 1;
+      //ConnectedCheck.BackColor = Color.Red;
+      //ConnectedCheck.Checked = false;
+      //ConnectedCheck.ImageIndex = 1;
+      Console.WriteLine(e.ErrorMessage);
     }
 
     private void Network_LoggedOutHandler(object sender, Massive.Events.LoggedOutEvent e)
@@ -62,7 +64,8 @@ namespace OpenWorld.src.Controls
     {
       if ( ConnectedCheck.Checked == true)
       {
-        Globals.Network.Setup();
+        // Globals.Network.Setup();
+        MMessageBus.LobbyLoadRequest(this, new ChangeDetailsEvent(true, "Getting Lobby"));
       }
       else
       {

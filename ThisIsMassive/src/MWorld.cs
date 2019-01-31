@@ -622,41 +622,7 @@ namespace ThisIsMassive.src
       //MBoneModel bm = new MBoneModel();
       //bm.Setup();
 
-      ////////////////// AVATARS /////////////////////
-
-      MModel s = Helper.CreateModel(MScene.TemplateRoot, BuildParts.AVATAR01, @"Models\avatar01.3ds", new Vector3d(0, 0, 0));
-      s.InstanceID = BuildParts.AVATAR01;
-      s.TemplateID = BuildParts.AVATAR01;
-      s.IsAvatar = true;
-      s.SetMaterial(AvatarMat);
-      MPhysicsObject poa = new MPhysicsObject(s, "Physics", 5f, MPhysicsObject.EShape.Capsule, true, new Vector3d(0.3, 1.2, 0.5));
-      poa.SetDamping(0.7, 0.5);
-      poa.SetRestitution(0.5);
-      poa.SetSleep(15);
-      poa.SetAngularFactor(0.0, 0.0, 0.0);
-
-
-      MModel s2 = Helper.CreateModel(MScene.TemplateRoot, BuildParts.AVATAR01, @"Models\avatar02.3ds", new Vector3d(0, 0, 0));
-      s2.InstanceID = BuildParts.AVATAR02;
-      s2.TemplateID = BuildParts.AVATAR02;
-      s2.IsAvatar = true;
-      s2.SetMaterial(Avatar2Mat);
-      MPhysicsObject poa2 = new MPhysicsObject(s2, "Physics", 5f, MPhysicsObject.EShape.Capsule, true, new Vector3d(0.3, 1.2, 0.5));
-      poa2.SetDamping(0.7, 0.5);
-      poa2.SetRestitution(0.5);
-      poa2.SetAngularFactor(0.0, 0.0, 0.0);
-      poa2.SetSleep(15);
-
-      MModel s3 = Helper.CreateModel(MScene.TemplateRoot, BuildParts.AVATAR03, @"Models\Vehicles\eagle.3ds", new Vector3d(0, 0, 0));
-      s3.InstanceID = BuildParts.AVATAR03;
-      s3.TemplateID = BuildParts.AVATAR03;
-      s3.IsAvatar = true;
-      s3.SetMaterial(Avatar3Mat);      
-      MPhysicsObject poa3 = new MPhysicsObject(s3, "Physics", 10.5f, MPhysicsObject.EShape.Sphere, true, new Vector3d(0.3, 1.2, 0.5));
-      poa3.SetDamping(0.02, 0.02);
-      poa3.SetRestitution(0.1);
-      poa3.SetAngularFactor(1, 1, 1);
-      poa3.SetSleep(15);
+      
 
     }
 

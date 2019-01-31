@@ -28,7 +28,7 @@ namespace Massive.Server
   {
     public string Version = "1.005";
     public const int MAXCONNECTIONS = 100;
-    public double DistanceThreshold = 30;
+    public double DistanceThreshold = 30; //m, distance of avatar movement until a world update is sent
 
     MDBAdvocate _DataBase;
 
@@ -451,6 +451,8 @@ namespace Massive.Server
         DisconnectClient(c.connection, "Maximum Connections exceded");
         return;
       }
+
+      _DataBase.AddPlayer(c.Account);
 
       MNetMessage mli = new MNetMessage();
       mli.Command = MNetMessage.LOGIN;

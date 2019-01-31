@@ -67,7 +67,7 @@ namespace Massive
                 }
                 else
                 {
-                  string sAbsolute = Path.Combine(Globals.ResourcePath, Current.Filename);
+                  string sAbsolute = Path.Combine(Globals.AssetsPath, Current.Filename);
                   if (File.Exists(sAbsolute))
                   {
                     Current.LoadTextureData(sAbsolute);

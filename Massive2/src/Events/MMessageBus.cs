@@ -69,7 +69,10 @@ namespace Massive.Events
     public static event EventHandler<NavigationEvent> NavigationEnableHandler;
 
     public static event EventHandler<TableEvent> TableHandler;
-    
+
+    public static event EventHandler<TableEvent> LobbyLoadedHandler;
+    public static event EventHandler<ChangeDetailsEvent> LobbyLoadRequestHandler;
+
     /////////////// RENDERING ////////////////
     public static event EventHandler<InfoEvent> DisableRender;
     public static event EventHandler<UpdateEvent> UpdateHandler;
@@ -101,6 +104,16 @@ namespace Massive.Events
           e(sender, args);
         });
       }
+    }
+
+    public static void LobbyLoadRequest(object sender, ChangeDetailsEvent e)
+    {
+      GUIEvent(LobbyLoadRequestHandler, sender, e);
+    }
+
+    public static void LobbyLoaded(object sender, TableEvent e)
+    {
+      GUIEvent(LobbyLoadedHandler, sender, new TableEvent(e.Table));
     }
 
     public static void NotifyUpdate(object sender)
