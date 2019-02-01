@@ -312,6 +312,7 @@ namespace Massive
     {
       MSceneObject o = Helper.CreateCube(MScene.TemplateRoot, TemplateID);
       o.TemplateID = TemplateID;
+      o.Add(new MPhysicsObject(o, TemplateID + "_physics", 1, MPhysicsObject.EShape.Box, true, new Vector3d(1, 1, 1)));
       o.Setup();
       //o.OwnerID = m.OwnerID;
       //o.SetPosition(m.transform.Position);

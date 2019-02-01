@@ -1,8 +1,9 @@
 ﻿using Massive;
 using Massive.Events;
+using Massive.Tools;
 using OpenTK;
+using OpenWorld.Handlers;
 using OpenWorld.src;
-using OpenWorld.src.Handlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,13 @@ using System.Threading.Tasks;
 namespace OpenWorld.controllers
 {
   public class COpenWorld
-  {
-    MScene _scene;
+  {    
     MSpawnHandler _spawnHandler;
+    MCameraHandler _cameraHandler;    
     MBuildParts _buildParts;
 
     public COpenWorld()
-    {
+    {      
       Globals.Network.ConnectedToLobbyHandler += Network_ConnectedToLobbyHandler;
       Globals.Network.ConnectedToMASSIVEHandler += Network_ConnectedToMASSIVEHandler;
       Globals.Network.ConnectedToServerHandler += Network_ConnectedToServerHandler;
@@ -33,17 +34,19 @@ namespace OpenWorld.controllers
       Globals.VERSION = MVersion.VERSION;
 
       Globals.SetProjectPath(@".\");
-      _scene = new MScene(false, true);
+      Globals._scene = new MScene(true, true);
       _spawnHandler = new MSpawnHandler();
-      
-      _scene.SetupInitialObjects();
+      _cameraHandler = new MCameraHandler();
+
+      Globals._scene.SetupInitialObjects();
 
       _buildParts = new MBuildParts();
       _buildParts.Setup();
 
-
-      _scene.Play();
+      Globals._scene.Setup();
+      Globals._scene.Play();
       Settings.DebugNetwork = true;
+      MStateMachine.ChangeState(MStateMachine.eStates.Viewing);
     }
 
     //1 client connects to Zone Controller and receives this callback
@@ -96,7 +99,14 @@ namespace OpenWorld.controllers
   
     public void Update()
     {
-      _scene.Update();
+      Globals._scene.Update();
+    }
+
+    public void Render()
+    {
+      Globals._scene.ClearBackBuffer();
+      Globals._scene.Render();
+        
     }
   }
 }

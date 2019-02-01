@@ -18,7 +18,15 @@ namespace OpenWorld.src.Controllers
 
     public LobbyController()
     {
-      Entries = new List<LobbyEntry>();      
+
+    }
+
+    public void Setup()
+    {
+      if (Entries == null)
+      {
+        Entries = new List<LobbyEntry>();
+      }
     }
 
     public void GetLobbyList()
@@ -35,7 +43,7 @@ namespace OpenWorld.src.Controllers
         Console.WriteLine(ex.Message);
       }
 
-      DataTable dt = DataTableTools.ConvertToDatatable(Entries);      
+      DataTable dt = DataTableTools.ConvertToDatatable(Entries);
       TableEvent te = new TableEvent(dt);
       MMessageBus.LobbyLoaded(this, te);
     }

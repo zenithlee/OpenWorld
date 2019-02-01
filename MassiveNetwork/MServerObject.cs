@@ -11,8 +11,8 @@ namespace Massive.Network
 {
   public class MServerObject
   {
-    public const int STATICSTORAGE = 1;
-    public const int DYNAMICSTORAGE = 0;
+    public const int iSTATICSTORAGE = 1;
+    public const int iDYNAMICSTORAGE = 0;
 
     public int StaticStorage;
     public string Type;

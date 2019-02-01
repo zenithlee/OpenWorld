@@ -331,7 +331,7 @@ namespace ThisIsMassive
       MSceneObject citysound = AddModel(BuildParts.AUDIOCITY01, @"Models\cube01.3ds", new Vector3d(1, 1, 1));
       citysound.SetMaterial(BuildingMaterial3);
       MSound cs = new MSound();
-      string sPath = Path.Combine(Globals.ResourcePath, @"Audio\street.wav");
+      string sPath = Path.Combine(Globals.AssetsPath, @"Audio\street.wav");
       cs.Load(sPath);
       cs.PlayOnAwake = true;
       cs.Loop = true;

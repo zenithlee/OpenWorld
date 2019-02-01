@@ -126,10 +126,7 @@ namespace Massive.Server
         Logger.WriteLog(s);
       }
 
-      if (ServerInfo != null)
-      {
-        ServerInfo(this, new ServerEvent(s, ColorCode));
-      }
+      ServerInfo?.Invoke(this, new ServerEvent(s, ColorCode));
     }
 
     public void Start()
@@ -465,10 +462,7 @@ namespace Massive.Server
 
       Send(c, "Message", mli.Serialize());
 
-      if (ClientLoggedIn != null)
-      {
-        ClientLoggedIn(this, new ServerEvent("Logged In:" + c.ToString()));
-      }
+      ClientLoggedIn?.Invoke(this, new ServerEvent("Logged In:" + c.ToString()));
     }
     
     public void SetTexture(MClient c, MNetMessage m)
@@ -706,10 +700,7 @@ namespace Massive.Server
         Send(c, "Message", mr.Serialize());
       }
 
-      if (ZoneChanged != null)
-      {
-        ZoneChanged(this, new ZoneEvent(zone));
-      }
+      ZoneChanged?.Invoke(this, new ZoneEvent(zone));
     }
 
 

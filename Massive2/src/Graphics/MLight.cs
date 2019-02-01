@@ -72,7 +72,7 @@ namespace Massive
       mat.shader.SetMat4("lightSpaceMatrix", MTransform.GetFloatMatrix(GetLightSpaceMatrix()));
     }
 
-    public void LookAt(Vector3d target)
+    new public void LookAt(Vector3d target)
     {
       TargetVector = target;
     }

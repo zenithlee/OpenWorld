@@ -12,7 +12,7 @@ namespace Massive
 {
   public class MMesh : MSceneObject
   {
-    int EBO;
+   // int EBO;
     //List<MVertex> vertices;
     // MVertex[] _vertices;
     //List<uint> indices;

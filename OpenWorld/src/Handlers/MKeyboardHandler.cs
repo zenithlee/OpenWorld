@@ -8,21 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MassiveUniverse
+namespace OpenWorld.Handlers
 {
   class MKeyboardHandler
   {
-    Form Parent;
-    MScene _Scene;
+    Form Parent;    
     public static bool ShiftDown = false;
     public static bool ControlDown = false;
     public static bool AltDown = false;
     public static bool[] KeyState = new bool[255];
 
-    public MKeyboardHandler(Form f, Control c, MScene inScene)
+    public MKeyboardHandler(Form f, Control c)
     {
-      Parent = f;
-      _Scene = inScene;
+      Parent = f;      
       c.KeyDown += C_KeyDown;
       c.KeyUp += C_KeyUp;
       f.KeyDown += FormKey;

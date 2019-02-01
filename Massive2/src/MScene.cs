@@ -1,19 +1,13 @@
-﻿using OpenTK;
-using OpenTK.Graphics;
+﻿using Massive.Events;
+using Massive.Services;
+using Massive.Tools;
+using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
-
-using Massive.Events;
-using System.Diagnostics;
 
 /***
+ * MScene updates and renders the scene in OpenGL, shunts data between 32->64bit, and renders effects and overlays
+ * 
  * TODO: Formalize order of operations:
  * 1. Update Physics
  * 2. Update Camera
@@ -51,7 +45,7 @@ namespace Massive
     public MSceneObject SelectedObject;
     public static MPhysics Physics;
 
-    public EventHandler<GraphChangedEvent> GraphChanged;
+    new public EventHandler<GraphChangedEvent> GraphChanged;
     public static EventHandler<ClickEvent> OnClicked;
     public event EventHandler<RenderEvent> OnPostRender;
 
@@ -89,6 +83,7 @@ namespace Massive
     {
       _AddPlanets = AddPlanets;
       Globals._scene = this;
+      MZoneService ms = new MZoneService();
       // Globals.SetProjectPath(@"I:\root\dev\_Massive_64bit\Massive\MassiveTest2");
     }
 
@@ -110,7 +105,7 @@ namespace Massive
     public void Play()
     {
       Playing = true;
-      Root.OnPlay();
+      Root.OnPlay();      
     }
 
     public void Stop()
@@ -189,7 +184,7 @@ namespace Massive
       //Physics.Deletable = false;
       UtilityRoot.Add(Physics);
       Helper.CheckGLError(this, "TestPoint 2");
-      UtilityRoot.Add(Globals.Network);
+      //UtilityRoot.Add(Globals.Network);
       //Globals.Network.Deletable = false;
 
       DistanceClipper = new MDistanceClipper();

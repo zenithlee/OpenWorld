@@ -45,8 +45,8 @@ namespace Massive
       //ADD URL TEXTURES!      
 
       Bodies.Add(new MAstroBody("Sol", "The Sun", 1.988544E+30, new Vector3d(0, 0, 0),
-      new Vector3d(6.955E+5, 6.955E+5, 6.955E+5) * ScaleFactor, 
-      "https://www.bigfun.co.za/fu/static/2k_sun.jpg", false, 0, false, true)); // x 5 for gas emission shader
+      new Vector3d(6.955E+5, 6.955E+5, 6.955E+5) * ScaleFactor,
+      "Textures\\Planets\\2k_sun.jpg", false, 0, false, true)); // x 5 for gas emission shader
 
       Bodies.Add(new MAstroBody("Mercury", "The planet Mercury", 3.302E+23,
         new Vector3d(-3.676448098104388E+07, -5.914211791485628E+07, -3.979251580149613E+06) * 1000,
@@ -68,35 +68,35 @@ namespace Massive
 
       Bodies.Add(new MAstroBody("Mars", "The planet Mars", 6.4185E+23,
         new Vector3d(1.995782587374064E+8, -5.523248829579433E+7, 2.040911708145680E+7) * 1000,
-        new Vector3d(3389.9, 3389.9, 3389.9) * ScaleFactor, "https://www.bigfun.co.za/fu/static/2k_mars.jpg"
+        new Vector3d(3389.9, 3389.9, 3389.9) * ScaleFactor, "Textures\\Planets\\2k_mars.jpg"
         , false, 0, false, true));
       //VX= 7.888925502949942E+00 VY= 2.512145341232943E+01 VZ=-1.428163670266684E-01
 
       Bodies.Add(new MAstroBody("Jupiter", "The planet Jupiter", 1898.13E+24,
         new Vector3d(6.889448949554296E+08, 2.740877921731672E+08, 4.453849463134830E+07) * 1000,
-        new Vector3d(71492, 71492, 71492) * ScaleFactor, "https://www.bigfun.co.za/fu/static/2k_jupiter.jpg"
+        new Vector3d(71492, 71492, 71492) * ScaleFactor, "http://www.bigfun.co.za/fu/static/2k_jupiter.jpg"
         , false, 0, false, true));
 
       Bodies.Add(new MAstroBody("Saturn", "The planet Saturn", 5.68319E+26,
         new Vector3d(1.177516875361957E+09, 7.071279503136320E+08, 3.202538221937501E+07) * 1000,
-        new Vector3d(60268, 60268, 60268) * ScaleFactor, "https://www.bigfun.co.za/fu/static/2k_saturn.jpg", 
+        new Vector3d(60268, 60268, 60268) * ScaleFactor, "http://www.bigfun.co.za/fu/static/2k_saturn.jpg", 
         false, 0, true, true));
 
       Bodies.Add(new MAstroBody("Uranus", "The planet Uranus. Not a gas giant.", 86.8103E+24,
         new Vector3d(1.553968700866261E+09, -2.526552315539761E+09, 2.925724853501363E+08) * 1000,
-        new Vector3d(25362, 25362, 25362) * ScaleFactor, "https://www.bigfun.co.za/fu/static/2k_uranus.jpg"
+        new Vector3d(25362, 25362, 25362) * ScaleFactor, "http://www.bigfun.co.za/fu/static/2k_uranus.jpg"
         , false, 0, false, true));
 
       Bodies.Add(new MAstroBody("Neptune", "The planet Neptune.", 102.41E+24,
         new Vector3d(1.460744159765920E+09, -4.239590984479527E+09, 4.426341416587460E+08) * 1000,
-        new Vector3d(24766, 24766, 24766) * ScaleFactor, "https://www.bigfun.co.za/fu/static/2k_neptune.jpg"
+        new Vector3d(24766, 24766, 24766) * ScaleFactor, "http://www.bigfun.co.za/fu/static/2k_neptune.jpg"
         , false, 0, false, true));
 
       //VX = 5.092374353910485E+00 VY = 1.848518616013199E+00 VZ = 2.857105569330195E-01
 
       Bodies.Add(new MAstroBody("Moon", "The Moon", 734.9E+20,
         new Vector3d(1.235183178863080E+07, 1.462044997645861E+08, -7.578605371678978E+06) * ScaleFactor,
-        new Vector3d(1738.0, 1738.0, 1738.0) * ScaleFactor, "https://www.bigfun.co.za/fu/static/2k_moon.jpg"
+        new Vector3d(1738.0, 1738.0, 1738.0) * ScaleFactor, "Textures\\Planets\\2k_moon.jpg"
         , false, 0, false, true));
       //VX=-2.965755272661235E+01 VY= 1.496658883251257E+00 VZ=-3.397496558449063E+00
 
@@ -195,7 +195,7 @@ namespace Massive
           ring.OwnerID = "MasterAstronomer";
           MMaterial ringmat = new MMaterial(m.Name + "_mat");
           ringmat.AddShader((MShader)MScene.MaterialRoot.FindModuleByName(MShader.DEFAULT_SHADER));
-          MTexture ringtex = Globals.TexturePool.GetTexture("https://www.bigfun.co.za/fu/static/saturn_rings.png");
+          MTexture ringtex = Globals.TexturePool.GetTexture(@"Textures\Planets\saturn_rings.png");
           ringmat.SetDiffuseTexture(ringtex);
           ring.SetMaterial(ringmat);
 
@@ -214,6 +214,7 @@ namespace Massive
         mo.Tag = m;
         m.Tag = mo;
 
+        //now that we have a 3d model, apply some progressive textures (will auto-switch with smooth transition in shader)
         MMaterial mat = new MMaterial(m.Name + "_mat");
         mat.AddShader((MShader)MScene.MaterialRoot.FindModuleByName(MShader.DEFAULT_SHADER));
         MTexture tex = Globals.TexturePool.GetTexture(m.TextureName);

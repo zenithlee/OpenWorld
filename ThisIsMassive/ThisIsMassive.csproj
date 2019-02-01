@@ -479,7 +479,6 @@
     <Compile Include="src\Network\LoginService.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\MStateMachine.cs" />
     <AdditionalFiles Include="version.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AdditionalFiles>

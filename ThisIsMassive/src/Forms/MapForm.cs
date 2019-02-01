@@ -119,7 +119,7 @@ namespace ThisIsMassive.src.Controls
       }
       else
       {
-        bmp = Image.FromFile(Path.Combine(Globals.ResourcePath, CurrentBody.TextureName));
+        bmp = Image.FromFile(Path.Combine(Globals.AssetsPath, CurrentBody.TextureName));
         MapBox.BackgroundImage = bmp;
       }
 

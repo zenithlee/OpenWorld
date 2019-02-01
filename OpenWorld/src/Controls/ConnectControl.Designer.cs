@@ -46,6 +46,7 @@
       this.ConnectedCheck.Appearance = System.Windows.Forms.Appearance.Button;
       this.ConnectedCheck.AutoSize = true;
       this.ConnectedCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ConnectedCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.ConnectedCheck.ImageIndex = 1;
       this.ConnectedCheck.ImageList = this.imageList1;
       this.ConnectedCheck.Location = new System.Drawing.Point(0, 0);

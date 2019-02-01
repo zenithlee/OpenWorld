@@ -13,7 +13,7 @@ using System.Threading.Tasks;
  * 
  * */
 
-namespace Massive
+namespace Massive.Tools
 {
   public class MScreenPick : MObject
   {

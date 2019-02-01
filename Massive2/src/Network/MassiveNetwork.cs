@@ -22,9 +22,12 @@ using System.Data;
 using MassiveNetwork;
 
 /**
- * TODO: Contact central server to get address of secondary server, then use secondary server address for world calls.
+ * 
  * CONNECT
  *   LOGIN
+ *   GETWORLD
+ *   TELEPORT
+ *   MOVE
  * */
 
 namespace Massive
@@ -314,6 +317,8 @@ namespace Massive
           SendConnectToLOBBYRequest();
           //Send(new MNetMessage(1, Globals.UserAccount.UserID, MNetMessage.CONNECTREQ, ip.ToString()));
 
+          MScene.UtilityRoot.Add(this);
+
         }
         catch (Exception e)
         {
@@ -421,7 +426,7 @@ namespace Massive
       }
     }
 
-    void Error(MNetMessage m)
+    new void Error(MNetMessage m)
     {
       Globals.Log(this, m.Payload);
       if (ErrorEventHandler != null)

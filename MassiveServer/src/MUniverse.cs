@@ -53,7 +53,7 @@ namespace Massive.Server
      * */
     public void Flush()
     {
-      foreach (var item in Objects.Where(kvp => (kvp.Value.StaticStorage == MServerObject.DYNAMICSTORAGE)).ToList())
+      foreach (var item in Objects.Where(kvp => (kvp.Value.StaticStorage == MServerObject.iDYNAMICSTORAGE)).ToList())
       {
         Objects.Remove(item.Key);
       }
@@ -80,7 +80,7 @@ namespace Massive.Server
             }
             if (item.Value.OwnerID.Equals(UserID))
             {
-              if (item.Value.StaticStorage == MServerObject.DYNAMICSTORAGE)
+              if (item.Value.StaticStorage == MServerObject.iDYNAMICSTORAGE)
               {
                 Objects.Remove(item.Key);
               }

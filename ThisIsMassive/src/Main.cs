@@ -262,6 +262,7 @@ namespace ThisIsMassive
           CheckTermsOfService();
           break;
         case MStateMachine.eStates.ConnectToLobby:
+          Setup();
           ConnectToLobby();
           break;
         case MStateMachine.eStates.ConnectToMASSIVE:
@@ -274,7 +275,7 @@ namespace ThisIsMassive
           Login();
           break;
         case MStateMachine.eStates.Setup:
-          Setup();
+          //Setup();
           break;
         //case MStateMachine.eStates.DownloadingZones:
           //Globals.Network.GetZones();
@@ -344,6 +345,10 @@ namespace ThisIsMassive
       });
 #endif
       Globals.Network.SendLoginRequest();
+      MStateMachine.ChangeState(MStateMachine.eStates.DownloadingWorld);
+      Paused = false;
+      _updateAppHandler.CheckForUpdates();
+      MyWorld.AddAvatar();
     }
 
     void Setup()
@@ -380,10 +385,7 @@ namespace ThisIsMassive
         splash.DoClose();
       });
 #endif
-      MStateMachine.ChangeState(MStateMachine.eStates.DownloadingWorld);
-      Paused = false;      
-      _updateAppHandler.CheckForUpdates();
-      MyWorld.AddAvatar();
+     
       //UpdateThread.RunWorkerAsync();
       //UpdateThread = new BackgroundWorker();
       //UpdateThread.DoWork += UpdateThread_DoWork;

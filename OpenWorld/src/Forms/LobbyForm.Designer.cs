@@ -72,7 +72,7 @@
       this.tableLayoutPanel2.ColumnCount = 3;
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.01754F));
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.98245F));
-      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 118F));
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
       this.tableLayoutPanel2.Controls.Add(this.JoinButton, 2, 0);
       this.tableLayoutPanel2.Controls.Add(this.ServerIPBox, 1, 0);
       this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -87,9 +87,9 @@
       // 
       this.JoinButton.Dock = System.Windows.Forms.DockStyle.Fill;
       this.JoinButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.JoinButton.Location = new System.Drawing.Point(361, 3);
+      this.JoinButton.Location = new System.Drawing.Point(359, 3);
       this.JoinButton.Name = "JoinButton";
-      this.JoinButton.Size = new System.Drawing.Size(113, 26);
+      this.JoinButton.Size = new System.Drawing.Size(115, 26);
       this.JoinButton.TabIndex = 0;
       this.JoinButton.Text = "Join";
       this.JoinButton.UseVisualStyleBackColor = true;
@@ -100,7 +100,7 @@
       this.ServerIPBox.Dock = System.Windows.Forms.DockStyle.Fill;
       this.ServerIPBox.Location = new System.Drawing.Point(117, 3);
       this.ServerIPBox.Name = "ServerIPBox";
-      this.ServerIPBox.Size = new System.Drawing.Size(238, 20);
+      this.ServerIPBox.Size = new System.Drawing.Size(236, 20);
       this.ServerIPBox.TabIndex = 1;
       // 
       // LobbyForm

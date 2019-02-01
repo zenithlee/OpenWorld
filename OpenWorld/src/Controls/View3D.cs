@@ -16,7 +16,7 @@ namespace OpenWorld
     public View3D()
     {
       InitializeComponent();
-      Application.Idle += Application_Idle;
+     
     }
 
     public void Setup()

@@ -30,6 +30,7 @@ namespace OpenWorld.src.Forms
     {
       Globals.GUIThreadOwner.Invoke((MethodInvoker)delegate
       {
+       
         this.Show();
       });
     }
@@ -52,6 +53,7 @@ namespace OpenWorld.src.Forms
 
     private void LobbyForm_Load(object sender, EventArgs e)
     {
+      _lobbyController.Setup();
       _lobbyController.GetLobbyList();
     }
 

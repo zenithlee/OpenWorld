@@ -104,7 +104,7 @@ namespace Massive.Network
       return JsonConvert.DeserializeObject<MNetMessage>(sPacket);    
     }
 
-    public virtual string Serialize()
+    public new virtual string Serialize()
     {
       return JsonConvert.SerializeObject(this);      
     }

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenWorld.src.Handlers
+namespace OpenWorld.Handlers
 {
   public class MSpawnHandler
   {
@@ -34,9 +34,13 @@ namespace OpenWorld.src.Handlers
     void Spawn(MServerObject m)
     {
       //if ((m.Name == Globals.UserAccount.UserID) && ( m.OwnerID == Globals.UserAccount.UserID)){
-        Helper.Spawn(m.TemplateID, m.OwnerID, m.Name, m.Tag,           
+        MSceneObject mo = Helper.Spawn(m.TemplateID, m.OwnerID, m.Name, m.Tag,           
           MassiveTools.VectorFromArray( m.Position), 
           MassiveTools.QuaternionFromArray(m.Rotation));
+      if ( mo.Name == Globals.UserAccount.UserID)
+      {
+        Globals.Avatar.SetSceneObject(mo);
+      }
       //}
       //Helper.CreateCube(MScene.ModelRoot, dt)
     }    

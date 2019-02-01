@@ -99,13 +99,12 @@
     <Reference Include="AssimpNet">
       <HintPath>..\packages\AssimpNet.3.3.2\lib\net45\AssimpNet.dll</HintPath>
     </Reference>
-    <Reference Include="BulletSharp, Version=2.87.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dlls\64\BulletSharp.dll</HintPath>
+    <Reference Include="BulletSharp">
+      <HintPath>..\dlls\64Andres\64_2018_08_25\BulletSharp.dll</HintPath>
     </Reference>
-    <Reference Include="irrKlang.NET4, Version=1.0.6617.18847, Culture=neutral, PublicKeyToken=a854741bd80517c7, processorArchitecture=AMD64">
+    <Reference Include="irrKlang.NET4, Version=1.0.6617.18810, Culture=neutral, PublicKeyToken=a854741bd80517c7, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dlls\32\irrKlang.NET4.dll</HintPath>
+      <HintPath>..\dlls\64\irrKlang.NET4.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -277,6 +276,7 @@
     <Compile Include="src\Physics\MPhysicsDebug.cs" />
     <Compile Include="src\Physics\MRaycastTask.cs" />
     <Compile Include="src\Platform\MFileSystem.cs" />
+    <Compile Include="src\Services\MZoneService.cs" />
     <Compile Include="src\Settings.cs" />
     <Compile Include="src\Tools\ConvexDecomposition.cs" />
     <Compile Include="src\Tools\DataTableTools.cs" />
@@ -285,6 +285,7 @@
     <Compile Include="src\Tools\MBackgroundQueue.cs" />
     <Compile Include="src\Tools\ModelPool.cs" />
     <Compile Include="src\Tools\MGISTools.cs" />
+    <Compile Include="src\Tools\MStateMachine.cs" />
     <Compile Include="src\Tools\RectD.cs" />
     <Compile Include="src\UI\MInputBox.cs" />
     <Compile Include="src\UI\MSplash.cs" />

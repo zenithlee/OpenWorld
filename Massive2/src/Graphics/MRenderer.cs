@@ -13,7 +13,7 @@ namespace Massive
   public class MRenderer : MObject
   {
     uint quadVAO, quadVBO;
-    public Color4 ClearColor = Color4.Gray;
+    public Color4 ClearColor = Color4.Red;
 
     int SceneFBO = 0;
     int SceneTex = 0;
@@ -63,11 +63,17 @@ void main()
     public MRenderer() : base(EType.Other, "Renderer")
     {
       FXShader = new MShader("FX");
-      FXShader.LoadFromString(vs, fs);
+      try { 
+        FXShader.LoadFromString(vs, fs);
+      }
+      catch ( Exception e)
+      {
+        Console.WriteLine("MRenderer: " + e.Message + " . OPENGL Setup?");
+      }
       BufferSize = new Vector2(MScreen.Width, MScreen.Height);
     }
 
-    public void Debug()
+    new public void Debug()
     {
 #if DEBUG
       Helper.CheckGLError(this);

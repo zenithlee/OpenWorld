@@ -131,6 +131,7 @@ namespace Massive
       }
       else
       {
+        done = false;
         tex = new MTexture("Texture");
         Pool.Add(TextureFile, tex);
         tex.Name = TextureFile;

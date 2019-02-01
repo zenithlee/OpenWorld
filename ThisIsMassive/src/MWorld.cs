@@ -590,7 +590,7 @@ namespace ThisIsMassive.src
       UISound.Volume = 0.1f;
       MScene.UtilityRoot.Add(UISound);
       //UISound.Loop = true;
-      UISound.Load(Path.Combine(Globals.ResourcePath, "Audio\\click.wav"));
+      UISound.Load(Path.Combine(Globals.AssetsPath, "Audio\\click.wav"));
 
       MScene.Fog.Enabled = true;
 
