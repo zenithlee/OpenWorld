@@ -50,7 +50,12 @@ namespace OpenWorld.src.Controllers
 
     void ParseJSON(string sLobby)
     {
-      Entries = JsonConvert.DeserializeObject<List<LobbyEntry>>(sLobby);
+      LobbyList o = JsonConvert.DeserializeObject<LobbyList>(sLobby);
+      if  ( o == null )
+      {
+        MMessageBus.Status(this, "Error retrieving lobby");
+      }
+      Entries = o.data;
     }
   }
 }

@@ -33,6 +33,12 @@ namespace Massive.GIS
     public double AvatarDistanceToSurface = double.MaxValue;
     public Vector3d DirectionToAvatar = Vector3d.Zero;
     public int ZoomLevel = 14;
+    
+    //distance in m at which physics is generated for a tile. Landing on a tile with no physics means user falls through
+    //if they fall through and physics is generated, they will be stuck underground.
+    //TODO: either create smaller physics areas that gen faster, or lift user above ground if they're below.
+    // This will mean we can't create terrain caves, but we can use other objects for caves
+    public const double PHYSICS_DISTANCE = 12000; 
 
     private const double MinLatitude = -85.05112878;
     private const double MaxLatitude = 85.05112878;
@@ -85,23 +91,23 @@ namespace Massive.GIS
       Vector3d TilePos = GetTileFromPoint(e.Position);
       Vector3d LonLat = GetLonLatOnShere(e.Position);
       //Console.WriteLine(AvatarDistanceToSurface);
-      if (AvatarDistanceToSurface < 12000)
+      if (AvatarDistanceToSurface < PHYSICS_DISTANCE)
       {
         //_terrainHandler.UpdateTileMesh((int)TilePos.X, (int)TilePos.Y, (int)TilePos.Z, LonLat);
         ///_terrainHandler.UpdateForest((int)TilePos.X, (int)TilePos.Y, (int)TilePos.Z);
 
         int NumTiles = Settings.MaxTerrains;
 
-        if (AvatarDistanceToSurface < 5000)
-        {
+       // if (AvatarDistanceToSurface < PHYSICS_DISTANCE)
+        //{
           //_terrainHandler.UpdateTileMesh((int)TilePos.X, (int)TilePos.Y, (int)TilePos.Z, LonLat);
           //_terrainHandler.SetupPhysics((int)TilePos.X, (int)TilePos.Y, (int)TilePos.Z);
-          if (Settings.TerrainPhysics == true)
-          {
-            _terrainHandler.SetupPhysics((int)TilePos.X, (int)TilePos.Y, (int)TilePos.Z);
-          }
+          //if (Settings.TerrainPhysics == true)
+          //{
+            //_terrainHandler.SetupPhysics((int)TilePos.X, (int)TilePos.Y, (int)TilePos.Z);
+          //}
           _terrainHandler.GetPOI((int)TilePos.X, (int)TilePos.Y, LonLat);
-        }
+        //}
 
         for (int y = -NumTiles; y <= NumTiles; y++)
         {

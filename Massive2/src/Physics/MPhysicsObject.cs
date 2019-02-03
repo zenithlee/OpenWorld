@@ -159,6 +159,9 @@ namespace Massive
       _rigidBody.SetDamping(0.3, 0.1);
       //_rigidBody.UserObject = Name;
       _rigidBody.Restitution = 0.5;
+      _rigidBody.CcdMotionThreshold = 1e-7;
+      _rigidBody.CcdSweptSphereRadius = 0.5;
+
 
       _rigidBody.ContactProcessingThreshold = 1e30f;
       _rigidBody.SetSleepingThresholds(0.20, 0.20);
@@ -208,11 +211,11 @@ namespace Massive
     public override void Update()
     {
       if (_rigidBody == null) return;
-      if (Globals.Avatar._physics != null && double.IsNaN(Globals.Avatar._physics._rigidBody.WorldTransform[0, 0]))
-      {
+     // if (Globals.Avatar._physics != null && double.IsNaN(Globals.Avatar._physics._rigidBody.WorldTransform[0, 0]))
+      //{
         //Debugger.Break();
-        Console.WriteLine("NANI");
-      }
+//        Console.WriteLine("MPhysicsObject.Update NANI");
+  //    }
       _rigidBody.AngularVelocity = Vector3d.Clamp(_rigidBody.AngularVelocity, -VelocityLimit, VelocityLimit);
       Matrix4d m = _rigidBody.CenterOfMassTransform;
       //Target.transform.Position = m.ExtractTranslation(); //broken in bullet

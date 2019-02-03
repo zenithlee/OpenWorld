@@ -23,6 +23,7 @@ using MassiveNetwork;
 
 /**
  * 
+ * Setup() initiates connection
  * CONNECT
  *   LOGIN
  *   GETWORLD
@@ -32,11 +33,13 @@ using MassiveNetwork;
 
 namespace Massive
 {
+  /*
   public class MassivePacket
   {
     public string sType;
     public string sData;
   }
+  */
   public class MassiveNetwork : MObject
   {
     public const string TYPE_POSROT = "PR";
@@ -86,7 +89,7 @@ namespace Massive
     //public string SettingsFile = @"settings.txt";
 
     //private string serverIP = "127.0.0.1";
-    private string serverIP = "127.0.0.1";    
+    private string serverIP = "127.0.0.1";
     public string ServerIP { get => serverIP; set => serverIP = value; }
     public string LocalIP = "127.0.0.1";
 
@@ -100,7 +103,7 @@ namespace Massive
 
     public bool Connected = false;
     public bool Ready = false;
-    
+
     ConnectionInfo targetServerConnectionInfo;
     static MassiveNetwork _instance;
 
@@ -126,7 +129,7 @@ namespace Massive
 
     public void HandleV1(MNetMessage m, string sDataString)
     {
-      if ( Settings.DebugNetwork == true)
+      if (Settings.DebugNetwork == true)
       {
         Console.WriteLine(m.Command + " :: " + m.Payload);
       }
@@ -275,7 +278,7 @@ namespace Massive
 
     public void SetUserID(string sID)
     {
-      Globals.UserAccount.UserID = sID;      
+      Globals.UserAccount.UserID = sID;
     }
 
     public override void Setup()
@@ -301,7 +304,7 @@ namespace Massive
 
           IPAddress ip = IPAddress.Parse(LocalIP);
           //Connection.StartListening(ConnectionType.TCP, new System.Net.IPEndPoint(ip, 0));          
-          
+
 
           Listeners.Clear();
           foreach (System.Net.IPEndPoint localEndPoint in Connection.ExistingLocalListenEndPoints(ConnectionType.TCP))
@@ -325,7 +328,7 @@ namespace Massive
           Connected = false;
           if (ErrorEventHandler != null)
           {
-            ErrorEventHandler(this, new ErrorEvent(e.Message));            
+            ErrorEventHandler(this, new ErrorEvent(e.Message));
           }
           Status(false, true, e.Message);
         }
@@ -474,7 +477,7 @@ namespace Massive
       {
         Globals.UserAccount.UserID = m.UserID;
       }
-      
+
       ConnectedToLobbyHandler?.Invoke(this, new StatusEvent(true, "Connected to LOBBY"));
     }
 
@@ -556,19 +559,19 @@ namespace Massive
 
     void SpawnObjects(MNetMessage m)
     {
-      MSpawnMessage msm = MSpawnMessage.Deserialize<MSpawnMessage>(m.Payload);      
+      MSpawnMessage msm = MSpawnMessage.Deserialize<MSpawnMessage>(m.Payload);
       SpawnTasks.Add(msm.SpawnTable);
       //foreach( DataRow dr in dt.Rows)
       //{
-        //MServerObject mso = new MServerObject();
-        //mso.UnpackFromDataRow(dt.Columns, dr);
+      //MServerObject mso = new MServerObject();
+      //mso.UnpackFromDataRow(dt.Columns, dr);
       //}
-     // if (msm.Spawnables == null) return;
+      // if (msm.Spawnables == null) return;
 
       //foreach (MServerObject mso in msm.Spawnables)
       //{
-//        SpawnTasks.Add(mso);
-  //    }
+      //        SpawnTasks.Add(mso);
+      //    }
     }
 
     //called from main thread
@@ -602,7 +605,10 @@ namespace Massive
       worker.DoWork += Bw_DoWork;
       worker.RunWorkerAsync(m);
       //Bw_DoWork(this, new DoWorkEventArgs(m));
-      Console.WriteLine(m.Command);
+      if (Settings.DebugNetwork == true)
+      {
+        Console.WriteLine(m.Command);
+      }
     }
 
     private void Bw_DoWork(object sender, DoWorkEventArgs e)
@@ -614,7 +620,7 @@ namespace Massive
          ((System.Net.IPEndPoint)targetServerConnectionInfo.RemoteEndPoint).Port,
          p.Serialize());
     }
-    
+
     public void Send(MNetMessage m)
     {
       if (!Connected) return;
@@ -682,7 +688,7 @@ namespace Massive
       Temp.Add(p);
       */
 
-      DataTable dt = DB.CreateObjectTable();      
+      DataTable dt = DB.CreateObjectTable();
       DataRow dr = dt.NewRow();
       dr[DB.OWNERID] = Globals.UserAccount.UserID;
       dr[DB.TEMPLATEID] = TemplateID;
@@ -752,13 +758,13 @@ namespace Massive
     public void UpdateZone(MNetMessage m)
     {
       MServerZone z = MServerZone.Deserialize<MServerZone>(m.Payload);
-      if ( ZoneUpdatedEventHandler != null)
+      if (ZoneUpdatedEventHandler != null)
       {
         ZoneUpdatedEventHandler(this, new ZoneEvent(z));
       }
     }
 
-      public void UpdateZoneRequest(MServerZone z)
+    public void UpdateZoneRequest(MServerZone z)
     {
       MNetMessage m = new MNetMessage();
       m.Command = MNetMessage.UPDATEZONEREQ;
@@ -837,12 +843,12 @@ namespace Massive
       MMessageBus.AvatarChanged(this, m.UserID, mr.AvatarID);
     }
 
-   
+
 
     public void MoveObject(MNetMessage mn)
-    {      
+    {
       MPosMessage pm = MPosMessage.Deserialize<MPosMessage>(mn.Payload);
-      
+
       PositionChangeHandler?.Invoke(this, new MoveEvent(pm.InstanceID,
        MassiveTools.VectorFromArray(pm.Position),
        MassiveTools.QuaternionFromArray(pm.Rotation)));

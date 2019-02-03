@@ -29,8 +29,7 @@ namespace OpenWorld.src.Forms
     private void MMessageBus_LobbyLoadRequestHandler(object sender, ChangeDetailsEvent e)
     {
       Globals.GUIThreadOwner.Invoke((MethodInvoker)delegate
-      {
-       
+      {       
         this.Show();
       });
     }
@@ -58,10 +57,14 @@ namespace OpenWorld.src.Forms
     }
 
     private void JoinButton_Click(object sender, EventArgs e)
-    {      
+    {
       //string sName = dg.Cells[0].Value.ToString();
       //string sIP = dg.Cells[1].Value.ToString();
+      Join();      
+    }
 
+    void Join()
+    {
       Globals.Network.ServerIP = ServerIPBox.Text;
       Globals.Network.Setup();
     }
@@ -77,6 +80,15 @@ namespace OpenWorld.src.Forms
       DataGridViewRow dg = dataGridView1.SelectedRows[0];
       if (dg == null) return;
       ServerIPBox.Text = dg.Cells[1].Value.ToString();
+      NameLabel.Text = dg.Cells[0].Value.ToString();
+    }
+
+    private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+    {
+      DataGridViewRow dg = dataGridView1.SelectedRows[0];
+      if (dg == null) return;
+      ServerIPBox.Text = dg.Cells[1].Value.ToString();
+      Join();
     }
   }
 }

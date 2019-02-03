@@ -35,10 +35,11 @@
       // 
       this.PositionBox.Dock = System.Windows.Forms.DockStyle.Fill;
       this.PositionBox.Location = new System.Drawing.Point(0, 0);
+      this.PositionBox.Margin = new System.Windows.Forms.Padding(1);
       this.PositionBox.Multiline = true;
       this.PositionBox.Name = "PositionBox";
-      this.PositionBox.Size = new System.Drawing.Size(304, 33);
-      this.PositionBox.TabIndex = 0;
+      this.PositionBox.Size = new System.Drawing.Size(516, 32);
+      this.PositionBox.TabIndex = 1;
       this.PositionBox.Text = "0,0,0\r\n-18.1, 33.00";
       // 
       // PositionControl
@@ -47,14 +48,13 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.PositionBox);
       this.Name = "PositionControl";
-      this.Size = new System.Drawing.Size(304, 33);
+      this.Size = new System.Drawing.Size(516, 32);
       this.ResumeLayout(false);
       this.PerformLayout();
 
     }
 
     #endregion
-
     private System.Windows.Forms.TextBox PositionBox;
   }
 }

@@ -52,12 +52,17 @@ namespace ThisIsMassive.src
 
       Globals.Network.LoggedInHandler += Network_LoggedInHandler;
       Globals.Network.LoggedOutHandler += Network_LoggedOutHandler;
+      Globals.Network.TeleportHandler += Network_TeleportHandler;
       //Globals.Network.ObjectSpawned += Network_ObjectSpawned;
       //Globals.Network.DeletedHandler += Network_DeletedHandler;      
 
       Globals.Network.TextureHandler += Network_TextureHandler;
     }
 
+    private void Network_TeleportHandler(object sender, MoveEvent e)
+    {
+      throw new NotImplementedException();
+    }
 
     public void Setup()
     {
@@ -182,7 +187,7 @@ namespace ThisIsMassive.src
     }
 
     private void MMessageBus_MoveAvatarRequestEventHandler(object sender, MoveEvent e)
-    {
+    {      
       Globals.Network.PositionRequest(Globals.UserAccount.UserID, e.Position, e.Rotation);
     }
 

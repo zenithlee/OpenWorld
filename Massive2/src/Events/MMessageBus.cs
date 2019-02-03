@@ -43,6 +43,8 @@ namespace Massive.Events
     public static event EventHandler<RotationRequestEvent> RotateEventHandler;
 
     public static event EventHandler<InfoEvent> InfoEventHandler;
+    //something is loading that may affect UI
+    public static event EventHandler<InfoEvent> LoadingStatusHandler;
     public static event EventHandler<InfoEvent> ChangeUserIDHandler;
     public static event EventHandler<InfoEvent> ChangedUserInfoHandler;
     public static event EventHandler<ChangeAvatarEvent> ChangeAvatarRequestHandler;
@@ -116,10 +118,15 @@ namespace Massive.Events
       GUIEvent(LobbyLoadedHandler, sender, new TableEvent(e.Table));
     }
 
+    public static void LoadingStatus(object sender, string sMessage)
+    {
+      GUIEvent(LoadingStatusHandler, sender, new InfoEvent(sMessage));
+    }
+
     public static void NotifyUpdate(object sender)
     {
       //GUIEvent(UpdateHandler, sender, new UpdateEvent(Time.DeltaTime));
-      if ( UpdateHandler != null )
+      if (UpdateHandler != null)
       {
         UpdateHandler(sender, new UpdateEvent(Time.DeltaTime));
       }
@@ -146,10 +153,10 @@ namespace Massive.Events
     }
 
     private void Network_LoggedInHandler(object sender, ChangeDetailsEvent e)
-    {       
-       GUIEvent(LoggedIn, sender, e);
+    {
+      GUIEvent(LoggedIn, sender, e);
     }
-    
+
     private void Network_USerDetailsChanged(object sender, ChangeDetailsEvent e)
     {
       GUIEvent(UserDetailsChanged, sender, e);
@@ -168,7 +175,7 @@ namespace Massive.Events
     private void Network_PositionChangeHandler(object sender, MoveEvent e)
     {
       GUIEvent(ObjectMovedEvent, sender, e);
-    }    
+    }
 
     public static void AvatarMoved(object sender, string InstanceID, Vector3d Position, Quaterniond Rotation)
     {
@@ -259,6 +266,8 @@ namespace Massive.Events
     {
       ChangeUserIDHandler?.Invoke(sender, new InfoEvent(sUID));
     }
+
+
 
     public static void Status(object sender, string sMessage)
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenWorld.src
+namespace OpenWorld
 {
   public class MBuildingBlock
   {

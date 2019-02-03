@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -19,6 +20,20 @@ namespace Massive.Network
        * string sGuid = Convert.ToBase64String(g.ToByteArray());      
       */
       
+    }
+
+    public static string GetMachineID()
+    {
+      if (File.Exists("uid"))
+      {
+        return File.ReadAllText("uid");
+      }
+      else
+      {
+        string sGUID = GUID();
+        File.WriteAllText("uid", sGUID);
+        return sGUID;
+      }      
     }
 
     public static byte[] Hash(string inputString)

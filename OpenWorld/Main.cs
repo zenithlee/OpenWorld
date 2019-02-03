@@ -5,6 +5,7 @@ using Massive.Tools;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenWorld.controllers;
+using OpenWorld.Forms;
 using OpenWorld.Handlers;
 using OpenWorld.src.Forms;
 using System;
@@ -13,7 +14,7 @@ using System.Windows.Forms;
 
 namespace OpenWorld
 {
-  public partial class Form1 : Form
+  public partial class Main : Form
   {
     COpenWorld openWorld;
     private GLControl glControl1;
@@ -22,8 +23,9 @@ namespace OpenWorld
     LobbyForm lobbyForm;
     MKeyboardHandler keyboardHandler;
     MMouseHandler mouseHandler;
+    InfoOverlayForm _infoForm;
 
-    public Form1()
+    public Main()
     {
       InitializeComponent();
       SetupGLControl();
@@ -33,12 +35,20 @@ namespace OpenWorld
     private void Form1_Load(object sender, EventArgs e)
     {
       openWorld = new COpenWorld();
-      keyboardHandler = new MKeyboardHandler(this, glControl1);      
+      keyboardHandler = new MKeyboardHandler(this, glControl1);
       lobbyForm = new LobbyForm();
       openWorld.Setup();
       mouseHandler = new MMouseHandler(glControl1);
       timer1.Start();
-      Application.Idle += Application_Idle; ;
+      Application.Idle += Application_Idle;
+      SetupInfo();
+    }
+
+    void SetupInfo()
+    {
+      _infoForm = new InfoOverlayForm();
+      _infoForm.Show(this);
+      UpdateWindowVariables();
     }
 
     private void Application_Idle(object sender, EventArgs e)
@@ -59,7 +69,7 @@ namespace OpenWorld
       this.glControl1.Size = new System.Drawing.Size(920, 542);
       this.glControl1.TabIndex = 0;
       this.glControl1.TabStop = false;
-      this.glControl1.VSync = false;      
+      this.glControl1.VSync = false;
       //this.glControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glControl1_KeyDown);
       //this.glControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseDown);
       this.glControl1.Resize += new System.EventHandler(this.glControl1_Resize);
@@ -88,11 +98,10 @@ namespace OpenWorld
       }
       //if (_infoForm != null)
       //{
-        //_infoForm.UpdateData();
+      //_infoForm.UpdateData();
       //}
+      UpdateWindowVariables();
     }
-
-  
 
     private void Form1_KeyDown(object sender, KeyEventArgs e)
     {
@@ -113,15 +122,29 @@ namespace OpenWorld
 
     private void timer1_Tick(object sender, EventArgs e)
     {
-      keyboardHandler.Update();      
+      keyboardHandler.Update();
       openWorld.Update();
     }
 
-    private void HomeButton_Click(object sender, EventArgs e)
+    private void Form1_FormClosing(object sender, FormClosingEventArgs e)
     {
-      MServerZone zone = MZoneService.Find("Earth");
-      Vector3d pos = MassiveTools.Vector3dFromVector3_Server(zone.Position);
-      Globals.Network.TeleportRequest(Globals.UserAccount.UserID, pos, Quaterniond.Identity);
+      timer1.Stop();
+      Application.Idle -= Application_Idle;
+      openWorld.Dispose();
+    }
+
+    void UpdateWindowVariables()
+    {
+      ClientLocation = glControl1.PointToScreen(new Point(0,0));
+      if (_infoForm != null)
+      {
+        _infoForm.UpdateData();
+      }
+    }
+
+    private void Main_Move(object sender, EventArgs e)
+    {
+      UpdateWindowVariables();
     }
   }
 }

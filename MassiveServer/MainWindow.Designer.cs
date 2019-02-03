@@ -63,10 +63,14 @@
       this.objects = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.maxobjects = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.state = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.postgresDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.BackupTimer = new System.Windows.Forms.Timer(this.components);
-      this.mUserAccountBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.PublicIPLabel = new System.Windows.Forms.Label();
+      this.PublicIPBox = new System.Windows.Forms.TextBox();
+      this.RegisterLobbyButton = new System.Windows.Forms.Button();
+      this.postgresDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.mUserAccountBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.label4 = new System.Windows.Forms.Label();
       this.tableLayoutPanel1.SuspendLayout();
       this.panel1.SuspendLayout();
       this.tableLayoutPanel3.SuspendLayout();
@@ -134,6 +138,10 @@
       // panel1
       // 
       this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+      this.panel1.Controls.Add(this.label4);
+      this.panel1.Controls.Add(this.RegisterLobbyButton);
+      this.panel1.Controls.Add(this.PublicIPBox);
+      this.panel1.Controls.Add(this.PublicIPLabel);
       this.panel1.Controls.Add(this.ChatBox);
       this.panel1.Controls.Add(this.FlushButton);
       this.panel1.Controls.Add(this.label1);
@@ -151,10 +159,10 @@
       // 
       // ChatBox
       // 
-      this.ChatBox.Location = new System.Drawing.Point(13, 223);
+      this.ChatBox.Location = new System.Drawing.Point(13, 235);
       this.ChatBox.Multiline = true;
       this.ChatBox.Name = "ChatBox";
-      this.ChatBox.Size = new System.Drawing.Size(175, 91);
+      this.ChatBox.Size = new System.Drawing.Size(175, 87);
       this.ChatBox.TabIndex = 13;
       this.ChatBox.Text = "Server is updating. Please close and restart to install updates.";
       // 
@@ -162,7 +170,7 @@
       // 
       this.FlushButton.BackColor = System.Drawing.Color.Gold;
       this.FlushButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.FlushButton.Location = new System.Drawing.Point(123, 110);
+      this.FlushButton.Location = new System.Drawing.Point(13, 328);
       this.FlushButton.Name = "FlushButton";
       this.FlushButton.Size = new System.Drawing.Size(65, 39);
       this.FlushButton.TabIndex = 12;
@@ -178,16 +186,16 @@
       this.label1.ForeColor = System.Drawing.Color.White;
       this.label1.Location = new System.Drawing.Point(6, 8);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(68, 13);
+      this.label1.Size = new System.Drawing.Size(96, 13);
       this.label1.TabIndex = 5;
-      this.label1.Text = "IP Address";
+      this.label1.Text = "LAN IP Address";
       // 
       // label2
       // 
       this.label2.AutoSize = true;
       this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.label2.ForeColor = System.Drawing.Color.White;
-      this.label2.Location = new System.Drawing.Point(6, 57);
+      this.label2.Location = new System.Drawing.Point(6, 90);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(30, 13);
       this.label2.TabIndex = 7;
@@ -197,7 +205,7 @@
       // 
       this.StartButton.BackColor = System.Drawing.Color.LimeGreen;
       this.StartButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.StartButton.Location = new System.Drawing.Point(10, 110);
+      this.StartButton.Location = new System.Drawing.Point(10, 132);
       this.StartButton.Name = "StartButton";
       this.StartButton.Size = new System.Drawing.Size(64, 39);
       this.StartButton.TabIndex = 0;
@@ -206,7 +214,7 @@
       // 
       // PortBox
       // 
-      this.PortBox.Location = new System.Drawing.Point(10, 73);
+      this.PortBox.Location = new System.Drawing.Point(10, 108);
       this.PortBox.Name = "PortBox";
       this.PortBox.Size = new System.Drawing.Size(178, 20);
       this.PortBox.TabIndex = 6;
@@ -215,7 +223,7 @@
       // 
       this.StopButton.BackColor = System.Drawing.Color.Crimson;
       this.StopButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.StopButton.Location = new System.Drawing.Point(10, 155);
+      this.StopButton.Location = new System.Drawing.Point(10, 177);
       this.StopButton.Name = "StopButton";
       this.StopButton.Size = new System.Drawing.Size(61, 39);
       this.StopButton.TabIndex = 1;
@@ -226,11 +234,12 @@
       // 
       this.TestButton.BackColor = System.Drawing.SystemColors.MenuHighlight;
       this.TestButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.TestButton.Location = new System.Drawing.Point(123, 320);
+      this.TestButton.Location = new System.Drawing.Point(123, 328);
       this.TestButton.Name = "TestButton";
       this.TestButton.Size = new System.Drawing.Size(65, 39);
       this.TestButton.TabIndex = 3;
       this.TestButton.Text = "Chat";
+      this.toolTip1.SetToolTip(this.TestButton, "Send the text to All users as a chat message");
       this.TestButton.UseVisualStyleBackColor = false;
       this.TestButton.Click += new System.EventHandler(this.TestButton_Click_1);
       // 
@@ -286,7 +295,7 @@
       // 
       this.ZoneList.Dock = System.Windows.Forms.DockStyle.Fill;
       this.ZoneList.FormattingEnabled = true;
-      this.ZoneList.Location = new System.Drawing.Point(303, 35);
+      this.ZoneList.Location = new System.Drawing.Point(203, 35);
       this.ZoneList.Name = "ZoneList";
       this.ZoneList.Size = new System.Drawing.Size(94, 375);
       this.ZoneList.TabIndex = 12;
@@ -311,7 +320,7 @@
       // 
       this.UniverseList.Dock = System.Windows.Forms.DockStyle.Fill;
       this.UniverseList.FormattingEnabled = true;
-      this.UniverseList.Location = new System.Drawing.Point(203, 35);
+      this.UniverseList.Location = new System.Drawing.Point(303, 35);
       this.UniverseList.Name = "UniverseList";
       this.UniverseList.Size = new System.Drawing.Size(94, 375);
       this.UniverseList.TabIndex = 9;
@@ -422,6 +431,48 @@
       this.BackupTimer.Interval = 3600000;
       this.BackupTimer.Tick += new System.EventHandler(this.BackupTimer_Tick);
       // 
+      // PublicIPLabel
+      // 
+      this.PublicIPLabel.AutoSize = true;
+      this.PublicIPLabel.ForeColor = System.Drawing.Color.White;
+      this.PublicIPLabel.Location = new System.Drawing.Point(9, 51);
+      this.PublicIPLabel.Name = "PublicIPLabel";
+      this.PublicIPLabel.Size = new System.Drawing.Size(49, 13);
+      this.PublicIPLabel.TabIndex = 14;
+      this.PublicIPLabel.Text = "PublicIP:";
+      // 
+      // PublicIPBox
+      // 
+      this.PublicIPBox.Location = new System.Drawing.Point(10, 68);
+      this.PublicIPBox.Name = "PublicIPBox";
+      this.PublicIPBox.ReadOnly = true;
+      this.PublicIPBox.Size = new System.Drawing.Size(178, 20);
+      this.PublicIPBox.TabIndex = 15;
+      // 
+      // RegisterLobbyButton
+      // 
+      this.RegisterLobbyButton.BackColor = System.Drawing.Color.Gold;
+      this.RegisterLobbyButton.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.RegisterLobbyButton.Location = new System.Drawing.Point(77, 132);
+      this.RegisterLobbyButton.Name = "RegisterLobbyButton";
+      this.RegisterLobbyButton.Size = new System.Drawing.Size(111, 39);
+      this.RegisterLobbyButton.TabIndex = 16;
+      this.RegisterLobbyButton.Text = "Register Lobby";
+      this.toolTip1.SetToolTip(this.RegisterLobbyButton, "Register/Update this server with the main lobby");
+      this.RegisterLobbyButton.UseVisualStyleBackColor = false;
+      this.RegisterLobbyButton.Click += new System.EventHandler(this.RegisterLobbyButton_Click);
+      // 
+      // label4
+      // 
+      this.label4.AutoSize = true;
+      this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label4.ForeColor = System.Drawing.Color.White;
+      this.label4.Location = new System.Drawing.Point(10, 219);
+      this.label4.Name = "label4";
+      this.label4.Size = new System.Drawing.Size(99, 13);
+      this.label4.TabIndex = 17;
+      this.label4.Text = "Send Chat Text:";
+      // 
       // MainWindow
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -484,6 +535,10 @@
     private System.Windows.Forms.ColumnHeader ipaddress;
     private System.Windows.Forms.ColumnHeader email;
     private System.Windows.Forms.ToolTip toolTip1;
+    private System.Windows.Forms.Label PublicIPLabel;
+    private System.Windows.Forms.TextBox PublicIPBox;
+    private System.Windows.Forms.Button RegisterLobbyButton;
+    private System.Windows.Forms.Label label4;
   }
 }
 

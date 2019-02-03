@@ -27,7 +27,7 @@ namespace Massive
     public bool UseGravity = true;
     public Vector3d Gravity { get => World.Gravity; set => World.Gravity = value; }
 
-    BackgroundWorker _backgroundWorker;
+    public BackgroundWorker _backgroundWorker;
 
     List<MPhysicsObject> AddQueue = new List<MPhysicsObject>();
     List<MPhysicsObject> RemoveQueue = new List<MPhysicsObject>();
@@ -99,6 +99,7 @@ namespace Massive
       }
     }
 
+    //do all bullet related setup things on the bullet thread
     private void _backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
     {
       collisionConf = new DefaultCollisionConfiguration();

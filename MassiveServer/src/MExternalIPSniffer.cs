@@ -11,10 +11,12 @@ namespace MassiveServer.src
   public class MExternalIPSniffer
   {
     public static string WebServerFolderToWrite = @"c:\dev\bigfun\";
+    public static string externalip = "0.0.0.0";
 
     public static void SniffIP()
     {
-      string externalip = new WebClient().DownloadString("http://icanhazip.com");
+      externalip = new WebClient().DownloadString("http://icanhazip.com");
+      externalip = externalip.Trim();
       Console.WriteLine("External IP is:" + externalip);
 
       string sPath = Path.Combine(WebServerFolderToWrite, "ip.txt");

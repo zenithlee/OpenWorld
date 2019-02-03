@@ -92,7 +92,20 @@ namespace Massive.Server
       
 #endif
       MaxConnectionsLabel.Text = "Max Connections" + MServer.MAXCONNECTIONS;
-      Log("Backup schedule is: Backup every " + (BackupTimer.Interval / 3600000) + " hour", 3);      
+      Log("Backup schedule is: Backup every " + (BackupTimer.Interval / 3600000) + " hour", 3);
+      GetPublicIP();
+    }
+
+    void GetPublicIP()
+    {
+      WebClient wc = new WebClient();
+      try { 
+        string s = wc.DownloadString("http://icanhazip.com");
+        PublicIPBox.Text = s;
+      } catch( Exception e)
+      {
+        PublicIPBox.Text = "Could not get Public IP";
+      }
     }
 
     private void _Server_UniverseChanged(object sender, ServerEvent e)
@@ -374,6 +387,12 @@ namespace Massive.Server
     {
       _Server.FlushInactiveObjects();
       Log("Flushed ALL non-static Objects", MServer.UTILITY);
+    }
+
+    private void RegisterLobbyButton_Click(object sender, EventArgs e)
+    {
+      RegisterForm rf = new RegisterForm();      
+      rf.Show(this);
     }
   }
 }

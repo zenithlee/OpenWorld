@@ -125,9 +125,9 @@ namespace MassiveServer
     public void AddPlayer(MUserAccount m)
     {
       string sQuery = string.Format(
-        @"INSERT IGNORE into users (userid, screenname, avatarid, email, password) 
-        VALUES('{0}', '{1}', '{2}', '{3}', '{4}');",
-        m.UserID, m.UserName, m.AvatarID, m.Email, m.Password);
+        @"INSERT IGNORE into users (userid, screenname, avatarid, email, password, ip) 
+        VALUES('{0}', '{1}', '{2}', '{3}', '{4}', {5});",
+        m.UserID, m.UserName, m.AvatarID, m.Email, m.Password, m.ClientIP);
       Query(sQuery);
 
       /*sQuery = string.Format(

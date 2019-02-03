@@ -96,7 +96,18 @@ namespace OpenWorld.Handlers
       dist = MathHelper.Clamp(dist, 1, 10);
       //MScene.Camera.transform.Position = Vector3d.Lerp(MScene.Camera.transform.Position, TargetPosition, Time.DeltaTime * Speed * dist);
       MScene.Camera.transform.Position = TargetPosition;
-      MScene.Camera.UpVector = Vector3d.Lerp(MScene.Camera.UpVector, TargetUp, Time.DeltaTime * Speed * 2);
+
+      Vector3d upv = MScene.Camera.UpVector;
+      if ( double.IsNaN(upv.X))
+      {
+        upv = Vector3d.UnitY;
+      }
+      if (double.IsNaN(TargetUp.X))
+      {
+        TargetUp = Vector3d.UnitY;
+      }
+
+      MScene.Camera.UpVector = Vector3d.Lerp(upv, TargetUp, Time.DeltaTime * Speed * 2);
     }
 
     public void Update()
@@ -138,10 +149,11 @@ namespace OpenWorld.Handlers
         if (((dist > 0.25) || (td > 1))
           && (Throttle > MaxNetworkThrottle))
         {
-          MMessageBus.MoveAvatarRequest(this, Globals.UserAccount.UserID, AP, Globals.Avatar.GetRotation());
           Throttle = 0;
           PreviousPosition = MScene.Camera.transform.Position;
           PreviousTarget = MScene.Camera.Target.transform.Position;
+          MMessageBus.MoveAvatarRequest(this, Globals.UserAccount.UserID, AP, Globals.Avatar.GetRotation());
+          
         }
       }
 

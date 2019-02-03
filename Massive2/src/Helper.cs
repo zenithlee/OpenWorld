@@ -310,9 +310,15 @@ namespace Massive
 
     public static MSceneObject LoadTemplate(string TemplateID)
     {
-      MSceneObject o = Helper.CreateCube(MScene.TemplateRoot, TemplateID);
+      MSceneObject o = Helper.CreateSphere(MScene.TemplateRoot, 2, TemplateID);
       o.TemplateID = TemplateID;
-      o.Add(new MPhysicsObject(o, TemplateID + "_physics", 1, MPhysicsObject.EShape.Box, true, new Vector3d(1, 1, 1)));
+      o.InstanceID = TemplateID;
+      MPhysicsObject mpo = new MPhysicsObject(o, TemplateID + "_physics", 1, MPhysicsObject.EShape.Box, true, new Vector3d(1, 1, 1));            
+      mpo.SetDamping(0.7, 0.5);
+      mpo.SetRestitution(0.5);
+      mpo.SetSleep(15);
+      mpo.SetAngularFactor(0.0, 0.0, 0.0);
+      o.Add(mpo);
       o.Setup();
       //o.OwnerID = m.OwnerID;
       //o.SetPosition(m.transform.Position);

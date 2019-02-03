@@ -27,16 +27,17 @@ namespace OpenWorld.Handlers
         if (mso == null) continue;
         Spawn(mso);
       }
-      
-      Console.WriteLine(dt.TableName);
     }
 
     void Spawn(MServerObject m)
     {
-      //if ((m.Name == Globals.UserAccount.UserID) && ( m.OwnerID == Globals.UserAccount.UserID)){
-        MSceneObject mo = Helper.Spawn(m.TemplateID, m.OwnerID, m.Name, m.Tag,           
+      MSceneObject mo = (MSceneObject)MScene.Root.FindModuleByInstanceID(m.InstanceID);
+      if (mo != null) return;      
+        //if ((m.Name == Globals.UserAccount.UserID) && ( m.OwnerID == Globals.UserAccount.UserID)){
+        mo = Helper.Spawn(m.TemplateID, m.OwnerID, m.Name, m.Tag,           
           MassiveTools.VectorFromArray( m.Position), 
           MassiveTools.QuaternionFromArray(m.Rotation));
+      mo.InstanceID = m.InstanceID;
       if ( mo.Name == Globals.UserAccount.UserID)
       {
         Globals.Avatar.SetSceneObject(mo);

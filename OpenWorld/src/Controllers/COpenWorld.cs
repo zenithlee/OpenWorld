@@ -25,8 +25,16 @@ namespace OpenWorld.controllers
       Globals.Network.ConnectedToServerHandler += Network_ConnectedToServerHandler;
       Globals.Network.LoggedInHandler += Network_LoggedInHandler;
 
-      Globals.Network.PositionChangeHandler += Network_PositionChangeHandler;
+      Globals.Network.PositionChangeHandler += Network_PositionChangeHandler;      
       Globals.Network.TeleportHandler += Network_TeleportHandler;
+
+      MMessageBus.MoveAvatarRequestEventHandler += MMessageBus_MoveAvatarRequestEventHandler;
+    }
+
+    //relay move avatar request to server
+    private void MMessageBus_MoveAvatarRequestEventHandler(object sender, MoveEvent e)
+    {
+      Globals.Network.PositionRequest(Globals.UserAccount.UserID, e.Position, e.Rotation);
     }
 
     public void Setup()
@@ -45,7 +53,7 @@ namespace OpenWorld.controllers
 
       Globals._scene.Setup();
       Globals._scene.Play();
-      Settings.DebugNetwork = true;
+      //Settings.DebugNetwork = true;
       MStateMachine.ChangeState(MStateMachine.eStates.Viewing);
     }
 
@@ -73,12 +81,40 @@ namespace OpenWorld.controllers
 
     private void Network_TeleportHandler(object sender, MoveEvent e)
     {
-      //throw new NotImplementedException();
-    }
+      MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(e.InstanceID);
+      if (mo != null)
+      {
+        mo.SetPosition(e.Position);
+        mo.SetRotation(e.Rotation);
+      }
+        //throw new NotImplementedException();
+      }
 
     private void Network_PositionChangeHandler(object sender, Massive.Events.MoveEvent e)
     {
       //throw new NotImplementedException();
+      if (!e.InstanceID.Equals(Globals.UserAccount.UserID))
+      {
+        MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(e.InstanceID);
+        if (mo != null)
+        {
+          MMoveSync ms = (MMoveSync)mo.FindModuleByType(MObject.EType.MoveSync);
+          if (ms == null)
+          {
+            ms = new MMoveSync(mo, e.Position, e.Rotation);
+            mo.Add(ms);
+          }
+          else
+          {
+            ms.SetTarget(e.Position, e.Rotation);
+          }
+        }
+      }
+      else
+      {
+        MMessageBus.AvatarMoved(this, e.InstanceID, e.Position, e.Rotation);
+      }
+        //Console.WriteLine(e.Position);
     }
 
    
@@ -98,15 +134,21 @@ namespace OpenWorld.controllers
 
   
     public void Update()
-    {
+    {      
       Globals._scene.Update();
     }
 
     public void Render()
     {
       Globals._scene.ClearBackBuffer();
-      Globals._scene.Render();
-        
+      Globals._scene.Render();       
+    }
+
+    public void Dispose()
+    {
+      Globals.ApplicationExiting = true;
+      MScene.Physics.DisposeWorld();
+      Globals._scene.Dispose();
     }
   }
 }

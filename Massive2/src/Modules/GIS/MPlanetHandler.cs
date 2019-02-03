@@ -210,7 +210,7 @@ namespace Massive
         mo.InstanceID = m.Name;
         mo.TemplateID = m.Name;
         mo.OwnerID = "MasterAstronomer";
-        mo.DistanceThreshold = m.Radius.X * 110002;
+        mo.DistanceThreshold = m.Radius.X * 110002; //distance at which it becomes visible
         mo.Tag = m;
         m.Tag = mo;
 
@@ -236,8 +236,8 @@ namespace Massive
         {
           m.AddDynamicTerrain(); //adds tile based terrain (from e.g. tile service)
 
-          // MPhysicsObject po = new MPhysicsObject(mo, "Physics", 0, MPhysicsObject.EShape.ConcaveMesh, 
-          //  false, m.Radius);
+           //MPhysicsObject po = new MPhysicsObject(mo, "Physics", 0, MPhysicsObject.EShape.ConcaveMesh, 
+            //false, m.Radius);
           MPhysicsObject po = new MPhysicsObject(mo, "Physics", 0, MPhysicsObject.EShape.Sphere,
             false, m.Radius);
           //po.SetLinearFactor(0, 0, 0);

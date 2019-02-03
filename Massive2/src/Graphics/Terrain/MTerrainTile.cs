@@ -18,6 +18,7 @@ using GeoJSON.Net.Geometry;
 using Massive.Tools;
 using Massive.GIS;
 using System.Threading;
+using Massive.Events;
 
 namespace Massive
 {
@@ -53,7 +54,7 @@ namespace Massive
       ZoomLevel = Zoom;
       //Heights = new float[] { x_res * z_res };
       PointsOfInterest = new List<MPOI>();
-      DistanceThreshold = 22000;
+      DistanceThreshold = 64000;
 
       Forest = new MForest();
       Forest.transform.Scale = new Vector3d(1, 1, 1);
@@ -122,13 +123,13 @@ namespace Massive
 
     public void Setup(MAstroBody body)
     {
-      string sText = string.Format("earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);
+      string sText = string.Format("Earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);
       sText = Path.Combine(Settings.TileDataPath, sText);
       if (!File.Exists(sText))
       {
         return;
       }
-      CurrentBody = body;      
+      CurrentBody = body;
       if (_backgroundWorker != null)
       {
         _backgroundWorker.CancelAsync();
@@ -143,13 +144,14 @@ namespace Massive
     private void Bw_DoWork(object sender, DoWorkEventArgs e)
     {
       Console.WriteLine("Memory:" + GC.GetTotalMemory(false));
+      MMessageBus.LoadingStatus(this, "Loading:" + TileX + "," + TileY);
       SetupMesh();
       if (_backgroundWorker.CancellationPending) return;
       CreateMaterial();
       LoadBiome();
-      if (_backgroundWorker.CancellationPending) return;      
+      if (_backgroundWorker.CancellationPending) return;
 
-      LoadTexture();      
+      LoadTexture();
       if (_backgroundWorker.CancellationPending) return;
       //while (material.DiffuseTexture == null) ;
       //while (material.DiffuseTexture.DataIsReady == false) ;
@@ -167,6 +169,23 @@ namespace Massive
       };
       LoadMetaData((MAstroBody)e.Argument);
 
+      ApplyHeightMap();
+
+      DistanceFromAvatar = Vector3d.Distance(Globals.Avatar.GetPosition(), this.transform.Position);
+
+      //stopwatch.Start();
+      //MPhysicsObject po = new MPhysicsObject(this, "Terrain_collider", 0, MPhysicsObject.EShape.ConcaveMesh, false, this.transform.Scale);
+      //stopwatch.Stop();
+      //Console.WriteLine("Phyics Upload " + TileX + "," + TileY + " in " + stopwatch.ElapsedMilliseconds + "ms");
+      if (Settings.DrawTrees == true)
+      {
+        Forest.PlantTrees(CurrentBody, this);
+      }
+      IsSetup = true;
+    }
+
+    void ApplyHeightMap()
+    {
       //Random r = new Random(123);
       int i = 0;
       double d = z_res / (z_res + 1);
@@ -185,16 +204,6 @@ namespace Massive
           i++;
         }
       }
-
-      DistanceFromAvatar = Vector3d.Distance(Globals.Avatar.GetPosition(), this.transform.Position);
-
-      //stopwatch.Start();
-      //MPhysicsObject po = new MPhysicsObject(this, "Terrain_collider", 0, MPhysicsObject.EShape.ConcaveMesh, false, this.transform.Scale);
-      //stopwatch.Stop();
-      //Console.WriteLine("Phyics Upload " + TileX + "," + TileY + " in " + stopwatch.ElapsedMilliseconds + "ms");
-      Forest.PlantTrees(CurrentBody, this);
-
-      IsSetup = true;
     }
 
     public void SetupPhysics()
@@ -289,6 +298,7 @@ namespace Massive
     public void LoadTexture()
     {
       string sText = string.Format("earth\\{0}\\continuity\\{1}_{2}.jpg", ZoomLevel, TileX, TileY);
+      //string sText = string.Format("earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);
       sText = Path.Combine(Settings.TileDataPath, sText);
       if (File.Exists(sText))
       {
@@ -409,6 +419,7 @@ namespace Massive
       IndicesLength = Indices.Length;
       //Indices = null;
       // Vertices = null;
+      //SetupPhysics(); //must run on main thread
     }
 
     public Vector3d GetPointOnSurface(Vector3d pt)
