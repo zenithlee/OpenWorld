@@ -14,9 +14,9 @@ ECommerce
 ![http://bigfun.co.za/art/13.JPG](http://bigfun.co.za/art/13.JPG)
 
 ## *first run*
+Easiest is to download the Deploy.zip release file under Releases.  
 Run The MassiveServer on a Windows Machine  
 Run OpenWorldMinimum to show basic login flow  
-Download a Content pack to get 3D models, textures, terrains, etc.  
 Run OpenWorld to get a basic 3D browser, with crafting. Use this as a starting point for new browsers.  
 
 
