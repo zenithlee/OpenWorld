@@ -1,20 +1,20 @@
 ## *OpenWorld*
-Open World is a New Internet, Spatial Server and 3D Browser
+Open World is a New Internet, Spatial Server and 3D Browser  
 
-64 Bit Engine (both in memory and Coordinates)
-Spatial 3D server
-Spatial Universe Browser
-1:1 scale planets
-Crafting
-Multiplayer
-Sharing content
-Chat
-ECommerce
+64 Bit Engine (both in memory and Coordinates)  
+Spatial 3D server  
+Spatial Universe Browser  
+1:1 scale planets  
+Crafting  
+Multiplayer  
+Sharing content  
+Chat  
+ECommerce  
 
 ## *first run*
-Run The MassiveServer on a Windows Machine
-Run OpenWorldMinimum to show basic login flow
-Run OpenWorld to get a basic 3D browser, with crafting. Use this as a starting point for new browsers.
+Run The MassiveServer on a Windows Machine  
+Run OpenWorldMinimum to show basic login flow  
+Run OpenWorld to get a basic 3D browser, with crafting. Use this as a starting point for new browsers.  
 
 ## *Loading Terrain*
 Using Bing-type tiles
