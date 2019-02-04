@@ -1,4 +1,4 @@
-﻿namespace ThisIsMassive.src.Controls
+﻿namespace OpenWorld.Forms
 {
   partial class UserInfoForm
   {
@@ -133,7 +133,7 @@
       this.tableLayoutPanel3.Name = "tableLayoutPanel3";
       this.tableLayoutPanel3.RowCount = 1;
       this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel3.Size = new System.Drawing.Size(390, 49);
+      this.tableLayoutPanel3.Size = new System.Drawing.Size(390, 28);
       this.tableLayoutPanel3.TabIndex = 9;
       // 
       // DoneButton
@@ -144,7 +144,7 @@
       this.DoneButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.DoneButton.Location = new System.Drawing.Point(305, 3);
       this.DoneButton.Name = "DoneButton";
-      this.DoneButton.Size = new System.Drawing.Size(82, 43);
+      this.DoneButton.Size = new System.Drawing.Size(82, 22);
       this.DoneButton.TabIndex = 10;
       this.DoneButton.Text = "Done";
       this.DoneButton.UseVisualStyleBackColor = false;
@@ -310,7 +310,7 @@
       this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 1, 5);
       this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 8);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(2, 0);
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(2, 21);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 9;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
@@ -324,20 +324,8 @@
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(528, 343);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(528, 322);
       this.tableLayoutPanel1.TabIndex = 0;
-      this.tableLayoutPanel1.Controls.SetChildIndex(this.tableLayoutPanel3, 0);
-      this.tableLayoutPanel1.Controls.SetChildIndex(this.tableLayoutPanel4, 0);
-      this.tableLayoutPanel1.Controls.SetChildIndex(this.label6, 0);
-      this.tableLayoutPanel1.Controls.SetChildIndex(this.EmailBox, 0);
-      this.tableLayoutPanel1.Controls.SetChildIndex(this.tableLayoutPanel2, 0);
-      this.tableLayoutPanel1.Controls.SetChildIndex(this.UserNameBox, 0);
-      this.tableLayoutPanel1.Controls.SetChildIndex(this.label1, 0);
-      this.tableLayoutPanel1.Controls.SetChildIndex(this.label2, 0);
-      this.tableLayoutPanel1.Controls.SetChildIndex(this.label4, 0);
-      this.tableLayoutPanel1.Controls.SetChildIndex(this.UserIDBox, 0);
-      this.tableLayoutPanel1.Controls.SetChildIndex(this.label5, 0);
-      this.tableLayoutPanel1.Controls.SetChildIndex(this.PasswordBox, 0);
       // 
       // CloseButton
       // 
@@ -364,6 +352,7 @@
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "UserInfoForm";
       this.Text = "User Details";
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserInfoForm_FormClosing);
       this.Shown += new System.EventHandler(this.UserInfoForm_Shown);
       this.Controls.SetChildIndex(this.tableLayoutPanel1, 0);
       this.tableLayoutPanel4.ResumeLayout(false);

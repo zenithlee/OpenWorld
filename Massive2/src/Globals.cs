@@ -48,8 +48,7 @@ namespace Massive
     public enum eRenderPass { Normal, ShadowDepth, Pick, Outline, FX, Reflection };
     public static eRenderPass RenderPass = eRenderPass.Normal;
     public static MShader ShaderOverride;
-    public static event EventHandler<ErrorEvent> ShaderErrorEvent;
-    public static event EventHandler<InfoEvent> InfoEventGlobal;
+    public static event EventHandler<ErrorEvent> ShaderErrorEvent;    
     public static event EventHandler<StatusEvent> ShaderCompilerEvent;
     public static event EventHandler<ErrorEvent> ErrorEventGlobal;
     public static event EventHandler<GraphChangedEvent> GraphChangeHandler;
@@ -68,7 +67,8 @@ namespace Massive
     
     public static void Log(object sender, string s)
     {
-      InfoEventGlobal?.Invoke(sender, new InfoEvent(s));
+      //InfoEventGlobal?.Invoke(sender, new InfoEvent(s));
+      Console.WriteLine(s);
     }
 
     public static void SetProjectPath(string path)

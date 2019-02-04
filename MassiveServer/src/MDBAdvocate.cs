@@ -126,7 +126,7 @@ namespace MassiveServer
     {
       string sQuery = string.Format(
         @"INSERT IGNORE into users (userid, screenname, avatarid, email, password, ip) 
-        VALUES('{0}', '{1}', '{2}', '{3}', '{4}', {5});",
+        VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');",
         m.UserID, m.UserName, m.AvatarID, m.Email, m.Password, m.ClientIP);
       Query(sQuery);
 
@@ -138,6 +138,35 @@ namespace MassiveServer
       Query(sQuery);*/
     }
 
+    public MUserAccount GetPlayerByEmail(string Email, string Password)
+    {
+      MUserAccount mu = new MUserAccount();
+      mu.Email = Email;
+      mu.Password = Password;
+      string sQuery = string.Format("SELECT * from users where email='{0}' and password='{1}';", Email, Password);
+      DataTable dt = QueryReader(sQuery);
+      if (dt.Rows.Count == 0) return null;
+
+      //DataRow row = dt.Rows[0]["userid"];
+      //mu.UserID = row.ItemArray.GetValue("userid"].ToString();
+      mu.UserID = dt.Rows[0]["userid"].ToString();
+      return mu;
+    }
+
+    public MUserAccount GetPlayerByUserID(string UserID)
+    {
+      MUserAccount mu = new MUserAccount();      
+      string sQuery = string.Format("SELECT * from users where userid='{0}';", UserID);
+      DataTable dt = QueryReader(sQuery);
+      if (dt.Rows.Count == 0) return null;
+
+      //DataRow row = dt.Rows[0]["userid"];
+      //mu.UserID = row.ItemArray.GetValue("userid"].ToString();
+      mu.UserID = dt.Rows[0]["userid"].ToString();      
+      return mu;
+    }
+
+
     public bool AddToWorld(DataTable dt)
     {
       int n = 0;
@@ -147,21 +176,49 @@ namespace MassiveServer
          @"INSERT IGNORE into objects (`instanceid`, `ownerid`, `templateid`, `textureid`, `name`, `persist`, x,y,z, rx, ry, rz, rw) 
         VALUES('{0}', '{1}', '{2}', '{3}', '{4}', {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12});",
          dr[DB.INSTANCEID], dr[DB.OWNERID], dr[DB.TEMPLATEID], dr[DB.TEXTUREID], dr[DB.NAME], dr[DB.PERSIST],
-         dr[DB.X], dr[DB.Y], dr[DB.Z], dr[DB.RX], dr[DB.RY], dr[DB.RZ], dr[DB.RZ]
+         dr[DB.X], dr[DB.Y], dr[DB.Z], dr[DB.RX], dr[DB.RY], dr[DB.RZ], dr[DB.RW]
          );
         n += Query(sQuery);
       }
       return n == 0 ? false : true;
     }
 
-    public void UpdatePlayer(MUserAccount m)
+    public string UpdatePlayer(MUserAccount m)
     {
-      string sQuery = string.Format(
+      MUserAccount mu = null;
+      if (string.IsNullOrEmpty(m.UserID))
+      {
+        mu = GetPlayerByEmail(m.Email, m.Password);
+      }
+      else
+      {
+        mu = GetPlayerByUserID(m.UserID);
+      }
+        
+      string sQuery = "";
+      if ( mu == null)
+      {
+        //generate a new UserID
+        if (string.IsNullOrEmpty(m.UserID))
+        {
+          m.UserID = UidGen.GUID();
+        }        
+        sQuery = string.Format(
+        @"INSERT  into users (`screenname`,`avatarid`,`email`,`password`, `userid`) 
+          VALUES('{0}','{1}','{2}','{3}','{4}');",
+        m.UserName, m.AvatarID, m.Email, m.Password, m.UserID);
+      }
+      else
+      {
+        sQuery = string.Format(
         @"UPDATE users 
           SET screenname = '{0}', avatarid = '{1}', email='{2}', password='{3}' 
           WHERE `userid`='{4}';",
         m.UserName, m.AvatarID, m.Email, m.Password, m.UserID);
+      }
+      
       Query(sQuery);
+      return m.UserID;
     }
 
     /// <summary>

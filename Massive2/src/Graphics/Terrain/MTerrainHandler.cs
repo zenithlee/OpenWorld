@@ -108,6 +108,7 @@ namespace Massive
       }
     }
 
+    /*
     public void SetupPhysics(int tx, int ty, int zoom)
     {
       string TileNum = TerrainNumber(tx, ty);
@@ -118,6 +119,7 @@ namespace Massive
       MTerrainTile tile = Tiles[TileNum];
       Tiles[TileNum].SetupPhysics();
     }
+    */
 
 
     public void GetPOI(int tx, int ty, Vector3d AvatarPosLonLat)

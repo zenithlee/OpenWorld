@@ -41,7 +41,7 @@ namespace Massive
       //string sFullPath =  sPath;
       if (!File.Exists(sFullPath))
       {
-        Console.WriteLine("File:" + sFullPath + " not found");
+        Console.WriteLine("MModel.Load: File:" + sFullPath + " not found");
         return;
       }
 

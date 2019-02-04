@@ -19,7 +19,7 @@ namespace Massive
     public static Vector3d OffsetFirstPerson = Vector3d.Zero;
     public static Vector3d OffsetThirdPerson = new Vector3d(0, 2, 2);
 
-    public static string CDNIP = "197.93.157.217";
+    public static string CDNIP = "127.0.0.1";
     public static string UpdateServerIP = "10.0.0.3";
     //public static string TileDataPath = @"D:\MASSIVE_TEMP\UserData\Cache\";
     public static string TileDataPath = @".\Assets\Terrain\";

@@ -13,6 +13,7 @@ namespace MassiveServer.src
 {
   public class MDatabase
   {
+    //in the db, make sure to only allow entry for localhost users
     private MySqlConnection connection = null;
     public string DatabaseName = "wonderland";
     public string Hostname = "10.0.0.3";
@@ -58,6 +59,7 @@ namespace MassiveServer.src
       catch (Exception e)
       {
         ResultText = e.Message;
+        Console.WriteLine(e.Message);
       }
       finally
       {

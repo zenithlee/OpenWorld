@@ -324,7 +324,7 @@ namespace OpenWorld
             mo.OnClick(DoubleClick);
             MMessageBus.Select(this, mo);
             MMaterial m = (MMaterial)mo.FindModuleByType(EType.Material);
-            MMessageBus.Status(this, "Selected:" + mo.InstanceID + "(" + mo.TemplateID + ")" + mo.BoundingBox.ToString());
+            MMessageBus.Status(this, "Selected:" + mo.InstanceID + "(" + mo.TemplateID + ")" + mo.BoundingBox.ToString() + " - " + mo.transform.Rotation.ToString());
           }
         }
       }

@@ -19,7 +19,7 @@ namespace Massive.Events
   {
 
     public static event EventHandler<ChangeDetailsEvent> LoggedIn;
-    public static event EventHandler<ErrorEvent> NetworkError;
+    public static event EventHandler<ErrorEvent> ErrorHandler;
     public static event EventHandler<ChangeDetailsEvent> UserDetailsChanged;
 
     public static event EventHandler<MoveEvent> AvatarMovedEvent;
@@ -79,6 +79,10 @@ namespace Massive.Events
     public static event EventHandler<InfoEvent> DisableRender;
     public static event EventHandler<UpdateEvent> UpdateHandler;
     public static event EventHandler<UpdateEvent> LateUpdateHandler;
+
+    // User Details
+    public static event EventHandler<InfoEvent> SaveUserDetailsHandler;
+    public static event EventHandler<InfoEvent> LoadUserDetailsHandler;
 
     public MMessageBus()
     {
@@ -149,7 +153,7 @@ namespace Massive.Events
 
     private void Network_ErrorEventHandler(object sender, ErrorEvent e)
     {
-      GUIEvent(NetworkError, sender, e);
+      GUIEvent(ErrorHandler, sender, e);
     }
 
     private void Network_LoggedInHandler(object sender, ChangeDetailsEvent e)
@@ -180,6 +184,11 @@ namespace Massive.Events
     public static void AvatarMoved(object sender, string InstanceID, Vector3d Position, Quaterniond Rotation)
     {
       GUIEvent(AvatarMovedEvent, sender, new MoveEvent(InstanceID, Position, Rotation));
+    }
+
+    public static void Error(object sender, string sMessage)
+    {
+      GUIEvent(ErrorHandler,sender, new ErrorEvent(sMessage));
     }
 
     public static void ToggleRenderer()
@@ -257,10 +266,7 @@ namespace Massive.Events
       TeleportCompleteHandler?.Invoke(sender, new MoveEvent(InstanceID, Pos, Rot));
     }
 
-    public static void ChangedUserInfo(object sender)
-    {
-      ChangedUserInfoHandler?.Invoke(sender, new InfoEvent("Changed"));
-    }
+   
 
     public static void ChangeUserID(object sender, string sUID)
     {
@@ -273,6 +279,8 @@ namespace Massive.Events
     {
       InfoEventHandler?.Invoke(sender, new InfoEvent(sMessage));
     }
+
+    
 
     /* public static void Update(object sender, double d)
      {
@@ -346,6 +354,19 @@ namespace Massive.Events
     public static void Rotate(object sender, Quaterniond newRot)
     {
       RotateEventHandler?.Invoke(sender, new RotationRequestEvent(newRot));
+    }
+
+    public static void LoadUserDetailsRequest(object sender, InfoEvent e)
+    {
+      LoadUserDetailsHandler?.Invoke(sender, e);
+    }
+    public static void SaveUserDetailsRequest(object sender, InfoEvent e)
+    {
+      LoadUserDetailsHandler?.Invoke(sender, e);
+    }
+    public static void ChangedUserInfo(object sender)
+    {
+      ChangedUserInfoHandler?.Invoke(sender, new InfoEvent("Changed"));
     }
 
   }

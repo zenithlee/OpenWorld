@@ -1,4 +1,4 @@
-﻿namespace OpenWorld.src.Forms
+﻿namespace OpenWorld.Forms
 {
   partial class LobbyForm
   {
@@ -35,8 +35,8 @@
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
       this.JoinButton = new System.Windows.Forms.Button();
       this.ServerIPBox = new System.Windows.Forms.TextBox();
-      this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.NameLabel = new System.Windows.Forms.Label();
+      this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.tableLayoutPanel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
       this.tableLayoutPanel2.SuspendLayout();
@@ -59,11 +59,14 @@
       // 
       // dataGridView1
       // 
+      this.dataGridView1.AllowUserToAddRows = false;
+      this.dataGridView1.AllowUserToDeleteRows = false;
       this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
       this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridView1.Location = new System.Drawing.Point(3, 45);
       this.dataGridView1.Name = "dataGridView1";
+      this.dataGridView1.ReadOnly = true;
       this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
       this.dataGridView1.Size = new System.Drawing.Size(756, 461);
       this.dataGridView1.TabIndex = 0;
@@ -75,7 +78,7 @@
       this.tableLayoutPanel2.ColumnCount = 3;
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.01754F));
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.98245F));
-      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
       this.tableLayoutPanel2.Controls.Add(this.JoinButton, 2, 0);
       this.tableLayoutPanel2.Controls.Add(this.ServerIPBox, 1, 0);
       this.tableLayoutPanel2.Controls.Add(this.NameLabel, 0, 0);
@@ -91,9 +94,9 @@
       // 
       this.JoinButton.Dock = System.Windows.Forms.DockStyle.Fill;
       this.JoinButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.JoinButton.Location = new System.Drawing.Point(635, 3);
+      this.JoinButton.Location = new System.Drawing.Point(632, 3);
       this.JoinButton.Name = "JoinButton";
-      this.JoinButton.Size = new System.Drawing.Size(118, 30);
+      this.JoinButton.Size = new System.Drawing.Size(121, 30);
       this.JoinButton.TabIndex = 0;
       this.JoinButton.Text = "Join";
       this.JoinButton.UseVisualStyleBackColor = true;
@@ -102,9 +105,9 @@
       // ServerIPBox
       // 
       this.ServerIPBox.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.ServerIPBox.Location = new System.Drawing.Point(205, 3);
+      this.ServerIPBox.Location = new System.Drawing.Point(204, 3);
       this.ServerIPBox.Name = "ServerIPBox";
-      this.ServerIPBox.Size = new System.Drawing.Size(424, 20);
+      this.ServerIPBox.Size = new System.Drawing.Size(422, 20);
       this.ServerIPBox.TabIndex = 1;
       // 
       // NameLabel
@@ -113,7 +116,7 @@
       this.NameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
       this.NameLabel.Location = new System.Drawing.Point(3, 0);
       this.NameLabel.Name = "NameLabel";
-      this.NameLabel.Size = new System.Drawing.Size(196, 36);
+      this.NameLabel.Size = new System.Drawing.Size(195, 36);
       this.NameLabel.TabIndex = 2;
       this.NameLabel.Text = "Servers";
       this.NameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

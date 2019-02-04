@@ -1,4 +1,4 @@
-﻿namespace ThisIsMassive.src.Forms
+﻿namespace OpenWorld.Forms
 {
   partial class DToolForm
   {

@@ -61,6 +61,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.ConnectedCheck);
+      this.Margin = new System.Windows.Forms.Padding(1);
       this.Name = "ConnectControl";
       this.Size = new System.Drawing.Size(42, 39);
       this.ResumeLayout(false);

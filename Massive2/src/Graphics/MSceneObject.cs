@@ -243,8 +243,9 @@ namespace Massive
           p2._rigidBody.AngularFactor = p1._rigidBody.AngularFactor;
           p2._rigidBody.LinearFactor = p1._rigidBody.LinearFactor;
           p2._rigidBody.Restitution = p1._rigidBody.Restitution;
-          p2.SetPosition(mo.transform.Position);
-          p2.SetRotation(mo.transform.Rotation);
+          p2.SetPosRot(mo.transform.Position, mo.transform.Rotation);
+          //p2.SetPosition(mo.transform.Position);
+          //p2.SetRotation(mo.transform.Rotation);
           p2.StopAllMotion();
         }
 

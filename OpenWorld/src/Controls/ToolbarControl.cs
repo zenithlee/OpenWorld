@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OpenWorld.Forms;
+using System;
 using System.Windows.Forms;
-using ThisIsMassive.src.Forms;
 
-namespace OpenWorld.src.Controls
+namespace OpenWorld.Controls
 {
   public partial class ToolbarControl : UserControl
   {
+    ChatForm _chatForm;
+    BuildForm _buildForm;
     public ToolbarControl()
     {
       InitializeComponent();
@@ -20,8 +15,14 @@ namespace OpenWorld.src.Controls
 
     private void ChatButton_Click(object sender, EventArgs e)
     {
-      ChatForm chat = new ChatForm();
-      chat.Show(Main.ActiveForm);
+      _chatForm = new ChatForm();
+      _chatForm.Show(Main.ActiveForm);
+    }
+
+    private void BuildButton_Click(object sender, EventArgs e)
+    {
+      _buildForm = new BuildForm();
+      _buildForm.Show(Main.ActiveForm);
     }
   }
 }

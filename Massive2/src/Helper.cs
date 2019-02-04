@@ -92,7 +92,7 @@ namespace Massive
       }
       catch (Exception e)
       {
-
+        Console.WriteLine("CreateModel: Failed to load model:" + sName + " :" + Filename);
       }
       parent.Add(m);
       return m;
@@ -308,23 +308,7 @@ namespace Massive
       return WallShader;
     }
 
-    public static MSceneObject LoadTemplate(string TemplateID)
-    {
-      MSceneObject o = Helper.CreateSphere(MScene.TemplateRoot, 2, TemplateID);
-      o.TemplateID = TemplateID;
-      o.InstanceID = TemplateID;
-      MPhysicsObject mpo = new MPhysicsObject(o, TemplateID + "_physics", 1, MPhysicsObject.EShape.Box, true, new Vector3d(1, 1, 1));            
-      mpo.SetDamping(0.7, 0.5);
-      mpo.SetRestitution(0.5);
-      mpo.SetSleep(15);
-      mpo.SetAngularFactor(0.0, 0.0, 0.0);
-      o.Add(mpo);
-      o.Setup();
-      //o.OwnerID = m.OwnerID;
-      //o.SetPosition(m.transform.Position);
-      //o.SetRotation(m.transform.Rotation);
-      return o;
-    }
+   
 
     /**
      * Creates a copy of an existing object from the TemplateRoot
@@ -338,11 +322,8 @@ namespace Massive
       MSceneObject m = (MSceneObject)MScene.TemplateRoot.FindModuleByInstanceID(TemplateID);
       if (m == null)
       {
-        m = LoadTemplate(TemplateID);
-        if ( m == null )
-        {
-          return null;
-        }        
+        Console.WriteLine("TEMPLATE NOT LOADED INTO MScene.TemplateRoot:" + TemplateID);
+        return null;
       }
 
       MSceneObject t = null;

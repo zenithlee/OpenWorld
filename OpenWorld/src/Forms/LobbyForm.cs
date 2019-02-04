@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace OpenWorld.src.Forms
+namespace OpenWorld.Forms
 {
   public partial class LobbyForm : Form
   {

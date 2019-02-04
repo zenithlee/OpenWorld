@@ -558,6 +558,21 @@ namespace Massive
       return _rigidBody.WorldTransform.ExtractRotation();
     }
 
+    public void SetPosRot(Vector3d pos, Quaterniond rot)
+    {
+      if (Disposed) return;
+      
+
+
+      Matrix4d rm = Matrix4d.CreateFromQuaternion(rot)
+        * Matrix4d.CreateTranslation(pos);
+      //_rigidBody.MotionState.WorldTransform = rm;            
+      _rigidBody.LinearVelocity = new Vector3d(0, 0, 0);
+      _rigidBody.AngularVelocity = new Vector3d(0, 0, 0);
+      _rigidBody.WorldTransform = rm;
+      _rigidBody.CenterOfMassTransform = rm;
+    }
+
     public void SetRotation(Quaterniond rot)
     {
       if (Disposed) return;

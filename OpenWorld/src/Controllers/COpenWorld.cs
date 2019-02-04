@@ -3,27 +3,24 @@ using Massive.Events;
 using Massive.Tools;
 using OpenTK;
 using OpenWorld.Handlers;
-using OpenWorld.src;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OpenWorld.controllers
+namespace OpenWorld.Controllers
 {
   public class COpenWorld
   {    
     MSpawnHandler _spawnHandler;
     MCameraHandler _cameraHandler;    
     MBuildParts _buildParts;
+    UserDetails _userDetails;
 
     public COpenWorld()
-    {      
-      Globals.Network.ConnectedToLobbyHandler += Network_ConnectedToLobbyHandler;
+    {
+      Settings.TerrainPhysics = true;
       Globals.Network.ConnectedToMASSIVEHandler += Network_ConnectedToMASSIVEHandler;
       Globals.Network.ConnectedToServerHandler += Network_ConnectedToServerHandler;
-      Globals.Network.LoggedInHandler += Network_LoggedInHandler;
+      //Globals.Network.LoggedInHandler += Network_LoggedInHandler;
+      MMessageBus.LoggedIn += MMessageBus_LoggedIn;
 
       Globals.Network.PositionChangeHandler += Network_PositionChangeHandler;      
       Globals.Network.TeleportHandler += Network_TeleportHandler;
@@ -51,32 +48,35 @@ namespace OpenWorld.controllers
       _buildParts = new MBuildParts();
       _buildParts.Setup();
 
+      _userDetails = new UserDetails();
+      _userDetails.Setup();
+
       Globals._scene.Setup();
       Globals._scene.Play();
       //Settings.DebugNetwork = true;
       MStateMachine.ChangeState(MStateMachine.eStates.Viewing);
     }
 
-    //1 client connects to Zone Controller and receives this callback
+    //1 client connects to MASSIVE server and receives this callback
     private void Network_ConnectedToMASSIVEHandler(object sender, Massive.Events.StatusEvent e)
     {
       Console.WriteLine("Connected To Universe");
       Globals.Network.SendLoginRequest();
     }
 
-    //2 we're logged in. Let's create an avatar and tell the server the AvatarID
-    private void Network_LoggedInHandler(object sender, ChangeDetailsEvent e)
+    //2 user logs in, gets a userID, ends up here
+    private void MMessageBus_LoggedIn(object sender, ChangeDetailsEvent e)
     {
       Globals.Network.GetWorld();
 
+      
       Globals.Network.SpawnRequest(Globals.UserAccount.AvatarID, MTexture.DEFAULT_TEXTURE, Globals.UserAccount.UserID, "TAG",
-      new OpenTK.Vector3d(12717655889.4, 146353256822.3, -7581841339.4), Quaterniond.Identity, Globals.UserAccount.UserID, 0, 10);
-      //MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);
+        new OpenTK.Vector3d(12717655889.4, 146353256822.3, -7581841339.4), Quaterniond.Identity, Globals.UserAccount.UserID, 0, 10);     
+      
       Globals.Network.ChangeAvatarRequest(Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);
-      //12717655889.4, 146353256822.3, -7581841339.4(18.4096672612293, -33.9328163657347, 0)
-      //Globals.Network.PositionRequest(Globals.UserAccount.UserID, new OpenTK.Vector3d(12717655889.4, 146353256822.3, -7581841339.4), Quaterniond.Identity);
+      //12717655889.4, 146353256822.3, -7581841339.4(18.4096672612293, -33.9328163657347, 0)     
       Globals.Network.TeleportRequest(Globals.UserAccount.UserID, new OpenTK.Vector3d(12717655889.4, 146353256822.3, -7581841339.4), Quaterniond.Identity);
-
+      
     }
 
     private void Network_TeleportHandler(object sender, MoveEvent e)
@@ -124,14 +124,6 @@ namespace OpenWorld.controllers
     {
       Console.WriteLine("Connected to Server");
     }
-
-    //2 client connects to lobby and receives this callback
-    private void Network_ConnectedToLobbyHandler(object sender, Massive.Events.StatusEvent e)
-    {
-      Console.WriteLine("Connected To Lobby");
-      Globals.Network.SendConnectToMASSIVERequest();
-    }
-
   
     public void Update()
     {      

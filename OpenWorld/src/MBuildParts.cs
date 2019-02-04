@@ -84,29 +84,67 @@ namespace OpenWorld
     public static string ASTEROIDBELT = "ASTEROIDBELT";
     public static string SPACESTATION01 = "SPACESTATION01";
 
+    public const string MModel = "MModel";
+    public const string MSphere = "MSphere";
+    public const string MCube = "MCube";
 
-    List<MBuildingBlock> Blocks;
+    static Dictionary<string, MBuildingBlock> Blocks;
 
     public void Setup()
     {
-      Blocks = new List<MBuildingBlock>();
-      //AddDefaults();
+      Blocks = new Dictionary<string, MBuildingBlock>();
+     // AddDefaults();
       string sData = MFileSystem.GetFile(MFileSystem.RegistryPath);
       if (string.IsNullOrEmpty(sData)) return;
-      Blocks = JsonConvert.DeserializeObject<List<MBuildingBlock>>(sData);
+      Blocks = JsonConvert.DeserializeObject<Dictionary<string, MBuildingBlock>>(sData);
+
+      SetupMaterials();
+    }
+
+    void SetupMaterials()
+    {
+      MShader WallShader = new MShader("WallShader");
+      WallShader.Load("Shaders\\default_v.glsl",
+        "Shaders\\default_f.glsl",
+        "Shaders\\Terrain\\eval.glsl",
+        "Shaders\\Terrain\\control.glsl"
+        );
+      WallShader.Bind();
+      WallShader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
+      WallShader.SetInt("material.specular", MShader.LOCATION_SPECULAR);
+      WallShader.SetInt("material.multitex", MShader.LOCATION_MULTITEX);
+      WallShader.SetInt("material.normalmap", MShader.LOCATION_NORMALMAP);
+      WallShader.SetInt("material.shadowMap", MShader.LOCATION_SHADOWMAP);
+
+      MMaterial Avatar2Mat = new MMaterial("AVATAR02M");
+      Avatar2Mat.AddShader(WallShader);
+      Avatar2Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar02.jpg"));
+      MScene.MaterialRoot.Add(Avatar2Mat);
+    }
+
+    public static MBuildingBlock GetBlock(string sTemplateID)
+    {
+      if (Blocks.ContainsKey(sTemplateID))
+      {
+        return Blocks[sTemplateID];
+      }
+
+      //if we can't find a registry entry, return sphere.
+      MBuildingBlock bb = new MBuildingBlock(sTemplateID);
+      bb.Type = "MSPHERE";
+      return bb;
     }
 
     public void AddDefaults()
     {
-      MBuildingBlock b = new MBuildingBlock();
-      b.Name = "FOUNDATION01";
+      MBuildingBlock b = new MBuildingBlock("FOUNDATION01");      
       b.Size = new double[] { 1, 1, 1 };
       b.Model = Path.Combine(Globals.AssetsPath, "Models", "Construction", "foundation01.3ds");
-      Blocks.Add(b);
-      b = new MBuildingBlock();
-      Blocks.Add(b);
-      b = new MBuildingBlock();
-      Blocks.Add(b);
+      Blocks.Add(b.Name, b);
+      b = new MBuildingBlock("Test1");
+      Blocks.Add(b.Name, b);
+      b = new MBuildingBlock("Test2");
+      Blocks.Add(b.Name, b);
       string sTemp = JsonConvert.SerializeObject(Blocks);
     }
   }

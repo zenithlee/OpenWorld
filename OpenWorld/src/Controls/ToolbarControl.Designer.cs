@@ -1,4 +1,4 @@
-﻿namespace OpenWorld.src.Controls
+﻿namespace OpenWorld.Controls
 {
   partial class ToolbarControl
   {
@@ -33,6 +33,7 @@
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.ChatButton = new System.Windows.Forms.Button();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.BuildButton = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -40,6 +41,7 @@
       // 
       this.tableLayoutPanel1.ColumnCount = 1;
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel1.Controls.Add(this.BuildButton, 0, 1);
       this.tableLayoutPanel1.Controls.Add(this.ChatButton, 0, 0);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -67,6 +69,20 @@
       this.ChatButton.UseVisualStyleBackColor = true;
       this.ChatButton.Click += new System.EventHandler(this.ChatButton_Click);
       // 
+      // BuildButton
+      // 
+      this.BuildButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BuildButton.BackgroundImage")));
+      this.BuildButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.BuildButton.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.BuildButton.Location = new System.Drawing.Point(0, 32);
+      this.BuildButton.Margin = new System.Windows.Forms.Padding(0);
+      this.BuildButton.Name = "BuildButton";
+      this.BuildButton.Size = new System.Drawing.Size(45, 32);
+      this.BuildButton.TabIndex = 1;
+      this.toolTip1.SetToolTip(this.BuildButton, "Chat with others");
+      this.BuildButton.UseVisualStyleBackColor = true;
+      this.BuildButton.Click += new System.EventHandler(this.BuildButton_Click);
+      // 
       // ToolbarControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -84,5 +100,6 @@
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     private System.Windows.Forms.Button ChatButton;
     private System.Windows.Forms.ToolTip toolTip1;
+    private System.Windows.Forms.Button BuildButton;
   }
 }

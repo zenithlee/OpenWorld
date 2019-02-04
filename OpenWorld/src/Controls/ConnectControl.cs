@@ -17,8 +17,7 @@ namespace OpenWorld.src.Controls
     public ConnectControl()
     {
       InitializeComponent();
-
-      Globals.Network.ConnectedToLobbyHandler += Network_ConnectedToLobbyHandler;
+      
       Globals.Network.ConnectedToMASSIVEHandler += Network_ConnectedToMASSIVEHandler;
       Globals.Network.ConnectedToServerHandler += Network_ConnectedToServerHandler;
       Globals.Network.LoggedOutHandler += Network_LoggedOutHandler;
@@ -51,14 +50,7 @@ namespace OpenWorld.src.Controls
       ConnectedCheck.BackColor = Color.White;
       ConnectedCheck.Checked = false;
       ConnectedCheck.ImageIndex = 1;
-    }
-
-    private void Network_ConnectedToLobbyHandler(object sender, Massive.Events.StatusEvent e)
-    {
-      ConnectedCheck.BackColor = Color.White;
-      ConnectedCheck.Checked = true;
-      ConnectedCheck.ImageIndex = 0;
-    }
+    }    
 
     private void ConnectedCheck_CheckedChanged(object sender, EventArgs e)
     {

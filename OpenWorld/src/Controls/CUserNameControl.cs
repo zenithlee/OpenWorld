@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using Massive;
 using Massive.Events;
-using Massive;
+using OpenWorld.Forms;
 using OpenWorld.Services;
+using System;
+using System.Windows.Forms;
 
 namespace ThisIsMassive.src.Controls
 {
@@ -41,7 +35,14 @@ namespace ThisIsMassive.src.Controls
 
     void SetName(string s)
     {
-      Username.Text = Globals.UserAccount.UserName;
+      if (string.IsNullOrEmpty(s))
+      {
+        Username.Text = "Anonymous";
+      }
+      else
+      {
+        Username.Text = Globals.UserAccount.UserName;
+      }      
     }
 
     private void Username_Click(object sender, EventArgs e)

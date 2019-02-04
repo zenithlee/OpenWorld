@@ -3,9 +3,7 @@
 namespace Massive.Network
 {
   public class MNetMessage : IMSerializable
-  {
-    public const string CONNECTTOLOBBYREQ = "CONNECTTOLOBBYREQ";
-    public const string CONNECTTOLOBBY = "CONNECTTOLOBBY";
+  {   
 
     public const string CONNECTTOMASSIVEREQ = "CONNECTTOMASSIVEREQ";
     public const string CONNECTTOMASSIVE = "CONNECTTOMASSIVE";

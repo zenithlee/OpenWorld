@@ -50,7 +50,7 @@ namespace Massive.Server
     public const int ERROR = 4;
 
     //public DataSerializer Serializer { get; set; }
-    
+
     public IPEndPoint lastServerIPEndPoint = null;
     public string ServerIPAddress = "127.0.0.1";
     public int ServerPort = 50895;
@@ -91,42 +91,6 @@ namespace Massive.Server
     {
       _DataBase.FlushPlayers();
       //CurrentUniverse.Flush();
-    }
-
-    protected virtual bool IsFileLocked(FileInfo file)
-    {
-      FileStream stream = null;
-
-      try
-      {
-        stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None);
-      }
-      catch (IOException)
-      {
-        //the file is unavailable because it is:
-        //still being written to
-        //or being processed by another thread
-        //or does not exist (has already been processed)
-        return true;
-      }
-      finally
-      {
-        if (stream != null)
-          stream.Close();
-      }
-
-      //file is not locked
-      return false;
-    }
-
-    public void Log(string s, int ColorCode)
-    {
-      if (ColorCode > 2)
-      {
-        Logger.WriteLog(s);
-      }
-
-      ServerInfo?.Invoke(this, new ServerEvent(s, ColorCode));
     }
 
     public void Start()
@@ -285,15 +249,12 @@ namespace Massive.Server
       c.Account.LastActivity = DateTime.Now;
       c.ActivityFlag = true;
       switch (m.Command)
-      {
-        case MNetMessage.CONNECTTOLOBBYREQ:
-          ConnectToLobby(c, m);
-          break;
+      {        
         case MNetMessage.CONNECTTOMASSIVEREQ:
           ConnectToMASSIVE(c, m);
           break;
         case MNetMessage.LOGINREQ:
-          Login(c, m);
+          LoginRequest(c, m);
           break;
         case MNetMessage.CHATREQ:
           ChatMessage(c, m);
@@ -303,7 +264,7 @@ namespace Massive.Server
           break;
         case MNetMessage.CHANGEDETAILSREQ:
           ChangeDetails(c, m);
-          break;          
+          break;
         case MNetMessage.CHANGEPROPERTYREQ:
           ChangeProperty(c, m);
           break;
@@ -354,7 +315,7 @@ namespace Massive.Server
       {
         if (m != null)
         {
-          string sMessage = m.Command + "Executed in:" + stopwatch.ElapsedMilliseconds + "ms";
+          string sMessage = m.Command + " Executed in: " + stopwatch.ElapsedMilliseconds + "ms";
           MetricInfo(this, new ServerEvent(sMessage));
         }
       }
@@ -376,59 +337,33 @@ namespace Massive.Server
      * Merges a dictionary of objects into the store
      * TODO: check that the client is an admin     
      * */
-     /*
-    public void Merge(MClient c, MNetMessage m)
-    {
-      Dictionary<string, MServerObject> Results = null;
-      try
-      {
-        Results = JsonConvert.DeserializeObject<Dictionary<string, MServerObject>>(m.Payload);
-      }
-      catch (Exception e)
-      {
-        MNetMessage mr = new MNetMessage(1, "SERVER", MNetMessage.MERGE, "FAILED: " + e.Message);
-        Send(c, "Message", mr.Serialize());
-      }
-      finally
-      {
-        if (Results != null)
-        {
-          foreach (KeyValuePair<string, MServerObject> kv in Results)
-          {
-            AddToWorld(kv.Value);
-          }
-        }
-        MNetMessage mr = new MNetMessage(1, "SERVER", MNetMessage.MERGE, "SUCCESS");
-        Send(c, "Message", mr.Serialize());
-      }
-    }
-    */
-    /**
-     * Get user account, or create a new one if null. Send back the account details
-     * */
-    public void ConnectToLobby(MClient c, MNetMessage m)
-    {
-      c.Account.UserID = m.UserID;
-      c.State = MClient.STATE_CONNECTOLOBBY;
-
-      if ((string.IsNullOrEmpty(m.UserID)) || (c.Load() == false))
-      {
-        c.CreateNewAccount();
-      }
-
-      _DataBase.AddPlayer(c.Account);
-
-      
-      Log("Connected Account:" + c.ToString(), UTILITY);
-
-      MNetMessage mr = new MNetMessage();
-      mr.Command = MNetMessage.CONNECTTOLOBBY;
-      mr.UserID = c.Account.UserID;
-
-      Send(c, "Message", mr.Serialize());
-
-      ClientConnected?.Invoke(this, new ServerEvent("Connected to LOBBY:" + c.ToString()));
-    }
+    /*
+   public void Merge(MClient c, MNetMessage m)
+   {
+     Dictionary<string, MServerObject> Results = null;
+     try
+     {
+       Results = JsonConvert.DeserializeObject<Dictionary<string, MServerObject>>(m.Payload);
+     }
+     catch (Exception e)
+     {
+       MNetMessage mr = new MNetMessage(1, "SERVER", MNetMessage.MERGE, "FAILED: " + e.Message);
+       Send(c, "Message", mr.Serialize());
+     }
+     finally
+     {
+       if (Results != null)
+       {
+         foreach (KeyValuePair<string, MServerObject> kv in Results)
+         {
+           AddToWorld(kv.Value);
+         }
+       }
+       MNetMessage mr = new MNetMessage(1, "SERVER", MNetMessage.MERGE, "SUCCESS");
+       Send(c, "Message", mr.Serialize());
+     }
+   }
+   */   
 
     public void ConnectToMASSIVE(MClient c, MNetMessage m)
     {
@@ -441,7 +376,7 @@ namespace Massive.Server
       ClientConnected?.Invoke(this, new ServerEvent("Connected to MASSIVE:" + c.ToString()));
     }
 
-      public void Login(MClient c, MNetMessage m)
+    public void LoginRequest(MClient c, MNetMessage m)
     {
       if (MassiveConnections.Count >= MAXCONNECTIONS)
       {
@@ -449,28 +384,40 @@ namespace Massive.Server
         return;
       }
 
-      _DataBase.AddPlayer(c.Account);
+      MLoginMessageRequest mlir = MLoginMessageRequest.Deserialize<MLoginMessageRequest>(m.Payload);
+      //check database
+      //if password matches, continue
+      //if not, send failed message
 
-      MNetMessage mli = new MNetMessage();
-      mli.Command = MNetMessage.LOGIN;
-      mli.UserID = m.UserID;
-      c.Account.UserID = m.UserID;
-      c.State = MClient.STATE_CONNECTOWORLD;
-      c.Save();
+      MUserAccount mu = _DataBase.GetPlayerByEmail(mlir.Email, mlir.Password);
+      if ( mu == null)
+      {
+        MNetMessage mli = new MNetMessage();
+        mli.Command = MNetMessage.ERROR;
+        mli.Payload = "User not found. Building Disabled. Register User and Login again.";
+        Send(c, "Message", mli.Serialize());
+      }
+      else
+      {
+        //_DataBase.AddPlayer(c.Account);
 
-      mli.Payload = JsonConvert.SerializeObject(c.Account);              
-
-      Send(c, "Message", mli.Serialize());
+        MNetMessage mli = new MNetMessage();
+        mli.Command = MNetMessage.LOGIN;
+        mli.UserID = mu.UserID;        
+        mli.Payload = mu.Serialize();
+        Send(c, "Message", mli.Serialize());
+        c.Account = mu;
+      }     
 
       ClientLoggedIn?.Invoke(this, new ServerEvent("Logged In:" + c.ToString()));
     }
-    
+
     public void SetTexture(MClient c, MNetMessage m)
     {
       MTextureMessage mt = MTextureMessage.Deserialize<MTextureMessage>(m.Payload);
 
-      
-      bool Success = _DataBase.SetTexture(m.UserID, mt.InstanceID, mt.TextureID); 
+
+      bool Success = _DataBase.SetTexture(m.UserID, mt.InstanceID, mt.TextureID);
       //bool Success = CurrentUniverse.SetTexture(m.UserID, mt.InstanceID, mt.TextureID);
 
       MNetMessage mr = new MNetMessage();
@@ -521,7 +468,7 @@ namespace Massive.Server
           //mso.DateCreated = DateTime.Now;
           //mso.DateModified = DateTime.Now;
         }
-        
+
         /*
         //+1  so client can spawn an avatar in case max is 0
         if ((c.Account.TotalObjects < c.Account.MaxObjects + 1) || mso.StaticStorage == 0)
@@ -601,18 +548,18 @@ namespace Massive.Server
       //CurrentUniverse.MoveObject(c.Account.UserID, tp.InstanceID, tp.Locus, tp.Rotation);
       SendToAllClients(c, m.Serialize());
 
-     /* MServerObject mso = DB.GetObject(c.Account.UserID);
-      if (mso != null)
-      {
-        List<MServerObject> objects = new List<MServerObject>();
-        objects.Add(mso);
-        MSpawnMessage sm = new MSpawnMessage(objects);
-        m.Command = MNetMessage.SPAWN;
-        m.Payload = sm.Serialize();
-        SpawnRequest(c, m);
-      }
-      SyncWorld(c);
-      */
+      /* MServerObject mso = DB.GetObject(c.Account.UserID);
+       if (mso != null)
+       {
+         List<MServerObject> objects = new List<MServerObject>();
+         objects.Add(mso);
+         MSpawnMessage sm = new MSpawnMessage(objects);
+         m.Command = MNetMessage.SPAWN;
+         m.Payload = sm.Serialize();
+         SpawnRequest(c, m);
+       }
+       SyncWorld(c);
+       */
 
       //CurrentUniverse.WriteToDisk();
     }
@@ -638,7 +585,7 @@ namespace Massive.Server
       if (c.Account != null)
       {
         //List<MServerObject> items = DB.GetObjectsNear(c.Account.UserID, c.Account.CurrentPosition[0], c.Account.CurrentPosition[1], c.Account.CurrentPosition[2]);
-        
+
         //if (items.Count > 0)
         {
           MSpawnMessage msm = new MSpawnMessage(_DataBase.GetObjectsNear(c.Account.UserID, c.Account.CurrentPosition[0], c.Account.CurrentPosition[1], c.Account.CurrentPosition[2]));
@@ -750,13 +697,13 @@ namespace Massive.Server
       MUserAccount mu = MUserAccount.Deserialize<MUserAccount>(m.Payload);
       // TODO: Validate account
       mu.CopyTo(c.Account);
-      c.Save();
+     // c.Save();
 
-      _DataBase.UpdatePlayer(c.Account);
+      string UserID = _DataBase.UpdatePlayer(c.Account);
 
       MNetMessage mn = new MNetMessage();
       mn.Command = MNetMessage.CHANGEDETAILS;
-      mn.UserID = c.Account.UserID;
+      mn.UserID = UserID;
 
       //TODO: VALIDATE USERACCOUNT
 
@@ -791,7 +738,7 @@ namespace Massive.Server
       MChangeAvatarRequest ca = MChangeAvatarRequest.Deserialize<MChangeAvatarRequest>(m.Payload);
       MNetMessage mn = new MNetMessage();
 
-      if ( _DataBase.ChangeAvatar(c.Account.UserID, ca.AvatarID))
+      if (_DataBase.ChangeAvatar(c.Account.UserID, ca.AvatarID))
       {
         mn.Command = MNetMessage.CHANGEAVATAR;
         mn.UserID = c.Account.UserID;
@@ -948,6 +895,42 @@ namespace Massive.Server
     public void Close()
     {
       _DataBase.Disconnect();
+    }
+
+    protected virtual bool IsFileLocked(FileInfo file)
+    {
+      FileStream stream = null;
+
+      try
+      {
+        stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None);
+      }
+      catch (IOException)
+      {
+        //the file is unavailable because it is:
+        //still being written to
+        //or being processed by another thread
+        //or does not exist (has already been processed)
+        return true;
+      }
+      finally
+      {
+        if (stream != null)
+          stream.Close();
+      }
+
+      //file is not locked
+      return false;
+    }
+
+    public void Log(string s, int ColorCode)
+    {
+      if (ColorCode > 2)
+      {
+        Logger.WriteLog(s);
+      }
+
+      ServerInfo?.Invoke(this, new ServerEvent(s, ColorCode));
     }
   }
 }

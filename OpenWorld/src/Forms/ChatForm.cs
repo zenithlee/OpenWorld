@@ -1,15 +1,8 @@
-﻿using OpenWorld;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ThisIsMassive.src.Forms
+namespace OpenWorld.Forms
 {
   public partial class ChatForm : DToolForm
   {
@@ -35,6 +28,12 @@ namespace ThisIsMassive.src.Forms
     private void cChatControl1_Load(object sender, EventArgs e)
     {
          
+    }
+
+    private void ChatForm_FormClosing(object sender, FormClosingEventArgs e)
+    {      
+      cChatControl1.Close();
+      ///Hide();
     }
   }
 }

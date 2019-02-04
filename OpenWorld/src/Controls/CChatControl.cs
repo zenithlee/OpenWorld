@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Massive;
 using Massive.Events;
+using Massive.Network;
 
 namespace OpenWorld.Controls
 {
@@ -17,11 +18,65 @@ namespace OpenWorld.Controls
     int IncrementID = 0;
     Font BoldFont = new Font("Arial", 8, FontStyle.Bold);
     Font StdFont = new Font("Arial", 8, FontStyle.Regular);
-
-
+    Dictionary<string, MChatMessage> MessageOwners;
+    ListViewGroup RabbleGroup;
+    ListViewGroup CommunityGroup;
+    ListViewGroup FriendsGroup;
+    
     public CChatControl()
     {
-      InitializeComponent();     
+      InitializeComponent();
+
+      FriendsList.Groups.Clear();
+      MessageOwners = new Dictionary<string, MChatMessage>();
+
+      RabbleGroup = new ListViewGroup();
+      RabbleGroup.Header = "Rabble";
+      CommunityGroup = new ListViewGroup();
+      CommunityGroup.Header = "Community";
+      FriendsGroup = new ListViewGroup();
+      FriendsGroup.Header = "Friends";
+
+      FriendsList.Groups.Add(RabbleGroup);
+      FriendsList.Groups.Add(CommunityGroup);
+      FriendsList.Groups.Add(FriendsGroup);
+    }
+
+    void UpdateUI()
+    {
+      FriendsList.Items.Clear();
+      foreach( KeyValuePair<string,MChatMessage> m in MessageOwners)
+      {
+        ListViewItem lvi = new ListViewItem();
+        if ( string.IsNullOrEmpty(m.Value.OwnerName))
+        {
+          //m.OwnerName = "Anon";
+          lvi.Text = "Anon";
+          lvi.Group = RabbleGroup;
+        }
+        else
+        {
+          lvi.Group = CommunityGroup;
+          lvi.Text = m.Value.OwnerName;
+        }
+
+        lvi.ToolTipText = m.Value.OwnerName + ":" + m.Value.OwnerID + ":" + m.Value.TargetID;
+        //TODO check if friends
+        lvi.ImageIndex = 2;
+        lvi.Tag = m;
+        FriendsList.Items.Add(lvi);
+      }
+    }
+
+    void AddMessage(MChatMessage m)
+    {      
+      if ( !MessageOwners.ContainsKey(m.OwnerID))
+      {
+        //MessageOwners.Remove(m.OwnerID);
+        MessageOwners.Add(m.OwnerID, m);
+      }     
+
+      UpdateUI();
     }
 
     private void Network_ChatEventHandler(object sender, ChatEvent e)
@@ -44,6 +99,8 @@ namespace OpenWorld.Controls
         ChatBox.DeselectAll();
 
         ChatBox.ScrollToCaret();
+
+        AddMessage(e.message);
       });
 
       if (e.message.MessageID == IncrementID)
@@ -55,7 +112,6 @@ namespace OpenWorld.Controls
           ChatBoxMessage.Focus();
         });
       }
-
     }
 
     private void SendButton_Click(object sender, EventArgs e)
@@ -99,6 +155,12 @@ namespace OpenWorld.Controls
     {
       ChatBoxMessage.Focus();
       ChatBoxMessage.SelectedText = "";
+    }
+
+    public void Close()
+    {      
+      Globals.Network.ChatEventHandler -= Network_ChatEventHandler;
+      //base.Dispose();
     }
 
     private void CChatControl_Load(object sender, EventArgs e)

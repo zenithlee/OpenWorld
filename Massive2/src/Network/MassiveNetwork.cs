@@ -1,25 +1,19 @@
-﻿using OpenTK;
-
+﻿using Massive.Events;
+using Massive.Network;
+using Massive.Tools;
+using MassiveNetwork;
+using MassiveNetwork.NetMessages;
 using NetworkCommsDotNet;
 using NetworkCommsDotNet.Connections;
-using NetworkCommsDotNet.DPSBase;
 using NetworkCommsDotNet.Tools;
+using Newtonsoft.Json;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using Massive.Network;
-using Massive.Events;
-using Newtonsoft.Json;
-using MassiveNetwork.NetMessages;
-using Massive.Tools;
-using System.Data;
-using MassiveNetwork;
 
 /**
  * 
@@ -27,8 +21,9 @@ using MassiveNetwork;
  * CONNECT
  *   LOGIN
  *   GETWORLD
- *   TELEPORT
- *   MOVE
+ *   TELEPORT - move fast
+ *   MOVE - move, rotate an object
+ *   SPAWNREQUEST - to build something
  * */
 
 namespace Massive
@@ -45,8 +40,7 @@ namespace Massive
     public const string TYPE_POSROT = "PR";
     public const string TYPE_CHAT = "CH";
 
-    public event EventHandler<StatusEvent> ConnectedToServerHandler;
-    public event EventHandler<StatusEvent> ConnectedToLobbyHandler;
+    public event EventHandler<StatusEvent> ConnectedToServerHandler;    
     public event EventHandler<StatusEvent> ConnectedToMASSIVEHandler;
 
     //note: sent from a different thread
@@ -135,10 +129,7 @@ namespace Massive
       }
 
       switch (m.Command)
-      {
-        case MNetMessage.CONNECTTOLOBBY:
-          HandleConnectedToLobby(m);
-          break;
+      {        
         case MNetMessage.CONNECTTOMASSIVE:
           HandleConnectedToMASSIVE(m);
           break;
@@ -317,7 +308,7 @@ namespace Massive
           Connected = true;
 
           //send a blank message to activate the connection
-          SendConnectToLOBBYRequest();
+          SendConnectToMASSIVERequest();
           //Send(new MNetMessage(1, Globals.UserAccount.UserID, MNetMessage.CONNECTREQ, ip.ToString()));
 
           MScene.UtilityRoot.Add(this);
@@ -378,14 +369,6 @@ namespace Massive
       Status(false, false, "Disconnected");
     }
 
-    public void SendConnectToLOBBYRequest()
-    {
-      MNetMessage m = new MNetMessage();
-      m.UserID = Globals.UserAccount.UserID;
-      m.Command = MNetMessage.CONNECTTOLOBBYREQ;
-      Send(m);
-    }
-
     public void SendConnectToMASSIVERequest()
     {
       MNetMessage m = new MNetMessage();
@@ -402,7 +385,8 @@ namespace Massive
       m.Command = MNetMessage.LOGINREQ;
       //TODO: Cast as connect message
       MLoginMessageRequest lir = new MLoginMessageRequest();
-      lir.UserName = Globals.UserAccount.Email;
+      lir.Email = Globals.UserAccount.Email;
+      lir.UserName = Globals.UserAccount.UserName;
       lir.Password = Globals.UserAccount.Password;
       lir.Zone = Globals.UserAccount.Zone;
       m.Payload = lir.Serialize();
@@ -432,10 +416,7 @@ namespace Massive
     new void Error(MNetMessage m)
     {
       Globals.Log(this, m.Payload);
-      if (ErrorEventHandler != null)
-      {
-        ErrorEventHandler(this, new ErrorEvent(m.Payload));
-      }
+      ErrorEventHandler?.Invoke(this, new ErrorEvent(m.Payload));
     }
 
     public void MergeRequest(string sJson)
@@ -471,16 +452,6 @@ namespace Massive
       InfoDumpHandler?.Invoke(this, new InfoEvent("Results", m.Payload));
     }
 
-    void HandleConnectedToLobby(MNetMessage m)
-    {
-      if (string.IsNullOrEmpty(Globals.UserAccount.UserID))
-      {
-        Globals.UserAccount.UserID = m.UserID;
-      }
-
-      ConnectedToLobbyHandler?.Invoke(this, new StatusEvent(true, "Connected to LOBBY"));
-    }
-
     void HandleConnectedToMASSIVE(MNetMessage m)
     {
       ConnectedToMASSIVEHandler?.Invoke(this, new StatusEvent(true, "Connected to _MASSIVE"));
@@ -498,6 +469,7 @@ namespace Massive
       MUserAccount mu = JsonConvert.DeserializeObject<MUserAccount>(m.Payload);
       Globals.UserAccount.UserName = mu.UserName;
       Globals.UserAccount.HomePosition = mu.HomePosition;
+      Globals.UserAccount.UserID = mu.UserID;
 
       LoggedInHandler(this, new ChangeDetailsEvent(true, "Logged In"));
 

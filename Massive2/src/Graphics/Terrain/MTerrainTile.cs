@@ -68,11 +68,13 @@ namespace Massive
     {
       base.Update();
 
+      /*
       if (DoSetupPhysics == true)
       {
         DoSetupPhysics = false;
         SetupPhysics();
       }
+      */
     }
 
     public override void Render(Matrix4d viewproj, Matrix4d parentmodel)
@@ -108,7 +110,10 @@ namespace Massive
         Biome = null;
       }
 
-      MPhysics.Instance.Remove(_physics);
+      if (MPhysics.Instance != null)
+      {
+        MPhysics.Instance.Remove(_physics);
+      }
 
       MScene.Background2.Remove(Forest);
       Forest.Dispose();
@@ -214,6 +219,7 @@ namespace Massive
         Console.WriteLine("SetupPhysics " + TileX + "," + TileY);
         string sText = string.Format("PHYSICS: Cache\\earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);
         _physics = new MPhysicsObject(this, "Terrain_collider", 0, MPhysicsObject.EShape.ConcaveMesh, false, this.transform.Scale);
+        DoSetupPhysics = false;
       }
     }
 
@@ -419,7 +425,10 @@ namespace Massive
       IndicesLength = Indices.Length;
       //Indices = null;
       // Vertices = null;
-      //SetupPhysics(); //must run on main thread
+      if (Settings.TerrainPhysics == true)
+      {
+        SetupPhysics(); //must run on main thread
+      }
     }
 
     public Vector3d GetPointOnSurface(Vector3d pt)

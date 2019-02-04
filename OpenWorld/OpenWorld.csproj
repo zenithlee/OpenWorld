@@ -71,6 +71,7 @@
     <Compile Include="src\Controllers\COpenWorld.cs" />
     <Compile Include="src\Controllers\LobbyController.cs" />
     <Compile Include="src\Controllers\LobbyEntry.cs" />
+    <Compile Include="src\Controllers\UserDetails.cs" />
     <Compile Include="src\Controls\CChatControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -95,12 +96,6 @@
     <Compile Include="src\Controls\NavBarControl.Designer.cs">
       <DependentUpon>NavBarControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\Controls\PositionControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="src\Controls\PositionControl.Designer.cs">
-      <DependentUpon>PositionControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="src\Controls\StatusControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -118,6 +113,12 @@
     </Compile>
     <Compile Include="src\Controls\View3D.Designer.cs">
       <DependentUpon>View3D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\BuildForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\BuildForm.Designer.cs">
+      <DependentUpon>BuildForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Forms\ChatForm.cs">
       <SubType>Form</SubType>
@@ -155,6 +156,7 @@
     <Compile Include="src\Handlers\MSpawnHandler.cs" />
     <Compile Include="src\MBuildingBlock.cs" />
     <Compile Include="src\MBuildParts.cs" />
+    <Compile Include="src\Models\ChatUser.cs" />
     <Compile Include="src\Services\ThemeService.cs" />
     <Compile Include="Version.cs" />
     <EmbeddedResource Include="Main.resx">
@@ -181,11 +183,14 @@
     <EmbeddedResource Include="src\Controls\NavBarControl.resx">
       <DependentUpon>NavBarControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\Controls\PositionControl.resx">
-      <DependentUpon>PositionControl.cs</DependentUpon>
+    <EmbeddedResource Include="src\Controls\StatusControl.resx">
+      <DependentUpon>StatusControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Controls\ToolbarControl.resx">
       <DependentUpon>ToolbarControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\BuildForm.resx">
+      <DependentUpon>BuildForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>

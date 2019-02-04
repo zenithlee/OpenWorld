@@ -324,7 +324,7 @@ namespace Massive
           }
           catch (Exception e)
           {
-
+            Console.WriteLine("MOBJECT:" + Name + " EXCEPTION");
           }
         }
       }

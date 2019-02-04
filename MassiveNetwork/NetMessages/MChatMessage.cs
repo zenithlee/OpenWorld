@@ -14,6 +14,7 @@ namespace Massive.Network
     public string TargetID; // * for broadcast e.g. server message
     public string MessageType;
     public int MessageID;
+    public int Flags = 0;
     public const string TYPEADMIN = "ADMIN";
     public const string TYPEFRIEND = "FRIEND";
     public const string TYPERANDOM = "RANDOM";

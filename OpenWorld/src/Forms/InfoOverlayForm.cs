@@ -38,6 +38,7 @@ namespace OpenWorld.Forms
       //UserInfo.Text = e.Message;
       sStatus = e.Message;
       UpdateData();
+      timer1.Start();
     }
 
     private void MMessageBus_ZoneSelectHandler(object sender, ZoneEvent e)
@@ -62,7 +63,7 @@ namespace OpenWorld.Forms
       Location.Offset(10, Height);
 
       if (MPlanetHandler.CurrentNear == null) return;
-      UserInfo.Text = sStatus + "\r\n";
+      UserInfo.Text = "";
 
       Vector3d pos = MPlanetHandler.CurrentNear.GetLonLatOnShere(UserPosition);
       UserInfo.Text += string.Format("LonLat: {0:0.0000},{1:0.0000} Alt:{2:0.0}", pos.X, pos.Y, MPlanetHandler.CurrentNear.AvatarDistanceToSurface);
@@ -75,6 +76,8 @@ namespace OpenWorld.Forms
       UserInfo.Text += " > " + Vector3d.Distance(Globals.Avatar.GetPosition(), NavigationTarget) + "km";
       Location = Main.ClientLocation;
       Location.Offset(10, Main.RenderClientSize.Height - Height);
+
+      UserInfo.Text += "\r\n"+sStatus;
     }
 
     public void GetMetaData(Vector3d Tile)
@@ -84,5 +87,9 @@ namespace OpenWorld.Forms
       UserInfo.Text += "\r\n" + MPlanetHandler.CurrentNear._terrainHandler.GetTileInfo(Tile);
     }
 
+    private void timer1_Tick(object sender, EventArgs e)
+    {
+      sStatus = "";
+    }
   }
 }

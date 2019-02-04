@@ -1,6 +1,7 @@
 ﻿using OpenWorld.Controls;
+using OpenWorld.Forms;
 
-namespace ThisIsMassive.src.Forms
+namespace OpenWorld.Forms
 {
   partial class ChatForm
   {
@@ -48,7 +49,7 @@ namespace ThisIsMassive.src.Forms
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 1;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(233, 527);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(363, 527);
       this.tableLayoutPanel1.TabIndex = 1;
       // 
       // cChatControl1
@@ -59,7 +60,7 @@ namespace ThisIsMassive.src.Forms
       this.cChatControl1.Margin = new System.Windows.Forms.Padding(0);
       this.cChatControl1.Name = "cChatControl1";
       this.cChatControl1.Padding = new System.Windows.Forms.Padding(1);
-      this.cChatControl1.Size = new System.Drawing.Size(233, 527);
+      this.cChatControl1.Size = new System.Drawing.Size(363, 527);
       this.cChatControl1.TabIndex = 0;
       this.cChatControl1.Load += new System.EventHandler(this.cChatControl1_Load);
       // 
@@ -83,7 +84,7 @@ namespace ThisIsMassive.src.Forms
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.Black;
-      this.ClientSize = new System.Drawing.Size(237, 550);
+      this.ClientSize = new System.Drawing.Size(367, 550);
       this.Controls.Add(this.tableLayoutPanel1);
       this.Name = "ChatForm";
       this.Opacity = 0.9D;
@@ -92,6 +93,7 @@ namespace ThisIsMassive.src.Forms
       this.Text = "Chat";
       this.TopMost = false;
       this.TransparencyKey = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(2)))));
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChatForm_FormClosing);
       this.Shown += new System.EventHandler(this.ChatForm_Shown);
       this.Controls.SetChildIndex(this.tableLayoutPanel1, 0);
       this.tableLayoutPanel1.ResumeLayout(false);

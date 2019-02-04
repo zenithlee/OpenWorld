@@ -10,7 +10,7 @@ namespace Massive
 {
   public class MMaterial : MObject
   {
-    public const string DEFAULT_MATERIAL = "DefaultMaterial";
+    public const string DEFAULT_MATERIAL = "MATERIAL01";
 
     public MShader shader { get; set; }
 

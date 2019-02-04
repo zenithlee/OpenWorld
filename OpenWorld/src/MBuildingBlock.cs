@@ -14,6 +14,7 @@ namespace OpenWorld
     private string materialID = "MATERIAL01";
     private string templateID;
     private string type = "MModel";
+    private string physicsShape = "Box";
     private double[] size = new double[] { 1, 1, 1 };
     private string model;
     private double weight = 1;
@@ -26,5 +27,11 @@ namespace OpenWorld
     public string Model { get => model; set => model = value; }
     public double Weight { get => weight; set => weight = value; }
     public string MaterialID { get => materialID; set => materialID = value; }
+    public string PhysicsShape { get => physicsShape; set => physicsShape = value; }
+
+    public MBuildingBlock(string sName)
+    {
+      name = sName;
+    }
   }
 }
