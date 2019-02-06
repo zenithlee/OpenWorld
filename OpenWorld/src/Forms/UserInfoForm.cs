@@ -110,7 +110,7 @@ namespace OpenWorld.Forms
     {
       if (StatusLabel.InvokeRequired)
       {
-        StatusLabel.Invoke((MethodInvoker)delegate
+        StatusLabel.BeginInvoke((MethodInvoker)delegate
         {
           if (Success == true)
           {

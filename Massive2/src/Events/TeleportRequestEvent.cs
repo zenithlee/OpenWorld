@@ -8,14 +8,12 @@ using System.Threading.Tasks;
 namespace Massive.Events
 {
   public class TeleportRequestHandler
-  {
-    public string Location;
+  {    
     public Vector3d Position;
     public Quaterniond Rotation;
 
-    public TeleportRequestHandler(string inLocation, Vector3d pos, Quaterniond rot)
-    {
-      Location = inLocation;
+    public TeleportRequestHandler(Vector3d pos, Quaterniond rot)
+    {   
       Position = pos;
       Rotation = rot;
     }

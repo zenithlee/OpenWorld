@@ -23,6 +23,7 @@ using System.Diagnostics;
 using System.IO;
 using MassiveServer.src.postgis;
 using MassiveServer.src.forms;
+using System.Threading;
 
 namespace Massive.Server
 {
@@ -126,6 +127,7 @@ namespace Massive.Server
       timer1.Stop();
       //ConsoleBox.Text = "";
       StartServer();
+      CMDTimer.Start();
     }
 
     public void OutputLogLegend()
@@ -393,6 +395,58 @@ namespace Massive.Server
     {
       RegisterForm rf = new RegisterForm();      
       rf.Show(this);
+    }
+
+    void Restart()
+    {
+      try
+      {
+        MNetMessage mn = new MNetMessage();
+        mn.Command = MNetMessage.CHAT;
+        MChatMessage mc = new MChatMessage();
+        mc.Message = "Server is shutting down. Please log back on in a few minutes";
+        mc.OwnerID = "SERVER";
+        mc.TargetID = "*";
+        mn.Payload = mc.Serialize();
+
+        _Server.ChatMessage(null, mn);
+      }
+      catch (Exception ex)
+      {
+        Log(ex.Message, MServer.ERROR);
+        if (ex.InnerException != null)
+        {
+          Log(ex.InnerException.Message, MServer.ERROR);
+        }
+      }
+
+      Thread.Sleep(1000);
+
+      Application.Restart();
+      Environment.Exit(0);
+    }
+
+    //commands can be placed in a command file to, e.g. restart the app
+    void ParseCmd()
+    {
+      string sCmdFile = ".\\cmd\\servercmd.txt";
+      if ( File.Exists(sCmdFile))
+      {
+        string cmd = File.ReadAllText(sCmdFile);
+        File.Move(sCmdFile, sCmdFile + "_" + DateTime.Now.ToString("yyyymmddhhmmss"));
+        if (string.IsNullOrEmpty(cmd)) return;
+        cmd = cmd.Trim();
+        if ( cmd == "RESTART")
+        {
+          Restart();
+        }
+
+      }
+    }
+
+    private void CMDTimer_Tick(object sender, EventArgs e)
+    {
+      ParseCmd();
     }
   }
 }

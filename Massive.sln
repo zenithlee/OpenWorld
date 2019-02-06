@@ -40,6 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		DBSetup.sql = DBSetup.sql
 		doc_dont_delete\mydata.json = doc_dont_delete\mydata.json
 		doc_dont_delete\Notes.txt = doc_dont_delete\Notes.txt
+		README.html = README.html
 		README.md = README.md
 		MassiveServer\bin\Debug\data\universe_0_0_0.csv = MassiveServer\bin\Debug\data\universe_0_0_0.csv
 		MassiveServer\bin\Debug\data\zones.csv = MassiveServer\bin\Debug\data\zones.csv

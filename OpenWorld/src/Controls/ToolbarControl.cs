@@ -24,5 +24,11 @@ namespace OpenWorld.Controls
       _buildForm = new BuildForm();
       _buildForm.Show(Main.ActiveForm);
     }
+
+    private void SettingsButton_Click(object sender, EventArgs e)
+    {
+      SettingsForm f = new SettingsForm();
+      f.Show(Main.ActiveForm);
+    }
   }
 }

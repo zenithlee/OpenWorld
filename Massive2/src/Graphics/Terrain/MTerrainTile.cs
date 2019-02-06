@@ -24,6 +24,8 @@ namespace Massive
 {
   public class MTerrainTile : MMesh
   {
+    public const double PHYSICS_ACTIVE_DISTANCE = 12000.0;
+
     Stopwatch stopwatch;
     MTerrainBoundary Boundary;
     public int z_res = 257;
@@ -44,6 +46,8 @@ namespace Massive
     MPhysicsObject _physics;
     public bool DoSetupPhysics = false;
 
+
+
     MForest Forest;
 
     public MTerrainTile(int TX, int TY, int Zoom, double Radius) : base("TerrainSlice", EType.Terrain)
@@ -60,7 +64,7 @@ namespace Massive
       Forest.transform.Scale = new Vector3d(1, 1, 1);
       Forest.DistanceThreshold = 5000;
       Forest.CastsShadow = true;
-      //Add(Forest);
+     // Add(Forest);
       MScene.Background2.Add(Forest);
     }
 
@@ -79,6 +83,7 @@ namespace Massive
 
     public override void Render(Matrix4d viewproj, Matrix4d parentmodel)
     {
+      Forest.transform.Position = this.transform.Position;
       base.Render(viewproj, parentmodel);
     }
 
@@ -139,6 +144,9 @@ namespace Massive
       {
         _backgroundWorker.CancelAsync();
       };
+
+      Console.WriteLine("Memory:" + GC.GetTotalMemory(false));
+      MMessageBus.LoadingStatus(this, "Loading:" + TileX + "," + TileY);
       _backgroundWorker = new BackgroundWorker();
       _backgroundWorker.DoWork += Bw_DoWork;
       _backgroundWorker.RunWorkerCompleted += Bw_RunWorkerCompleted;
@@ -148,8 +156,7 @@ namespace Massive
 
     private void Bw_DoWork(object sender, DoWorkEventArgs e)
     {
-      Console.WriteLine("Memory:" + GC.GetTotalMemory(false));
-      MMessageBus.LoadingStatus(this, "Loading:" + TileX + "," + TileY);
+      
       SetupMesh();
       if (_backgroundWorker.CancellationPending) return;
       CreateMaterial();
@@ -162,6 +169,7 @@ namespace Massive
       //while (material.DiffuseTexture.DataIsReady == false) ;
       LoadHeightMap();
 
+      /*
       if (Heightmap == null)
       {
         //Console.WriteLine(TileX + "," + TileY + "," + ZoomLevel + " not found");
@@ -172,6 +180,7 @@ namespace Massive
         Console.WriteLine("HeightMap Waiting ");
         Thread.Sleep(50);
       };
+      */
       LoadMetaData((MAstroBody)e.Argument);
 
       ApplyHeightMap();
@@ -187,6 +196,50 @@ namespace Massive
         Forest.PlantTrees(CurrentBody, this);
       }
       IsSetup = true;
+    }
+
+
+
+    private void Bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    {
+      if (Vertices == null) return;
+      //Globals.GUIThreadOwner.Invoke((MethodInvoker)delegate
+      //  {
+      int MSize = TexturedVertex.Size;
+      GL.GenVertexArrays(1, out VAO);
+      GL.GenBuffers(1, out VBO);
+      GL.GenBuffers(1, out EBO);
+
+      GL.BindVertexArray(VAO);
+      GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
+      GL.BufferData(BufferTarget.ArrayBuffer, Vertices.Length * MSize, Vertices, BufferUsageHint.DynamicDraw);
+
+      GL.BindBuffer(BufferTarget.ElementArrayBuffer, EBO);
+      GL.BufferData(BufferTarget.ElementArrayBuffer, Indices.Length * sizeof(int), Indices, BufferUsageHint.StaticDraw);
+
+      // vertex positions
+      GL.EnableVertexAttribArray(0);
+      GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, MSize, 0);
+      // vertex normals
+      GL.EnableVertexAttribArray(1);
+      GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, MSize, sizeof(float) * 3);
+      // vertex texture coords
+      GL.EnableVertexAttribArray(2);
+      GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, MSize, sizeof(float) * 6);
+
+      //  });
+
+      _backgroundWorker.Dispose();
+      _backgroundWorker = null;
+      VerticesLength = Vertices.Length;
+      IndicesLength = Indices.Length;
+      //Indices = null;
+      // Vertices = null;
+      if (Settings.TerrainPhysics == true)
+      {
+        MMessageBus.LoadingStatus(this, "Preparing:" + TileX + "," + TileY);
+        SetupPhysics(); //must run on main thread
+      }
     }
 
     void ApplyHeightMap()
@@ -216,8 +269,9 @@ namespace Massive
       if (IsSetup == false) return;
       if (_physics == null)
       {
-        Console.WriteLine("SetupPhysics " + TileX + "," + TileY);
-        string sText = string.Format("PHYSICS: Cache\\earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);
+        Console.WriteLine("MTerrainTile.SetupPhysics " + TileX + "," + TileY);
+        //string sText = string.Format("PHYSICS: Cache\\earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);
+        
         _physics = new MPhysicsObject(this, "Terrain_collider", 0, MPhysicsObject.EShape.ConcaveMesh, false, this.transform.Scale);
         DoSetupPhysics = false;
       }
@@ -227,7 +281,7 @@ namespace Massive
     {
       // Console.WriteLine(TileX + " : " + DistanceFromAvatar);
 
-      if ((IsSetup == true) && (DistanceFromAvatar < 5000) && (_physics == null))
+      if ((IsSetup == true) && (DistanceFromAvatar < PHYSICS_ACTIVE_DISTANCE) && (_physics == null))
       {
         DoSetupPhysics = true;
       }
@@ -261,6 +315,7 @@ namespace Massive
       Boundary = b;
     }
 
+    //Heightmaps are RGB packed, generated by Generator app
     float HeightColorToHeight(int x, int y)
     {
       int pos = (y * x_res + x) * 4;
@@ -326,8 +381,8 @@ namespace Massive
       string sHeight = string.Format("earth\\{0}\\continuity\\{1}_{2}.png", ZoomLevel, TileX, TileY);
       sHeight = Path.Combine(Settings.TileDataPath, sHeight);
       if (File.Exists(sHeight))
-      {
-        //Heightmap = Globals.TexturePool.GetTexture(sHeight);
+      {        
+        //loading syncronously, not slow
         Heightmap = new MTexture("Heightmap");
         Heightmap.LoadTextureData(sHeight);
         if (Heightmap != null)
@@ -381,55 +436,6 @@ namespace Massive
       }
     }
 
-    public void UpdateHeights()
-    {
-      if (Heightmap == null) return;
-      if (Heightmap.DataIsReady == false) return;
-      if (IsSetup == true) return;
-    }
-
-
-
-    private void Bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-    {
-      if (Vertices == null) return;
-      //Globals.GUIThreadOwner.Invoke((MethodInvoker)delegate
-      //  {
-      int MSize = TexturedVertex.Size;
-      GL.GenVertexArrays(1, out VAO);
-      GL.GenBuffers(1, out VBO);
-      GL.GenBuffers(1, out EBO);
-
-      GL.BindVertexArray(VAO);
-      GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
-      GL.BufferData(BufferTarget.ArrayBuffer, Vertices.Length * MSize, Vertices, BufferUsageHint.DynamicDraw);
-
-      GL.BindBuffer(BufferTarget.ElementArrayBuffer, EBO);
-      GL.BufferData(BufferTarget.ElementArrayBuffer, Indices.Length * sizeof(int), Indices, BufferUsageHint.StaticDraw);
-
-      // vertex positions
-      GL.EnableVertexAttribArray(0);
-      GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, MSize, 0);
-      // vertex normals
-      GL.EnableVertexAttribArray(1);
-      GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, MSize, sizeof(float) * 3);
-      // vertex texture coords
-      GL.EnableVertexAttribArray(2);
-      GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, MSize, sizeof(float) * 6);
-
-      //  });
-
-      _backgroundWorker.Dispose();
-      _backgroundWorker = null;
-      VerticesLength = Vertices.Length;
-      IndicesLength = Indices.Length;
-      //Indices = null;
-      // Vertices = null;
-      if (Settings.TerrainPhysics == true)
-      {
-        SetupPhysics(); //must run on main thread
-      }
-    }
 
     public Vector3d GetPointOnSurface(Vector3d pt)
     {

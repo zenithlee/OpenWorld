@@ -1,5 +1,6 @@
 ﻿using Massive;
 using Massive.GIS;
+using Massive.Tools;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,12 @@ namespace Massive
   {
     //F = G*(m1*m2/d^2)
     public static Vector3d GetGravityVector(Vector3d AP)
-    {      
+    {
       double G = 6.67191e-11;
       if (Globals.Avatar.Target == null)
       {
-        return Vector3d.UnitY * -9.8;
+        //return Vector3d.UnitY * -9.8;
+        // AP = Globals.UserAccount.CurrentPosition;
       }
       Vector3d g = Vector3d.Zero;
       //Vector3d g = GetGravityAtXYZ(Globals.Avatar.GetPosition());
@@ -44,7 +46,7 @@ namespace Massive
           //FogHeight *= 0.01;          
           //Console.WriteLine(b.DistanceToAvatar + ",FH " + FogHeight + ",AS " + b.AtmosphereStart);
           FogHeight = Extensions.Clamp(FogHeight, 0, 1.0);
-          MPlanetHandler.CurrentNear = b;
+          ///MPlanetHandler.CurrentNear = b;
         }
 
         Vector3d delta = (b.Position - AP).Normalized();
@@ -70,13 +72,21 @@ namespace Massive
     public static void CalculateGravityAtAvatar()
     {
       //Console.WriteLine("Update");
-      Vector3d g = GetGravityVector(Globals.Avatar.GetPosition());
+
+      Vector3d g = GetGravityVector(Globals.Avatar.GetPosition());      
+      if ( Globals.Avatar.Target == null)
+      {
+        g = GetGravityVector(MassiveTools.VectorFromArray(Globals.UserAccount.CurrentPosition));
+      }
 
       MPhysics.Instance.SetGravity(g);
       Globals.LocalUpVector = -g.Normalized();
       if (double.IsNaN(Globals.LocalUpVector.X))
       {
-        Globals.LocalUpVector = Globals.Avatar.Target.transform.Up();
+        if (Globals.Avatar.Target != null)
+        {
+          Globals.LocalUpVector = Globals.Avatar.Target.transform.Up();
+        }
       }
       if (double.IsNaN(g.X))
       {

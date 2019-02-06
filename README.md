@@ -69,6 +69,29 @@ Server is source of truth, so all movement, spawn, chat, gets approved by server
 MMessageBus will intercept some server messages relating to UI, and invoke them on the UI thread.  
 So use MMessageBus event handlers rather than network ones.  
 
+# Scenegraph
+There are several Roots that MObjects are attached to.
+The SceneGraph is updated, and rendered
+MScene.ModelRoot - All models to be rendered (including those who are marked as invisible or out of range)
+MScene.AstroRoot - All planetary phenomena
+MScene.UtilityRoot - All systems that need a pulse
+MSCene.MaterialRoot - All materials, textures, and Shaders
+MScene.TemplateRoot - All Templates. "Lite" versions of renderable objects used to define construction.
+            An object must first be a member of the template root before an instance can spawn
+
+All Renderable objects are instances of a Template object in the MScene.TemplateRoot
+
+# Types of Objects
+MObject - Base class of anything synced to the Scenegraph Update and Rendering, including Physics
+MSCeneObject - Renderable
+MPhysicsObject - Attached to an MSceneObject to give it physics properties
+
+# Helper
+Helper static functions contain convenient functions.
+MSceneObject mo = Helper.CreateCube(parent, name, position);
+MassiveTools and other static Tool classes help converting coordinates
+MassiveTools.ArrayToVector
+MAstroBody.LonLatToVector
 
 ## Chat
 Chat is still primitive, with limited friends lists, etc  

@@ -11,6 +11,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,6 +32,15 @@ namespace OpenWorld.Forms
       MMessageBus.NavigationHandler += MMessageBus_NavigationHandler;
       MMessageBus.ZoneSelectHandler += MMessageBus_ZoneSelectHandler;
       MMessageBus.LoadingStatusHandler += MMessageBus_LoadingStatusHandler;
+      MMessageBus.LoggedIn += MMessageBus_LoggedIn;      
+      //string sDist = string.Format("{0,12:#.00}", 12341234123.6623452345);
+      //UserInfo.Text = sDist;
+
+    }
+
+    private void MMessageBus_LoggedIn(object sender, ChangeDetailsEvent e)
+    {
+      NavigationTarget = MassiveTools.VectorFromArray(Globals.UserAccount.HomePosition);
     }
 
     private void MMessageBus_LoadingStatusHandler(object sender, InfoEvent e)
@@ -38,6 +48,7 @@ namespace OpenWorld.Forms
       //UserInfo.Text = e.Message;
       sStatus = e.Message;
       UpdateData();
+      Thread.Sleep(10);
       timer1.Start();
     }
 
@@ -60,8 +71,8 @@ namespace OpenWorld.Forms
     public void UpdateData()
     {
       Location = Main.ClientLocation;
-      Location.Offset(10, Height);
-
+      Location.Offset(10, Height);      
+      
       if (MPlanetHandler.CurrentNear == null) return;
       UserInfo.Text = "";
 
@@ -73,7 +84,8 @@ namespace OpenWorld.Forms
 
       GetMetaData(TilePos);
 
-      UserInfo.Text += " > " + Vector3d.Distance(Globals.Avatar.GetPosition(), NavigationTarget) + "km";
+      string sDist = string.Format("{0,12:#.00}km", Vector3d.Distance(Globals.Avatar.GetPosition(), NavigationTarget) / 1000.0);
+      UserInfo.Text += " |> " +sDist;
       Location = Main.ClientLocation;
       Location.Offset(10, Main.RenderClientSize.Height - Height);
 

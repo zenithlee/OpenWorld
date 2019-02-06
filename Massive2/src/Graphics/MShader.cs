@@ -64,7 +64,7 @@ namespace Massive
     public void Bind()
     {
       GL.UseProgram(ProgramID);
-      Helper.CheckGLError(this, "TestPoint MShader");
+      //Helper.CheckGLError(this, "TestPoint MShader");
     }
 
     public void SetBool(string name, bool value)

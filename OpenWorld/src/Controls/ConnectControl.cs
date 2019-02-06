@@ -22,6 +22,15 @@ namespace OpenWorld.src.Controls
       Globals.Network.ConnectedToServerHandler += Network_ConnectedToServerHandler;
       Globals.Network.LoggedOutHandler += Network_LoggedOutHandler;
       Globals.Network.ErrorEventHandler += Network_ErrorEventHandler;
+      Globals.Network.StatusEventHandler += Network_StatusEventHandler;
+    }
+
+    private void Network_StatusEventHandler(object sender, NetworkStatusEvent e)
+    {
+      if (Globals.Network.Connected == false)
+      {
+        ConnectedCheck.BackColor = Color.Red;
+      }
     }
 
     private void Network_ConnectedToServerHandler(object sender, Massive.Events.StatusEvent e)

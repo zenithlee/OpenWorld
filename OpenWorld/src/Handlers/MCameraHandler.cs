@@ -3,11 +3,6 @@ using Massive.Events;
 using Massive.Tools;
 using OpenTK;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Massive.MObject;
 
 /// <summary>
 /// Controls a camera, animation, prevents clipping, etc
@@ -40,6 +35,7 @@ namespace OpenWorld.Handlers
 
       Globals.Network.TeleportHandler += Network_TeleportHandler;
       MMessageBus.UpdateHandler += MMessageBus_UpdateHandler;
+      MStateMachine.StateChanged += MStateMachine_StateChanged;
 
       //po = new MPhysicsObject(_camera, "CamPhysball", 0, MPhysicsObject.EShape.Sphere, false, new Vector3d(0.1,0.1,0.1));
       // MMessageBus.TeleportedEventHandler += MMessageBus_TeleportEventHandler;
@@ -47,6 +43,11 @@ namespace OpenWorld.Handlers
 
       // Target = Helper.CreateSphere(null, "CamTarget");
       // Target.transform.Position = new OpenTK.Vector3d(0, 1.1, 9);
+    }
+
+    private void MStateMachine_StateChanged(object sender, EventArgs e)
+    {
+      
     }
 
     private void MMessageBus_UpdateHandler(object sender, UpdateEvent e)
@@ -114,14 +115,11 @@ namespace OpenWorld.Handlers
     {
       Throttle += Time.DeltaTime;
 
-      if (Globals.Avatar.Target != null)
-      {
-
         Vector3d AP = Globals.Avatar.GetPosition();
 
-        MBoundingBox box = Globals.Avatar.Target.BoundingBox;
+        //MBoundingBox box = Globals.Avatar.Target.BoundingBox;
         //Console.WriteLine(box);
-        double rad = box.Size().Length;
+        //double rad = box.Size().Length;
 
         // CheckIfCloseToWall(AP + Globals.Avatar.Forward() * 0.1);        
        
@@ -152,11 +150,16 @@ namespace OpenWorld.Handlers
           Throttle = 0;
           PreviousPosition = MScene.Camera.transform.Position;
           PreviousTarget = MScene.Camera.Target.transform.Position;
+        if ( Globals.Network.Connected == true) { 
           MMessageBus.MoveAvatarRequest(this, Globals.UserAccount.UserID, AP, Globals.Avatar.GetRotation());
-          
         }
-      }
+        else
+        {
+          MMessageBus.AvatarMoved(this, Globals.UserAccount.UserID, AP, Globals.Avatar.GetRotation());
+        }
 
+      }      
+     
       UpdateMovement();
     }
 

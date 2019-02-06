@@ -81,7 +81,7 @@ namespace OpenWorld.Controls
 
     private void Network_ChatEventHandler(object sender, ChatEvent e)
     { 
-      ChatBox.Invoke((MethodInvoker)delegate
+      ChatBox.BeginInvoke((MethodInvoker)delegate
       {
         int st = ChatBox.TextLength;
         ChatBox.SelectionFont = BoldFont;

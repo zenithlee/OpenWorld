@@ -90,7 +90,7 @@ namespace Massive.GIS
 
       Vector3d TilePos = GetTileFromPoint(e.Position);
       Vector3d LonLat = GetLonLatOnShere(e.Position);
-      Console.WriteLine(AvatarDistanceToSurface);
+      //Console.WriteLine(AvatarDistanceToSurface);
       if (AvatarDistanceToSurface < PHYSICS_DISTANCE)
       {        
         ///_terrainHandler.UpdateForest((int)TilePos.X, (int)TilePos.Y, (int)TilePos.Z);
@@ -105,10 +105,13 @@ namespace Massive.GIS
             _terrainHandler.UpdateTileMesh((int)TilePos.X + x, (int)TilePos.Y + y, (int)TilePos.Z, LonLat);
             if (Settings.TerrainPhysics == true)
             {
+              //removed: handled in setup until proper loading
               //_terrainHandler.SetupPhysics((int)TilePos.X, (int)TilePos.Y, (int)TilePos.Z);
             }
           }
         }
+
+
       }
       else
       {
@@ -464,6 +467,17 @@ namespace Massive.GIS
       return MathHelper.RadiansToDegrees(Math.Atan(Math.Sinh(n)));
     }
 
+    /// <summary>
+    /// USed for positioning in Astronimical coords e.g. NASA relative position (Right Ascension & Declination)
+    /// </summary>
+    /// <param name="RA_hours"></param>
+    /// <param name="RA_minutes"></param>
+    /// <param name="RA_seconds"></param>
+    /// <param name="Dec_degrees"></param>
+    /// <param name="Dec_minutes"></param>
+    /// <param name="Dec_seconds"></param>
+    /// <param name="DistanceLY"></param>
+    /// <returns></returns>
     public Vector3d GetPositionFromRADECL(double RA_hours, double RA_minutes, double RA_seconds,
       double Dec_degrees, double Dec_minutes, double Dec_seconds, double DistanceLY)
     {

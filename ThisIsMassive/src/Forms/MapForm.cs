@@ -42,7 +42,7 @@ namespace ThisIsMassive.src.Controls
       AstroBodies.DataSource = MPlanetHandler.Bodies;
       AstroBodies.DisplayMember = "Name";
       CurrentBody = MPlanetHandler.Bodies.Find(x => "Earth" == x.Name);
-      AstroBodies.SelectedIndex = CurrentBody.ListIndex;      
+      AstroBodies.SelectedIndex = CurrentBody.ListIndex;
     }
 
     private void MapBox_MouseMove(object sender, MouseEventArgs e)

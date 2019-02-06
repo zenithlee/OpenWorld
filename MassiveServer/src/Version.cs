@@ -1,4 +1,4 @@
 public class MVersion 
 {
-   public static int VERSION=78;
+   public static int VERSION=88;
 }

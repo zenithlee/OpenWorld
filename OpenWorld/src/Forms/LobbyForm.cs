@@ -28,7 +28,7 @@ namespace OpenWorld.Forms
 
     private void MMessageBus_LobbyLoadRequestHandler(object sender, ChangeDetailsEvent e)
     {
-      Globals.GUIThreadOwner.Invoke((MethodInvoker)delegate
+      Globals.GUIThreadOwner.BeginInvoke((MethodInvoker)delegate
       {       
         this.Show();
       });
@@ -44,7 +44,7 @@ namespace OpenWorld.Forms
 
     private void Network_ConnectedToServerHandler(object sender, Massive.Events.StatusEvent e)
     {
-      Globals.GUIThreadOwner.Invoke((MethodInvoker)delegate
+      Globals.GUIThreadOwner.BeginInvoke((MethodInvoker)delegate
       {
         this.Hide();
       });

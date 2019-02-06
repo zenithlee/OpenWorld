@@ -30,7 +30,7 @@ namespace Massive
 
     //MCube GravityIndicator;
     double ScaleFactor = 1000;
-    MMaterial MSkyMaterial;    
+    MMaterial MSkyMaterial;
 
     public static MPlanetHandler _Instance;
 
@@ -40,7 +40,7 @@ namespace Massive
     }
 
     public override void Setup()
-    {      
+    {
       //TODO:
       //ADD URL TEXTURES!      
 
@@ -79,7 +79,7 @@ namespace Massive
 
       Bodies.Add(new MAstroBody("Saturn", "The planet Saturn", 5.68319E+26,
         new Vector3d(1.177516875361957E+09, 7.071279503136320E+08, 3.202538221937501E+07) * 1000,
-        new Vector3d(60268, 60268, 60268) * ScaleFactor, "http://www.bigfun.co.za/fu/static/2k_saturn.jpg", 
+        new Vector3d(60268, 60268, 60268) * ScaleFactor, "http://www.bigfun.co.za/fu/static/2k_saturn.jpg",
         false, 0, true, true));
 
       Bodies.Add(new MAstroBody("Uranus", "The planet Uranus. Not a gas giant.", 86.8103E+24,
@@ -172,6 +172,7 @@ namespace Massive
         //planet files contain uvs for mercator
         if (m.HasAtmosphere)
         {
+          CurrentNear = m;
           mo = Helper.CreateModel(MScene.AstroRoot, m.Name, @"Models\earth.3ds", Vector3d.Zero);
           //mo = Helper.CreateSphere(MScene.AstroRoot, 3, "Planet");
           //mo.transform.Scale = m.Radius * 1.00055;
@@ -211,6 +212,12 @@ namespace Massive
         mo.TemplateID = m.Name;
         mo.OwnerID = "MasterAstronomer";
         mo.DistanceThreshold = m.Radius.X * 110002; //distance at which it becomes visible
+        //MModel mod = (MModel)mo.FindModuleByType(EType.Model);
+        //mod.DistanceThreshold = mo.DistanceThreshold;
+        //MMesh met = (MMesh)mod.FindModuleByType(EType.Mesh);
+        //if ( met != null ) { 
+        //met.DistanceThreshold = mo.DistanceThreshold;
+        //}
         mo.Tag = m;
         m.Tag = mo;
 
@@ -234,10 +241,13 @@ namespace Massive
 
         if (m.HasAtmosphere)
         {
-          m.AddDynamicTerrain(); //adds tile based terrain (from e.g. tile service)
+          if (Settings.DrawTerrains == true)
+          {
+            m.AddDynamicTerrain(); //adds tile based terrain (from e.g. tile service)
+          }
 
-           //MPhysicsObject po = new MPhysicsObject(mo, "Physics", 0, MPhysicsObject.EShape.ConcaveMesh, 
-            //false, m.Radius);
+          //MPhysicsObject po = new MPhysicsObject(mo, "Physics", 0, MPhysicsObject.EShape.ConcaveMesh, 
+          //false, m.Radius);
           MPhysicsObject po = new MPhysicsObject(mo, "Physics", 0, MPhysicsObject.EShape.Sphere,
             false, m.Radius);
           //po.SetLinearFactor(0, 0, 0);
@@ -314,7 +324,7 @@ namespace Massive
         }
         else
         {
-          MPhysicsObject po = new MPhysicsObject(mo, "Physics", 0, MPhysicsObject.EShape.Sphere, false, 
+          MPhysicsObject po = new MPhysicsObject(mo, "Physics", 0, MPhysicsObject.EShape.Sphere, false,
             m.Radius * 0.999);
           po.SetLinearFactor(0, 0, 0);
           po.SetRestitution(0.5);

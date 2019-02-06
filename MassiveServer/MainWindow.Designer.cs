@@ -35,6 +35,10 @@
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.MaxConnectionsLabel = new System.Windows.Forms.Label();
       this.panel1 = new System.Windows.Forms.Panel();
+      this.label4 = new System.Windows.Forms.Label();
+      this.RegisterLobbyButton = new System.Windows.Forms.Button();
+      this.PublicIPBox = new System.Windows.Forms.TextBox();
+      this.PublicIPLabel = new System.Windows.Forms.Label();
       this.ChatBox = new System.Windows.Forms.TextBox();
       this.FlushButton = new System.Windows.Forms.Button();
       this.label1 = new System.Windows.Forms.Label();
@@ -65,12 +69,9 @@
       this.state = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.BackupTimer = new System.Windows.Forms.Timer(this.components);
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.PublicIPLabel = new System.Windows.Forms.Label();
-      this.PublicIPBox = new System.Windows.Forms.TextBox();
-      this.RegisterLobbyButton = new System.Windows.Forms.Button();
       this.postgresDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.mUserAccountBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.label4 = new System.Windows.Forms.Label();
+      this.CMDTimer = new System.Windows.Forms.Timer(this.components);
       this.tableLayoutPanel1.SuspendLayout();
       this.panel1.SuspendLayout();
       this.tableLayoutPanel3.SuspendLayout();
@@ -156,6 +157,48 @@
       this.panel1.Name = "panel1";
       this.panel1.Size = new System.Drawing.Size(194, 375);
       this.panel1.TabIndex = 20;
+      // 
+      // label4
+      // 
+      this.label4.AutoSize = true;
+      this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label4.ForeColor = System.Drawing.Color.White;
+      this.label4.Location = new System.Drawing.Point(10, 219);
+      this.label4.Name = "label4";
+      this.label4.Size = new System.Drawing.Size(99, 13);
+      this.label4.TabIndex = 17;
+      this.label4.Text = "Send Chat Text:";
+      // 
+      // RegisterLobbyButton
+      // 
+      this.RegisterLobbyButton.BackColor = System.Drawing.Color.Gold;
+      this.RegisterLobbyButton.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.RegisterLobbyButton.Location = new System.Drawing.Point(77, 132);
+      this.RegisterLobbyButton.Name = "RegisterLobbyButton";
+      this.RegisterLobbyButton.Size = new System.Drawing.Size(111, 39);
+      this.RegisterLobbyButton.TabIndex = 16;
+      this.RegisterLobbyButton.Text = "Register Lobby";
+      this.toolTip1.SetToolTip(this.RegisterLobbyButton, "Register/Update this server with the main lobby");
+      this.RegisterLobbyButton.UseVisualStyleBackColor = false;
+      this.RegisterLobbyButton.Click += new System.EventHandler(this.RegisterLobbyButton_Click);
+      // 
+      // PublicIPBox
+      // 
+      this.PublicIPBox.Location = new System.Drawing.Point(10, 68);
+      this.PublicIPBox.Name = "PublicIPBox";
+      this.PublicIPBox.ReadOnly = true;
+      this.PublicIPBox.Size = new System.Drawing.Size(178, 20);
+      this.PublicIPBox.TabIndex = 15;
+      // 
+      // PublicIPLabel
+      // 
+      this.PublicIPLabel.AutoSize = true;
+      this.PublicIPLabel.ForeColor = System.Drawing.Color.White;
+      this.PublicIPLabel.Location = new System.Drawing.Point(9, 51);
+      this.PublicIPLabel.Name = "PublicIPLabel";
+      this.PublicIPLabel.Size = new System.Drawing.Size(49, 13);
+      this.PublicIPLabel.TabIndex = 14;
+      this.PublicIPLabel.Text = "PublicIP:";
       // 
       // ChatBox
       // 
@@ -431,47 +474,10 @@
       this.BackupTimer.Interval = 3600000;
       this.BackupTimer.Tick += new System.EventHandler(this.BackupTimer_Tick);
       // 
-      // PublicIPLabel
+      // CMDTimer
       // 
-      this.PublicIPLabel.AutoSize = true;
-      this.PublicIPLabel.ForeColor = System.Drawing.Color.White;
-      this.PublicIPLabel.Location = new System.Drawing.Point(9, 51);
-      this.PublicIPLabel.Name = "PublicIPLabel";
-      this.PublicIPLabel.Size = new System.Drawing.Size(49, 13);
-      this.PublicIPLabel.TabIndex = 14;
-      this.PublicIPLabel.Text = "PublicIP:";
-      // 
-      // PublicIPBox
-      // 
-      this.PublicIPBox.Location = new System.Drawing.Point(10, 68);
-      this.PublicIPBox.Name = "PublicIPBox";
-      this.PublicIPBox.ReadOnly = true;
-      this.PublicIPBox.Size = new System.Drawing.Size(178, 20);
-      this.PublicIPBox.TabIndex = 15;
-      // 
-      // RegisterLobbyButton
-      // 
-      this.RegisterLobbyButton.BackColor = System.Drawing.Color.Gold;
-      this.RegisterLobbyButton.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.RegisterLobbyButton.Location = new System.Drawing.Point(77, 132);
-      this.RegisterLobbyButton.Name = "RegisterLobbyButton";
-      this.RegisterLobbyButton.Size = new System.Drawing.Size(111, 39);
-      this.RegisterLobbyButton.TabIndex = 16;
-      this.RegisterLobbyButton.Text = "Register Lobby";
-      this.toolTip1.SetToolTip(this.RegisterLobbyButton, "Register/Update this server with the main lobby");
-      this.RegisterLobbyButton.UseVisualStyleBackColor = false;
-      this.RegisterLobbyButton.Click += new System.EventHandler(this.RegisterLobbyButton_Click);
-      // 
-      // label4
-      // 
-      this.label4.AutoSize = true;
-      this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label4.ForeColor = System.Drawing.Color.White;
-      this.label4.Location = new System.Drawing.Point(10, 219);
-      this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(99, 13);
-      this.label4.TabIndex = 17;
-      this.label4.Text = "Send Chat Text:";
+      this.CMDTimer.Interval = 5000;
+      this.CMDTimer.Tick += new System.EventHandler(this.CMDTimer_Tick);
       // 
       // MainWindow
       // 
@@ -539,6 +545,7 @@
     private System.Windows.Forms.TextBox PublicIPBox;
     private System.Windows.Forms.Button RegisterLobbyButton;
     private System.Windows.Forms.Label label4;
+    private System.Windows.Forms.Timer CMDTimer;
   }
 }
 

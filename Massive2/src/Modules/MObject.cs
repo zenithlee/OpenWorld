@@ -58,7 +58,7 @@ namespace Massive
 
     public MObject Parent;
     public static readonly object ModuleLock = new object();
-    public List<MObject> Modules = new List<MObject>();
+    public List<MObject> Modules = new List<MObject>(20);
     public object Tag;
 
     public int Index = 0;

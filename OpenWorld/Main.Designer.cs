@@ -31,19 +31,19 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.connectControl1 = new OpenWorld.src.Controls.ConnectControl();
-      this.navBarControl1 = new OpenWorld.src.Controls.NavBarControl();
+      this.navBarControl1 = new OpenWorld.Controls.NavBarControl();
       this.positionControl1 = new OpenWorld.src.Controls.StatusControl();
       this.toolbarControl1 = new OpenWorld.Controls.ToolbarControl();
-      this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
       // tableLayoutPanel1
       // 
       this.tableLayoutPanel1.ColumnCount = 2;
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 94.83013F));
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.169867F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
       this.tableLayoutPanel1.Controls.Add(this.connectControl1, 1, 0);
       this.tableLayoutPanel1.Controls.Add(this.navBarControl1, 0, 0);
       this.tableLayoutPanel1.Controls.Add(this.positionControl1, 0, 2);
@@ -52,19 +52,24 @@
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 3;
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.736138F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.26386F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
       this.tableLayoutPanel1.Size = new System.Drawing.Size(1000, 654);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
+      // timer1
+      // 
+      this.timer1.Interval = 30;
+      this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+      // 
       // connectControl1
       // 
       this.connectControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.connectControl1.Location = new System.Drawing.Point(948, 0);
+      this.connectControl1.Location = new System.Drawing.Point(958, 0);
       this.connectControl1.Margin = new System.Windows.Forms.Padding(0);
       this.connectControl1.Name = "connectControl1";
-      this.connectControl1.Size = new System.Drawing.Size(52, 34);
+      this.connectControl1.Size = new System.Drawing.Size(42, 32);
       this.connectControl1.TabIndex = 0;
       // 
       // navBarControl1
@@ -73,30 +78,25 @@
       this.navBarControl1.Location = new System.Drawing.Point(0, 0);
       this.navBarControl1.Margin = new System.Windows.Forms.Padding(0);
       this.navBarControl1.Name = "navBarControl1";
-      this.navBarControl1.Size = new System.Drawing.Size(948, 34);
+      this.navBarControl1.Size = new System.Drawing.Size(958, 32);
       this.navBarControl1.TabIndex = 1;
       // 
       // positionControl1
       // 
       this.positionControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.positionControl1.Location = new System.Drawing.Point(1, 606);
+      this.positionControl1.Location = new System.Drawing.Point(1, 607);
       this.positionControl1.Margin = new System.Windows.Forms.Padding(1);
       this.positionControl1.Name = "positionControl1";
-      this.positionControl1.Size = new System.Drawing.Size(946, 47);
+      this.positionControl1.Size = new System.Drawing.Size(956, 46);
       this.positionControl1.TabIndex = 2;
       // 
       // toolbarControl1
       // 
       this.toolbarControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.toolbarControl1.Location = new System.Drawing.Point(951, 37);
+      this.toolbarControl1.Location = new System.Drawing.Point(961, 35);
       this.toolbarControl1.Name = "toolbarControl1";
-      this.toolbarControl1.Size = new System.Drawing.Size(46, 565);
+      this.toolbarControl1.Size = new System.Drawing.Size(36, 568);
       this.toolbarControl1.TabIndex = 3;
-      // 
-      // timer1
-      // 
-      this.timer1.Interval = 30;
-      this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
       // 
       // Main
       // 
@@ -123,7 +123,7 @@
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     private src.Controls.ConnectControl connectControl1;
     private System.Windows.Forms.Timer timer1;
-    private src.Controls.NavBarControl navBarControl1;
+    private Controls.NavBarControl navBarControl1;
     private src.Controls.StatusControl positionControl1;
     private Controls.ToolbarControl toolbarControl1;
   }

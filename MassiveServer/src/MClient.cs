@@ -41,8 +41,8 @@ namespace Massive.Server
 
     public MBox Fence = new MBox();
 
-
-    public double[] DefaultHome = new double[3] { 12730053938.5647, 146364499953.768, -7575689430.23295 };
+    //Cape Town XYZ
+    public double[] DefaultHome = new double[3] { 12717655069.6974, 146353256379.691, -7581841040.79404 };
 
     public event PropertyChangedEventHandler PropertyChanged;
 

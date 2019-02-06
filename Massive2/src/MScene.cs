@@ -57,8 +57,6 @@ namespace Massive
     public const int MAXLIGHTS = 8;
 
     public bool Stereo = false;
-    public bool _AddPlanets = false;
-    public bool _AddBackdrop = true;
 
     public static MFog Fog;
     public static MAudioListener audioListener;
@@ -79,9 +77,8 @@ namespace Massive
     MMaterial Wood;
     public bool Playing = false;
 
-    public MScene(bool AddPlanets, bool AddBackdrop) : base(EType.Other, "Scene")
+    public MScene(bool AddBackdrop) : base(EType.Other, "Scene")
     {
-      _AddPlanets = AddPlanets;
       Globals._scene = this;
       MZoneService ms = new MZoneService();
       // Globals.SetProjectPath(@"I:\root\dev\_Massive_64bit\Massive\MassiveTest2");
@@ -105,7 +102,7 @@ namespace Massive
     public void Play()
     {
       Playing = true;
-      Root.OnPlay();      
+      Root.OnPlay();
     }
 
     public void Stop()
@@ -207,7 +204,7 @@ namespace Massive
       UtilityRoot.Add(AstroRoot);
       AstroRoot.Deletable = false;
 
-      if (_AddPlanets == true)
+      if (Settings.DrawPlanets == true)
       {
         MPlanetHandler mpi = new MPlanetHandler();
         UtilityRoot.Add(mpi);
@@ -221,7 +218,7 @@ namespace Massive
       //ModelRoot.Add(Overlay); //manually drawn in render
 
 
-      if (_AddBackdrop == true)
+      if (Settings.DrawBackdrop == true)
       {
         AddBackdrop();
       }
@@ -360,7 +357,7 @@ namespace Massive
         Background2.Update();
       }
 
-        MMessageBus.NotifyUpdate(this);
+      MMessageBus.NotifyUpdate(this);
       Overlay.Update();
       MMessageBus.NotifyLateUpdate(this);
     }
@@ -524,7 +521,7 @@ namespace Massive
     void RenderScene(ref Matrix4d view, ref Matrix4d offsetmat, ref Matrix4d projection, ref Matrix4d viewproj)
     {
       ///////////////// SKY ///////////////////  
-      if (_AddBackdrop)
+      if (Settings.DrawBackdrop == true)
       {
         GL.Disable(EnableCap.DepthTest);
         backdrop.Render(view, offsetmat);

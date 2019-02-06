@@ -116,10 +116,20 @@ namespace OpenWorld
       WallShader.SetInt("material.normalmap", MShader.LOCATION_NORMALMAP);
       WallShader.SetInt("material.shadowMap", MShader.LOCATION_SHADOWMAP);
 
+      MMaterial Avatar1Mat = new MMaterial("AVATAR01M");
+      Avatar1Mat.AddShader(WallShader);
+      Avatar1Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar01.jpg"));
+      MScene.MaterialRoot.Add(Avatar1Mat);
+
       MMaterial Avatar2Mat = new MMaterial("AVATAR02M");
       Avatar2Mat.AddShader(WallShader);
       Avatar2Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar02.jpg"));
       MScene.MaterialRoot.Add(Avatar2Mat);
+    }
+
+    public static Dictionary<string, MBuildingBlock> GetBlocks()
+    {
+      return Blocks;
     }
 
     public static MBuildingBlock GetBlock(string sTemplateID)

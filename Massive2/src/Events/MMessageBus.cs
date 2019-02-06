@@ -84,6 +84,10 @@ namespace Massive.Events
     public static event EventHandler<InfoEvent> SaveUserDetailsHandler;
     public static event EventHandler<InfoEvent> LoadUserDetailsHandler;
 
+    public static event EventHandler<BooleanEvent> GravityStateHandler;
+
+
+
     public MMessageBus()
     {
       Globals.Network.PositionChangeHandler += Network_PositionChangeHandler;
@@ -92,7 +96,7 @@ namespace Massive.Events
       Globals.Network.LoggedInHandler += Network_LoggedInHandler; ;
       Globals.Network.USerDetailsChanged += Network_USerDetailsChanged;
       Globals.Network.ErrorEventHandler += Network_ErrorEventHandler;
-      Globals.Network.TableHandler += Network_TableHandler;
+      Globals.Network.TableHandler += Network_TableHandler;      
     }
 
 
@@ -105,7 +109,7 @@ namespace Massive.Events
 
       if (e != null)
       {
-        Globals.GUIThreadOwner.Invoke((MethodInvoker)delegate
+        Globals.GUIThreadOwner.BeginInvoke((MethodInvoker)delegate
         {
           e(sender, args);
         });
@@ -179,6 +183,11 @@ namespace Massive.Events
     private void Network_PositionChangeHandler(object sender, MoveEvent e)
     {
       GUIEvent(ObjectMovedEvent, sender, e);
+    }
+
+    public static void GravityStateChanged(object sender, BooleanEvent b)
+    {
+      GUIEvent(GravityStateHandler, sender, b);
     }
 
     public static void AvatarMoved(object sender, string InstanceID, Vector3d Position, Quaterniond Rotation)
@@ -256,9 +265,9 @@ namespace Massive.Events
       AvatarChangedHandler?.Invoke(sender, new ChangeAvatarEvent(sUserID, sTemplateID));
     }
 
-    public static void TeleportRequest(object sender, string Locus, Vector3d Pos, Quaterniond Rot)
+    public static void TeleportRequest(object sender, Vector3d Pos, Quaterniond Rot)
     {
-      TeleportRequestHandler?.Invoke(sender, new TeleportRequestHandler(Locus, Pos, Rot));
+      TeleportRequestHandler?.Invoke(sender, new TeleportRequestHandler(Pos, Rot));
     }
 
     public static void TeleportComplete(object sender, string InstanceID, Vector3d Pos, Quaterniond Rot)

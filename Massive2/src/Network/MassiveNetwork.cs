@@ -468,7 +468,7 @@ namespace Massive
     {
       MUserAccount mu = JsonConvert.DeserializeObject<MUserAccount>(m.Payload);
       Globals.UserAccount.UserName = mu.UserName;
-      Globals.UserAccount.HomePosition = mu.HomePosition;
+      //Globals.UserAccount.HomePosition = mu.HomePosition;
       Globals.UserAccount.UserID = mu.UserID;
 
       LoggedInHandler(this, new ChangeDetailsEvent(true, "Logged In"));

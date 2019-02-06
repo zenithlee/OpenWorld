@@ -125,6 +125,7 @@ namespace Massive
             // draw mesh from inddices
             GL.BindVertexArray(VAO);
             GL.DrawElements(BeginMode.Triangles, IndicesLength, DrawElementsType.UnsignedInt, 0);
+            
             GL.BindVertexArray(0);
           }
         }
@@ -139,6 +140,7 @@ namespace Massive
           {
             GL.BindVertexArray(VAO);
             GL.DrawArrays(PrimitiveType.Triangles, 0, VerticesLength);
+            //Helper.CheckGLError(this, "MSky 2");
             GL.BindVertexArray(0);
           }
         }

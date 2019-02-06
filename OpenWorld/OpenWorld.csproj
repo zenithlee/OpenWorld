@@ -71,6 +71,7 @@
     <Compile Include="src\Controllers\COpenWorld.cs" />
     <Compile Include="src\Controllers\LobbyController.cs" />
     <Compile Include="src\Controllers\LobbyEntry.cs" />
+    <Compile Include="src\Controllers\NavigationBarDecoder.cs" />
     <Compile Include="src\Controllers\UserDetails.cs" />
     <Compile Include="src\Controls\CChatControl.cs">
       <SubType>UserControl</SubType>
@@ -144,6 +145,12 @@
     <Compile Include="src\Forms\LobbyForm.Designer.cs">
       <DependentUpon>LobbyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Forms\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Forms\UserInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +161,7 @@
     <Compile Include="src\Handlers\MKeyboardHandler.cs" />
     <Compile Include="src\Handlers\MMouseHandler.cs" />
     <Compile Include="src\Handlers\MSpawnHandler.cs" />
+    <Compile Include="src\Handlers\MTeleportHandler.cs" />
     <Compile Include="src\MBuildingBlock.cs" />
     <Compile Include="src\MBuildParts.cs" />
     <Compile Include="src\Models\ChatUser.cs" />
@@ -203,6 +211,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\LobbyForm.resx">
       <DependentUpon>LobbyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\UserInfoForm.resx">
       <DependentUpon>UserInfoForm.cs</DependentUpon>

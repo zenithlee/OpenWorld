@@ -28,10 +28,8 @@ namespace Massive
     MShader TerrainShader;
     int TileCount = 0;
 
-    //           TileX,TileY,ZOOM
-    //dictionary 0000   0000   00
     Dictionary<string, MTerrainTile> Tiles;
-    int NumTiles = 64;
+    //int NumTiles = 64;
 
     MObject Container;
     
@@ -107,20 +105,6 @@ namespace Massive
         InitializeTile(TileNum, tx, ty, ZoomLevel);
       }
     }
-
-    /*
-    public void SetupPhysics(int tx, int ty, int zoom)
-    {
-      string TileNum = TerrainNumber(tx, ty);
-      if (!Tiles.ContainsKey(TileNum))
-      {
-        return;
-      }
-      MTerrainTile tile = Tiles[TileNum];
-      Tiles[TileNum].SetupPhysics();
-    }
-    */
-
 
     public void GetPOI(int tx, int ty, Vector3d AvatarPosLonLat)
     {

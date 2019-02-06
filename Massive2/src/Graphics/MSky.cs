@@ -77,7 +77,7 @@ namespace Massive
         SkyBall.transform.Position = this.transform.Position;
         SkyBall.Render(viewproj * _projectionMatrix, Matrix4d.Identity);
       }
-      Helper.CheckGLError(this, "MSky 2");
+     
 
       GL.Enable(EnableCap.DepthTest);
       GL.CullFace(CullFaceMode.Back);

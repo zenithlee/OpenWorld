@@ -86,7 +86,7 @@ namespace Massive
           Vector3d Treepos = new Vector3d(x,
             0,
             z);
-          //Vector3d PlantingPos = planet.GetNearestPointOnSphere(SeedPos + Treepos, 0) - SeedPos;
+          //Vector3d PlantingPos = planet.GetNearestPointOnSphere(Treepos, 0);
           Matrix4d TreeScale = Matrix4d.Scale(1+ran.NextDouble(), 1 + ran.NextDouble()*2, 1 + ran.NextDouble());
           Vector3d PlantingPos = Tile.GetPointOnSurface(Treepos); //; + new Vector3d(r.NextDouble()*5, r.NextDouble() * 5, r.NextDouble()*5);
           Matrix4d TreePosition = Matrix4d.CreateTranslation(PlantingPos);
@@ -101,7 +101,7 @@ namespace Massive
 
       for (int j = TotalInstances; j < MaxInstances; j++)
       {
-        Matrix4 final = Matrix4.Identity;
+        Matrix4 final = Matrix4.CreateTranslation(j, 0, 0) ;
         mats[j] = final;
       }
 
@@ -120,8 +120,8 @@ namespace Massive
     void UploadBuffer()
     {
       GL.BindBuffer(BufferTarget.ArrayBuffer, instanceVBO);
-      GL.BufferData(BufferTarget.ArrayBuffer, sizeofmat * MaxInstances, mats, BufferUsageHint.StreamDraw);
-      //GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)0, sizeofmat * TotalInstances, mats);
+      GL.BufferData(BufferTarget.ArrayBuffer, sizeofmat * MaxInstances, mats, BufferUsageHint.StaticDraw);
+      //GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)0, sizeofmat * MaxInstances, mats);
 
       Matrix4 mat = new Matrix4();
       int mat4size = Marshal.SizeOf(mat);
@@ -230,15 +230,35 @@ namespace Massive
     void SetupTree()
     {
       tree = new MModel(EType.Model, "InstanceTree");
-      tree.DistanceThreshold = 5000;
+      tree.DistanceThreshold = 15000;
       tree.Load(TreeModel);
       treemesh = (MMesh)tree.FindModuleByType(EType.Mesh);
       treemesh.transform.Scale = new Vector3d(1, 1, 1);
       treemesh.Setup();
+      //MScene.Background.Add(tree);
     }
 
     void SetupMaterial()
     {
+      MShader TreeShader = new MShader("WallShader");
+      TreeShader.Load("Shaders\\default_v.glsl",
+        "Shaders\\default_f.glsl",
+        "",
+        ""
+        );
+      TreeShader.Bind();
+      TreeShader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
+      TreeShader.SetInt("material.specular", MShader.LOCATION_SPECULAR);
+      TreeShader.SetInt("material.multitex", MShader.LOCATION_MULTITEX);
+      TreeShader.SetInt("material.normalmap", MShader.LOCATION_NORMALMAP);
+      TreeShader.SetInt("material.shadowMap", MShader.LOCATION_SHADOWMAP);
+
+      MMaterial Avatar1Mat = new MMaterial("TREE01M");
+      Avatar1Mat.AddShader(TreeShader);
+      Avatar1Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar01.jpg"));
+      MScene.MaterialRoot.Add(Avatar1Mat);
+     
+
       MMaterial InstanceMat = new MMaterial("InstanceMaterial");
       MShader shader = new MShader("InstanceShader");
       //shader.LoadFromString(sVertexShader, sFragmentShader);
@@ -254,7 +274,9 @@ namespace Massive
       shader.SetInt("material.shadowMap", MShader.LOCATION_SHADOWMAP);
       InstanceMat.AddShader(shader);
       InstanceMat.SetDiffuseTexture(Globals.TexturePool.GetTexture(TreeTexture));
-      this.AddMaterial(InstanceMat);
+      this.SetMaterial(InstanceMat);
+      tree.SetMaterial(InstanceMat);
+
     }   
 
     public override void Render(Matrix4d viewproj, Matrix4d parentmodel)
@@ -262,7 +284,9 @@ namespace Massive
       if (Settings.DrawTrees == false) return;
       if (Globals.ShaderOverride != null) return;
       if (DistanceFromAvatar > DistanceThreshold) return;
-      
+      if ( tree != null) { 
+      tree.transform.Position = this.transform.Position;
+      }
       if ( Planted == false)
       {
         Setup();
@@ -276,19 +300,17 @@ namespace Massive
       material.shader.SetMat4("model", modelMatrix);
       //material.shader.SetBool("selected", Selected);
       material.shader.SetBool("ShadowEnabled", CastsShadow);
-
-      //GL.BindVertexArray(VAO);      
+      
       GL.BindVertexArray(treemesh.VAO);
       GL.BindBuffer(BufferTarget.ElementArrayBuffer, treemesh.EBO);
 
       UploadBuffer();
-      material.Render(viewproj, parentmodel);
-      //GL.DrawArrays(PrimitiveType.Triangles, 0, Vertices.Length);      
-      //GL.DrawArraysInstanced(PrimitiveType.Triangles, 0, treemesh.Vertices.Length, TotalInstances);
-      GL.DrawElementsInstanced(PrimitiveType.Triangles, treemesh.Indices.Length, DrawElementsType.UnsignedInt, treemesh.Indices, TotalInstances);
+      material.Render(viewproj, parentmodel);      
+      GL.DrawArraysInstanced(PrimitiveType.Triangles, 0, treemesh.Vertices.Length, TotalInstances);      
+      Helper.CheckGLError(this);
       GL.BindVertexArray(0);
       material.UnBind();
-      //base.Render(viewproj, parentmodel);
+      base.Render(viewproj, parentmodel);
     }
   }
 }

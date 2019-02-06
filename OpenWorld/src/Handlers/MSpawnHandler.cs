@@ -74,9 +74,9 @@ namespace OpenWorld.Handlers
       return o;
     }
 
-    void Spawn(MServerObject m)
+    public void Spawn(MServerObject m)
     {
-      MSceneObject mo = (MSceneObject)MScene.Root.FindModuleByInstanceID(m.InstanceID);
+      MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(m.InstanceID);
       if (mo != null) return;
       MSceneObject mt = (MSceneObject)MScene.TemplateRoot.FindModuleByName(m.TemplateID);
       if ( mt == null)
@@ -96,8 +96,8 @@ namespace OpenWorld.Handlers
       {
         mo.InstanceID = m.InstanceID;
         mo.SetRotation(MassiveTools.QuaternionFromArray(m.Rotation));
-        if (mo.Name == Globals.UserAccount.UserID)
-        {
+        if (mo.InstanceID == Globals.UserAccount.UserID)
+        {         
           Globals.Avatar.SetSceneObject(mo);
         }
       }     

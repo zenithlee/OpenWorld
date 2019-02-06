@@ -1,5 +1,6 @@
 ﻿using Massive;
 using Massive.Events;
+using Massive.Tools;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -247,8 +248,36 @@ namespace OpenWorld.Handlers
       }
     }
 
+    public void UpdateOffline()
+    {
+      double mult = GetMultiplier();      
+      if (KeyState[(int)Keys.W])
+      {
+        Vector3d pos = MScene.Camera.transform.Position + new Vector3d(100 * mult, 0, 0);
+        Globals.UserAccount.CurrentPosition = MassiveTools.ArrayFromVector(pos);
+        MScene.Camera.SetPosition(pos);
+        MMessageBus.AvatarMoved(this, Globals.UserAccount.UserID, pos, Quaterniond.Identity);
+      }
+
+      if (KeyState[(int)Keys.A])
+      {
+        Vector3d pos = MScene.Camera.transform.Position + new Vector3d(0, 0, -100*mult);
+        Globals.UserAccount.CurrentPosition = MassiveTools.ArrayFromVector(pos);
+        MScene.Camera.SetPosition(pos);
+        MMessageBus.AvatarMoved(this, Globals.UserAccount.UserID, pos, Quaterniond.Identity);
+      }
+
+
+    }
+
+
     public void Update()
     {
+      //if ( Globals.Network.Connected == false)
+      //{
+//        UpdateOffline();
+      //}
+
       if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Walking)
       {
         UpdateWalking();
@@ -257,8 +286,6 @@ namespace OpenWorld.Handlers
       {
         UpdateFlying();
       }
-
-
     }
 
   }

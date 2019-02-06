@@ -11,14 +11,20 @@ using Massive.Network;
 using OpenTK;
 using Massive;
 using Massive.Services;
+using OpenWorld.Controllers;
+using Massive.Events;
+using Massive.Tools;
 
-namespace OpenWorld.src.Controls
+namespace OpenWorld.Controls
 {
   public partial class NavBarControl : UserControl
   {
+    NavigationBarDecoder Decoder;
+
     public NavBarControl()
     {
       InitializeComponent();
+      Decoder = new NavigationBarDecoder();
     }
 
     private void HomeButton_Click(object sender, EventArgs e)
@@ -27,8 +33,43 @@ namespace OpenWorld.src.Controls
       //Vector3d pos = MassiveTools.Vector3dFromVector3_Server(zone.Position);
 
       //cape town
-      Vector3d pos = new Vector3d(12717657178.1831, 146353256847.389, -7581837054.42208);
-      Globals.Network.TeleportRequest(Globals.UserAccount.UserID, pos, Quaterniond.Identity);
+      Vector3d pos = MassiveTools.VectorFromArray(Globals.UserAccount.HomePosition);
+      
+      if ( Globals.Network.Connected == true)
+      {
+        MMessageBus.TeleportRequest(Globals.UserAccount.UserID, pos, Quaterniond.Identity);
+      }
+      else
+      {
+        MScene.Camera.transform.Position = pos;
+        Globals.UserAccount.CurrentPosition = MassiveTools.ArrayFromVector(pos);
+        Globals.Avatar.SetPosition(pos);
+        MMessageBus.AvatarMoved(this, Globals.UserAccount.UserID, pos, Quaterniond.Identity);
+      }
+      
+    }
+
+    private void SiteBox_TextChanged(object sender, EventArgs e)
+    {
+     
+    }
+
+    private void SiteBox_KeyUp(object sender, KeyEventArgs e)
+    {
+      if ( e.KeyCode == Keys.Enter)
+      {
+        Go();
+      }
+    }
+
+    void Go()
+    {
+      string sText = SiteBox.Text;
+      if (string.IsNullOrEmpty(sText)) return;
+      sText = sText.Trim();
+      SiteBox.Text = sText;
+      Vector3d dest = Decoder.Decode(sText);
+      MMessageBus.TeleportRequest(this, dest, Globals.LocalUpRotation());
     }
   }
 }

@@ -1,10 +1,6 @@
 ﻿using Massive.Events;
 using OpenTK;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Massive
 {
@@ -15,7 +11,7 @@ namespace Massive
 
     public Quaterniond TargetRotation;
 
-    public MPhysicsObject _physics;    
+    public MPhysicsObject _physics;
     public double height = 1.2;
 
     public double Throttle = 0;
@@ -82,16 +78,8 @@ namespace Massive
       _physics = null;
       if (Target != null)
       {
-        _physics = (MPhysicsObject)Target.FindModuleByType(EType.PhysicsObject);
-        if (_physics == null)
-        {
-          //_physics = new MPhysicsObject(Target, "Physics", 1, MPhysicsObject.EShape.Sphere, false, Vector3d.One);
-          //Target.Add(_physics);
-          //_physics._rigidBody.SetSleepingThresholds(0.01, 0.1);
-        }
-
-      }
-      //Target.animation.TranslationSpeed = 1;
+        _physics = (MPhysicsObject)Target.FindModuleByType(EType.PhysicsObject);        
+      }      
     }
 
     public Vector3d GetPosition()
@@ -119,7 +107,7 @@ namespace Massive
       {
         if (Target != null)
         {
-          Target.transform.Position = pos;       
+          Target.transform.Position = pos;
         }
         return;
       }
@@ -211,7 +199,7 @@ namespace Massive
       if (_physics == null) return;
       _physics.SetActive(true);
 
-      Controller.Jump(b);   
+      Controller.Jump(b);
     }
 
     public void InputB1(double b)
@@ -241,7 +229,12 @@ namespace Massive
 
     public Vector3d Up()
     {
-      if (_physics == null) return new Vector3d(0, 1, 0);
+      if (_physics == null)
+      {
+        return Globals.LocalUpVector;
+        //new Vector3d(0, 1, 0);
+      }
+
       Vector3d vo = _physics._rigidBody.WorldTransform.ExtractRotation() * new Vector3d(0, 1, 0);
       return vo;
     }

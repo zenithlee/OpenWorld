@@ -71,6 +71,7 @@
       this.StatusBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
       this.StatusBox.Size = new System.Drawing.Size(627, 41);
       this.StatusBox.TabIndex = 2;
+      this.StatusBox.Text = "Offline. Connect to Universe to download sites";
       // 
       // StatusControl
       // 

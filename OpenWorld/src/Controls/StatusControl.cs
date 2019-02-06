@@ -20,9 +20,33 @@ namespace OpenWorld.src.Controls
       InitializeComponent();
       Globals.Network.PositionChangeHandler += Network_PositionChangeHandler;
       Globals.Network.TeleportHandler += Network_TeleportHandler;
+      Globals.Network.StatusEventHandler += Network_StatusEventHandler;
       //Globals.Network.ErrorEventHandler += Network_ErrorEventHandler;
       MMessageBus.ErrorHandler += MMessageBus_ErrorHandler;
       MMessageBus.InfoEventHandler += MMessageBus_InfoEventHandler;
+      MMessageBus.AvatarMovedEvent += MMessageBus_AvatarMovedEvent;
+    }
+
+    private void MMessageBus_AvatarMovedEvent(object sender, MoveEvent e)
+    {
+      SetPosition(e.Position);
+    }
+
+    private void Network_StatusEventHandler(object sender, NetworkStatusEvent e)
+    {
+      BeginInvoke(new MethodInvoker(delegate ()
+      {
+        if (Globals.Network.Connected == false)
+        {
+          StatusBox.BackColor = Color.Red;
+          StatusBox.Text = "SERVER DISCONNECTED";
+        }
+        else
+        {
+          StatusBox.BackColor = Color.White;
+          StatusBox.Text = "Connected";
+        }
+      }));
     }
 
     private void MMessageBus_ErrorHandler(object sender, ErrorEvent e)

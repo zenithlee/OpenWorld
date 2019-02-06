@@ -12,10 +12,14 @@ namespace Massive
 {
   public static class Settings
   {
-    public static int MaxTerrains = 2;
+    public static int MaxTerrains = 1;
+    public static bool DrawPlanets = true;
+    public static bool DrawBackdrop = true;
     public static bool DrawTrees = true;
+    public static bool DrawTerrains = true;
     public static double TreeDensity = 0.04;
     public static bool TerrainPhysics = true;
+    public static bool Gravity = true;
     public static Vector3d OffsetFirstPerson = Vector3d.Zero;
     public static Vector3d OffsetThirdPerson = new Vector3d(0, 2, 2);
 

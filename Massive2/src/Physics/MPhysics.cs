@@ -1,4 +1,5 @@
 ﻿using BulletSharp;
+using Massive.Events;
 using OpenTK;
 using OpenTK.Graphics;
 using System;
@@ -24,6 +25,7 @@ namespace Massive
     //List<CollisionShape> collisionShapes = new List<CollisionShape>();
     CollisionConfiguration collisionConf;
 
+    public Vector3d DefaultGravity = new Vector3d(0, -9.8, 0);
     public bool UseGravity = true;
     public Vector3d Gravity { get => World.Gravity; set => World.Gravity = value; }
 
@@ -40,6 +42,13 @@ namespace Massive
       : base(EType.PhysicsEngine, "PhysicsEngine")
     {
       Instance = this;
+      MMessageBus.GravityStateHandler += MMessageBus_GravityStateHandler;
+    }
+
+    private void MMessageBus_GravityStateHandler(object sender, BooleanEvent e)
+    {
+      UseGravity = e.State;
+      SetGravity(DefaultGravity);
     }
 
     public override void Setup()

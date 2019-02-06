@@ -1,4 +1,4 @@
-﻿namespace OpenWorld.src.Controls
+﻿namespace OpenWorld.Controls
 {
   partial class NavBarControl
   {
@@ -86,6 +86,8 @@
       this.SiteBox.Size = new System.Drawing.Size(569, 26);
       this.SiteBox.TabIndex = 4;
       this.SiteBox.Text = "Home";
+      this.SiteBox.TextChanged += new System.EventHandler(this.SiteBox_TextChanged);
+      this.SiteBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SiteBox_KeyUp);
       // 
       // NavBarControl
       // 
