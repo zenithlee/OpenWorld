@@ -19,8 +19,8 @@ namespace OpenWorld.Forms
 
     private void ChatForm_Shown(object sender, EventArgs e)
     {
-      Point p = Main.ClientLocation;
-      p.Offset(Main.RenderClientSize.Width - Width, 0);
+      Point p = Main.ClientRect.Location;
+      p.Offset(Main.ClientRect.Width - Width, 0);
       Location = p;
       cChatControl1.Setup();
     }

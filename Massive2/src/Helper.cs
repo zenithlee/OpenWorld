@@ -365,13 +365,14 @@ namespace Massive
       t.transform.Position = Pos;
       t.transform.Rotation = Rot;
 
-      t.Tag = m.Tag;
+      t.Tag = Tag;
 
       MClickHandler ch = (MClickHandler)m.FindModuleByType(MObject.EType.ClickHandler);
       if (ch != null)
       {
         MClickHandler ch2 = new MClickHandler();
         ch2.Clicked = ch.Clicked;
+        ch2.RightClicked = ch.RightClicked;
         ch2.DoubleClicked = ch.DoubleClicked;
         t.Add(ch2);
       }

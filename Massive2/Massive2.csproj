@@ -128,6 +128,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\Events\BooleanEvent.cs" />
+    <Compile Include="src\Events\BookmarkEvent.cs" />
+    <Compile Include="src\Modules\Widgets\MLinker.cs" />
     <Compile Include="src\MScene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Graphics\MBoundingBox.cs" />

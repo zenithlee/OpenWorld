@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using Massive.Platform;
+using OpenTK;
 using OpenTK.Audio.OpenAL;
 
 using System;
@@ -42,7 +43,7 @@ namespace Massive
 
     public override void Setup()
     {
-      string sFile = Path.Combine(Globals.AssetsPath, currentFile);      
+      string sFile = Path.Combine(MFileSystem.AssetsPath, currentFile);      
       if (!File.Exists(sFile))
       {
         Error = "File not found:" + sFile;

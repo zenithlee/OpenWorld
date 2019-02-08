@@ -14,12 +14,14 @@ namespace OpenWorld
   {
     COpenWorld openWorld;
     private GLControl glControl1;
-    public static Point ClientLocation;
-    public static Size RenderClientSize;
+    //public static Point ClientLocation;
+    //public static Size RenderClientSize;
     LobbyForm lobbyForm;
     MKeyboardHandler keyboardHandler;
     MMouseHandler mouseHandler;
     InfoOverlayForm _infoForm;
+
+    public static Rectangle ClientRect;
 
     public Main()
     {
@@ -37,6 +39,7 @@ namespace OpenWorld
       mouseHandler = new MMouseHandler(glControl1);
       timer1.Start();
       Application.Idle += Application_Idle;
+      bookmarksControl1.Setup();
       SetupInfo();
     }
 
@@ -69,14 +72,16 @@ namespace OpenWorld
       //this.glControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glControl1_KeyDown);
       //this.glControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseDown);
       this.glControl1.Resize += new System.EventHandler(this.glControl1_Resize);
-      this.tableLayoutPanel1.Controls.Add(this.glControl1, 0, 1);
+      this.tableLayoutPanel1.Controls.Add(this.glControl1, 0, 2);
     }
 
     private void glControl1_Resize(object sender, EventArgs e)
     {
       Point p = PointToScreen(glControl1.Location);
-      ClientLocation = p;
-      RenderClientSize = glControl1.Size;
+      ClientRect.X = p.X;
+      ClientRect.Y = p.Y;
+      ClientRect.Width = glControl1.Width;
+      ClientRect.Height = glControl1.Height;      
 
       int w = 800;
       int h = 600;
@@ -131,7 +136,8 @@ namespace OpenWorld
 
     void UpdateWindowVariables()
     {
-      ClientLocation = glControl1.PointToScreen(new Point(0,0));
+      //ClientLocation = glControl1.PointToScreen(new Point(0,0));
+      ClientRect.Location = glControl1.PointToScreen(glControl1.ClientRectangle.Location);
       if (_infoForm != null)
       {
         _infoForm.UpdateData();
@@ -141,6 +147,11 @@ namespace OpenWorld
     private void Main_Move(object sender, EventArgs e)
     {
       UpdateWindowVariables();
+    }
+
+    private void Main_Shown(object sender, EventArgs e)
+    {
+      UpdateWindowVariables();      
     }
   }
 }

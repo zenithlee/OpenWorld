@@ -39,7 +39,6 @@ namespace Massive.Events
     public static event EventHandler<MoveEvent> TeleportCompleteHandler;
 
     public static event EventHandler<ChangePropertyEvent> PropertyChangeEvent;
-
     public static event EventHandler<RotationRequestEvent> RotateEventHandler;
 
     public static event EventHandler<InfoEvent> InfoEventHandler;
@@ -65,6 +64,9 @@ namespace Massive.Events
     public static event EventHandler<ZoneEvent> ZoneAddHandler;
     public static event EventHandler<ZoneEvent> ZoneDeleteHandler;
     public static event EventHandler<ZoneEvent> ZoneSelectHandler;
+
+    public static event EventHandler<BookmarkEvent> BookmardAddRequestEvent;
+    public static event EventHandler<BookmarkEvent> BookmarkAddedEvent;
 
     public static event EventHandler<NavigationEvent> NavigationHandler;
     public static event EventHandler<NavigationEvent> NavigationDisableHandler;
@@ -200,6 +202,11 @@ namespace Massive.Events
       GUIEvent(ErrorHandler,sender, new ErrorEvent(sMessage));
     }
 
+    public static void Select(object sender, SelectEvent mo)
+    {
+      GUIEvent(SelectEventHandler, sender, mo);      
+    }
+
     public static void ToggleRenderer()
     {
       DisableRender?.Invoke(null, new InfoEvent(""));
@@ -248,6 +255,16 @@ namespace Massive.Events
     public static void AddZone(object sender, MServerZone zone)
     {
       ZoneAddHandler?.Invoke(sender, new ZoneEvent(zone));
+    }
+
+    public static void AddBookmarkRequest(object sender, BookmarkEvent e)
+    {
+      BookmardAddRequestEvent?.Invoke(sender, e);
+    }
+
+    public static void BookmarkAdded(object sender, BookmarkEvent e)
+    {
+      BookmarkAddedEvent?.Invoke(sender, e);
     }
 
     public static void ChangeModeRequest(object sender, MAvatar.eMoveMode NewMode)
@@ -299,9 +316,9 @@ namespace Massive.Events
        }
      }*/
 
-    public static void ChangeTextureRequest(object sender, string sNewTextureID)
+    public static void ChangeTextureRequest(object sender, string sInstanceID, string sNewTextureID)
     {
-      TextureRequestHandler?.Invoke(sender, new TextureRequestEvent(sNewTextureID));
+      TextureRequestHandler?.Invoke(sender, new TextureRequestEvent(sInstanceID, sNewTextureID));
     }
 
     public static void DeleteRequest(object sender, MSceneObject mo)
@@ -324,16 +341,7 @@ namespace Massive.Events
       FocusEventHandler?.Invoke(sender, new FocusEvent(mo));
     }
 
-    public static void Select(object sender, MSceneObject mo)
-    {
-      if (SelectEventHandler != null)
-      {
-        Globals.GUIThreadOwner.Invoke((MethodInvoker)delegate
-        {
-          SelectEventHandler(sender, new SelectEvent(mo));
-        });
-      }
-    }
+   
 
     public static void Click(object sender, Point Pos, int Button)
     {
@@ -350,9 +358,9 @@ namespace Massive.Events
       TeleportedEventHandler?.Invoke(sender, new MoveEvent(InstanceID, Position, Quaterniond.Identity));
     }
 
-    public static void MoveRequest(object sender, string InstanceID, Vector3d NewPosition)
+    public static void MoveRequest(object sender, string InstanceID, Vector3d NewPosition, Quaterniond rot)
     {
-      MoveRequestEventHandler?.Invoke(sender, new MoveEvent(InstanceID, NewPosition, Quaterniond.Identity));
+      MoveRequestEventHandler?.Invoke(sender, new MoveEvent(InstanceID, NewPosition, rot));
     }
 
     public static void MoveAvatarRequest(object sender, string InstanceID, Vector3d pos, Quaterniond rot)

@@ -30,6 +30,7 @@ namespace Massive
     bool CanIOpen()
     {
       string stag = (string)msoParent.Tag;
+      if (string.IsNullOrEmpty(stag)) return true;
       string[] items = stag.Split('|');
       string permissions = items[1];
 

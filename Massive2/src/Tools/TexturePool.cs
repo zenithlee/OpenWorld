@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Threading;
+using Massive.Platform;
 using Massive.Tools;
 
 namespace Massive
@@ -67,7 +68,7 @@ namespace Massive
                 }
                 else
                 {
-                  string sAbsolute = Path.Combine(Globals.AssetsPath, Current.Filename);
+                  string sAbsolute = Path.Combine(MFileSystem.AssetsPath, Current.Filename);
                   if (File.Exists(sAbsolute))
                   {
                     Current.LoadTextureData(sAbsolute);
@@ -106,7 +107,7 @@ namespace Massive
     {
       string extension = ".jpg";
       if (URL.EndsWith(".png")) extension = ".png";
-      return Path.Combine(Globals.CachePath, Helper.HashString(Globals.UserAccount.UserID + "_" + URL) + extension);
+      return Path.Combine(MFileSystem.CachePath, Helper.HashString(Globals.UserAccount.UserID + "_" + URL) + extension);
     }
 
     void DownloadFromURL()

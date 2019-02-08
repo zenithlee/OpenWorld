@@ -267,9 +267,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cmd\servercmd.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="cmd\zservercmd.txt" />
     <Content Include="Laurent-Baumann-Aqua-Blend-Finder-Toolbar-Burn.ico" />
     <Content Include="php\fu.php" />
   </ItemGroup>

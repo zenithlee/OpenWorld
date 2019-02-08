@@ -60,7 +60,7 @@ namespace Massive
     }
     */
 
-    public override void OnClick(bool DoubleClick)
+    public override void OnClick(bool DoubleClick, bool RightClick)
     {
      // base.OnClick();
       if (_Activator == null) return;

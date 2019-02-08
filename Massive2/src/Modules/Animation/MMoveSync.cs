@@ -109,17 +109,12 @@ namespace Massive
       
     }
 
-    void Complete()
+    public void Complete()
     {
       MSceneObject msp = (MSceneObject)Parent;
-      MPhysicsObject po = (MPhysicsObject)msp.FindModuleByType(EType.PhysicsObject);
-
-      //for( int i=0; i<  po._rigidBody.NumConstraintRefs; i++)
-      //{
-        //TypedConstraint tc = po._rigidBody.GetConstraintRef(0);
-        //tc.
-      //}
-
+      //MPhysicsObject po = (MPhysicsObject)msp.FindModuleByType(EType.PhysicsObject);
+      msp.SetPosition(TargetPosition);
+      msp.SetRotation(TargetRotation, false);
 
       Parent.Remove(this);
       Parent = null;

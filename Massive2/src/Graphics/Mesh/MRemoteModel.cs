@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Massive.Platform;
 using OpenTK;
 
 namespace Massive
@@ -51,7 +52,7 @@ namespace Massive
         extension = ".obj";
       }
 
-      CacheFile = Path.Combine(Globals.CachePath, Helper.HashString(Globals.UserAccount.UserID + "_" + URL) + extension);
+      CacheFile = Path.Combine(MFileSystem.CachePath, Helper.HashString(Globals.UserAccount.UserID + "_" + URL) + extension);
 
       if (File.Exists(CacheFile))
       {

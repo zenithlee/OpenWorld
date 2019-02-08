@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Massive.Events;
+using Massive.Platform;
 
 namespace Massive
 {  
@@ -50,7 +51,7 @@ namespace Massive
       }
       MassiveDomain = AppDomain.CreateDomain("MassiveScripts");
 
-      string absPath = Globals.ProjectPath + "bin\\Scripts.dll";
+      string absPath = MFileSystem.ProjectPath + "bin\\Scripts.dll";
       if (!File.Exists(absPath)) return;
 
 

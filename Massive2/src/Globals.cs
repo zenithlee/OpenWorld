@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Massive.Platform;
 
 namespace Massive
 {
@@ -60,10 +61,7 @@ namespace Massive
     public static MUserAccount UserAccount = new MUserAccount();
 
     public static string LobbyDataURL = "http://bigfun.co.za/massive/lobby/";
-    public static string ProjectPath = @".\";
-    public static string AssetsPath = @".\Assets\";
-    public static string AppDataPath = @".\Assets\UserData";
-    public static string CachePath = @".\Assets\UserData\Cache";
+    
     
     public static void Log(object sender, string s)
     {
@@ -71,16 +69,7 @@ namespace Massive
       Console.WriteLine(s);
     }
 
-    public static void SetProjectPath(string path)
-    {
-      if (!path.EndsWith("\\")) path += "\\";
-      ProjectPath = path;
-      AssetsPath = Path.Combine(path, "Assets\\");
-      AppDataPath = Path.Combine(path, @"UserData");
-      CachePath = Path.Combine(path, @"UserData\Cache");
-      if (!Directory.Exists(AppDataPath)) Directory.CreateDirectory(AppDataPath);
-      if (!Directory.Exists(CachePath)) Directory.CreateDirectory(CachePath);
-    }
+    
 
     public static void NotifyChange(object sender, MObject mo, GraphChangedEvent.ChangeType Reason)
     {

@@ -21,14 +21,14 @@ namespace Massive
     int depthMapFBO;
     public int depthMap;
     private float nearPlane = 10.5f;
-    private float farPlane = 60.5f;
+    private float farPlane = 50.5f;
     public float NearPlane { get => nearPlane; set => nearPlane = value; }
     public float FarPlane { get => farPlane; set => farPlane = value; }
 
-    private bool orthographic = true;
+    private bool orthographic = false;
     public bool Orthographic { get => orthographic; set => orthographic = value; }
 
-    private float fOV = 90;
+    private float fOV = 64;
     public float FOV { get => fOV; set => fOV = value; }
 
     Matrix4d lightProjection, lightView, lightSpaceMatrix;

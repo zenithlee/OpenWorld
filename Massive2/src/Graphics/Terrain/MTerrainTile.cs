@@ -270,8 +270,7 @@ namespace Massive
       if (_physics == null)
       {
         Console.WriteLine("MTerrainTile.SetupPhysics " + TileX + "," + TileY);
-        //string sText = string.Format("PHYSICS: Cache\\earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);
-        
+        //string sText = string.Format("PHYSICS: Cache\\earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);                
         _physics = new MPhysicsObject(this, "Terrain_collider", 0, MPhysicsObject.EShape.ConcaveMesh, false, this.transform.Scale);
         DoSetupPhysics = false;
       }

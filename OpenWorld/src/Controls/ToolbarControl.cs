@@ -8,6 +8,7 @@ namespace OpenWorld.Controls
   {
     ChatForm _chatForm;
     BuildForm _buildForm;
+    
     public ToolbarControl()
     {
       InitializeComponent();
@@ -16,19 +17,25 @@ namespace OpenWorld.Controls
     private void ChatButton_Click(object sender, EventArgs e)
     {
       _chatForm = new ChatForm();
-      _chatForm.Show(Main.ActiveForm);
+      _chatForm.Show(ParentForm);
     }
 
     private void BuildButton_Click(object sender, EventArgs e)
     {
       _buildForm = new BuildForm();
-      _buildForm.Show(Main.ActiveForm);
+      _buildForm.Show(ParentForm);
     }
 
     private void SettingsButton_Click(object sender, EventArgs e)
     {
       SettingsForm f = new SettingsForm();
-      f.Show(Main.ActiveForm);
+      f.Show(ParentForm);
+    }
+
+    private void AssetsButton_Click(object sender, EventArgs e)
+    {
+      AssetsForm af = new AssetsForm();
+      af.Show(ParentForm);
     }
   }
 }

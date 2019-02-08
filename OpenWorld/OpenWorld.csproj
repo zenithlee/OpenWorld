@@ -68,11 +68,18 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\Controllers\BookmarkController.cs" />
     <Compile Include="src\Controllers\COpenWorld.cs" />
     <Compile Include="src\Controllers\LobbyController.cs" />
     <Compile Include="src\Controllers\LobbyEntry.cs" />
     <Compile Include="src\Controllers\NavigationBarDecoder.cs" />
     <Compile Include="src\Controllers\UserDetails.cs" />
+    <Compile Include="src\Controls\BookmarksControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\BookmarksControl.Designer.cs">
+      <DependentUpon>BookmarksControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Controls\CChatControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -97,11 +104,23 @@
     <Compile Include="src\Controls\NavBarControl.Designer.cs">
       <DependentUpon>NavBarControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Controls\ObjectMoveControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\ObjectMoveControl.Designer.cs">
+      <DependentUpon>ObjectMoveControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Controls\StatusControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="src\Controls\StatusControl.Designer.cs">
       <DependentUpon>StatusControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\TextureControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\TextureControl.Designer.cs">
+      <DependentUpon>TextureControl.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Controls\ToolbarControl.cs">
       <SubType>UserControl</SubType>
@@ -114,6 +133,12 @@
     </Compile>
     <Compile Include="src\Controls\View3D.Designer.cs">
       <DependentUpon>View3D.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\AssetsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\AssetsForm.Designer.cs">
+      <DependentUpon>AssetsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Forms\BuildForm.cs">
       <SubType>Form</SubType>
@@ -133,11 +158,23 @@
     <Compile Include="src\Forms\DToolForm.Designer.cs">
       <DependentUpon>DToolForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Forms\ImageUploader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\ImageUploader.Designer.cs">
+      <DependentUpon>ImageUploader.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Forms\InfoOverlayForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\Forms\InfoOverlayForm.Designer.cs">
       <DependentUpon>InfoOverlayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\LinkerConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\LinkerConfigForm.Designer.cs">
+      <DependentUpon>LinkerConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Forms\LobbyForm.cs">
       <SubType>Form</SubType>
@@ -158,14 +195,20 @@
       <DependentUpon>UserInfoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Handlers\MCameraHandler.cs" />
+    <Compile Include="src\Handlers\MDeleteHandler.cs" />
     <Compile Include="src\Handlers\MKeyboardHandler.cs" />
+    <Compile Include="src\Handlers\MLightHandler.cs" />
     <Compile Include="src\Handlers\MMouseHandler.cs" />
+    <Compile Include="src\Handlers\MNavigationPointer.cs" />
+    <Compile Include="src\Handlers\MPropertyChangeHandler.cs" />
     <Compile Include="src\Handlers\MSpawnHandler.cs" />
     <Compile Include="src\Handlers\MTeleportHandler.cs" />
+    <Compile Include="src\Handlers\MTextureHandler.cs" />
     <Compile Include="src\MBuildingBlock.cs" />
     <Compile Include="src\MBuildParts.cs" />
     <Compile Include="src\Models\ChatUser.cs" />
     <Compile Include="src\Services\ThemeService.cs" />
+    <Compile Include="src\Widgets\MLinkerWidget.cs" />
     <Compile Include="Version.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
@@ -179,6 +222,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="src\Controls\BookmarksControl.resx">
+      <DependentUpon>BookmarksControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Controls\CChatControl.resx">
       <DependentUpon>CChatControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -191,11 +237,20 @@
     <EmbeddedResource Include="src\Controls\NavBarControl.resx">
       <DependentUpon>NavBarControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\ObjectMoveControl.resx">
+      <DependentUpon>ObjectMoveControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Controls\StatusControl.resx">
       <DependentUpon>StatusControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\TextureControl.resx">
+      <DependentUpon>TextureControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Controls\ToolbarControl.resx">
       <DependentUpon>ToolbarControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\AssetsForm.resx">
+      <DependentUpon>AssetsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\BuildForm.resx">
       <DependentUpon>BuildForm.cs</DependentUpon>
@@ -206,8 +261,14 @@
     <EmbeddedResource Include="src\Forms\DToolForm.resx">
       <DependentUpon>DToolForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\ImageUploader.resx">
+      <DependentUpon>ImageUploader.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\InfoOverlayForm.resx">
       <DependentUpon>InfoOverlayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\LinkerConfigForm.resx">
+      <DependentUpon>LinkerConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\LobbyForm.resx">
       <DependentUpon>LobbyForm.cs</DependentUpon>

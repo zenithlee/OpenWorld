@@ -24,7 +24,7 @@ namespace OpenWorld.src.Controls
       //Globals.Network.ErrorEventHandler += Network_ErrorEventHandler;
       MMessageBus.ErrorHandler += MMessageBus_ErrorHandler;
       MMessageBus.InfoEventHandler += MMessageBus_InfoEventHandler;
-      MMessageBus.AvatarMovedEvent += MMessageBus_AvatarMovedEvent;
+      MMessageBus.AvatarMovedEvent += MMessageBus_AvatarMovedEvent;      
     }
 
     private void MMessageBus_AvatarMovedEvent(object sender, MoveEvent e)

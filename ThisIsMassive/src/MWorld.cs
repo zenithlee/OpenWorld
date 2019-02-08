@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using ThisIsMassive.src.Handlers;
 using ThisIsMassive.Widgets;
 using System.IO;
+using Massive.Platform;
+using OpenWorld.Handlers;
 
 namespace ThisIsMassive.src
 {
@@ -390,7 +392,7 @@ namespace ThisIsMassive.src
         {
           if (mo.OwnerID.Equals(Globals.UserAccount.UserID))
           {
-            MMessageBus.Select(this, mo);
+            MMessageBus.Select(this, new SelectEvent(mo));
           }
         }
         else
@@ -595,7 +597,7 @@ namespace ThisIsMassive.src
       UISound.Volume = 0.1f;
       MScene.UtilityRoot.Add(UISound);
       //UISound.Loop = true;
-      UISound.Load(Path.Combine(Globals.AssetsPath, "Audio\\click.wav"));
+      UISound.Load(Path.Combine(MFileSystem.AssetsPath, "Audio\\click.wav"));
 
       MScene.Fog.Enabled = true;
 

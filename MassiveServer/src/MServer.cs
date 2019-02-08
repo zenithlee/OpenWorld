@@ -174,7 +174,7 @@ namespace Massive.Server
       }
       else
       {
-        DisconnectClient(connection, "Maximum Connections Reached");
+        DisconnectClient(connection, "Maximum Connections Reached. Please try a different server, or come back later.");
       }
     }
 
@@ -376,6 +376,7 @@ namespace Massive.Server
       ClientConnected?.Invoke(this, new ServerEvent("Connected to MASSIVE:" + c.ToString()));
     }
 
+    //log in registered player
     public void LoginRequest(MClient c, MNetMessage m)
     {
       if (MassiveConnections.Count >= MAXCONNECTIONS)
@@ -388,6 +389,14 @@ namespace Massive.Server
       //check database
       //if password matches, continue
       //if not, send failed message
+      IPEndPoint ipe = (IPEndPoint)c.connection.ConnectionInfo.RemoteEndPoint;      
+      string s = ipe.Address + ":" + ipe.Port;
+      c.Account.ClientIP = s;
+      if ( c.Account.UserID == null)
+      {
+        c.Account.UserID = m.UserID;
+      }
+      _DataBase.UpdatePlayerIP(c.Account);
 
       MUserAccount mu = _DataBase.GetPlayerByEmail(mlir.Email, mlir.Password);
       if ( mu == null)
@@ -399,8 +408,6 @@ namespace Massive.Server
       }
       else
       {
-        //_DataBase.AddPlayer(c.Account);
-
         MNetMessage mli = new MNetMessage();
         mli.Command = MNetMessage.LOGIN;
         mli.UserID = mu.UserID;        
@@ -430,7 +437,7 @@ namespace Massive.Server
       else
       {
         mr.Command = MNetMessage.ERROR;
-        mr.Payload = "NOT THE OWNER";
+        mr.Payload = "ERROR UPDATING TEXTURE " + _DataBase.ResultText;
         Send(c, "Message", mr.Serialize());
       }
     }

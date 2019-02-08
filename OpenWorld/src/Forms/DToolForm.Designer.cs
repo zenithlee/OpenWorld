@@ -52,7 +52,7 @@
       // 
       // TitleBar
       // 
-      this.TitleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(14)))), ((int)(((byte)(14)))));
+      this.TitleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
       this.tableLayoutPanel1.SetColumnSpan(this.TitleBar, 2);
       this.TitleBar.Dock = System.Windows.Forms.DockStyle.Fill;
       this.TitleBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

@@ -40,9 +40,19 @@ namespace OpenWorld.Controllers
 
     bool DecodePOI(string sText, out Vector3d v)
     {
+      bool found = false;
       Vector3d vt = Vector3d.Zero;
       v = vt;
-      return false;
+
+      foreach ( MAstroBody b in MPlanetHandler.Bodies)
+      {
+        if (b.Name.ToLower().Contains(sText.ToLower())) {          
+          v = b.Position + b.Radius*1.1;
+          found = true;
+          break;
+        }
+      }
+      return found;
     }
 
     bool DecodeZone(string sText, out Vector3d v)

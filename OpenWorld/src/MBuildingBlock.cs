@@ -9,6 +9,9 @@ namespace OpenWorld
 {
   public class MBuildingBlock
   {
+    public const string MATERIAL_TYPE = "MMaterial";
+    public const string MDOEL_TYPE = "MModel";
+
     private string name = "Block";
     private string textureID = "TEXTURE01";
     private string materialID = "MATERIAL01";
@@ -17,7 +20,10 @@ namespace OpenWorld
     private string physicsShape = "Box";
     private double[] size = new double[] { 1, 1, 1 };
     private string model;
+    private string path;
     private double weight = 1;
+    private string subModule;
+    private bool isTransparent = false;
 
     public string Name { get => name; set => name = value; }    
     public string TemplateID { get => templateID; set => templateID = value; }
@@ -28,6 +34,9 @@ namespace OpenWorld
     public double Weight { get => weight; set => weight = value; }
     public string MaterialID { get => materialID; set => materialID = value; }
     public string PhysicsShape { get => physicsShape; set => physicsShape = value; }
+    public string Path { get => path; set => path = value; }
+    public string SubModule { get => subModule; set => subModule = value; }
+    public bool IsTransparent { get => isTransparent; set => isTransparent = value; }
 
     public MBuildingBlock(string sName)
     {

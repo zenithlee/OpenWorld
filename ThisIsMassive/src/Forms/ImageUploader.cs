@@ -1,4 +1,5 @@
 ﻿using Massive;
+using Massive.Platform;
 using Massive.Tools;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace ThisIsMassive.src.Controls
       string extension = fi.Extension;
 
       string tempname = Helper.HashString(DateTime.Now.ToString()) + extension;
-      string TempName = Path.Combine(Globals.AppDataPath, tempname);
+      string TempName = Path.Combine(MFileSystem.AppDataPath, tempname);
 
       if (File.Exists(TempName))
       {

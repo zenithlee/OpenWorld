@@ -1,5 +1,6 @@
 ﻿using Assimp;
 using Assimp.Configs;
+using Massive.Platform;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
@@ -37,7 +38,7 @@ namespace Massive
     public virtual void Load(string sPath)
     {
       Filename = sPath;
-      string sFullPath = Path.Combine(Globals.AssetsPath, sPath);
+      string sFullPath = Path.Combine(MFileSystem.AssetsPath, sPath);
       //string sFullPath =  sPath;
       if (!File.Exists(sFullPath))
       {

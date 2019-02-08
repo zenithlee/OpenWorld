@@ -25,7 +25,7 @@ namespace OpenWorld.Handlers
     MPhysicsObject po;
 
     Vector3d TargetPosition;
-    Vector3d TargetUp;    
+    Vector3d TargetUp;
 
     //MSceneObject Target;
 
@@ -47,7 +47,7 @@ namespace OpenWorld.Handlers
 
     private void MStateMachine_StateChanged(object sender, EventArgs e)
     {
-      
+
     }
 
     private void MMessageBus_UpdateHandler(object sender, UpdateEvent e)
@@ -99,7 +99,7 @@ namespace OpenWorld.Handlers
       MScene.Camera.transform.Position = TargetPosition;
 
       Vector3d upv = MScene.Camera.UpVector;
-      if ( double.IsNaN(upv.X))
+      if (double.IsNaN(upv.X))
       {
         upv = Vector3d.UnitY;
       }
@@ -109,57 +109,60 @@ namespace OpenWorld.Handlers
       }
 
       MScene.Camera.UpVector = Vector3d.Lerp(upv, TargetUp, Time.DeltaTime * Speed * 2);
+
     }
 
     public void Update()
     {
       Throttle += Time.DeltaTime;
 
-        Vector3d AP = Globals.Avatar.GetPosition();
+      Vector3d AP = Globals.Avatar.GetPosition();
 
-        //MBoundingBox box = Globals.Avatar.Target.BoundingBox;
-        //Console.WriteLine(box);
-        //double rad = box.Size().Length;
+      //MBoundingBox box = Globals.Avatar.Target.BoundingBox;
+      //Console.WriteLine(box);
+      //double rad = box.Size().Length;
 
-        // CheckIfCloseToWall(AP + Globals.Avatar.Forward() * 0.1);        
-       
-        TargetUp = Globals.Avatar.Up();
+      // CheckIfCloseToWall(AP + Globals.Avatar.Forward() * 0.1);        
 
-        if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Walking)
+      TargetUp = Globals.Avatar.Up();
+
+      if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Walking)
+      {
+        TargetPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
+               - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;
+
+        MScene.Camera.Target.transform.Position = AP + Globals.Avatar.Forward() * 10
+          + MScene.Camera.TargetOffset;
+      }
+      else
+      {
+        TargetPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
+               - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;
+
+        MScene.Camera.Target.transform.Position = AP + Globals.Avatar.Forward() * 10;
+      }
+
+      double dist = Vector3d.Distance(PreviousPosition, MScene.Camera.transform.Position);
+      double td = Math.Abs(Vector3d.Distance(PreviousTarget, MScene.Camera.Target.transform.Position));
+
+      if (((dist > 0.25) || (td > 1))
+        && (Throttle > MaxNetworkThrottle))
+      {
+        Throttle = 0;
+        PreviousPosition = MScene.Camera.transform.Position;
+        PreviousTarget = MScene.Camera.Target.transform.Position;
+        if (Globals.Network.Connected == true)
         {
-          TargetPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
-                 - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;          
-
-          MScene.Camera.Target.transform.Position = AP + Globals.Avatar.Forward() * 10
-            + MScene.Camera.TargetOffset;
-        }
-        else
-        {
-          TargetPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
-                 - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;          
-
-          MScene.Camera.Target.transform.Position = AP + Globals.Avatar.Forward() * 10;
-        }
-
-        double dist = Vector3d.Distance(PreviousPosition, MScene.Camera.transform.Position);
-        double td = Math.Abs(Vector3d.Distance(PreviousTarget, MScene.Camera.Target.transform.Position));
-
-        if (((dist > 0.25) || (td > 1))
-          && (Throttle > MaxNetworkThrottle))
-        {
-          Throttle = 0;
-          PreviousPosition = MScene.Camera.transform.Position;
-          PreviousTarget = MScene.Camera.Target.transform.Position;
-        if ( Globals.Network.Connected == true) { 
           MMessageBus.MoveAvatarRequest(this, Globals.UserAccount.UserID, AP, Globals.Avatar.GetRotation());
         }
         else
         {
           MMessageBus.AvatarMoved(this, Globals.UserAccount.UserID, AP, Globals.Avatar.GetRotation());
+          Console.WriteLine("Click " + Globals.Avatar.GetRotation());
         }
 
-      }      
-     
+      }
+
       UpdateMovement();
     }
 

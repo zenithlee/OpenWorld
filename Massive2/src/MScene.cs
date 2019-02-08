@@ -1,4 +1,5 @@
 ﻿using Massive.Events;
+using Massive.Platform;
 using Massive.Services;
 using Massive.Tools;
 using OpenTK;
@@ -233,7 +234,7 @@ namespace Massive
       MaterialRoot.Add(DefaultMaterial);
 
       MTexture DefaultTexture = new MTexture(MTexture.DEFAULT_TEXTURE);
-      DefaultTexture.LoadTextureData(Globals.ProjectPath + "Assets\\Textures\\default.jpg");
+      DefaultTexture.LoadTextureData(MFileSystem.ProjectPath + "Assets\\Textures\\default.jpg");
       DefaultTexture.DoAssign = true;
       DefaultMaterial.SetDiffuseTexture(DefaultTexture);
 
@@ -327,7 +328,7 @@ namespace Massive
       Helper.CheckGLError(this, "TestPoint 4a");
       MTexture BackgroundTexure = new MTexture("BackgroundT");
       Helper.CheckGLError(this, "TestPoint 4b");
-      BackgroundTexure.LoadTextureData(Globals.ProjectPath + "Assets\\Textures\\Planets\\8k_stars_milky_way.jpg");
+      BackgroundTexure.LoadTextureData(MFileSystem.ProjectPath + "Assets\\Textures\\Planets\\8k_stars_milky_way.jpg");
       BackgroundTexure.DoAssign = true;
 
       MaterialRoot.Add(BGMat);

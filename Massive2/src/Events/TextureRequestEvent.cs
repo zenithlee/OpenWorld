@@ -8,10 +8,12 @@ namespace Massive.Events
 {
   public class TextureRequestEvent
   {
+    public string InstanceID = "";
     public string TextureID = "";
 
-    public TextureRequestEvent(string inTexID)
+    public TextureRequestEvent(string inInstanceID, string inTexID)
     {
+      InstanceID = inInstanceID;
       TextureID = inTexID;
     }
   }

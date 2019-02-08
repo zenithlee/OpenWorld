@@ -1,4 +1,5 @@
 ﻿using Massive;
+using Massive.Platform;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -83,6 +84,9 @@ namespace ThisIsMassive
     public static string ASTEROID03 = "ASTEROID03";
     public static string ASTEROIDBELT = "ASTEROIDBELT";
     public static string SPACESTATION01 = "SPACESTATION01";
+
+
+
 
     public static MSceneObject AddModel(string Code, string File, Vector3d Scale,
       MPhysicsObject.EShape Shape = MPhysicsObject.EShape.Box,
@@ -331,7 +335,7 @@ namespace ThisIsMassive
       MSceneObject citysound = AddModel(BuildParts.AUDIOCITY01, @"Models\cube01.3ds", new Vector3d(1, 1, 1));
       citysound.SetMaterial(BuildingMaterial3);
       MSound cs = new MSound();
-      string sPath = Path.Combine(Globals.AssetsPath, @"Audio\street.wav");
+      string sPath = Path.Combine(MFileSystem.AssetsPath, @"Audio\street.wav");
       cs.Load(sPath);
       cs.PlayOnAwake = true;
       cs.Loop = true;

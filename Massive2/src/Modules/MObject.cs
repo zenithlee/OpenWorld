@@ -46,7 +46,7 @@ namespace Massive
       PhysicsObject, PhysicsEngine, PhysicsCharacter,
       Fog,
       Flare, Particle,
-      ClickHandler, Door
+      ClickHandler, Door, Linker
     };
 
     public EType Type { get; set; }
@@ -324,7 +324,7 @@ namespace Massive
           }
           catch (Exception e)
           {
-            Console.WriteLine("MOBJECT:" + Name + " EXCEPTION");
+            Console.WriteLine("MOBJECT:" + Name + " EXCEPTION " + e.Message);
           }
         }
       }
@@ -350,11 +350,11 @@ namespace Massive
       }
     }
 
-    public virtual void OnClick(bool DoubleClick = false)
+    public virtual void OnClick(bool DoubleClick = false, bool RightClick = false)
     {
       foreach (MObject m in Modules.ToArray())
       {
-        m.OnClick(DoubleClick);
+        m.OnClick(DoubleClick, RightClick);
       }
     }
 

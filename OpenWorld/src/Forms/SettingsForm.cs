@@ -16,5 +16,16 @@ namespace OpenWorld.Forms
       Settings.Gravity = GravityCheck.Checked;
       MMessageBus.GravityStateChanged(this, new BooleanEvent(Settings.Gravity));
     }
+
+    private void TerrainPhysicsCheck_CheckedChanged(object sender, EventArgs e)
+    {
+      Settings.TerrainPhysics = TerrainPhysicsCheck.Checked;
+    }
+
+    private void SettingsForm_Load(object sender, EventArgs e)
+    {
+      TerrainPhysicsCheck.Checked = Settings.TerrainPhysics;
+      GravityCheck.Checked = Settings.Gravity;
+    }
   }
 }

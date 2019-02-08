@@ -11,7 +11,22 @@ namespace Massive.Platform
 {
   public class MFileSystem
   {
+    public static string ProjectPath = @".\";
+    public static string AssetsPath = @".\Assets\";
+    public static string AppDataPath = @".\Assets\UserData";
+    public static string CachePath = @".\Assets\UserData\Cache";
     public static string RegistryPath = "Assets\\Registry.json";
+
+    public static void SetProjectPath(string path)
+    {
+      if (!path.EndsWith("\\")) path += "\\";
+      MFileSystem.ProjectPath = path;
+      MFileSystem.AssetsPath = Path.Combine(path, "Assets\\");
+      MFileSystem.AppDataPath = Path.Combine(path, @"UserData");
+      MFileSystem.CachePath = Path.Combine(path, @"UserData\Cache");
+      if (!Directory.Exists(MFileSystem.AppDataPath)) Directory.CreateDirectory(MFileSystem.AppDataPath);
+      if (!Directory.Exists(MFileSystem.CachePath)) Directory.CreateDirectory(MFileSystem.CachePath);
+    }
 
     public static string GetFile(string sPath)
     {

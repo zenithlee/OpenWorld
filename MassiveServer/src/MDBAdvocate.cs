@@ -150,19 +150,21 @@ namespace MassiveServer
       //DataRow row = dt.Rows[0]["userid"];
       //mu.UserID = row.ItemArray.GetValue("userid"].ToString();
       mu.UserID = dt.Rows[0]["userid"].ToString();
+      mu.UserName = dt.Rows[0]["screenname"].ToString();
+      mu.AvatarID = dt.Rows[0]["avatarid"].ToString();
       return mu;
     }
 
     public MUserAccount GetPlayerByUserID(string UserID)
     {
-      MUserAccount mu = new MUserAccount();      
+      MUserAccount mu = new MUserAccount();
       string sQuery = string.Format("SELECT * from users where userid='{0}';", UserID);
       DataTable dt = QueryReader(sQuery);
       if (dt.Rows.Count == 0) return null;
 
       //DataRow row = dt.Rows[0]["userid"];
       //mu.UserID = row.ItemArray.GetValue("userid"].ToString();
-      mu.UserID = dt.Rows[0]["userid"].ToString();      
+      mu.UserID = dt.Rows[0]["userid"].ToString();
       return mu;
     }
 
@@ -194,19 +196,19 @@ namespace MassiveServer
       {
         mu = GetPlayerByUserID(m.UserID);
       }
-        
+
       string sQuery = "";
-      if ( mu == null)
+      if (mu == null)
       {
         //generate a new UserID
         if (string.IsNullOrEmpty(m.UserID))
         {
           m.UserID = UidGen.GUID();
-        }        
+        }
         sQuery = string.Format(
-        @"INSERT  into users (`screenname`,`avatarid`,`email`,`password`, `userid`) 
-          VALUES('{0}','{1}','{2}','{3}','{4}');",
-        m.UserName, m.AvatarID, m.Email, m.Password, m.UserID);
+        @"INSERT  into users (`screenname`,`avatarid`,`email`,`password`, `userid`, `ip`) 
+          VALUES('{0}','{1}','{2}','{3}','{4}, {5}');",
+        m.UserName, m.AvatarID, m.Email, m.Password, m.UserID, m.ClientIP);
       }
       else
       {
@@ -216,7 +218,18 @@ namespace MassiveServer
           WHERE `userid`='{4}';",
         m.UserName, m.AvatarID, m.Email, m.Password, m.UserID);
       }
-      
+
+      Query(sQuery);
+      return m.UserID;
+    }
+
+    public string UpdatePlayerIP(MUserAccount m)
+    {
+      if (m == null) return "";
+      string sQuery = string.Format(
+      @"UPDATE users SET ip = '{0}' WHERE `userid`='{1}';",
+      m.ClientIP, m.UserID);
+
       Query(sQuery);
       return m.UserID;
     }

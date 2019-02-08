@@ -21,7 +21,7 @@ namespace Massive
     MTerrainTile Tile;
     bool Planted = true;//start as planted to prevent premature building
 
-    const int MaxInstances = 5000;
+    //const int MaxInstances = 2000;
     int TotalInstances = 0;
     int sizeofmat = sizeof(float) * 4 * 4;
     int vec4size = sizeof(float) * 4;
@@ -31,7 +31,7 @@ namespace Massive
 
     public MForest() : base(EType.Other, "Forest")
     {
-      mats = new Matrix4[MaxInstances];      
+      mats = new Matrix4[Settings.MaxTreesPerTerrain];      
     }
 
     public override void Dispose()
@@ -82,7 +82,7 @@ namespace Massive
 
           //if (g < 0.7) continue;
           //Console.WriteLine(c[0] + " " + c[1] + " " + c[2] + " " + c[3]);
-          if (i >= MaxInstances) break;
+          if (i >= Settings.MaxTreesPerTerrain) break;
           Vector3d Treepos = new Vector3d(x,
             0,
             z);
@@ -99,7 +99,7 @@ namespace Massive
 
       TotalInstances = i;
 
-      for (int j = TotalInstances; j < MaxInstances; j++)
+      for (int j = TotalInstances; j < Settings.MaxTreesPerTerrain; j++)
       {
         Matrix4 final = Matrix4.CreateTranslation(j, 0, 0) ;
         mats[j] = final;
@@ -120,7 +120,7 @@ namespace Massive
     void UploadBuffer()
     {
       GL.BindBuffer(BufferTarget.ArrayBuffer, instanceVBO);
-      GL.BufferData(BufferTarget.ArrayBuffer, sizeofmat * MaxInstances, mats, BufferUsageHint.StaticDraw);
+      GL.BufferData(BufferTarget.ArrayBuffer, sizeofmat * Settings.MaxTreesPerTerrain, mats, BufferUsageHint.StaticDraw);
       //GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)0, sizeofmat * MaxInstances, mats);
 
       Matrix4 mat = new Matrix4();
@@ -240,7 +240,7 @@ namespace Massive
 
     void SetupMaterial()
     {
-      MShader TreeShader = new MShader("WallShader");
+      MShader TreeShader = new MShader("TreeShader");
       TreeShader.Load("Shaders\\default_v.glsl",
         "Shaders\\default_f.glsl",
         "",

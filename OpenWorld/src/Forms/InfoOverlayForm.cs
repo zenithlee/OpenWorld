@@ -70,11 +70,14 @@ namespace OpenWorld.Forms
 
     public void UpdateData()
     {
-      Location = Main.ClientLocation;
+      Location = Main.ClientRect.Location;
       Location.Offset(10, Height);      
       
       if (MPlanetHandler.CurrentNear == null) return;
-      UserInfo.Text = "";
+
+      //UserInfo.Text = "";      
+      UserInfo.Text = MPlanetHandler.CurrentNear.Name + ".";     
+      
 
       Vector3d pos = MPlanetHandler.CurrentNear.GetLonLatOnShere(UserPosition);
       UserInfo.Text += string.Format("LonLat: {0:0.0000},{1:0.0000} Alt:{2:0.0}", pos.X, pos.Y, MPlanetHandler.CurrentNear.AvatarDistanceToSurface);
@@ -86,8 +89,8 @@ namespace OpenWorld.Forms
 
       string sDist = string.Format("{0,12:#.00}km", Vector3d.Distance(Globals.Avatar.GetPosition(), NavigationTarget) / 1000.0);
       UserInfo.Text += " |> " +sDist;
-      Location = Main.ClientLocation;
-      Location.Offset(10, Main.RenderClientSize.Height - Height);
+      //Location = Main.ClientLocation;
+      //Location.Offset(10, Main.RenderClientSize.Height - Height);
 
       UserInfo.Text += "\r\n"+sStatus;
     }

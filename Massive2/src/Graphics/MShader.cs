@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using Massive.Platform;
+using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
 
@@ -151,14 +152,14 @@ namespace Massive
       ProgramID = GL.CreateProgram();
 
       int vertexShader = GL.CreateShader(ShaderType.VertexShader);
-      string sVertexPath = Path.Combine(Globals.AssetsPath, VertexShaderPath);
+      string sVertexPath = Path.Combine(MFileSystem.AssetsPath, VertexShaderPath);
       if (!File.Exists(sVertexPath))
       {
         Log(vertexShader + " : File not found:" + sVertexPath + ". Needs AppPathConfig?");
       }
       else
       {
-        GL.ShaderSource(vertexShader, File.ReadAllText(Path.Combine(Globals.AssetsPath, VertexShaderPath)));
+        GL.ShaderSource(vertexShader, File.ReadAllText(Path.Combine(MFileSystem.AssetsPath, VertexShaderPath)));
         GL.CompileShader(vertexShader);
       }
 
@@ -170,14 +171,14 @@ namespace Massive
       }
 
       int fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
-      string sFragmentPath = Path.Combine(Globals.AssetsPath, FragmentShaderPath);
+      string sFragmentPath = Path.Combine(MFileSystem.AssetsPath, FragmentShaderPath);
       if (!File.Exists(sFragmentPath))
       {
         Log(sFragmentPath + " : File not found");
       }
       else
       {
-        GL.ShaderSource(fragmentShader, File.ReadAllText(Path.Combine(Globals.AssetsPath, FragmentShaderPath)));
+        GL.ShaderSource(fragmentShader, File.ReadAllText(Path.Combine(MFileSystem.AssetsPath, FragmentShaderPath)));
         GL.CompileShader(fragmentShader);
       }
 

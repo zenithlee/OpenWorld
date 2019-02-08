@@ -80,7 +80,7 @@ namespace ThisIsMassive.src.Forms
       DataGridViewRow vrow = AssetsView.Rows[e.RowIndex];
       MSceneObject row = (MSceneObject)vrow.DataBoundItem;
 
-      MMessageBus.TeleportRequest(this, "", row.transform.Position + row.BoundingBox.Size(), row.transform.Rotation);
+      MMessageBus.TeleportRequest(this, row.transform.Position + row.BoundingBox.Size(), row.transform.Rotation);
 
     }
   }

@@ -1,5 +1,6 @@
 ﻿using Massive;
 using Massive.Network;
+using Massive.Platform;
 using Newtonsoft.Json;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
@@ -28,7 +29,7 @@ namespace Massive.Tools
     {
       string extension = ".jpg";
       if (URL.EndsWith(".png")) extension = ".png";
-      return Path.Combine(Globals.CachePath, Helper.HashString(Globals.UserAccount.UserID + "_" + URL)) + extension;
+      return Path.Combine(MFileSystem.CachePath, Helper.HashString(Globals.UserAccount.UserID + "_" + URL)) + extension;
     }
 
     public static Vector3d Vector3dFromVector3(Vector3 v)

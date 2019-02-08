@@ -1,0 +1,32 @@
+﻿using Massive;
+using Massive.Events;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OpenWorld.Handlers
+{
+  public class MDeleteHandler
+  {
+    public MDeleteHandler()
+    {
+      MMessageBus.ObjectDeletedEvent += MMessageBus_ObjectDeletedEvent;
+    }
+
+    private void MMessageBus_ObjectDeletedEvent(object sender, DeleteEvent e)
+    {
+      MSceneObject o = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(e.InstanceID);
+
+      MPhysicsObject po = (MPhysicsObject)o.FindModuleByType(MObject.EType.PhysicsObject);
+      MScene.Physics.Remove(po);
+
+      MScene.ModelRoot.Remove(o);
+      MScene.Priority1.Remove(o);
+      MScene.Priority2.Remove(o);
+
+      //o.Dispose(); //don't dispose, it disposes templates, let GC pick up unallocated objects
+    }
+  }
+}

@@ -12,7 +12,7 @@ namespace OpenWorld
 {
   public class MBuildParts
   {
-    public const string FOUNDATION01 = "FOUNDATION01";
+    public const string FOUNDATION01 = "FOUNDATION01"; //do not change, server side
     public const string TELEPORT01 = "TELEPORT01";
 
     public static string SHOPFRONT01 = "SHOPFRONT01";
@@ -88,12 +88,18 @@ namespace OpenWorld
     public const string MSphere = "MSphere";
     public const string MCube = "MCube";
 
+    /// <summary>
+    /// TEXTURES
+    /// </summary>
+    public static string WALL01M = "WALL01M";
+    public static string WALL02M = "WALL02M";
+
     static Dictionary<string, MBuildingBlock> Blocks;
 
     public void Setup()
     {
       Blocks = new Dictionary<string, MBuildingBlock>();
-     // AddDefaults();
+      // AddDefaults();
       string sData = MFileSystem.GetFile(MFileSystem.RegistryPath);
       if (string.IsNullOrEmpty(sData)) return;
       Blocks = JsonConvert.DeserializeObject<Dictionary<string, MBuildingBlock>>(sData);
@@ -103,28 +109,38 @@ namespace OpenWorld
 
     void SetupMaterials()
     {
-      MShader WallShader = new MShader("WallShader");
-      WallShader.Load("Shaders\\default_v.glsl",
+      MShader BasicShader = new MShader("BasicShader");
+      BasicShader.Load("Shaders\\default_v.glsl",
         "Shaders\\default_f.glsl",
         "Shaders\\Terrain\\eval.glsl",
         "Shaders\\Terrain\\control.glsl"
         );
-      WallShader.Bind();
-      WallShader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
-      WallShader.SetInt("material.specular", MShader.LOCATION_SPECULAR);
-      WallShader.SetInt("material.multitex", MShader.LOCATION_MULTITEX);
-      WallShader.SetInt("material.normalmap", MShader.LOCATION_NORMALMAP);
-      WallShader.SetInt("material.shadowMap", MShader.LOCATION_SHADOWMAP);
+      BasicShader.Bind();
+      BasicShader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
+      BasicShader.SetInt("material.specular", MShader.LOCATION_SPECULAR);
+      BasicShader.SetInt("material.multitex", MShader.LOCATION_MULTITEX);
+      BasicShader.SetInt("material.normalmap", MShader.LOCATION_NORMALMAP);
+      BasicShader.SetInt("material.shadowMap", MShader.LOCATION_SHADOWMAP);
 
       MMaterial Avatar1Mat = new MMaterial("AVATAR01M");
-      Avatar1Mat.AddShader(WallShader);
+      Avatar1Mat.AddShader(BasicShader);
       Avatar1Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar01.jpg"));
       MScene.MaterialRoot.Add(Avatar1Mat);
 
       MMaterial Avatar2Mat = new MMaterial("AVATAR02M");
-      Avatar2Mat.AddShader(WallShader);
+      Avatar2Mat.AddShader(BasicShader);
       Avatar2Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar02.jpg"));
       MScene.MaterialRoot.Add(Avatar2Mat);
+
+      foreach (KeyValuePair<string, MBuildingBlock> k in Blocks)
+      {
+        MBuildingBlock b = k.Value;
+        if (b.Type != "MMaterial") continue;
+        MMaterial MATM = new MMaterial(b.TextureID);
+        MATM.AddShader(BasicShader);
+        MATM.SetDiffuseTexture(Globals.TexturePool.GetTexture(b.Path));
+        MScene.MaterialRoot.Add(MATM);
+      }      
     }
 
     public static Dictionary<string, MBuildingBlock> GetBlocks()
@@ -145,11 +161,14 @@ namespace OpenWorld
       return bb;
     }
 
+    /// <summary>
+    /// For testing
+    /// </summary>
     public void AddDefaults()
     {
-      MBuildingBlock b = new MBuildingBlock("FOUNDATION01");      
+      MBuildingBlock b = new MBuildingBlock("FOUNDATION01");
       b.Size = new double[] { 1, 1, 1 };
-      b.Model = Path.Combine(Globals.AssetsPath, "Models", "Construction", "foundation01.3ds");
+      b.Model = Path.Combine(MFileSystem.AssetsPath, "Models", "Construction", "foundation01.3ds");
       Blocks.Add(b.Name, b);
       b = new MBuildingBlock("Test1");
       Blocks.Add(b.Name, b);

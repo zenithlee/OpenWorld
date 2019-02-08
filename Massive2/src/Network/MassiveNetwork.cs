@@ -695,6 +695,7 @@ namespace Massive
       MTextureMessage mt = new MTextureMessage();
       mt.InstanceID = InstanceID;
       mt.TextureID = TextureID;
+      mt.OwnerID = Globals.UserAccount.UserID;
 
       MNetMessage mn = new MNetMessage();
       mn.UserID = Globals.UserAccount.UserID;

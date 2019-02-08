@@ -1,6 +1,7 @@
 ﻿using Massive;
 using Massive.Events;
 using Massive.Network;
+using Massive.Platform;
 using Massive.Tools;
 using OpenTK;
 using OpenWorld.Handlers;
@@ -9,12 +10,18 @@ using System;
 namespace OpenWorld.Controllers
 {
   public class COpenWorld
-  {    
+  {
     MSpawnHandler _spawnHandler;
+    MDeleteHandler _deleteHandler;
     MTeleportHandler _teleportHandler;
+    MTextureHandler _textureHandler;
     MCameraHandler _cameraHandler;
+    MLightHandler _lightHandler;
     MBuildParts _buildParts;
     UserDetails _userDetails;
+    MPropertyChangeHandler _propertyHandler;
+    MNavigationPointer _navPointer;
+    BookmarkController _bookmarkController;
 
     public COpenWorld()
     {
@@ -29,10 +36,22 @@ namespace OpenWorld.Controllers
       //Globals.Network.LoggedInHandler += Network_LoggedInHandler;
       MMessageBus.LoggedIn += MMessageBus_LoggedIn;
 
-      Globals.Network.PositionChangeHandler += Network_PositionChangeHandler;      
+      Globals.Network.PositionChangeHandler += Network_PositionChangeHandler;
       Globals.Network.TeleportHandler += Network_TeleportHandler;
 
       MMessageBus.MoveAvatarRequestEventHandler += MMessageBus_MoveAvatarRequestEventHandler;
+      MMessageBus.MoveRequestEventHandler += MMessageBus_MoveRequestEventHandler;
+      MMessageBus.TextureRequestHandler += MMessageBus_TextureRequestHandler;
+    }
+
+    private void MMessageBus_TextureRequestHandler(object sender, TextureRequestEvent e)
+    {
+      Globals.Network.TextureRequest(e.InstanceID, e.TextureID);
+    }
+
+    private void MMessageBus_MoveRequestEventHandler(object sender, MoveEvent e)
+    {
+      Globals.Network.PositionRequest(e.InstanceID, e.Position, e.Rotation);
     }
 
     //relay move avatar request to server
@@ -45,11 +64,18 @@ namespace OpenWorld.Controllers
     {
       Globals.VERSION = MVersion.VERSION;
 
-      Globals.SetProjectPath(@".\");
+      MFileSystem.SetProjectPath(@".\");
       Globals._scene = new MScene(true);
       _spawnHandler = new MSpawnHandler();
+      _deleteHandler = new MDeleteHandler();
       _cameraHandler = new MCameraHandler();
       _teleportHandler = new MTeleportHandler();
+      _textureHandler = new MTextureHandler();
+      _lightHandler = new MLightHandler();
+      _propertyHandler = new MPropertyChangeHandler();
+      _navPointer = new MNavigationPointer();
+      _bookmarkController = new BookmarkController();
+
       MStateMachine state = new MStateMachine(Globals.GUIThreadOwner);
 
       Globals._scene.SetupInitialObjects();
@@ -59,12 +85,15 @@ namespace OpenWorld.Controllers
 
       _userDetails = new UserDetails();
       _userDetails.Setup();
+      ParseCmdLine();
 
       //TODO: get from server     
       Globals.UserAccount.HomePosition = MassiveTools.ArrayFromVector(new Vector3d(12717655405.872, 146353256617.827, -7581841152.6841));
       Globals.UserAccount.CurrentPosition = Globals.UserAccount.HomePosition;
 
       Globals._scene.Setup();
+      _navPointer.Setup();
+
       Globals._scene.Play();
       //Settings.DebugNetwork = true;
       CreateAvatar();
@@ -76,11 +105,22 @@ namespace OpenWorld.Controllers
       MServerObject m = new MServerObject();
       m.Name = "AVATAR01";
       m.TemplateID = "AVATAR01";
-      m.TextureID = "AVATAR01M";      
+      m.TextureID = "AVATAR01M";
       m.InstanceID = Globals.UserAccount.UserID;
       m.OwnerID = m.InstanceID;
       m.Position = Globals.UserAccount.HomePosition;
       _spawnHandler.Spawn(m);
+    }
+
+    void ParseCmdLine()
+    {
+      string[] args = Environment.GetCommandLineArgs();
+
+      if (args.Length > 1)
+      {
+        Globals.UserAccount.UserID = args[1];
+      }
+
     }
 
     //1 client connects to MASSIVE server and receives this callback
@@ -92,7 +132,9 @@ namespace OpenWorld.Controllers
 
     //2 user logs in, gets a userID, ends up here
     private void MMessageBus_LoggedIn(object sender, ChangeDetailsEvent e)
-    {      
+    {
+      ParseCmdLine();
+
       Globals.Network.GetWorld();
 
       //TODO: Use Server-side home position
@@ -100,13 +142,13 @@ namespace OpenWorld.Controllers
       //Globals.UserAccount.HomePosition = MassiveTools.ArrayFromVector(Home);
 
       Globals.Network.SpawnRequest(Globals.UserAccount.AvatarID, MTexture.DEFAULT_TEXTURE, Globals.UserAccount.UserID, "TAG",
-        Home, Quaterniond.Identity, Globals.UserAccount.UserID, 0, 10);     
-      
+        Home, Quaterniond.Identity, Globals.UserAccount.UserID, 0, 10);
+
       Globals.Network.ChangeAvatarRequest(Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);
       //12717655889.4, 146353256822.3, -7581841339.4(18.4096672612293, -33.9328163657347, 0)     
       Globals.Network.TeleportRequest(Globals.UserAccount.UserID, Home,
         Quaterniond.Identity);
-      
+
     }
 
     private void Network_TeleportHandler(object sender, MoveEvent e)
@@ -117,8 +159,8 @@ namespace OpenWorld.Controllers
         mo.SetPosition(e.Position);
         mo.SetRotation(e.Rotation);
       }
-        //throw new NotImplementedException();
-      }
+      //throw new NotImplementedException();
+    }
 
     private void Network_PositionChangeHandler(object sender, Massive.Events.MoveEvent e)
     {
@@ -144,27 +186,27 @@ namespace OpenWorld.Controllers
       {
         MMessageBus.AvatarMoved(this, e.InstanceID, e.Position, e.Rotation);
       }
-        //Console.WriteLine(e.Position);
+      //Console.WriteLine(e.Position);
     }
 
-   
+
 
     //1 client connects to server and receives this callback
     private void Network_ConnectedToServerHandler(object sender, Massive.Events.StatusEvent e)
     {
       Console.WriteLine("Connected to Server");
     }
-  
+
     public void Update()
     {
-     /// MPlanetHandler.GetUpAt(MassiveTools.VectorFromArray((Globals.UserAccount.CurrentPosition)));
-      Globals._scene.Update();      
+      /// MPlanetHandler.GetUpAt(MassiveTools.VectorFromArray((Globals.UserAccount.CurrentPosition)));
+      Globals._scene.Update();
     }
 
     public void Render()
     {
       Globals._scene.ClearBackBuffer();
-      Globals._scene.Render();       
+      Globals._scene.Render();
     }
 
     public void Dispose()

@@ -426,8 +426,34 @@ namespace Massive.Server
       Environment.Exit(0);
     }
 
-    //commands can be placed in a command file to, e.g. restart the app
-    void ParseCmd()
+    void Stop()
+    {
+      try
+      {
+        MNetMessage mn = new MNetMessage();
+        mn.Command = MNetMessage.CHAT;
+        MChatMessage mc = new MChatMessage();
+        mc.Message = "Server is shutting down. Please log back on in a few minutes";
+        mc.OwnerID = "SERVER";
+        mc.TargetID = "*";
+        mn.Payload = mc.Serialize();
+
+        _Server.ChatMessage(null, mn);
+      }
+      catch (Exception ex)
+      {
+        Log(ex.Message, MServer.ERROR);
+        if (ex.InnerException != null)
+        {
+          Log(ex.InnerException.Message, MServer.ERROR);
+        }
+      }
+      Thread.Sleep(1000);
+      Close();
+    }
+
+      //commands can be placed in a command file to, e.g. restart the app
+      void ParseCmd()
     {
       string sCmdFile = ".\\cmd\\servercmd.txt";
       if ( File.Exists(sCmdFile))
@@ -439,6 +465,10 @@ namespace Massive.Server
         if ( cmd == "RESTART")
         {
           Restart();
+        }
+        if (cmd == "STOP")
+        {
+          Stop();
         }
 
       }

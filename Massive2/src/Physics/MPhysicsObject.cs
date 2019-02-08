@@ -291,7 +291,7 @@ namespace Massive
       mass = inmass;
       //TriangleIndexVertexArray tm = new TriangleIndexVertexArray();
       Scale = new Vector3d(1, 1, 1);
-      TriangleMesh trimesh = new TriangleMesh();
+      TriangleMesh trimesh = new TriangleMesh();      
 
       int tcount = mesh.Indices.Count() / 3;
       for (int i = 0; i < tcount; i++)

@@ -46,7 +46,7 @@ namespace Massive
 
       Bodies.Add(new MAstroBody("Sol", "The Sun", 1.988544E+30, new Vector3d(0, 0, 0),
       new Vector3d(6.955E+5, 6.955E+5, 6.955E+5) * ScaleFactor,
-      "Textures\\Planets\\2k_sun.jpg", false, 0, false, true)); // x 5 for gas emission shader
+      "Textures\\Planets\\2k_sun.jpg", false, 0, false, false)); // x 5 for gas emission shader
 
       Bodies.Add(new MAstroBody("Mercury", "The planet Mercury", 3.302E+23,
         new Vector3d(-3.676448098104388E+07, -5.914211791485628E+07, -3.979251580149613E+06) * 1000,
@@ -97,7 +97,7 @@ namespace Massive
       Bodies.Add(new MAstroBody("Moon", "The Moon", 734.9E+20,
         new Vector3d(1.235183178863080E+07, 1.462044997645861E+08, -7.578605371678978E+06) * ScaleFactor,
         new Vector3d(1738.0, 1738.0, 1738.0) * ScaleFactor, "Textures\\Planets\\2k_moon.jpg"
-        , false, 0, false, true));
+        , false, 0, false, false));
       //VX=-2.965755272661235E+01 VY= 1.496658883251257E+00 VZ=-3.397496558449063E+00
 
       AddGravityIndicator();
@@ -173,20 +173,20 @@ namespace Massive
         if (m.HasAtmosphere)
         {
           CurrentNear = m;
-          mo = Helper.CreateModel(MScene.AstroRoot, m.Name, @"Models\earth.3ds", Vector3d.Zero);
+          mo = Helper.CreateModel(MScene.AstroRoot, m.Name, @"Models\planets\earth.3ds", Vector3d.Zero);
           //mo = Helper.CreateSphere(MScene.AstroRoot, 3, "Planet");
           //mo.transform.Scale = m.Radius * 1.00055;
           mo.transform.Scale = m.Radius;
         }
         else
         {
-          mo = Helper.CreateModel(MScene.AstroRoot, m.Name, @"Models\planet_sphere.3ds", Vector3d.Zero);
+          mo = Helper.CreateModel(MScene.AstroRoot, m.Name, @"Models\planets\planet_sphere2.3ds", Vector3d.Zero);
           mo.transform.Scale = m.Radius;
         }
 
         if (m.HasRings)
         {
-          MModel ring = Helper.CreateModel(MScene.Priority2, m.Name + "_rings", @"Models\planet_rings.3ds", Vector3d.Zero);
+          MModel ring = Helper.CreateModel(MScene.Priority2, m.Name + "_rings", @"Models\planets\planet_rings.3ds", Vector3d.Zero);
           ring.transform.Position = m.Position;
           ring.transform.Rotation = Quaterniond.FromEulerAngles(0, 0, 5 * Math.PI / 180);
           ring.transform.Scale = m.Radius;
@@ -254,7 +254,7 @@ namespace Massive
           //po.SetRestitution(0.5);
           //MSphere moc = Helper.CreateSphere(MScene.AstroRoot, 3, m.Name+ "Clouds", Vector3d.Zero);
 
-          MModel moc = Helper.CreateModel(MScene.AstroRoot, m.Name + "_clouds", @"Models\clouds.3ds", Vector3d.Zero);
+          MModel moc = Helper.CreateModel(MScene.AstroRoot, m.Name + "_clouds", @"Models\planets\clouds.3ds", Vector3d.Zero);
           moc.CastsShadow = false;
           moc.transform.Position = m.Position;
           moc.transform.Scale = m.Radius;

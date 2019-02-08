@@ -256,20 +256,25 @@ namespace OpenWorld
       {
         //hide own avatar
         bool previous = true;
-        if (Globals.Avatar.Target != null)
-        {
-          previous = Globals.Avatar.Target.Visible;
-        }
+        //if (Globals.Avatar.Target != null)
+        //{
+          //previous = Globals.Avatar.Target.Visible;
+        //}
 
-        CheckPick(e.Location);
+        CheckPick(e.Location, false);
 
-        if (Globals.Avatar.Target != null)
-        {
-          Globals.Avatar.Target.Visible = previous;
-        }
+        //if (Globals.Avatar.Target != null)
+        //{
+          //Globals.Avatar.Target.Visible = previous;
+        //}
       }
 
-      if (e.Button == MouseButtons.Right)
+      if ((e.Button == MouseButtons.Right) && (d < 3))
+      {
+        CheckPick(e.Location, false, true);
+      }
+
+        if (e.Button == MouseButtons.Right)
       {
         MMessageBus.Select(this, null);
       }
@@ -282,10 +287,10 @@ namespace OpenWorld
     {
       isDown = true;
       DownPoint = e.Location;
-      FirstDownPoint = e.Location;
+      FirstDownPoint = e.Location;      
     }
 
-    void CheckPick(Point p, bool DoubleClick = false)
+    void CheckPick(Point p, bool DoubleClick = false, bool RightClick = false)
     {
       GL.Enable(EnableCap.DepthTest);
       GL.ClearColor(Color.Black);
@@ -321,10 +326,10 @@ namespace OpenWorld
           }
           // else
           {
-            mo.OnClick(DoubleClick);
-            MMessageBus.Select(this, mo);
+            mo.OnClick(DoubleClick,RightClick);
+            MMessageBus.Select(this, new SelectEvent(mo));
             MMaterial m = (MMaterial)mo.FindModuleByType(EType.Material);
-            MMessageBus.Status(this, "Selected:" + mo.InstanceID + "(" + mo.TemplateID + ")" + mo.BoundingBox.ToString() + " - " + mo.transform.Rotation.ToString());
+            MMessageBus.Status(this, "Selected:" + mo.TemplateID);
           }
         }
       }

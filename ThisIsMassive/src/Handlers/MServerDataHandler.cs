@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThisIsMassive.src.Handlers
+namespace OpenWorld.Handlers
 {
   public class MServerDataHandler
   {

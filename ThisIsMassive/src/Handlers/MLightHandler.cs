@@ -22,6 +22,9 @@ namespace ThisIsMassive.src.Handlers
     {
       MLight light = (MLight)MScene.UtilityRoot.FindModuleByType(MObject.EType.DirectionalLight);
       if (light == null) return;
+
+      light.DebugDepth = true;
+
       light.transform.Position = e.Position
           + Globals.LocalUpVector * 22
           + Globals.LocalUpRotation() * new Vector3d(10, 10, 10);

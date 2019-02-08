@@ -30,6 +30,7 @@ namespace OpenWorld.src.Controls
       if (Globals.Network.Connected == false)
       {
         ConnectedCheck.BackColor = Color.Red;
+        ConnectedCheck.ImageIndex = 1;
       }
     }
 
@@ -37,13 +38,17 @@ namespace OpenWorld.src.Controls
     {
       if ( Globals.Network.Connected == false)
       {
-        ConnectedCheck.BackColor = Color.Gray;
+        ConnectedCheck.BackColor = Color.Transparent;
+        ConnectedCheck.Checked = true;
+        ConnectedCheck.ImageIndex = 0;
       }
     }
 
     private void Network_ConnectedToMASSIVEHandler(object sender, Massive.Events.StatusEvent e)
     {
-      ConnectedCheck.BackColor = Color.Green;
+      ConnectedCheck.BackColor = Color.Transparent;
+      ConnectedCheck.ImageIndex = 0;
+      ConnectedCheck.Checked = true;
     }
 
     private void Network_ErrorEventHandler(object sender, Massive.Events.ErrorEvent e)
