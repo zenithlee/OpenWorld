@@ -82,6 +82,8 @@ MScene.TemplateRoot - All Templates. "Lite" versions of renderable objects used 
 
 All Renderable objects are instances of a Template object in the MScene.TemplateRoot
 
+![http://bigfun.co.za/art/tonys.JPG](http://bigfun.co.za/art/tonys.JPG)
+
 # Types of Objects
 MObject - Base class of anything synced to the Scenegraph Update and Rendering, including Physics
 MSCeneObject - Renderable
