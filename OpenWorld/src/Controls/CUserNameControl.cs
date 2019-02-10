@@ -19,18 +19,25 @@ namespace ThisIsMassive.src.Controls
     private void MMessageBus_UserDetailsChanged(object sender, ChangeDetailsEvent e)
     {
       SetName(Globals.UserAccount.UserName);
-      SetStatus(Globals.UserAccount.TotalObjects, Globals.UserAccount.MaxObjects, Globals.UserAccount.Credit);
+      SetStatus(Globals.UserAccount.TotalObjects, Globals.UserAccount.MaxObjects);
+      SetCredit(Globals.UserAccount.Credit);
     }
 
     private void MMessageBus_LoggedIn(object sender, ChangeDetailsEvent e)
     {
       SetName(Globals.UserAccount.UserName);
-      SetStatus(Globals.UserAccount.TotalObjects, Globals.UserAccount.MaxObjects, Globals.UserAccount.Credit);
+      SetStatus(Globals.UserAccount.TotalObjects, Globals.UserAccount.MaxObjects);
+      SetCredit(Globals.UserAccount.Credit);
     }
 
-    void SetStatus(int Objects, int Max, double Credit)
+    void SetCredit(double Credit)
     {
-      StatusText.Text = string.Format("Build: {0}/{1} ${2}", Objects, Max, Credit);
+      CreditLabel.Text = string.Format("${0:0.00}", Credit);
+    }
+
+    void SetStatus(int Objects, int Max)
+    {
+      StatusText.Text = string.Format("B: {0}/{1}", Objects, Max);
     }
 
     void SetName(string s)

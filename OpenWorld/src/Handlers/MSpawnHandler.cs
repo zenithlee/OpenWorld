@@ -68,12 +68,21 @@ namespace OpenWorld.Handlers
         MPhysicsObject.EShape shape = GetShape(bb.PhysicsShape);
 
         MPhysicsObject mpo = new MPhysicsObject(o, TemplateID + "_physics", bb.Weight, shape,
-          true, size);
-        mpo.SetDamping(0.7, 0.5);
-        mpo.SetRestitution(0.5);
+          true, size);        
         mpo.SetSleep(15);
         mpo.SetFriction(0);
-        mpo.SetAngularFactor(0.0, 0.0, 0.0);
+        if ( shape != MPhysicsObject.EShape.Sphere)
+        {
+          mpo.SetAngularFactor(0.0, 0.0, 0.0);
+          mpo.SetDamping(0.7, 0.5);
+          mpo.SetRestitution(0.5);
+        }
+        else
+        {
+          mpo.SetDamping(0.1, 0.1);
+          mpo.SetRestitution(0.8);
+        }
+        
         o.Setup();
       }
 
@@ -175,6 +184,7 @@ namespace OpenWorld.Handlers
       if (MassiveTools.IsURL(sMaterialID))
       {
         mat = (MMaterial)new MMaterial("URLShader");
+        mat.MaterialID = sMaterialID;
         MShader DefaultShader = (MShader)MScene.MaterialRoot.FindModuleByName(MShader.DEFAULT_SHADER);
         mat.AddShader(DefaultShader);
         mat.ReplaceTexture(Globals.TexturePool.GetTexture(sMaterialID));

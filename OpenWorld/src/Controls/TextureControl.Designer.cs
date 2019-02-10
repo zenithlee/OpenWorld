@@ -31,9 +31,11 @@
       this.components = new System.ComponentModel.Container();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this.UploadTexture = new System.Windows.Forms.Button();
       this.TextureView = new System.Windows.Forms.ListView();
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-      this.UploadTexture = new System.Windows.Forms.Button();
+      this.CopyButton = new System.Windows.Forms.Button();
+      this.PasteButton = new System.Windows.Forms.Button();
       this.tableLayoutPanel2.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
@@ -61,6 +63,8 @@
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+      this.tableLayoutPanel1.Controls.Add(this.PasteButton, 0, 0);
+      this.tableLayoutPanel1.Controls.Add(this.CopyButton, 0, 0);
       this.tableLayoutPanel1.Controls.Add(this.UploadTexture, 0, 0);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -74,6 +78,18 @@
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
       this.tableLayoutPanel1.Size = new System.Drawing.Size(252, 44);
       this.tableLayoutPanel1.TabIndex = 1;
+      // 
+      // UploadTexture
+      // 
+      this.UploadTexture.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.UploadTexture.Location = new System.Drawing.Point(0, 0);
+      this.UploadTexture.Margin = new System.Windows.Forms.Padding(0);
+      this.UploadTexture.Name = "UploadTexture";
+      this.UploadTexture.Size = new System.Drawing.Size(50, 44);
+      this.UploadTexture.TabIndex = 0;
+      this.UploadTexture.Text = "Upload";
+      this.UploadTexture.UseVisualStyleBackColor = true;
+      this.UploadTexture.Click += new System.EventHandler(this.UploadTexture_Click);
       // 
       // TextureView
       // 
@@ -93,17 +109,29 @@
       this.imageList1.ImageSize = new System.Drawing.Size(32, 32);
       this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
       // 
-      // UploadTexture
+      // CopyButton
       // 
-      this.UploadTexture.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.UploadTexture.Location = new System.Drawing.Point(0, 0);
-      this.UploadTexture.Margin = new System.Windows.Forms.Padding(0);
-      this.UploadTexture.Name = "UploadTexture";
-      this.UploadTexture.Size = new System.Drawing.Size(50, 44);
-      this.UploadTexture.TabIndex = 0;
-      this.UploadTexture.Text = "Upload";
-      this.UploadTexture.UseVisualStyleBackColor = true;
-      this.UploadTexture.Click += new System.EventHandler(this.UploadTexture_Click);
+      this.CopyButton.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.CopyButton.Location = new System.Drawing.Point(50, 0);
+      this.CopyButton.Margin = new System.Windows.Forms.Padding(0);
+      this.CopyButton.Name = "CopyButton";
+      this.CopyButton.Size = new System.Drawing.Size(50, 44);
+      this.CopyButton.TabIndex = 1;
+      this.CopyButton.Text = "Copy";
+      this.CopyButton.UseVisualStyleBackColor = true;
+      this.CopyButton.Click += new System.EventHandler(this.CopyButton_Click);
+      // 
+      // PasteButton
+      // 
+      this.PasteButton.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.PasteButton.Location = new System.Drawing.Point(100, 0);
+      this.PasteButton.Margin = new System.Windows.Forms.Padding(0);
+      this.PasteButton.Name = "PasteButton";
+      this.PasteButton.Size = new System.Drawing.Size(50, 44);
+      this.PasteButton.TabIndex = 2;
+      this.PasteButton.Text = "Paste";
+      this.PasteButton.UseVisualStyleBackColor = true;
+      this.PasteButton.Click += new System.EventHandler(this.PasteButton_Click);
       // 
       // TextureControl
       // 
@@ -125,5 +153,7 @@
     private System.Windows.Forms.ListView TextureView;
     private System.Windows.Forms.ImageList imageList1;
     private System.Windows.Forms.Button UploadTexture;
+    private System.Windows.Forms.Button CopyButton;
+    private System.Windows.Forms.Button PasteButton;
   }
 }

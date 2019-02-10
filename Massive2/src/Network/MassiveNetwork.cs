@@ -470,6 +470,10 @@ namespace Massive
       Globals.UserAccount.UserName = mu.UserName;
       //Globals.UserAccount.HomePosition = mu.HomePosition;
       Globals.UserAccount.UserID = mu.UserID;
+      Globals.UserAccount.TotalObjects = mu.TotalObjects;
+      Globals.UserAccount.MaxObjects = mu.MaxObjects;
+      Globals.UserAccount.MaxFoundations = mu.MaxFoundations;
+      Globals.UserAccount.Credit = mu.Credit;
 
       LoggedInHandler(this, new ChangeDetailsEvent(true, "Logged In"));
 

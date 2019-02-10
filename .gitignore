@@ -18,3 +18,5 @@ dlls/64Andres
 *.pdb
 *.msi
 .vs/*
+.vs/**
+.vs

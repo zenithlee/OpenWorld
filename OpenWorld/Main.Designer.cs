@@ -35,8 +35,8 @@
       this.navBarControl1 = new OpenWorld.Controls.NavBarControl();
       this.positionControl1 = new OpenWorld.src.Controls.StatusControl();
       this.toolbarControl1 = new OpenWorld.Controls.ToolbarControl();
-      this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.bookmarksControl1 = new OpenWorld.src.Controls.BookmarksControl();
+      this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -58,6 +58,8 @@
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
       this.tableLayoutPanel1.Size = new System.Drawing.Size(1000, 654);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
@@ -96,11 +98,6 @@
       this.toolbarControl1.Size = new System.Drawing.Size(36, 536);
       this.toolbarControl1.TabIndex = 3;
       // 
-      // timer1
-      // 
-      this.timer1.Interval = 25;
-      this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-      // 
       // bookmarksControl1
       // 
       this.bookmarksControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -108,6 +105,11 @@
       this.bookmarksControl1.Name = "bookmarksControl1";
       this.bookmarksControl1.Size = new System.Drawing.Size(952, 26);
       this.bookmarksControl1.TabIndex = 4;
+      // 
+      // timer1
+      // 
+      this.timer1.Interval = 25;
+      this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
       // 
       // Main
       // 

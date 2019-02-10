@@ -19,16 +19,18 @@ namespace OpenWorld.Handlers
     private void Network_TextureHandler(object sender, Massive.Events.TextureEvent e)
     {
       MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(e.InstanceID);
-      MMaterial mat = (MMaterial)MScene.MaterialRoot.FindModuleByName(e.TextureID);
-      if (mat != null)
-      {        
+      MObject o = MScene.MaterialRoot.FindModuleByName(e.TextureID);
+      
+      if (o != null && o.Type == MObject.EType.Material)
+      {
+        MMaterial mat = (MMaterial)o;
         mo.SetMaterial(mat);
       }
       else
       {
         if (MassiveTools.IsURL(e.TextureID))
         {
-          mat = (MMaterial)new MMaterial("URLShader");
+          MMaterial mat = (MMaterial)new MMaterial("URLShader");
           MShader DefaultShader = (MShader)MScene.MaterialRoot.FindModuleByName(MShader.DEFAULT_SHADER);
           mat.AddShader(DefaultShader);
           mat.ReplaceTexture(Globals.TexturePool.GetTexture(e.TextureID));

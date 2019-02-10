@@ -18,7 +18,7 @@ namespace OpenWorld.Forms
   public partial class ImageUploader : DToolForm
   {
     public string sLocalFile;
-    public string sLocus;
+    public string sPublicFile;
     public string sTargetID;
 
     public ImageUploader()
@@ -76,7 +76,7 @@ namespace OpenWorld.Forms
 
       Client.Headers.Add("UserID:" + Globals.UserAccount.UserID);
       Client.Headers.Add("Target:" + sTargetID);
-      Client.Headers.Add("Locus:" + sLocus);
+      Client.Headers.Add("Locus:" + sPublicFile);
       string ServerIP = Globals.Network.ServerIP;
       Client.UploadFileAsync(new Uri("http://" + ServerIP + "/massive/fu/fu.php"), "POST", TempName);
       Client.UploadFileCompleted += Client_UploadFileCompleted;
@@ -93,7 +93,7 @@ namespace OpenWorld.Forms
       string s = System.Text.Encoding.UTF8.GetString(e.Result, 0, e.Result.Length);
       //Console.WriteLine(s);
       Status(s);
-      sLocus = s;
+      sPublicFile = s;
       DialogResult = DialogResult.OK;
       Close();
     }

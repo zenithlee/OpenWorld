@@ -86,7 +86,7 @@ namespace OpenWorld.Controls
         int st = ChatBox.TextLength;
         ChatBox.SelectionFont = BoldFont;
         ChatBox.SelectionBackColor = Color.DarkCyan;              
-        ChatBox.AppendText(e.message.OwnerName + ":" );        
+        ChatBox.AppendText(e.message.OwnerName + ":" );
         
         ChatBox.Select(st, ChatBox.TextLength - st);
         ChatBox.SelectionFont = StdFont;
@@ -167,6 +167,16 @@ namespace OpenWorld.Controls
     {
       ChatBoxMessage.Focus();
       ChatBoxMessage.SelectedText = "";
+    }
+
+    private void GotoChatterButton_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void FriendsList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
     }
   }
 }

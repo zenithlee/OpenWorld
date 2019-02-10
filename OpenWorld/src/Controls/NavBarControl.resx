@@ -121,7 +121,7 @@
   <data name="BookmarkButton.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAcCAYAAAAAwr0iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNWRHWFIA
+        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNWRHWFIA
         AAJmSURBVEhLvVc7aBRBGF4LEZEY89iZDYgWprJJIQo+AgoWdlpoZaP2NhYiqPgotLCxsrWJ2lkEOwvF
         183sXoKkEQQrQTAxXrjT3O5cMus3x5/kXCdxdzZ3H3wcO4/v+/f/5/6588ogrQ70198EPj32HrFkN5KQ
         3afH3mLu3VBfItiPRPK6/rB7kIZ7BxXxq0ry1DAJ+V0a7g30R74jkez7agCS12qv+nfRdPeB2l9ZMV8j
@@ -138,7 +138,7 @@
   <data name="HomeButton.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMS41ZEdYUgAAAy9JREFUWEe1V01P
+        vQAADr0BR/uQrQAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMS41ZEdYUgAAAy9JREFUWEe1V01P
         E0EY7i+Qq/wZPxIPQOguHDhhd6EiF1E5CzExQQ9GgbMaDogxIRgSUjmoN6MxehM/ErDs0hZiG8Ha8FFo
         w/g+w2y3bN/dtmT7JE866bzzPO/OvDM7G2kWdu/1dksf6EpGjRFLM8dA2ab/7N7+dhUWLiBsa8a4pRvf
         Lc04tnVTcESfpZvf1ik2lGR2+obb7Kg5TeYHnGEQKYkDGjeVvDLcpuSaAz3NZXqaTU68GdKsbaa6YxeV

@@ -160,6 +160,8 @@ namespace MassiveServer
       mu.UserID = dt.Rows[0]["userid"].ToString();
       mu.UserName = dt.Rows[0]["screenname"].ToString();
       mu.AvatarID = dt.Rows[0]["avatarid"].ToString();
+      mu.TotalObjects= (int)dt.Rows[0]["totalobjects"];
+      mu.Credit= (int)dt.Rows[0]["wallet"];
       return mu;
     }
 
@@ -239,6 +241,24 @@ namespace MassiveServer
       m.ClientIP, m.UserID);
 
       Query(sQuery);
+      return m.UserID;
+    }
+
+    public string UpdatePlayerUsage(MUserAccount m)
+    {
+      if (m == null) return "";
+
+      string sCountQuery = String.Format("SELECT COUNT(*) from `objects` where ownerid='{0}'", m.UserID);
+      int ObjectsOwned = QueryScalar(sCountQuery);
+
+      string sQuery = string.Format(
+      @"UPDATE users SET date_accessed = '{0}',totalobjects='{1}' WHERE `userid`='{2}';",
+      DateTime.Now, ObjectsOwned, m.UserID);
+
+      Query(sQuery);
+
+      
+
       return m.UserID;
     }
 

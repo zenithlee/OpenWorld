@@ -330,7 +330,7 @@
       this.ClearLog.Name = "ClearLog";
       this.ClearLog.Size = new System.Drawing.Size(100, 32);
       this.ClearLog.TabIndex = 1;
-      this.ClearLog.Text = "Clear";
+      this.ClearLog.Text = "Clear Console";
       this.ClearLog.UseVisualStyleBackColor = true;
       this.ClearLog.Click += new System.EventHandler(this.ClearLog_Click);
       // 
@@ -418,7 +418,7 @@
       this.DatabaseButton.Name = "DatabaseButton";
       this.DatabaseButton.Size = new System.Drawing.Size(100, 32);
       this.DatabaseButton.TabIndex = 25;
-      this.DatabaseButton.Text = "DataBase";
+      this.DatabaseButton.Text = "DataBase...";
       this.DatabaseButton.UseVisualStyleBackColor = true;
       this.DatabaseButton.Click += new System.EventHandler(this.DatabaseButton_Click);
       // 
@@ -448,6 +448,7 @@
       // userid
       // 
       this.userid.Text = "ID";
+      this.userid.Width = 176;
       // 
       // email
       // 

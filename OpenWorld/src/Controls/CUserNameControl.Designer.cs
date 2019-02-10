@@ -41,8 +41,8 @@
       // 
       this.tableLayoutPanel1.ColumnCount = 3;
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.47518F));
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.52483F));
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 77F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.52482F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
       this.tableLayoutPanel1.Controls.Add(this.Username, 1, 0);
       this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
       this.tableLayoutPanel1.Controls.Add(this.StatusText, 1, 1);
@@ -53,16 +53,16 @@
       this.tableLayoutPanel1.RowCount = 2;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(167, 39);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(216, 39);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // Username
       // 
       this.tableLayoutPanel1.SetColumnSpan(this.Username, 2);
       this.Username.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.Username.Location = new System.Drawing.Point(15, 0);
+      this.Username.Location = new System.Drawing.Point(25, 0);
       this.Username.Name = "Username";
-      this.Username.Size = new System.Drawing.Size(149, 19);
+      this.Username.Size = new System.Drawing.Size(188, 19);
       this.Username.TabIndex = 0;
       this.Username.Text = "Anonymouse";
       this.Username.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -76,7 +76,7 @@
       this.pictureBox1.Location = new System.Drawing.Point(0, 0);
       this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
       this.pictureBox1.Name = "pictureBox1";
-      this.pictureBox1.Size = new System.Drawing.Size(12, 19);
+      this.pictureBox1.Size = new System.Drawing.Size(22, 19);
       this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
       this.pictureBox1.TabIndex = 1;
       this.pictureBox1.TabStop = false;
@@ -86,10 +86,11 @@
       // 
       this.StatusText.BackColor = System.Drawing.Color.Transparent;
       this.StatusText.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.StatusText.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.StatusText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-      this.StatusText.Location = new System.Drawing.Point(15, 19);
+      this.StatusText.Location = new System.Drawing.Point(25, 19);
       this.StatusText.Name = "StatusText";
-      this.StatusText.Size = new System.Drawing.Size(71, 20);
+      this.StatusText.Size = new System.Drawing.Size(139, 20);
       this.StatusText.TabIndex = 2;
       this.StatusText.Text = "0/0";
       this.StatusText.Click += new System.EventHandler(this.Username_Click);
@@ -99,9 +100,9 @@
       this.CreditLabel.AutoSize = true;
       this.CreditLabel.BackColor = System.Drawing.Color.Transparent;
       this.CreditLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.CreditLabel.Location = new System.Drawing.Point(92, 19);
+      this.CreditLabel.Location = new System.Drawing.Point(170, 19);
       this.CreditLabel.Name = "CreditLabel";
-      this.CreditLabel.Size = new System.Drawing.Size(72, 20);
+      this.CreditLabel.Size = new System.Drawing.Size(43, 20);
       this.CreditLabel.TabIndex = 3;
       this.CreditLabel.Text = "$1000";
       this.CreditLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -113,7 +114,7 @@
       this.BackColor = System.Drawing.Color.White;
       this.Controls.Add(this.tableLayoutPanel1);
       this.Name = "CUserNameControl";
-      this.Size = new System.Drawing.Size(167, 39);
+      this.Size = new System.Drawing.Size(216, 39);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

@@ -1,4 +1,5 @@
 ﻿using Massive;
+using Massive.Platform;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace ThisIsMassive
   {
     public void Generate()
     {
-      string sAsteroid01 = Path.Combine(Globals.AppDataPath, @"Models\planets\asteroid01.3ds");
+      string sAsteroid01 = Path.Combine(MFileSystem.AppDataPath, @"Models\planets\asteroid01.3ds");
       Random r = new Random();
 
       for (int i = 0; i < 10; i++)
@@ -26,7 +27,7 @@ namespace ThisIsMassive
 
     public void Generate2()
     {
-      string sAsteroid01 = Path.Combine(Globals.AppDataPath, @"Models\planets\asteroid02.3ds");
+      string sAsteroid01 = Path.Combine(MFileSystem.AppDataPath, @"Models\planets\asteroid02.3ds");
       Random r = new Random();
 
       for (int i = 0; i < 10; i++)

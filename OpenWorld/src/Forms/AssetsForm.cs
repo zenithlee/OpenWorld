@@ -76,6 +76,7 @@ namespace OpenWorld.Forms
       {
         MSceneObject mo = (MSceneObject)col[0].OwningRow.DataBoundItem;
         MMessageBus.Navigate(this, mo.transform.Position);
+        MMessageBus.Select(this, new SelectEvent(mo));
       }
 
     }

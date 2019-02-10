@@ -31,13 +31,13 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToolbarControl));
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this.MapButton = new System.Windows.Forms.Button();
+      this.HelpButton = new System.Windows.Forms.Button();
       this.AssetsButton = new System.Windows.Forms.Button();
       this.SettingsButton = new System.Windows.Forms.Button();
       this.BuildButton = new System.Windows.Forms.Button();
       this.ChatButton = new System.Windows.Forms.Button();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.HelpButton = new System.Windows.Forms.Button();
-      this.MapButton = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -45,16 +45,16 @@
       // 
       this.tableLayoutPanel1.ColumnCount = 1;
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel1.Controls.Add(this.MapButton, 0, 4);
-      this.tableLayoutPanel1.Controls.Add(this.HelpButton, 0, 9);
-      this.tableLayoutPanel1.Controls.Add(this.AssetsButton, 0, 3);
-      this.tableLayoutPanel1.Controls.Add(this.SettingsButton, 0, 2);
+      this.tableLayoutPanel1.Controls.Add(this.MapButton, 0, 3);
+      this.tableLayoutPanel1.Controls.Add(this.HelpButton, 0, 10);
+      this.tableLayoutPanel1.Controls.Add(this.AssetsButton, 0, 2);
+      this.tableLayoutPanel1.Controls.Add(this.SettingsButton, 0, 9);
       this.tableLayoutPanel1.Controls.Add(this.BuildButton, 0, 1);
       this.tableLayoutPanel1.Controls.Add(this.ChatButton, 0, 0);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-      this.tableLayoutPanel1.RowCount = 10;
+      this.tableLayoutPanel1.RowCount = 11;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
@@ -65,16 +65,44 @@
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel1.Size = new System.Drawing.Size(38, 388);
       this.tableLayoutPanel1.TabIndex = 0;
+      // 
+      // MapButton
+      // 
+      this.MapButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MapButton.BackgroundImage")));
+      this.MapButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.MapButton.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.MapButton.Location = new System.Drawing.Point(0, 96);
+      this.MapButton.Margin = new System.Windows.Forms.Padding(0);
+      this.MapButton.Name = "MapButton";
+      this.MapButton.Size = new System.Drawing.Size(38, 32);
+      this.MapButton.TabIndex = 5;
+      this.toolTip1.SetToolTip(this.MapButton, "Chat with others");
+      this.MapButton.UseVisualStyleBackColor = true;
+      this.MapButton.Click += new System.EventHandler(this.MapButton_Click);
+      // 
+      // HelpButton
+      // 
+      this.HelpButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("HelpButton.BackgroundImage")));
+      this.HelpButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.HelpButton.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.HelpButton.Location = new System.Drawing.Point(0, 356);
+      this.HelpButton.Margin = new System.Windows.Forms.Padding(0);
+      this.HelpButton.Name = "HelpButton";
+      this.HelpButton.Size = new System.Drawing.Size(38, 32);
+      this.HelpButton.TabIndex = 4;
+      this.toolTip1.SetToolTip(this.HelpButton, "Chat with others");
+      this.HelpButton.UseVisualStyleBackColor = true;
+      this.HelpButton.Click += new System.EventHandler(this.HelpButton_Click);
       // 
       // AssetsButton
       // 
       this.AssetsButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("AssetsButton.BackgroundImage")));
       this.AssetsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
       this.AssetsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.AssetsButton.Location = new System.Drawing.Point(0, 96);
+      this.AssetsButton.Location = new System.Drawing.Point(0, 64);
       this.AssetsButton.Margin = new System.Windows.Forms.Padding(0);
       this.AssetsButton.Name = "AssetsButton";
       this.AssetsButton.Size = new System.Drawing.Size(38, 32);
@@ -88,7 +116,7 @@
       this.SettingsButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("SettingsButton.BackgroundImage")));
       this.SettingsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
       this.SettingsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.SettingsButton.Location = new System.Drawing.Point(0, 64);
+      this.SettingsButton.Location = new System.Drawing.Point(0, 324);
       this.SettingsButton.Margin = new System.Windows.Forms.Padding(0);
       this.SettingsButton.Name = "SettingsButton";
       this.SettingsButton.Size = new System.Drawing.Size(38, 32);
@@ -124,34 +152,6 @@
       this.toolTip1.SetToolTip(this.ChatButton, "Chat with others");
       this.ChatButton.UseVisualStyleBackColor = true;
       this.ChatButton.Click += new System.EventHandler(this.ChatButton_Click);
-      // 
-      // HelpButton
-      // 
-      this.HelpButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("HelpButton.BackgroundImage")));
-      this.HelpButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.HelpButton.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.HelpButton.Location = new System.Drawing.Point(0, 356);
-      this.HelpButton.Margin = new System.Windows.Forms.Padding(0);
-      this.HelpButton.Name = "HelpButton";
-      this.HelpButton.Size = new System.Drawing.Size(38, 32);
-      this.HelpButton.TabIndex = 4;
-      this.toolTip1.SetToolTip(this.HelpButton, "Chat with others");
-      this.HelpButton.UseVisualStyleBackColor = true;
-      this.HelpButton.Click += new System.EventHandler(this.HelpButton_Click);
-      // 
-      // MapButton
-      // 
-      this.MapButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MapButton.BackgroundImage")));
-      this.MapButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.MapButton.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.MapButton.Location = new System.Drawing.Point(0, 128);
-      this.MapButton.Margin = new System.Windows.Forms.Padding(0);
-      this.MapButton.Name = "MapButton";
-      this.MapButton.Size = new System.Drawing.Size(38, 32);
-      this.MapButton.TabIndex = 5;
-      this.toolTip1.SetToolTip(this.MapButton, "Chat with others");
-      this.MapButton.UseVisualStyleBackColor = true;
-      this.MapButton.Click += new System.EventHandler(this.MapButton_Click);
       // 
       // ToolbarControl
       // 

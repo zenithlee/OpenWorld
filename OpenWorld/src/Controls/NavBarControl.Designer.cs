@@ -30,10 +30,10 @@
     {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NavBarControl));
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this.BookmarkButton = new System.Windows.Forms.Button();
       this.HomeButton = new System.Windows.Forms.Button();
       this.cUserNameControl1 = new ThisIsMassive.src.Controls.CUserNameControl();
       this.SiteBox = new System.Windows.Forms.TextBox();
-      this.BookmarkButton = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -43,7 +43,7 @@
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 145F));
       this.tableLayoutPanel1.Controls.Add(this.BookmarkButton, 2, 0);
       this.tableLayoutPanel1.Controls.Add(this.HomeButton, 0, 0);
       this.tableLayoutPanel1.Controls.Add(this.cUserNameControl1, 3, 0);
@@ -53,8 +53,21 @@
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 1;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(727, 32);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(970, 32);
       this.tableLayoutPanel1.TabIndex = 0;
+      // 
+      // BookmarkButton
+      // 
+      this.BookmarkButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BookmarkButton.BackgroundImage")));
+      this.BookmarkButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.BookmarkButton.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.BookmarkButton.Location = new System.Drawing.Point(793, 0);
+      this.BookmarkButton.Margin = new System.Windows.Forms.Padding(0);
+      this.BookmarkButton.Name = "BookmarkButton";
+      this.BookmarkButton.Size = new System.Drawing.Size(32, 32);
+      this.BookmarkButton.TabIndex = 5;
+      this.BookmarkButton.UseVisualStyleBackColor = true;
+      this.BookmarkButton.Click += new System.EventHandler(this.BookmarkButton_Click);
       // 
       // HomeButton
       // 
@@ -73,10 +86,10 @@
       // 
       this.cUserNameControl1.BackColor = System.Drawing.Color.Transparent;
       this.cUserNameControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.cUserNameControl1.Location = new System.Drawing.Point(607, 0);
+      this.cUserNameControl1.Location = new System.Drawing.Point(825, 0);
       this.cUserNameControl1.Margin = new System.Windows.Forms.Padding(0);
       this.cUserNameControl1.Name = "cUserNameControl1";
-      this.cUserNameControl1.Size = new System.Drawing.Size(120, 32);
+      this.cUserNameControl1.Size = new System.Drawing.Size(145, 32);
       this.cUserNameControl1.TabIndex = 3;
       // 
       // SiteBox
@@ -86,24 +99,11 @@
       this.SiteBox.Location = new System.Drawing.Point(35, 3);
       this.SiteBox.Multiline = true;
       this.SiteBox.Name = "SiteBox";
-      this.SiteBox.Size = new System.Drawing.Size(537, 26);
+      this.SiteBox.Size = new System.Drawing.Size(755, 26);
       this.SiteBox.TabIndex = 4;
       this.SiteBox.Text = "Home";
       this.SiteBox.TextChanged += new System.EventHandler(this.SiteBox_TextChanged);
       this.SiteBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SiteBox_KeyUp);
-      // 
-      // BookmarkButton
-      // 
-      this.BookmarkButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BookmarkButton.BackgroundImage")));
-      this.BookmarkButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.BookmarkButton.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.BookmarkButton.Location = new System.Drawing.Point(575, 0);
-      this.BookmarkButton.Margin = new System.Windows.Forms.Padding(0);
-      this.BookmarkButton.Name = "BookmarkButton";
-      this.BookmarkButton.Size = new System.Drawing.Size(32, 32);
-      this.BookmarkButton.TabIndex = 5;
-      this.BookmarkButton.UseVisualStyleBackColor = true;
-      this.BookmarkButton.Click += new System.EventHandler(this.BookmarkButton_Click);
       // 
       // NavBarControl
       // 
@@ -112,7 +112,7 @@
       this.Controls.Add(this.tableLayoutPanel1);
       this.Margin = new System.Windows.Forms.Padding(0);
       this.Name = "NavBarControl";
-      this.Size = new System.Drawing.Size(727, 32);
+      this.Size = new System.Drawing.Size(970, 32);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
       this.ResumeLayout(false);

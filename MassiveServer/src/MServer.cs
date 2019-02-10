@@ -377,6 +377,7 @@ namespace Massive.Server
     }
 
     //log in registered player
+    //player sends updatedetails message to register
     public void LoginRequest(MClient c, MNetMessage m)
     {
       if (MassiveConnections.Count >= MAXCONNECTIONS)
@@ -397,6 +398,7 @@ namespace Massive.Server
         c.Account.UserID = m.UserID;
       }
       _DataBase.UpdatePlayerIP(c.Account);
+      _DataBase.UpdatePlayerUsage(c.Account);
 
       MUserAccount mu = _DataBase.GetPlayerByEmail(mlir.Email, mlir.Password);
       if ( mu == null)
@@ -468,35 +470,10 @@ namespace Massive.Server
       {
         if (string.IsNullOrEmpty((string)dr["instanceid"]))
         {
-          //mso.InstanceID = UidGen.GUID();
           dr[DB.INSTANCEID] = UidGen.GUID();
           dr[DB.DATECREATED] = DateTime.Now;
           dr[DB.DATEMODIFIED] = DateTime.Now;
-          //mso.DateCreated = DateTime.Now;
-          //mso.DateModified = DateTime.Now;
         }
-
-        /*
-        //+1  so client can spawn an avatar in case max is 0
-        if ((c.Account.TotalObjects < c.Account.MaxObjects + 1) || mso.StaticStorage == 0)
-        {
-          //if (AddToWorld(mso) == true)
-          //{
-            //if (mso.StaticStorage == 1)
-            //{
-              //c.Account.TotalObjects++;
-            //}
-          //}
-        }
-        else
-        {
-          MNetMessage me = new MNetMessage();
-          me.Command = MNetMessage.ERROR;
-          me.Payload = "You have reached your building limit. Max Objects =" + c.Account.TotalObjects + "/" + c.Account.MaxObjects;
-          Send(c, "Message", me.Serialize());
-          return;
-        }
-        */
       }
 
       _DataBase.AddToWorld(sm.SpawnTable);
@@ -534,7 +511,7 @@ namespace Massive.Server
       else
       {
         mn.Command = MNetMessage.ERROR;
-        mn.Payload = "ChangePosition:NOT THE OWNER";
+        mn.Payload = "ChangePosition:" + _DataBase.ResultText;
         Send(c, "Message", mn.Serialize());
       }
     }

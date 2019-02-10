@@ -34,7 +34,7 @@
       System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Friends", System.Windows.Forms.HorizontalAlignment.Left);
       System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Colleagues", System.Windows.Forms.HorizontalAlignment.Left);
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-      this.button1 = new System.Windows.Forms.Button();
+      this.GotoChatterButton = new System.Windows.Forms.Button();
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.ChatBox = new System.Windows.Forms.RichTextBox();
       this.SendButton = new System.Windows.Forms.Button();
@@ -52,7 +52,7 @@
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.63158F));
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.36842F));
-      this.tableLayoutPanel1.Controls.Add(this.button1, 0, 2);
+      this.tableLayoutPanel1.Controls.Add(this.GotoChatterButton, 0, 2);
       this.tableLayoutPanel1.Controls.Add(this.ChatBox, 1, 0);
       this.tableLayoutPanel1.Controls.Add(this.SendButton, 2, 2);
       this.tableLayoutPanel1.Controls.Add(this.ChatBoxMessage, 0, 1);
@@ -68,24 +68,25 @@
       this.tableLayoutPanel1.Size = new System.Drawing.Size(331, 493);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
-      // button1
+      // GotoChatterButton
       // 
-      this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-      this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.button1.FlatAppearance.BorderSize = 0;
-      this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.button1.ImageIndex = 1;
-      this.button1.ImageList = this.imageList1;
-      this.button1.Location = new System.Drawing.Point(0, 461);
-      this.button1.Margin = new System.Windows.Forms.Padding(0);
-      this.button1.Name = "button1";
-      this.button1.Size = new System.Drawing.Size(100, 32);
-      this.button1.TabIndex = 5;
-      this.button1.Text = "Goto";
-      this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-      this.toolTip1.SetToolTip(this.button1, "Go to their phyiscal location");
-      this.button1.UseVisualStyleBackColor = false;
+      this.GotoChatterButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+      this.GotoChatterButton.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.GotoChatterButton.FlatAppearance.BorderSize = 0;
+      this.GotoChatterButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.GotoChatterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.GotoChatterButton.ImageIndex = 1;
+      this.GotoChatterButton.ImageList = this.imageList1;
+      this.GotoChatterButton.Location = new System.Drawing.Point(0, 461);
+      this.GotoChatterButton.Margin = new System.Windows.Forms.Padding(0);
+      this.GotoChatterButton.Name = "GotoChatterButton";
+      this.GotoChatterButton.Size = new System.Drawing.Size(100, 32);
+      this.GotoChatterButton.TabIndex = 5;
+      this.GotoChatterButton.Text = "Goto";
+      this.GotoChatterButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this.toolTip1.SetToolTip(this.GotoChatterButton, "Go to their phyiscal location");
+      this.GotoChatterButton.UseVisualStyleBackColor = false;
+      this.GotoChatterButton.Click += new System.EventHandler(this.GotoChatterButton_Click);
       // 
       // imageList1
       // 
@@ -194,6 +195,7 @@
       this.FriendsList.TabIndex = 4;
       this.FriendsList.UseCompatibleStateImageBehavior = false;
       this.FriendsList.View = System.Windows.Forms.View.Details;
+      this.FriendsList.SelectedIndexChanged += new System.EventHandler(this.FriendsList_SelectedIndexChanged);
       // 
       // Nauts
       // 
@@ -224,7 +226,7 @@
     private System.Windows.Forms.Button GiveCake;
     private System.Windows.Forms.ImageList imageList1;
     private System.Windows.Forms.ToolTip toolTip1;
-    private System.Windows.Forms.Button button1;
+    private System.Windows.Forms.Button GotoChatterButton;
     private System.Windows.Forms.ListView FriendsList;
     private System.Windows.Forms.ColumnHeader Nauts;
   }

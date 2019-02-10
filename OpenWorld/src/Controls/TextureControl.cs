@@ -18,6 +18,7 @@ namespace OpenWorld.src.Controls
   public partial class TextureControl : UserControl
   {
     MSceneObject SelectedItem;
+    string sClipboard;
 
     public TextureControl()
     {
@@ -96,9 +97,21 @@ namespace OpenWorld.src.Controls
       if (iu.ShowDialog() == DialogResult.OK)
       {
         //sLocus now contains the URL of the uploaded image
-        MMessageBus.ChangeTextureRequest(this, SelectedItem.InstanceID, iu.sLocus);
+        MMessageBus.ChangeTextureRequest(this, SelectedItem.InstanceID, iu.sPublicFile);
       }
 
+    }
+
+    private void CopyButton_Click(object sender, EventArgs e)
+    {
+      if (SelectedItem == null) return;
+      sClipboard = SelectedItem.material.MaterialID;
+    }
+
+    private void PasteButton_Click(object sender, EventArgs e)
+    {
+      if (string.IsNullOrEmpty(sClipboard)) return;
+      MMessageBus.ChangeTextureRequest(this, SelectedItem.InstanceID, sClipboard);
     }
   }
 }
