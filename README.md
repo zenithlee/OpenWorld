@@ -1,5 +1,7 @@
 ## AXIS MUNDI *OpenWorld*
-Open World is a New Internet, Spatial Server and 3D Browser. The VR internet is managed by the VR Consortium and connects many VR experiences into one seamless universe.  
+Open World is a New Internet, Spatial Server, and 3D Web Browser.  
+The VR internet is managed by the Open World Consortium and connects many VR experiences into one seamless universe.  
+The Open World has its own constitution and voting rights.  
 
 64 Bit Engine (both in memory and Coordinates)  
 Spatial 3D server  
