@@ -2,7 +2,7 @@
 ## *Open World*
 Open World is a New Internet, Spatial Server, and 3D Web Browser.  
 The VR internet is managed by the Open World Consortium and connects many VR experiences into one seamless universe.  
-The Open World has its own constitution and voting rights.  
+The Open World has its own ![constitution](http://bigfun.co.za/openworld/index.html) and voting rights.  
 
 64 Bit Engine (both in memory and Coordinates)  
 Spatial 3D server  
