@@ -15,7 +15,7 @@ namespace Massive
     public Vector3d To;
     public double Depth;
     public Action<MRaycastTask> Completion;
-    public bool Result;
+    public bool Result = false;
     public Vector3d Hitpoint;
     public Vector3d Hitnormal;
     public object UserObject;

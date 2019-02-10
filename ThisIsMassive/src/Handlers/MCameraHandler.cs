@@ -122,7 +122,7 @@ namespace ThisIsMassive.src.Handlers
           TargetPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
                  - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;          
 
-          MScene.Camera.Target.transform.Position = AP + Globals.Avatar.Forward() * 10
+          MScene.Camera.Focus.transform.Position = AP + Globals.Avatar.Forward() * 10
             + MScene.Camera.TargetOffset;
         }
         else
@@ -130,11 +130,11 @@ namespace ThisIsMassive.src.Handlers
           TargetPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
                  - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;          
 
-          MScene.Camera.Target.transform.Position = AP + Globals.Avatar.Forward() * 10;
+          MScene.Camera.Focus.transform.Position = AP + Globals.Avatar.Forward() * 10;
         }
 
         double dist = Vector3d.Distance(PreviousPosition, MScene.Camera.transform.Position);
-        double td = Math.Abs(Vector3d.Distance(PreviousTarget, MScene.Camera.Target.transform.Position));
+        double td = Math.Abs(Vector3d.Distance(PreviousTarget, MScene.Camera.Focus.transform.Position));
 
         if (((dist > 0.25) || (td > 1))
           && (Throttle > MaxNetworkThrottle))
@@ -142,7 +142,7 @@ namespace ThisIsMassive.src.Handlers
           MMessageBus.MoveAvatarRequest(this, Globals.UserAccount.UserID, AP, Globals.Avatar.GetRotation());
           Throttle = 0;
           PreviousPosition = MScene.Camera.transform.Position;
-          PreviousTarget = MScene.Camera.Target.transform.Position;
+          PreviousTarget = MScene.Camera.Focus.transform.Position;
         }
       }
 

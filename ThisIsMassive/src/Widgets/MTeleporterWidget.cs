@@ -21,7 +21,7 @@ namespace ThisIsMassive.Widgets
       {
         Vector3d v = MZoneService.Find(parms[1]);
         MMessageBus.Status(mo, "Teleporting to:" + parms[1] + " - " + parms[2]);
-        MMessageBus.TeleportRequest(mo, (string)parms[1], v, Quaterniond.Identity);
+        MMessageBus.TeleportRequest(mo, v, Quaterniond.Identity);
       }
     }
   }

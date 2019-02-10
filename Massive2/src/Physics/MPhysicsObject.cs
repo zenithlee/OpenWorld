@@ -160,8 +160,7 @@ namespace Massive
       //_rigidBody.UserObject = Name;
       _rigidBody.Restitution = 0.5;
       _rigidBody.CcdMotionThreshold = 1e-7;
-      _rigidBody.CcdSweptSphereRadius = 0.5;
-
+      _rigidBody.CcdSweptSphereRadius = 0.5;      
 
       _rigidBody.ContactProcessingThreshold = 1e30f;
       _rigidBody.SetSleepingThresholds(0.20, 0.20);
@@ -533,6 +532,14 @@ namespace Massive
       if (_rigidBody != null)
       {
         _rigidBody.Restitution = d;
+      }
+    }
+
+    public void SetFriction(double d)
+    {
+      if (_rigidBody != null)
+      {
+        _rigidBody.Friction = d;
       }
     }
 

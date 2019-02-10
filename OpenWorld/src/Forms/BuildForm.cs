@@ -32,6 +32,7 @@ namespace OpenWorld.Forms
 
     private void MMessageBus_SelectEventHandler(object sender, SelectEvent e)
     {
+      if (e == null) return;
       SelectedItem = e.Selected;
       if ( SelectedItem != null)
       {
@@ -54,7 +55,7 @@ namespace OpenWorld.Forms
       Vector3d pos = SelectedItem.transform.Position;
       Quaterniond rot = SelectedItem.transform.Rotation;
       string sTag = "";
-      Globals.Network.SpawnRequest(SelectedItem.TemplateID, "TEXTURE01", SelectedItem.Name, sTag, pos, rot);
+      Globals.Network.SpawnRequest(SelectedItem.TemplateID, SelectedItem.material.MaterialID, SelectedItem.Name, sTag, pos, rot);
     }
 
 

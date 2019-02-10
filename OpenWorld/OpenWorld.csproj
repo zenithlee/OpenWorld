@@ -182,11 +182,35 @@
     <Compile Include="src\Forms\LobbyForm.Designer.cs">
       <DependentUpon>LobbyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Forms\MapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\MapForm.Designer.cs">
+      <DependentUpon>MapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\ProductInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\ProductInfoForm.Designer.cs">
+      <DependentUpon>ProductInfoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\TeleporterConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\TeleporterConfigForm.Designer.cs">
+      <DependentUpon>TeleporterConfigForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\TermsOfService.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\TermsOfService.Designer.cs">
+      <DependentUpon>TermsOfService.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Forms\UserInfoForm.cs">
       <SubType>Form</SubType>
@@ -209,6 +233,8 @@
     <Compile Include="src\Models\ChatUser.cs" />
     <Compile Include="src\Services\ThemeService.cs" />
     <Compile Include="src\Widgets\MLinkerWidget.cs" />
+    <Compile Include="src\Widgets\MPictureWidget.cs" />
+    <Compile Include="src\Widgets\MTeleporterWidget.cs" />
     <Compile Include="Version.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
@@ -273,8 +299,20 @@
     <EmbeddedResource Include="src\Forms\LobbyForm.resx">
       <DependentUpon>LobbyForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\MapForm.resx">
+      <DependentUpon>MapForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\ProductInfoForm.resx">
+      <DependentUpon>ProductInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\TeleporterConfigForm.resx">
+      <DependentUpon>TeleporterConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\TermsOfService.resx">
+      <DependentUpon>TermsOfService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\UserInfoForm.resx">
       <DependentUpon>UserInfoForm.cs</DependentUpon>
@@ -307,6 +345,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="sun.ico" />
+    <Content Include="UserData\Terms.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserData\Cache\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

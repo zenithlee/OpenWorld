@@ -78,6 +78,7 @@ namespace OpenWorld.Controllers
       return false;
     }
 
+    // coordinates are entered lat lon, so will be flipped
     bool DecodeLonLat(string sText, out Vector3d v)
     {
       Vector3d vt = Vector3d.Zero;      
@@ -92,9 +93,9 @@ namespace OpenWorld.Controllers
           radius = ab.Radius.X;
         }        
         if (GetNumbers(parts, out vt) == true)
-        {
-          Vector3d vr2 = ab.LonLatToUniPosition(vt.X, vt.Y, 0);
-          Vector3d vr = MGISTools.LonLatMercatorToPosition(vt.X, vt.Y, radius);
+        { 
+          //y = lon, x = lat
+          Vector3d vr = MGISTools.LonLatMercatorToPosition(vt.Y, vt.X, radius + 4000) + ab.Position;
           v = vr;
           return true;
         }

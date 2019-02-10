@@ -408,11 +408,11 @@ namespace ThisIsMassive.src
       {
         if (e.FocusObject == null)
 
-          MScene.Camera.Target.transform.Position = Selected.transform.Position;
+          MScene.Camera.Focus.transform.Position = Selected.transform.Position;
       }
       else
       {
-        MScene.Camera.Target.transform.Position = e.FocusObject.transform.Position;
+        MScene.Camera.Focus.transform.Position = e.FocusObject.transform.Position;
       }
     }
 

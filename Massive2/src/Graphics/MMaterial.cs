@@ -13,6 +13,7 @@ namespace Massive
     public const string DEFAULT_MATERIAL = "MATERIAL01";
 
     public MShader shader { get; set; }
+    public string MaterialID;
 
     public MTexture DiffuseTexture { get; set; }
     public MTexture MultiTexture { get; set; }

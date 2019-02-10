@@ -118,5 +118,25 @@ namespace OpenWorld.src.Controls
     {
       RotateSelection(0, 1, 0);
     }
+
+    private void RotateXP_Click(object sender, EventArgs e)
+    {
+      RotateSelection(1, 0, 0);
+    }
+
+    private void RotateXM_Click(object sender, EventArgs e)
+    {
+      RotateSelection(-1, 0, 0);
+    }
+
+    private void RotateZM_Click(object sender, EventArgs e)
+    {
+      RotateSelection(0, 0, -1);
+    }
+
+    private void RotateZP_Click(object sender, EventArgs e)
+    {
+      RotateSelection(0, 0, 1);
+    }
   }
 }

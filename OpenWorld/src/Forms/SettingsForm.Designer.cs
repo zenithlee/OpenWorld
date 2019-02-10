@@ -36,6 +36,8 @@
       this.label1 = new System.Windows.Forms.Label();
       this.GravityCheck = new System.Windows.Forms.CheckBox();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.label3 = new System.Windows.Forms.Label();
+      this.DebugPhysicsCheck = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel2.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -44,6 +46,8 @@
       this.tableLayoutPanel2.ColumnCount = 2;
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel2.Controls.Add(this.DebugPhysicsCheck, 1, 2);
+      this.tableLayoutPanel2.Controls.Add(this.label3, 0, 2);
       this.tableLayoutPanel2.Controls.Add(this.TerrainPhysicsCheck, 1, 1);
       this.tableLayoutPanel2.Controls.Add(this.label2, 0, 1);
       this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
@@ -116,6 +120,34 @@
       this.GravityCheck.UseVisualStyleBackColor = true;
       this.GravityCheck.CheckedChanged += new System.EventHandler(this.GravityCheck_CheckedChanged);
       // 
+      // label3
+      // 
+      this.label3.AutoSize = true;
+      this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.label3.ForeColor = System.Drawing.Color.White;
+      this.label3.Location = new System.Drawing.Point(3, 64);
+      this.label3.Name = "label3";
+      this.label3.Size = new System.Drawing.Size(142, 32);
+      this.label3.TabIndex = 4;
+      this.label3.Text = "Debug Physics";
+      this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.toolTip1.SetToolTip(this.label3, "Only applies to new terrain tiles");
+      // 
+      // DebugPhysicsCheck
+      // 
+      this.DebugPhysicsCheck.AutoSize = true;
+      this.DebugPhysicsCheck.Checked = true;
+      this.DebugPhysicsCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.DebugPhysicsCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.DebugPhysicsCheck.ForeColor = System.Drawing.Color.White;
+      this.DebugPhysicsCheck.Location = new System.Drawing.Point(151, 67);
+      this.DebugPhysicsCheck.Name = "DebugPhysicsCheck";
+      this.DebugPhysicsCheck.Size = new System.Drawing.Size(142, 26);
+      this.DebugPhysicsCheck.TabIndex = 5;
+      this.DebugPhysicsCheck.Text = "Enabled";
+      this.DebugPhysicsCheck.UseVisualStyleBackColor = true;
+      this.DebugPhysicsCheck.CheckedChanged += new System.EventHandler(this.DebugPhysicsCheck_CheckedChanged);
+      // 
       // SettingsForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -141,5 +173,7 @@
     private System.Windows.Forms.CheckBox TerrainPhysicsCheck;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.ToolTip toolTip1;
+    private System.Windows.Forms.CheckBox DebugPhysicsCheck;
+    private System.Windows.Forms.Label label3;
   }
 }

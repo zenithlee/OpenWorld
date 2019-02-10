@@ -38,7 +38,7 @@ namespace Massive.GIS
     //if they fall through and physics is generated, they will be stuck underground.
     //TODO: either create smaller physics areas that gen faster, or lift user above ground if they're below.
     // This will mean we can't create terrain caves, but we can use other objects for caves
-    public const double PHYSICS_DISTANCE = 42000; 
+    public const double DistanceToPlanetThreshold = 2000; 
 
     private const double MinLatitude = -85.05112878;
     private const double MaxLatitude = 85.05112878;
@@ -91,7 +91,7 @@ namespace Massive.GIS
       Vector3d TilePos = GetTileFromPoint(e.Position);
       Vector3d LonLat = GetLonLatOnShere(e.Position);
       //Console.WriteLine(AvatarDistanceToSurface);
-      if (AvatarDistanceToSurface < PHYSICS_DISTANCE)
+      if (AvatarDistanceToSurface < DistanceToPlanetThreshold)
       {        
         ///_terrainHandler.UpdateForest((int)TilePos.X, (int)TilePos.Y, (int)TilePos.Z);
 

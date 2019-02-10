@@ -262,10 +262,10 @@ namespace Massive.Server
         case MNetMessage.SPAWNREQUEST:
           SpawnRequest(c, m);
           break;
-        case MNetMessage.CHANGEDETAILSREQ:
+        case MNetMessage.CHANGEDETAILSREQ: //user details
           ChangeDetails(c, m);
           break;
-        case MNetMessage.CHANGEPROPERTYREQ:
+        case MNetMessage.CHANGEPROPERTYREQ: // object properties
           ChangeProperty(c, m);
           break;
         case MNetMessage.CHANGEAVATARREQUEST:
@@ -735,7 +735,7 @@ namespace Massive.Server
       else
       {
         mn.Command = MNetMessage.ERROR;
-        mn.Payload = "NOT THE OWNER";
+        mn.Payload = "ERROR updating Property. Please check syntax.";
         Send(c, "Message", mn.Serialize());
       }
     }

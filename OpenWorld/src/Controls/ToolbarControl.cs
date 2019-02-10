@@ -37,5 +37,19 @@ namespace OpenWorld.Controls
       AssetsForm af = new AssetsForm();
       af.Show(ParentForm);
     }
+
+    private void HelpButton_Click(object sender, EventArgs e)
+    {
+      TermsOfService f = new TermsOfService();
+      f.Setup();
+      f.Show(ParentForm);
+    }
+
+    private void MapButton_Click(object sender, EventArgs e)
+    {
+      MapForm f = new MapForm();
+      f.Setup();
+      f.Show(this.ParentForm);
+    }
   }
 }

@@ -119,15 +119,15 @@ namespace ThisIsMassive
       MTreeMaterial.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\foliage\\pine01.png"));
       MScene.MaterialRoot.Add(MTreeMaterial);
 
-      MSceneObject motree = AddModel(BuildParts.TREE01, @"Models\tree01.3ds", new Vector3d(2, 4, 2));
+      MSceneObject motree = AddModel(BuildParts.TREE01, @"Models\foliage\tree01.3ds", new Vector3d(2, 4, 2));
       motree.SetMaterial(MTreeMaterial);
       motree.IsTransparent = true;
 
-      MSceneObject motree2 = AddModel(BuildParts.TREE02, @"Models\tree02.3ds", new Vector3d(2, 4, 2));
+      MSceneObject motree2 = AddModel(BuildParts.TREE02, @"Models\foliage\tree02.3ds", new Vector3d(2, 4, 2));
       motree2.SetMaterial(MTreeMaterial);
       motree2.IsTransparent = true;
 
-      MSceneObject motree3 = AddModel(BuildParts.TREE03, @"Models\tree03.3ds", new Vector3d(0.2, 1, 0.2));
+      MSceneObject motree3 = AddModel(BuildParts.TREE03, @"Models\foliage\tree03.3ds", new Vector3d(0.2, 1, 0.2));
       motree3.SetMaterial((MMaterial)MScene.MaterialRoot.FindModuleByName(MMaterial.DEFAULT_MATERIAL));
     }
 

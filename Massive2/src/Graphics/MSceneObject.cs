@@ -22,7 +22,7 @@ namespace Massive
     public bool IsAvatar = false;
     public bool IsTransparent = false;
     public double DistanceFromAvatar { get; set; } = 0;
-    public double DistanceThreshold = 10000;
+    public double DistanceThreshold = 1000;
 
     // public MTransform transform { get => _transform; set => _transform = value; }
     public TexturedVertex[] Vertices = new TexturedVertex[0];

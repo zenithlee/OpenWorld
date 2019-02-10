@@ -15,7 +15,7 @@ namespace Massive
 {
   public class MCamera : MSceneObject
   {
-    public MSceneObject Target = new MSceneObject(EType.Null, "CameraFocus");
+    public MSceneObject Focus = new MSceneObject(EType.Null, "CameraFocus");
     public Vector3d TargetOffset = Vector3d.Zero;
     public Vector3d UpVector;
 
@@ -34,7 +34,7 @@ namespace Massive
     public MCamera(string inname) : base(EType.Camera, inname)
     {
       transform.Position = new Vector3d(15, 15, 15);
-      Target.transform.Position = new Vector3d(-1, -1, -1);
+      Focus.transform.Position = new Vector3d(-1, -1, -1);
       UpVector = new Vector3d(0, 1, 0);
     }
 
@@ -46,7 +46,7 @@ namespace Massive
 
     public void SetTarget(MSceneObject mo)
     {
-      Target = mo;
+      Focus = mo;
     }
 
     public Matrix4d GetProjection(bool Near = true)
@@ -89,12 +89,12 @@ namespace Massive
     public void Move(Vector3d delta)
     {
       transform.Position += delta;
-      Target.transform.Position += delta;
+      Focus.transform.Position += delta;
     }
 
     public Vector3d Direction()
     {
-      return (Target.transform.Position - transform.Position).Normalized();
+      return (Focus.transform.Position - transform.Position).Normalized();
     }
 
     public Vector3d SideDirection()
@@ -130,7 +130,7 @@ namespace Massive
       //need to use avatar positions to avoid successive frames jumping after lookat adjusts forward
       m4 = Matrix4d.LookAt(
       delta,
-      (Target.transform.Position - Globals.GlobalOffset) + Offset,
+      (Focus.transform.Position - Globals.GlobalOffset) + Offset,
       // lookat, 
       //Globals.Avatar.Up()
       UpVector

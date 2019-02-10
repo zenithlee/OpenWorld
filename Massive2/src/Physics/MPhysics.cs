@@ -115,7 +115,7 @@ namespace Massive
       //try 
       //dispatcher = new CollisionDispatcherMultiThreaded(collisionConf); //crashes
       dispatcher = new CollisionDispatcher(collisionConf);
-      
+
       broadphase = new DbvtBroadphase();
       ConstraintSolver solver = new MultiBodyConstraintSolver();
 
@@ -124,7 +124,7 @@ namespace Massive
       World.DispatchInfo.UseContinuous = true;
 
       World.Gravity = new Vector3d(0, -9.8, 0);
-      
+
       World.DebugDrawer = _DebugDrawer;
 
       //CollisionTester = new SphereShape(0.2);
@@ -160,6 +160,51 @@ namespace Massive
       RaycastsPending.Add(_rayTask);
     }
 
+    public MRaycastTask RayCast(Vector3d From, Vector3d To)
+    {
+      MRaycastTask task = new MRaycastTask();
+      task.From = From;
+      task.To = To;
+      Vector3d Result = To;
+      ClosestRayResultCallback rc = new ClosestRayResultCallback();
+      //rc.CollisionFilterMask = CollisionFilterGroups.StaticFilter;
+      rc.ClosestHitFraction = 0.8;
+      //AllHitsRayResultCallback       
+      rc.RayFromWorld = From;
+      rc.RayToWorld = To;
+
+      World.RayTestRef(ref From, ref To, rc);
+
+      if (rc.HasHit)
+      {
+        task.Result = true;
+        task.Hitpoint = rc.HitPointWorld;
+        task.Hitnormal = rc.HitNormalWorld;
+        return task;
+      }
+
+      ClosestConvexResultCallback cc = new ClosestConvexResultCallback();
+      //cc.CollisionFilterMask = CollisionFilterGroups.StaticFilter;      
+      cc.ClosestHitFraction = 0.21;
+      cc.ConvexFromWorld = From;
+      cc.ConvexToWorld = To;
+      cc.HitPointWorld = From;
+      Matrix4d mf = Matrix4d.CreateTranslation(From);
+      Matrix4d mt = Matrix4d.CreateTranslation(To);
+      World.ConvexSweepTest(CollisionTester, mf, mt, cc);
+
+      if (cc.HasHit == true)
+      {
+        task.Depth = Vector3d.Distance(From, cc.HitPointWorld);
+        if (task.Depth > 0) task.Result = true;
+        //task.Result = true;
+        task.Hitpoint = cc.HitPointWorld;
+        task.Hitnormal = cc.HitNormalWorld;
+      }
+
+      return task;
+    }
+
     void DoRayCast(MRaycastTask task)
     {
       ClosestRayResultCallback rc = new ClosestRayResultCallback();
@@ -168,28 +213,28 @@ namespace Massive
       //AllHitsRayResultCallback 
       if (task == null) return;
       rc.RayFromWorld = task.From;
-      rc.RayToWorld = task.To;      
+      rc.RayToWorld = task.To;
 
       World.RayTestRef(ref task.From, ref task.To, rc);
 
       if (rc.HasHit)
-      {        
+      {
         task.Depth = Vector3d.Distance(task.From, rc.HitPointWorld);
-        if ( task.Depth >0 ) task.Result = true;
+        if (task.Depth > 0) task.Result = true;
         task.Info = rc.CollisionObject.UserObject;
         task.Hitpoint = rc.HitPointWorld;
         task.Hitnormal = rc.HitNormalWorld;
         return;
       }
-      
-      ClosestConvexResultCallback cc = new ClosestConvexResultCallback();      
+
+      ClosestConvexResultCallback cc = new ClosestConvexResultCallback();
       //cc.CollisionFilterMask = CollisionFilterGroups.StaticFilter;
       cc.ClosestHitFraction = 0.21;
       cc.ConvexFromWorld = task.From;
       cc.ConvexToWorld = task.To;
       cc.HitPointWorld = task.From;
       Matrix4d mf = Matrix4d.CreateTranslation(task.From);
-      Matrix4d mt = Matrix4d.CreateTranslation(task.To);      
+      Matrix4d mt = Matrix4d.CreateTranslation(task.To);
       World.ConvexSweepTest(CollisionTester, mf, mt, cc);
 
       if (cc.HasHit == true)
@@ -244,7 +289,7 @@ namespace Massive
     }
 
     public void DisposeWorld()
-    {      
+    {
       //remove/dispose constraints
       if (World == null) return;
       if (World.IsDisposed) return;
@@ -252,7 +297,7 @@ namespace Massive
       RaycastsPending.Clear();
       AddQueue.Clear();
       RemoveQueue.Clear();
-      
+
 
       int i;
       for (i = World.NumConstraints - 1; i >= 0; i--)
@@ -291,9 +336,9 @@ namespace Massive
       if (dispatcher != null)
       {
         dispatcher.Dispose();
-      }      
-      dispatcher = null;      
-      
+      }
+      dispatcher = null;
+
       World.Dispose();
 
       broadphase.Dispose();
@@ -330,7 +375,7 @@ namespace Massive
     {
       //BackgroundWorker worker = (BackgroundWorker)sender;
       while (!_backgroundWorker.CancellationPending)
-        //while (Globals.ApplicationExiting == false)
+      //while (Globals.ApplicationExiting == false)
       {
 
         if (Globals.ApplicationExiting == true)
@@ -341,13 +386,13 @@ namespace Massive
 
         if (RaycastsPending.Count > 0)
         {
-          for ( int i=0; i< RaycastsPending.Count; i++)
+          for (int i = 0; i < RaycastsPending.Count; i++)
           {
             MRaycastTask t = RaycastsPending[0];
             RaycastsPending.RemoveAt(0);
             DoRayCast(t);
             _backgroundWorker.ReportProgress(0, t);
-          }          
+          }
         }
 
 
@@ -355,7 +400,7 @@ namespace Massive
         {
           MPhysicsObject po = AddQueue[0];
           AddQueue.RemoveAt(0);
-          if ( !World.CollisionObjectArray.Contains(po._rigidBody))
+          if (!World.CollisionObjectArray.Contains(po._rigidBody))
           {
             World.AddRigidBody(po._rigidBody);
           }
@@ -383,7 +428,7 @@ namespace Massive
         Thread.Sleep(5);
       }
       Thread.Sleep(100);
-       DisposeWorld();
+      DisposeWorld();
     }
   }
 }

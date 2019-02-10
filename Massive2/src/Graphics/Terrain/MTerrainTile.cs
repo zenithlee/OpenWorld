@@ -33,10 +33,12 @@ namespace Massive
     public bool IsSetup = false;
     public string ClosestCity = "";
     public MPOI ClosestPOI;
+    public MPOI ClosestSuburb;
 
     int TileX, TileY, ZoomLevel;
 
     List<MPOI> PointsOfInterest;
+    List<MPOI> Suburbs;
     MTexture Heightmap;
     public MTexture Biome;
     //float[] Heights;
@@ -58,13 +60,14 @@ namespace Massive
       ZoomLevel = Zoom;
       //Heights = new float[] { x_res * z_res };
       PointsOfInterest = new List<MPOI>();
+      Suburbs = new List<MPOI>();
       DistanceThreshold = 64000;
 
       Forest = new MForest();
       Forest.transform.Scale = new Vector3d(1, 1, 1);
       Forest.DistanceThreshold = 5000;
       Forest.CastsShadow = true;
-     // Add(Forest);
+      // Add(Forest);
       MScene.Background2.Add(Forest);
     }
 
@@ -156,7 +159,7 @@ namespace Massive
 
     private void Bw_DoWork(object sender, DoWorkEventArgs e)
     {
-      
+
       SetupMesh();
       if (_backgroundWorker.CancellationPending) return;
       CreateMaterial();
@@ -165,22 +168,9 @@ namespace Massive
 
       LoadTexture();
       if (_backgroundWorker.CancellationPending) return;
-      //while (material.DiffuseTexture == null) ;
-      //while (material.DiffuseTexture.DataIsReady == false) ;
+      
       LoadHeightMap();
 
-      /*
-      if (Heightmap == null)
-      {
-        //Console.WriteLine(TileX + "," + TileY + "," + ZoomLevel + " not found");
-        return;
-      }
-      while (Heightmap.DataIsReady == false)
-      {
-        Console.WriteLine("HeightMap Waiting ");
-        Thread.Sleep(50);
-      };
-      */
       LoadMetaData((MAstroBody)e.Argument);
 
       ApplyHeightMap();
@@ -195,7 +185,7 @@ namespace Massive
       {
         Forest.PlantTrees(CurrentBody, this);
       }
-      IsSetup = true;
+      
     }
 
 
@@ -235,6 +225,8 @@ namespace Massive
       IndicesLength = Indices.Length;
       //Indices = null;
       // Vertices = null;
+      IsSetup = true;
+
       if (Settings.TerrainPhysics == true)
       {
         MMessageBus.LoadingStatus(this, "Preparing:" + TileX + "," + TileY);
@@ -287,10 +279,23 @@ namespace Massive
       double Distance = 9999999999999999;
       foreach (MPOI p in PointsOfInterest)
       {
-        double d = Vector3d.Distance(LonLat, p.LonLat);
+        //double d = Vector3d.Distance(LonLat, p.LonLat);
+        double d= MGISTools.GetDistance(LonLat.Y, LonLat.X, p.LonLat.Y, p.LonLat.X);
         if (d < Distance)
         {
           ClosestPOI = p;
+          Distance = d;
+        }
+      }
+
+      Distance = 9999999999999999;
+      foreach (MPOI p in Suburbs)
+      {
+        //double d = Vector3d.Distance(LonLat, p.LonLat);
+        double d = MGISTools.GetDistance(LonLat.Y, LonLat.X, p.LonLat.Y, p.LonLat.X);
+        if (d < Distance)
+        {
+          ClosestSuburb = p;
           Distance = d;
         }
       }
@@ -299,11 +304,16 @@ namespace Massive
 
     public string GetInfo()
     {
-      string sReturn = ClosestCity + ": ";
+      string sReturn = ClosestCity;
+
+      if (ClosestSuburb != null)
+      {
+        sReturn += ":"+ClosestSuburb.Name;
+      }
 
       if (ClosestPOI != null)
       {
-        sReturn += ClosestPOI.Name;
+        sReturn += ":"+ClosestPOI.Name;
       }
 
       return sReturn;
@@ -380,7 +390,7 @@ namespace Massive
       string sHeight = string.Format("earth\\{0}\\continuity\\{1}_{2}.png", ZoomLevel, TileX, TileY);
       sHeight = Path.Combine(Settings.TileDataPath, sHeight);
       if (File.Exists(sHeight))
-      {        
+      {
         //loading syncronously, not slow
         Heightmap = new MTexture("Heightmap");
         Heightmap.LoadTextureData(sHeight);
@@ -389,6 +399,45 @@ namespace Massive
           Heightmap.DoAssign = true;
         }
       }
+    }
+
+    void AddPOI(string sName, string sclass, double lon, double lat, MAstroBody _body)
+    {
+      MPOI poi = new MPOI();
+      poi.sClass = sclass;
+      poi.Position = MGISTools.LonLatMercatorToPosition(lon, lat, _body.Radius.X)
+                 + _body.Position;
+      poi.LonLat = new Vector3d(lon, lat, 0);
+      poi.Name = sName;
+      if (sclass.Equals("suburb"))
+      {        
+        Suburbs.Add(poi);
+      }
+      if (sclass.Equals("minor"))
+      {       
+        PointsOfInterest.Add(poi);
+      }
+      if (sclass.Equals("tertiary"))
+      {       
+        PointsOfInterest.Add(poi);
+      }
+      if (sclass.Equals("major"))
+      {       
+        PointsOfInterest.Add(poi);
+      }
+      if (sclass.Equals("primary"))
+      {       
+        PointsOfInterest.Add(poi);
+      }
+      if (sclass.Equals("highway"))
+      {       
+        PointsOfInterest.Add(poi);
+      }
+      if (sclass.Equals("stream"))
+      {       
+        PointsOfInterest.Add(poi);
+      }
+
     }
 
     public void LoadMetaData(MAstroBody _body)
@@ -400,6 +449,7 @@ namespace Massive
         string sJSON = File.ReadAllText(path);
         try
         {
+          //todo query against results directly, using line-proximity
           FeatureCollection results = JsonConvert.DeserializeObject<FeatureCollection>(sJSON);
 
           //FeatureCollection results = (FeatureCollection) 
@@ -407,30 +457,49 @@ namespace Massive
           {
             var features = results.Features.Select(x => x)
               .Where(x => x.Properties.Keys.Contains("class") &&
-              (x.Properties.Values.Contains("suburb") || (x.Properties.Values.Contains("city")))
+              (x.Properties.Values.Contains("suburb"))
+              || (x.Properties.Values.Contains("city"))
+              || (x.Properties.Values.Contains("primary"))
+              || (x.Properties.Values.Contains("minor"))
               );
 
             foreach (Feature f in features)
-            {
-              MPOI poi = new MPOI();
-              poi.Name = f.Properties["name"].ToString();
+            {              
+              if (!f.Properties.ContainsKey("name"))
+              {
+                continue;
+              }              
+
               if (f.Properties["class"].Equals("city"))
               {
                 ClosestCity = f.Properties["name"].ToString();
+                continue;
               }
 
-              Point pt = (Point)f.Geometry;
-              poi.LonLat.X = pt.Coordinates.Longitude;
-              poi.LonLat.Y = pt.Coordinates.Latitude;
-              poi.Position = MGISTools.LonLatMercatorToPosition(pt.Coordinates.Latitude, pt.Coordinates.Longitude, _body.Radius.X)
-                 + _body.Position;
-              PointsOfInterest.Add(poi);
+              if (f.Geometry.Type == GeoJSON.Net.GeoJSONObjectType.Point)
+              {
+                Point pt = (Point)f.Geometry;                
+                AddPOI(f.Properties["name"].ToString(), f.Properties["class"].ToString(),
+                  pt.Coordinates.Longitude,
+                  pt.Coordinates.Latitude, _body);
+              }
+
+              if (f.Geometry.Type == GeoJSON.Net.GeoJSONObjectType.LineString)
+              {
+                LineString ls = (LineString)f.Geometry;
+                foreach( Position p in ls.Coordinates)
+                {                                    
+                  AddPOI(f.Properties["name"].ToString(), f.Properties["class"].ToString(),
+                  p.Longitude,
+                  p.Latitude, _body);
+                }                
+              }
             }
           }
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-
+          Console.WriteLine(ex.Message);
         }
       }
     }

@@ -42,7 +42,7 @@ namespace Massive
     public override void Setup()
     {
       //TODO:
-      //ADD URL TEXTURES!      
+      //ADD URL TEXTURES!
 
       Bodies.Add(new MAstroBody("Sol", "The Sun", 1.988544E+30, new Vector3d(0, 0, 0),
       new Vector3d(6.955E+5, 6.955E+5, 6.955E+5) * ScaleFactor,
@@ -50,13 +50,14 @@ namespace Massive
 
       Bodies.Add(new MAstroBody("Mercury", "The planet Mercury", 3.302E+23,
         new Vector3d(-3.676448098104388E+07, -5.914211791485628E+07, -3.979251580149613E+06) * 1000,
-        new Vector3d(2440, 2440, 2440) * ScaleFactor, "https://www.bigfun.co.za/fu/static/2k_mercury.jpg"
+        new Vector3d(2440, 2440, 2440) * ScaleFactor, "Textures\\Planets\\2k_mercury.jpg"
         , false, 0, false, true));
       //VX = 3.256023326434234E+01 VY = -2.128637611764578E+01 VZ = 5.328388929915358E-01
 
       Bodies.Add(new MAstroBody("Venus", "The planet Venus", 48.685E+23,
         new Vector3d(-1.048122216556790E+08, 2.393654051492437E+07, -6.939236908324338E+06) * 1000,
-         new Vector3d(6051.8, 6051.8, 6051.8) * ScaleFactor, "https://www.bigfun.co.za/fu/static/2k_venus.jpg"
+         new Vector3d(6051.8, 6051.8, 6051.8) * ScaleFactor,
+         "Textures\\Planets\\2k_venus.jpg"
          , false, 0, false, true));
       //VX = -8.048894150515352E+00 VY = -3.423458014481214E+01 VZ = 6.724535965214056E-01
 
@@ -74,22 +75,26 @@ namespace Massive
 
       Bodies.Add(new MAstroBody("Jupiter", "The planet Jupiter", 1898.13E+24,
         new Vector3d(6.889448949554296E+08, 2.740877921731672E+08, 4.453849463134830E+07) * 1000,
-        new Vector3d(71492, 71492, 71492) * ScaleFactor, "http://www.bigfun.co.za/fu/static/2k_jupiter.jpg"
+        new Vector3d(71492, 71492, 71492) * ScaleFactor,
+        "Textures\\Planets\\2k_jupiter.jpg"
         , false, 0, false, true));
 
       Bodies.Add(new MAstroBody("Saturn", "The planet Saturn", 5.68319E+26,
         new Vector3d(1.177516875361957E+09, 7.071279503136320E+08, 3.202538221937501E+07) * 1000,
-        new Vector3d(60268, 60268, 60268) * ScaleFactor, "http://www.bigfun.co.za/fu/static/2k_saturn.jpg",
+        new Vector3d(60268, 60268, 60268) * ScaleFactor,
+        "Textures\\Planets\\2k_saturn.jpg",
         false, 0, true, true));
 
       Bodies.Add(new MAstroBody("Uranus", "The planet Uranus. Not a gas giant.", 86.8103E+24,
         new Vector3d(1.553968700866261E+09, -2.526552315539761E+09, 2.925724853501363E+08) * 1000,
-        new Vector3d(25362, 25362, 25362) * ScaleFactor, "http://www.bigfun.co.za/fu/static/2k_uranus.jpg"
+        new Vector3d(25362, 25362, 25362) * ScaleFactor,
+        "Textures\\Planets\\2k_uranus.jpg"
         , false, 0, false, true));
 
       Bodies.Add(new MAstroBody("Neptune", "The planet Neptune.", 102.41E+24,
         new Vector3d(1.460744159765920E+09, -4.239590984479527E+09, 4.426341416587460E+08) * 1000,
-        new Vector3d(24766, 24766, 24766) * ScaleFactor, "http://www.bigfun.co.za/fu/static/2k_neptune.jpg"
+        new Vector3d(24766, 24766, 24766) * ScaleFactor,
+        "Textures\\Planets\\2k_neptune.jpg"
         , false, 0, false, true));
 
       //VX = 5.092374353910485E+00 VY = 1.848518616013199E+00 VZ = 2.857105569330195E-01
@@ -153,13 +158,13 @@ namespace Massive
       //MScene.AstroRoot.Add(GravityIndicator);
       //GravityIndicator.SetMaterial((MMaterial)MScene.MaterialRoot.FindModuleByName(MMaterial.DEFAULT_MATERIAL));
       CreateShaders();
-
-      int ListIndex = 0;
-      foreach (MAstroBody m in Bodies)
+      
+      for (int i=0; i< Bodies.Count; i++)
       {
+        MAstroBody m = Bodies[i];
         //m.Radius = m.Radius * 0.5;
         if (m.IsTemplate == true) continue;
-        m.ListIndex = ListIndex++;
+        m.ListIndex = i;
         Vector3d pos = m.Position + new Vector3d(-m.Radius.X, 0, 0) * (m.HasRings == true ? 3.0 : 1.1);
         MServerZone zone = new MServerZone("MASTER_ASTRONOMER", m.Name, "Astronomical",
           MassiveTools.ToVector3_Server(pos));

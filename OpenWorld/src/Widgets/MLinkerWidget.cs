@@ -21,7 +21,6 @@ namespace OpenWorld.Widgets
         Console.WriteLine(ee.Message);
         MMessageBus.Error(mo, ee.Message);
       }
-
     }
 
     public static void Mc_RightClick(MObject mo)

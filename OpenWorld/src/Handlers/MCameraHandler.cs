@@ -15,16 +15,19 @@ namespace OpenWorld.Handlers
     MCamera _camera;
 
     double MaxSpeed = 0.002;
-    double Speed = 1;
+    double Speed = 15;
     Vector3d PreviousPosition = Vector3d.Zero;
     Vector3d PreviousTarget = Vector3d.Zero;
     double MaxNetworkThrottle = 0.5;
     double Throttle = 0;
-    Vector3d CurrentPosition;
+
     bool ThirdPerson = true;
     MPhysicsObject po;
 
-    Vector3d TargetPosition;
+    //the physical location of the camera
+    Vector3d DestinationPosition;
+    //the position of the camera, minus wall clipping
+    Vector3d RenderedPosition;
     Vector3d TargetUp;
 
     //MSceneObject Target;
@@ -36,13 +39,6 @@ namespace OpenWorld.Handlers
       Globals.Network.TeleportHandler += Network_TeleportHandler;
       MMessageBus.UpdateHandler += MMessageBus_UpdateHandler;
       MStateMachine.StateChanged += MStateMachine_StateChanged;
-
-      //po = new MPhysicsObject(_camera, "CamPhysball", 0, MPhysicsObject.EShape.Sphere, false, new Vector3d(0.1,0.1,0.1));
-      // MMessageBus.TeleportedEventHandler += MMessageBus_TeleportEventHandler;
-      //MMessageBus.UpdateHandler += MMessageBus_UpdateHandler;
-
-      // Target = Helper.CreateSphere(null, "CamTarget");
-      // Target.transform.Position = new OpenTK.Vector3d(0, 1.1, 9);
     }
 
     private void MStateMachine_StateChanged(object sender, EventArgs e)
@@ -91,12 +87,55 @@ namespace OpenWorld.Handlers
 
     }
 
-    public void UpdateMovement()
+    void SetDestinationPosition(Vector3d AP)
     {
-      double dist = Vector3d.Distance(MScene.Camera.transform.Position, TargetPosition);
-      dist = MathHelper.Clamp(dist, 1, 10);
-      //MScene.Camera.transform.Position = Vector3d.Lerp(MScene.Camera.transform.Position, TargetPosition, Time.DeltaTime * Speed * dist);
-      MScene.Camera.transform.Position = TargetPosition;
+      if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Walking)
+      {
+        DestinationPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
+               - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;
+      }
+      else
+      {
+        DestinationPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
+               - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;
+
+        MScene.Camera.Focus.transform.Position = AP + Globals.Avatar.Forward() * 10;
+      }
+    }
+
+    public void CheckClipping(Vector3d AP)
+    {
+      MRaycastTask task = MScene.Physics.RayCast(AP - Globals.Avatar.Forward() * 1 + Globals.Avatar.Up() * Globals.Avatar.height,
+        DestinationPosition);
+
+      if (task.Result == true)
+      {
+        RenderedPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
+             - Globals.Avatar.Forward() * 0.5;
+      }
+      else
+      {
+        RenderedPosition = DestinationPosition;
+      }
+    }
+
+    public void UpdateMovement(Vector3d AP)
+    {
+      double dist = Vector3d.Distance(MScene.Camera.transform.Position, DestinationPosition);
+     // if (dist >1000)
+      //{
+        //dist = MathHelper.Clamp(Speed * dist, 1, 10);
+///        MScene.Camera.transform.Position = Extensions.SmoothStep(MScene.Camera.transform.Position,
+   //       RenderedPosition, Time.DeltaTime * 20);
+        //MScene.Camera.Focus.transform.Position = Extensions.SmoothStep(MScene.Camera.Focus.transform.Position, MScene.Camera.transform.Position + Globals.Avatar.Forward() * 10
+         // + MScene.Camera.TargetOffset, Time.DeltaTime * 20);
+     // }
+      //else
+      {
+        MScene.Camera.transform.Position = RenderedPosition;
+        MScene.Camera.Focus.transform.Position = AP + Globals.Avatar.Forward() * 10
+        + MScene.Camera.TargetOffset;
+      }
 
       Vector3d upv = MScene.Camera.UpVector;
       if (double.IsNaN(upv.X))
@@ -109,48 +148,23 @@ namespace OpenWorld.Handlers
       }
 
       MScene.Camera.UpVector = Vector3d.Lerp(upv, TargetUp, Time.DeltaTime * Speed * 2);
-
     }
 
-    public void Update()
+    /// <summary>
+    /// If we have moved greated than 1m, inform the network
+    /// </summary>
+    /// <param name="AP"></param>
+    void CheckNetworkUpdating(Vector3d AP)
     {
-      Throttle += Time.DeltaTime;
-
-      Vector3d AP = Globals.Avatar.GetPosition();
-
-      //MBoundingBox box = Globals.Avatar.Target.BoundingBox;
-      //Console.WriteLine(box);
-      //double rad = box.Size().Length;
-
-      // CheckIfCloseToWall(AP + Globals.Avatar.Forward() * 0.1);        
-
-      TargetUp = Globals.Avatar.Up();
-
-      if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Walking)
-      {
-        TargetPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
-               - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;
-
-        MScene.Camera.Target.transform.Position = AP + Globals.Avatar.Forward() * 10
-          + MScene.Camera.TargetOffset;
-      }
-      else
-      {
-        TargetPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
-               - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;
-
-        MScene.Camera.Target.transform.Position = AP + Globals.Avatar.Forward() * 10;
-      }
-
       double dist = Vector3d.Distance(PreviousPosition, MScene.Camera.transform.Position);
-      double td = Math.Abs(Vector3d.Distance(PreviousTarget, MScene.Camera.Target.transform.Position));
+      double td = Math.Abs(Vector3d.Distance(PreviousTarget, MScene.Camera.Focus.transform.Position));
 
       if (((dist > 0.25) || (td > 1))
         && (Throttle > MaxNetworkThrottle))
       {
         Throttle = 0;
         PreviousPosition = MScene.Camera.transform.Position;
-        PreviousTarget = MScene.Camera.Target.transform.Position;
+        PreviousTarget = MScene.Camera.Focus.transform.Position;
         if (Globals.Network.Connected == true)
         {
           MMessageBus.MoveAvatarRequest(this, Globals.UserAccount.UserID, AP, Globals.Avatar.GetRotation());
@@ -160,10 +174,24 @@ namespace OpenWorld.Handlers
           MMessageBus.AvatarMoved(this, Globals.UserAccount.UserID, AP, Globals.Avatar.GetRotation());
           Console.WriteLine("Click " + Globals.Avatar.GetRotation());
         }
-
       }
+    }
 
-      UpdateMovement();
+    public void Update()
+    {
+      Throttle += Time.DeltaTime;
+
+      Vector3d AP = Globals.Avatar.GetPosition();
+
+      // CheckIfCloseToWall(AP + Globals.Avatar.Forward() * 0.1);        
+
+      TargetUp = Globals.Avatar.Up();
+
+      SetDestinationPosition(AP);
+      CheckClipping(AP);
+      UpdateMovement(AP);
+      CheckNetworkUpdating(AP);
+
     }
 
   }

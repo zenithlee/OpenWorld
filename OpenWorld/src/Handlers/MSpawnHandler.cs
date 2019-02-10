@@ -4,6 +4,7 @@ using Massive.Network;
 using Massive.Tools;
 using OpenTK;
 using OpenWorld.Widgets;
+using OpernWorld.Widgets;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -71,6 +72,7 @@ namespace OpenWorld.Handlers
         mpo.SetDamping(0.7, 0.5);
         mpo.SetRestitution(0.5);
         mpo.SetSleep(15);
+        mpo.SetFriction(0);
         mpo.SetAngularFactor(0.0, 0.0, 0.0);
         o.Setup();
       }
@@ -90,6 +92,24 @@ namespace OpenWorld.Handlers
         mc.RightClicked = MLinkerWidget.Mc_RightClick;
         o.Add(mc);
         o.Tag = "LINKER01|URL:";
+      }
+
+      if (bb.SubModule == "MTeleporter")
+      {
+        MClickHandler mc = new MClickHandler();
+        mc.DoubleClicked = MTeleporterWidget.Mc_DoubleClick;
+        mc.RightClicked = MTeleporterWidget.Mc_RightClick;
+        o.Add(mc);
+        o.Tag = "TELEPORTER01|XYZ:";
+      }
+
+      if (bb.SubModule == "MPicture")
+      {
+        MClickHandler mc = new MClickHandler();
+        mc.DoubleClicked = MPictureWidget.Mc_DoubleClick;
+        mc.RightClicked = MPictureWidget.Mc_RightClick;
+        o.Add(mc);
+        o.Tag = "PICTURE01|This Picture|Description";
       }
 
       return o;
@@ -148,6 +168,7 @@ namespace OpenWorld.Handlers
         if (mat != null)
         {
           mo.SetMaterial(mat);
+          mat.MaterialID = sMaterialID;
         }
       }
 

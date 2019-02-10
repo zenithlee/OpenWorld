@@ -26,8 +26,8 @@ namespace Massive
     int sizeofmat = sizeof(float) * 4 * 4;
     int vec4size = sizeof(float) * 4;
     int instanceVBO;
-    string TreeModel = @"Models\tree01.3ds";
-    string TreeTexture = @"Textures\foliage\pine03.png";
+    string TreeModel = @"Models\foliage\tree01.3ds";
+    string TreeTexture = @"Textures\foliage\clovetree.png";
 
     public MForest() : base(EType.Other, "Forest")
     {

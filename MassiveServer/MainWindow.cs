@@ -423,7 +423,7 @@ namespace Massive.Server
       Thread.Sleep(1000);
 
       Application.Restart();
-      Environment.Exit(0);
+      Environment.Exit(0);            
     }
 
     void Stop()

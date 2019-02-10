@@ -1,6 +1,7 @@
 ﻿using Massive.Network;
 using MassiveNetwork;
 using MassiveServer.src;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -71,9 +72,16 @@ namespace MassiveServer
     public bool SetProperty(string UserID, string InstanceID, string PropertyTag)
     {
       string sQuery = string.Format(
-       @"UPDATE objects SET `tag`='{0}' WHERE `instanceid`='{1}' AND `ownerid`='{2}';",
+       @"UPDATE objects SET `tag`=@tag WHERE `instanceid`=@instanceid AND `ownerid`=@ownerid;",
          PropertyTag, InstanceID, UserID);
-      int num = Query(sQuery);
+      //int num = Query(sQuery);
+
+      Dictionary<string, string> parms = new Dictionary<string, string>();
+      parms.Add("tag", PropertyTag);
+      parms.Add("instanceid", InstanceID);
+      parms.Add("ownerid", UserID);
+      int num = QueryParam(sQuery, parms);
+
       return num == 0 ? false : true;
     }
 

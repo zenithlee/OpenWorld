@@ -201,6 +201,7 @@
     <Content Include="Assets\Models\buildings\building03.3ds" />
     <Content Include="Assets\Models\floor03.3ds" />
     <Content Include="Assets\Models\buildings\spacestation01.3ds" />
+    <Content Include="UserData\Settings.txt" />
     <None Include="Assets\Models\floor04.3ds" />
     <None Include="Assets\Models\people\casual2.obj" />
     <None Include="Assets\Models\people\casual5.obj" />
@@ -937,6 +938,7 @@
     <Folder Include="Deploy\" />
     <Folder Include="src\Events\" />
     <Folder Include="src\UI\" />
+    <Folder Include="UserData\Cache\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -34,11 +34,50 @@ namespace MassiveServer.src
         Hostname, DatabaseName, UserName, Password, Port);
     }
 
-    public int Query(string sQuery)
+    public int QueryParam(string sQuery, Dictionary<string,string> Params)
+    {
+      int NumResults = 0;
+
+      try
+      {
+        Setup();
+        //we must use 'using' method for multithreaded operation
+        using (var connection = new MySqlConnection(ConnectionString)) //actually pulls a connection from the pool
+        {
+          using (var cmd = connection.CreateCommand())
+          {
+            connection.Open();
+            cmd.CommandText = sQuery;
+
+            foreach( KeyValuePair<string,string> k in Params)
+            {
+              cmd.Parameters.AddWithValue("@"+k.Key, k.Value);
+            }
+            
+            NumResults = cmd.ExecuteNonQuery();
+            ResultText = NumResults + " rows affected";
+          }
+        }
+      }
+      catch (Exception e)
+      {
+        ResultText = e.Message;
+        Console.WriteLine(e.Message);
+      }
+      finally
+      {
+        Disconnect();
+      }
+
+
+      return NumResults;
+    }
+
+      public int Query(string sQuery)
     {
      // Console.WriteLine(sQuery);
       ResultText = "Ok";
-      DataTable results = new DataTable();
+      //DataTable results = new DataTable();
       int NumResults = 0;
 
       try

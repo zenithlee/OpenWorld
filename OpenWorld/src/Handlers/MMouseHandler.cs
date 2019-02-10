@@ -116,7 +116,6 @@ namespace OpenWorld
           {
             RotateAvatarSpace(e.Location);
           }
-
         }
       }
     }
@@ -132,7 +131,7 @@ namespace OpenWorld
 
       accx += dx;
 
-      Vector3d op = MScene.Camera.Target.transform.Position;
+      Vector3d op = MScene.Camera.Focus.transform.Position;
 
       Quaterniond rota = Extensions.LookAt(Globals.Avatar.GetPosition(),
                  Globals.Avatar.GetPosition() + Globals.LocalUpVector, Vector3d.UnitY);
@@ -205,9 +204,9 @@ namespace OpenWorld
     void RotateCameraAroundTarget(Point e)
     {
       Vector3d tp = Vector3d.Zero;
-      if (MScene.Camera.Target != null)
+      if (MScene.Camera.Focus != null)
       {
-        tp = MScene.Camera.Target.transform.Position;
+        tp = MScene.Camera.Focus.transform.Position;
       }
 
       ///Globals.GlobalOffset
@@ -221,7 +220,7 @@ namespace OpenWorld
       Vector3d p = RotateOffset(op - tp, -dx);
 
       double dist = 0;
-      Vector3d.Distance(ref MScene.Camera.Target.transform.Position, ref MScene.Camera.transform.Position, out dist);
+      Vector3d.Distance(ref MScene.Camera.Focus.transform.Position, ref MScene.Camera.transform.Position, out dist);
 
       MScene.Camera.transform.Position = p + tp + new Vector3d(0, dist * -dy, 0);
 
@@ -329,7 +328,7 @@ namespace OpenWorld
             mo.OnClick(DoubleClick,RightClick);
             MMessageBus.Select(this, new SelectEvent(mo));
             MMaterial m = (MMaterial)mo.FindModuleByType(EType.Material);
-            MMessageBus.Status(this, "Selected:" + mo.TemplateID);
+            //MMessageBus.Status(this, "Selected:" + mo.TemplateID);
           }
         }
       }

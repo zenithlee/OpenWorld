@@ -27,5 +27,10 @@ namespace OpenWorld.Forms
       TerrainPhysicsCheck.Checked = Settings.TerrainPhysics;
       GravityCheck.Checked = Settings.Gravity;
     }
+
+    private void DebugPhysicsCheck_CheckedChanged(object sender, EventArgs e)
+    {
+      MScene.Physics.DebugWorld = DebugPhysicsCheck.Checked;
+    }
   }
 }

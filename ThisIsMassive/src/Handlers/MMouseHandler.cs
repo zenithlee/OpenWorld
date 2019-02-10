@@ -75,12 +75,9 @@ namespace MassiveUniverse
     {
       if (e.Button == MouseButtons.Left)
       {
-        //Globals.Avatar.Hide();
         CheckPick(e.Location, true);
-        //Globals.Avatar.Show();
       }
       MMessageBus.Click(this, e.Location, e.Button == MouseButtons.Left ? 0 : 1);
-
     }
 
     public static double GetMouseMult()
@@ -107,7 +104,7 @@ namespace MassiveUniverse
           RotateCameraAroundTarget(e.Location);
         }
 
-        if ((MStateMachine.CurrentState == MStateMachine.eStates.Viewing) 
+        if ((MStateMachine.CurrentState == MStateMachine.eStates.Viewing)
           || (MStateMachine.CurrentState == MStateMachine.eStates.Building))
         {
           if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Walking)
@@ -118,7 +115,6 @@ namespace MassiveUniverse
           {
             RotateAvatarSpace(e.Location);
           }
-
         }
       }
     }
@@ -324,7 +320,7 @@ namespace MassiveUniverse
           // else
           {
             mo.OnClick(DoubleClick);
-            MMessageBus.Select(this, mo);
+            MMessageBus.Select(this, new SelectEvent(mo));
             MMaterial m = (MMaterial)mo.FindModuleByType(EType.Material);
             MMessageBus.Status(this, "Selected:" + mo.InstanceID + "(" + mo.TemplateID + ")" + mo.BoundingBox.ToString());
           }

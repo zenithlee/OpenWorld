@@ -610,6 +610,7 @@ namespace Massive
 
       MChangeProperty cp = new MChangeProperty();
       cp.InstanceID = InstanceID;
+      //PropertyTag = Uri.EscapeUriString(PropertyTag);
       cp.PropertyTag = PropertyTag;
 
       mn.Payload = cp.Serialize();

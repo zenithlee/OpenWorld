@@ -65,7 +65,12 @@ namespace Massive.Tools
       return d;
     }
 
-    public static Vector3d VectorFromString(string s)
+    public static string VectorToString(Vector3d v)
+    {
+      return v.X + "," + v.Y + "," + v.Z;
+    }
+
+      public static Vector3d VectorFromString(string s)
     {
       Vector3d v = new Vector3d();
       s = s.Replace("(", "");

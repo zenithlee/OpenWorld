@@ -12,7 +12,7 @@ namespace Massive
     public Quaterniond TargetRotation;
 
     public MPhysicsObject _physics;
-    public double height = 1.2;
+    public double height = 1.5;
 
     public double Throttle = 0;
 
@@ -165,7 +165,7 @@ namespace Massive
       {
         Vector3d ap = GetPosition();
         Vector3d pos = ap + Forward() * 0.5;
-        MPhysics.Instance.RayCastRequest(pos, pos + Forward() - Up() * 1.0, this, (result) =>
+        MPhysics.Instance.RayCastRequest(pos, pos + Forward() - Up() * height, this, (result) =>
           {
             if (result.Result == true)
             {
@@ -173,7 +173,7 @@ namespace Massive
               Counter++;
               if (result.Depth < 0.9)
               {
-                InputB1(7);
+                InputB1(70);
               }
             }
           });
@@ -210,8 +210,7 @@ namespace Massive
 
       if (MoveMode == eMoveMode.Walking)
       {
-        vo = GetRotation()
-         * new Vector3d(0, b, 0); //jetpack
+        vo = Globals.LocalUpVector * b; //jetpack
       }
       if (MoveMode == eMoveMode.Flying)
       {
