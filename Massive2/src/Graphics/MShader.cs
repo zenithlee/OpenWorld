@@ -33,33 +33,13 @@ namespace Massive
     public string EvalShaderPath { get; set; }
     public string ControlShaderPath { get; set; }
 
-    Dictionary<string, int> Cache = new Dictionary<string, int>();
-
     public MShader(string inname) : base(EType.Shader, inname)
     {
     }
 
     int GetLocation(string sName)
-    {
-      if (Cache.ContainsKey(sName))
-      {
-        return Cache[sName];
-      }
-      else
-      {
-        int loc = GL.GetUniformLocation(ProgramID, sName);
-        //if (loc == -1)
-        {
-          //TODO: Optimize shaders as parms get optimized out by compiler
-          //Console.WriteLine(this.Name + " MShader GetLocation: parm " + sName + " not found. " + ProgramID + " " + this.FragmentShaderPath);
-        }
-        //else
-        {
-          Cache.Add(sName, loc);
-        }
-
-        return loc;
-      }
+    {      
+       return GL.GetUniformLocation(ProgramID, sName);        
     }
 
     public void Bind()

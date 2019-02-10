@@ -20,6 +20,7 @@ namespace OpenWorld
     MKeyboardHandler keyboardHandler;
     MMouseHandler mouseHandler;
     InfoOverlayForm _infoForm;
+    WindowManager _windowManager;
 
     public static Rectangle ClientRect;
 
@@ -41,6 +42,16 @@ namespace OpenWorld
       Application.Idle += Application_Idle;
       bookmarksControl1.Setup();
       SetupInfo();
+      SetupWindow();
+    }
+
+    void SetupWindow()
+    {
+      _windowManager = WindowManager.Load(this);
+      Left = _windowManager.Left;
+      Top = _windowManager.Top;
+      Width = _windowManager.Width;
+      Height = _windowManager.Height;
     }
 
     void SetupInfo()
@@ -129,9 +140,11 @@ namespace OpenWorld
 
     private void Form1_FormClosing(object sender, FormClosingEventArgs e)
     {
+      _windowManager.Save();
       timer1.Stop();
       Application.Idle -= Application_Idle;
       openWorld.Dispose();
+      
     }
 
     void UpdateWindowVariables()

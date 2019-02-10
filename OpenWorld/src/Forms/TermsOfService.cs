@@ -21,7 +21,7 @@ namespace OpenWorld.Forms
 
     public void Setup()
     {
-      string sPath = Path.Combine(MFileSystem.AppDataPath, "Terms.txt");
+      string sPath = Path.Combine(MFileSystem.ProjectPath, "Terms.txt");
       if ( !File.Exists(sPath))
       {
         Console.WriteLine("ERROR, could not find TOS");
@@ -29,6 +29,16 @@ namespace OpenWorld.Forms
       }
       string sData = MFileSystem.GetFile(sPath);
       TermsTextBox.Text = sData;
+
+      sPath = Path.Combine(MFileSystem.ProjectPath, "Constitution.txt");
+      if (!File.Exists(sPath))
+      {
+        Console.WriteLine("ERROR, could not find Constitution");
+        return;
+      }
+      sData = MFileSystem.GetFile(sPath);
+      TermsTextBox.Text += "\r\n" + sData;
+
     }
 
     private void AcceptButton_Click(object sender, EventArgs e)

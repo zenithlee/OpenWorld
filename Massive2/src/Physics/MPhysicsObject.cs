@@ -210,16 +210,17 @@ namespace Massive
     public override void Update()
     {
       if (_rigidBody == null) return;
-     // if (Globals.Avatar._physics != null && double.IsNaN(Globals.Avatar._physics._rigidBody.WorldTransform[0, 0]))
-      //{
-        //Debugger.Break();
-//        Console.WriteLine("MPhysicsObject.Update NANI");
-  //    }
-      _rigidBody.AngularVelocity = Vector3d.Clamp(_rigidBody.AngularVelocity, -VelocityLimit, VelocityLimit);
-      Matrix4d m = _rigidBody.CenterOfMassTransform;
-      //Target.transform.Position = m.ExtractTranslation(); //broken in bullet
-      Target.transform.Position = _rigidBody.CenterOfMassPosition;
-      Target.transform.Rotation = m.ExtractRotation();
+
+      if ( _rigidBody.IsStaticObject== false)
+      {
+        _rigidBody.AngularVelocity = Vector3d.Clamp(_rigidBody.AngularVelocity, -VelocityLimit, VelocityLimit);
+        Matrix4d m = _rigidBody.CenterOfMassTransform;
+        //Target.transform.Position = m.ExtractTranslation(); //broken in bullet
+        Target.transform.Position = _rigidBody.CenterOfMassPosition;
+        Target.transform.Rotation = m.ExtractRotation();
+      }
+      
+      
       base.Update();
     }
 

@@ -11,7 +11,7 @@ namespace Massive.Platform
 {
   public class MFileSystem
   {
-    public static string ProjectPath = @".\";
+    public static string ProjectPath = @".\";    
     public static string AssetsPath = @".\Assets\";
     public static string AppDataPath = @".\Assets\UserData";
     public static string CachePath = @".\Assets\UserData\Cache";

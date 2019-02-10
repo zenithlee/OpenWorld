@@ -12,7 +12,7 @@ namespace Massive
     public Quaterniond TargetRotation;
 
     public MPhysicsObject _physics;
-    public double height = 1.5;
+    public double height = 1.2;
 
     public double Throttle = 0;
 

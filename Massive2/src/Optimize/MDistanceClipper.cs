@@ -13,7 +13,7 @@ namespace Massive
     public Vector3d AvatarPos;
 
     int SkipCounter = 0;
-    int SkipMax = 30;
+    int SkipMax = 40;
 
     public MDistanceClipper() : base(EType.Other, "DistanceClipper")
     {
