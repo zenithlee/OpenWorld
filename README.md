@@ -14,7 +14,7 @@ Sharing content
 Chat  
 ECommerce  
 
-![http://bigfun.co.za/art/13.JPG](http://bigfun.co.za/art/13.JPG)
+![http://bigfun.co.za/art/virtual_art_gallery2.JPG](http://bigfun.co.za/art/virtual_art_gallery2.JPG)
 
 ## *first run*
 Easiest is to download the Deploy.zip release file under Releases.  
