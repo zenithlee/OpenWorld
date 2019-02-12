@@ -6,6 +6,7 @@ using System;
 
 /// <summary>
 /// Controls a camera, animation, prevents clipping, etc
+/// syncs the avatar position on the network (todo: move to avatar handler)
 /// </summary>
 
 namespace OpenWorld.Handlers
@@ -152,6 +153,7 @@ namespace OpenWorld.Handlers
 
     /// <summary>
     /// If we have moved greated than 1m, inform the network
+    /// TODO: move to avatar handler
     /// </summary>
     /// <param name="AP"></param>
     void CheckNetworkUpdating(Vector3d AP)

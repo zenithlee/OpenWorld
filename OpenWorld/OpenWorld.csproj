@@ -224,6 +224,7 @@
     <Compile Include="src\Handlers\MKeyboardHandler.cs" />
     <Compile Include="src\Handlers\MLightHandler.cs" />
     <Compile Include="src\Handlers\MMouseHandler.cs" />
+    <Compile Include="src\Handlers\MMoveHandler.cs" />
     <Compile Include="src\Handlers\MNavigationPointer.cs" />
     <Compile Include="src\Handlers\MPropertyChangeHandler.cs" />
     <Compile Include="src\Handlers\MSpawnHandler.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="src\MBuildingBlock.cs" />
     <Compile Include="src\MBuildParts.cs" />
     <Compile Include="src\Models\ChatUser.cs" />
+    <Compile Include="src\Services\MBuildCheckService.cs" />
     <Compile Include="src\Services\ThemeService.cs" />
     <Compile Include="src\Widgets\MLinkerWidget.cs" />
     <Compile Include="src\Widgets\MPictureWidget.cs" />
@@ -346,10 +348,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="sun.ico" />
-    <Content Include="Deploy\Constitution.txt">
+    <Content Include="Constitution.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Deploy\Terms.txt">
+    <Content Include="Terms.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

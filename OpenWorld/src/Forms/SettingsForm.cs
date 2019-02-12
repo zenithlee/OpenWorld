@@ -32,5 +32,10 @@ namespace OpenWorld.Forms
     {
       MScene.Physics.DebugWorld = DebugPhysicsCheck.Checked;
     }
+
+    private void DebugDepthCheck_CheckedChanged(object sender, EventArgs e)
+    {
+      Globals._scene.light.DebugDepth = DebugDepthCheck.Checked;
+    }
   }
 }

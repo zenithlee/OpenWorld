@@ -29,8 +29,9 @@ namespace Massive.Server
     public string Version = "1.005";
     public const int MAXCONNECTIONS = 100;
     public double DistanceThreshold = 30; //m, distance of avatar movement until a world update is sent
+    public bool DisplayEvents = false;
 
-    MDBAdvocate _DataBase;
+    public MDBAdvocate _DataBase;
 
     Stopwatch stopwatch;
 
@@ -249,7 +250,7 @@ namespace Massive.Server
       c.Account.LastActivity = DateTime.Now;
       c.ActivityFlag = true;
       switch (m.Command)
-      {        
+      {
         case MNetMessage.CONNECTTOMASSIVEREQ:
           ConnectToMASSIVE(c, m);
           break;
@@ -262,7 +263,7 @@ namespace Massive.Server
         case MNetMessage.SPAWNREQUEST:
           SpawnRequest(c, m);
           break;
-        case MNetMessage.CHANGEDETAILSREQ: //user details
+        case MNetMessage.CHANGEDETAILSREQ: //Register user details or change/update user details
           ChangeDetails(c, m);
           break;
         case MNetMessage.CHANGEPROPERTYREQ: // object properties
@@ -363,7 +364,7 @@ namespace Massive.Server
        Send(c, "Message", mr.Serialize());
      }
    }
-   */   
+   */
 
     public void ConnectToMASSIVE(MClient c, MNetMessage m)
     {
@@ -390,10 +391,10 @@ namespace Massive.Server
       //check database
       //if password matches, continue
       //if not, send failed message
-      IPEndPoint ipe = (IPEndPoint)c.connection.ConnectionInfo.RemoteEndPoint;      
+      IPEndPoint ipe = (IPEndPoint)c.connection.ConnectionInfo.RemoteEndPoint;
       string s = ipe.Address + ":" + ipe.Port;
       c.Account.ClientIP = s;
-      if ( c.Account.UserID == null)
+      if (c.Account.UserID == null)
       {
         c.Account.UserID = m.UserID;
       }
@@ -401,7 +402,7 @@ namespace Massive.Server
       _DataBase.UpdatePlayerUsage(c.Account);
 
       MUserAccount mu = _DataBase.GetPlayerByEmail(mlir.Email, mlir.Password);
-      if ( mu == null)
+      if (mu == null)
       {
         MNetMessage mli = new MNetMessage();
         mli.Command = MNetMessage.ERROR;
@@ -412,11 +413,11 @@ namespace Massive.Server
       {
         MNetMessage mli = new MNetMessage();
         mli.Command = MNetMessage.LOGIN;
-        mli.UserID = mu.UserID;        
+        mli.UserID = mu.UserID;
         mli.Payload = mu.Serialize();
         Send(c, "Message", mli.Serialize());
         c.Account = mu;
-      }     
+      }
 
       ClientLoggedIn?.Invoke(this, new ServerEvent("Logged In:" + c.ToString()));
     }
@@ -681,7 +682,8 @@ namespace Massive.Server
       MUserAccount mu = MUserAccount.Deserialize<MUserAccount>(m.Payload);
       // TODO: Validate account
       mu.CopyTo(c.Account);
-     // c.Save();
+      // c.Save();
+      c.Account.ClientIP = c.Address.ToString();
 
       string UserID = _DataBase.UpdatePlayer(c.Account);
 
@@ -914,7 +916,10 @@ namespace Massive.Server
         Logger.WriteLog(s);
       }
 
-      ServerInfo?.Invoke(this, new ServerEvent(s, ColorCode));
+      if (DisplayEvents == true)
+      {
+        ServerInfo?.Invoke(this, new ServerEvent(s, ColorCode));
+      }
     }
   }
 }

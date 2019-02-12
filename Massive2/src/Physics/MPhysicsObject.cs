@@ -124,7 +124,7 @@ namespace Massive
         collisionShape = CreateHACDMesh(inTarget, mass, Scale);
       }
 
-      collisionShape.UserObject = inTarget;
+      
 
       Vector3d localInertia = Vector3d.Zero;
 
@@ -157,6 +157,7 @@ namespace Massive
       RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(mass, myMotionState, collisionShape, localInertia);
       _rigidBody = new RigidBody(rbInfo);
       _rigidBody.SetDamping(0.3, 0.1);
+      _rigidBody.UserObject = inTarget;
       //_rigidBody.UserObject = Name;
       _rigidBody.Restitution = 0.5;
       _rigidBody.CcdMotionThreshold = 1e-7;
@@ -213,14 +214,15 @@ namespace Massive
 
       if ( _rigidBody.IsStaticObject== false)
       {
-        _rigidBody.AngularVelocity = Vector3d.Clamp(_rigidBody.AngularVelocity, -VelocityLimit, VelocityLimit);
-        Matrix4d m = _rigidBody.CenterOfMassTransform;
-        //Target.transform.Position = m.ExtractTranslation(); //broken in bullet
-        Target.transform.Position = _rigidBody.CenterOfMassPosition;
-        Target.transform.Rotation = m.ExtractRotation();
+        _rigidBody.AngularVelocity = Vector3d.Clamp(_rigidBody.AngularVelocity, -VelocityLimit, VelocityLimit);        
       }
-      
-      
+
+      Matrix4d m = _rigidBody.CenterOfMassTransform;
+      Target.transform.Position = m.ExtractTranslation(); //broken in bullet
+      //Target.transform.Position = _rigidBody.CenterOfMassPosition;
+      Target.transform.Rotation = m.ExtractRotation();
+
+
       base.Update();
     }
 

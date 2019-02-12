@@ -375,7 +375,7 @@ namespace Massive.Server
     {
       //DBForm db = new DBForm();
       //db.Show(this);
-      SQLForm sf = new SQLForm();
+      SQLForm sf = new SQLForm(_Server._DataBase);
       sf.Show(this);
     }
 
@@ -477,6 +477,11 @@ namespace Massive.Server
     private void CMDTimer_Tick(object sender, EventArgs e)
     {
       ParseCmd();
+    }
+
+    private void ShowDebug_CheckedChanged(object sender, EventArgs e)
+    {
+      _Server.DisplayEvents = ShowDebug.Checked;
     }
   }
 }

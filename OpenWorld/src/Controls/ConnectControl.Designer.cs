@@ -40,6 +40,7 @@
       this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
       this.imageList1.Images.SetKeyName(0, "connected.png");
       this.imageList1.Images.SetKeyName(1, "disconnected.png");
+      this.imageList1.Images.SetKeyName(2, "disconnectederror.png");
       // 
       // ConnectedCheck
       // 
@@ -54,7 +55,7 @@
       this.ConnectedCheck.Size = new System.Drawing.Size(42, 39);
       this.ConnectedCheck.TabIndex = 0;
       this.ConnectedCheck.UseVisualStyleBackColor = false;
-      this.ConnectedCheck.CheckedChanged += new System.EventHandler(this.ConnectedCheck_CheckedChanged);
+      this.ConnectedCheck.Click += new System.EventHandler(this.ConnectedCheck_Click);
       // 
       // ConnectControl
       // 

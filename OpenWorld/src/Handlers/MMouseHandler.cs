@@ -11,7 +11,7 @@ using static Massive.MObject;
 namespace OpenWorld
 {
   class MMouseHandler
-  {    
+  {
     MScene _Scene;
 
     public static bool isDown = false;
@@ -31,7 +31,7 @@ namespace OpenWorld
         Console.WriteLine("MMouseHandler ERROR: Scene is not initialized");
         return;
       }
-      _Scene = Globals._scene;      
+      _Scene = Globals._scene;
 
       _glcontrol = c;
 
@@ -95,7 +95,7 @@ namespace OpenWorld
       if (isInitialized == false)
       {
         isInitialized = true;
-        RotateAvatarGround(new Point(10, 0));
+        RotateAvatarWalking(new Point(10, 0));
       }
 
       if (isDown == true)
@@ -105,12 +105,11 @@ namespace OpenWorld
           RotateCameraAroundTarget(e.Location);
         }
 
-        if ((MStateMachine.CurrentState == MStateMachine.eStates.Viewing) 
-          || (MStateMachine.CurrentState == MStateMachine.eStates.Building))
+        if (MStateMachine.CurrentState == MStateMachine.eStates.Viewing)
         {
           if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Walking)
           {
-            RotateAvatarGround(e.Location);
+            RotateAvatarWalking(e.Location);
           }
           else
           {
@@ -120,7 +119,7 @@ namespace OpenWorld
       }
     }
 
-    void RotateAvatarGround(Point e)
+    void RotateAvatarWalking(Point e)
     {
       //Vector3d tp = Vector3d.Zero;
       //tp = MScene.Camera.transform.Position;
@@ -257,14 +256,14 @@ namespace OpenWorld
         bool previous = true;
         //if (Globals.Avatar.Target != null)
         //{
-          //previous = Globals.Avatar.Target.Visible;
+        //previous = Globals.Avatar.Target.Visible;
         //}
 
         CheckPick(e.Location, false);
 
         //if (Globals.Avatar.Target != null)
         //{
-          //Globals.Avatar.Target.Visible = previous;
+        //Globals.Avatar.Target.Visible = previous;
         //}
       }
 
@@ -273,7 +272,7 @@ namespace OpenWorld
         CheckPick(e.Location, false, true);
       }
 
-        if (e.Button == MouseButtons.Right)
+      if (e.Button == MouseButtons.Right)
       {
         MMessageBus.Select(this, null);
       }
@@ -286,7 +285,7 @@ namespace OpenWorld
     {
       isDown = true;
       DownPoint = e.Location;
-      FirstDownPoint = e.Location;      
+      FirstDownPoint = e.Location;
     }
 
     void CheckPick(Point p, bool DoubleClick = false, bool RightClick = false)
@@ -321,14 +320,14 @@ namespace OpenWorld
           else
           if (!mo.OwnerID.Equals(Globals.UserAccount.UserID))
           {
-            MMessageBus.Status(this, "ID:" + mo.Index + " Object " + mo.Name + " with ID:" + mo.InstanceID + " is not owned by you. Owned by :" + mo.OwnerID);
+            MMessageBus.Status(this, "ID:" + mo.Index + " Object " + mo.Name + "," +mo.InstanceID);
           }
           // else
           {
-            mo.OnClick(DoubleClick,RightClick);
+            mo.OnClick(DoubleClick, RightClick);
             MMessageBus.Select(this, new SelectEvent(mo));
             MMaterial m = (MMaterial)mo.FindModuleByType(EType.Material);
-            //MMessageBus.Status(this, "Selected:" + mo.TemplateID);
+            MMessageBus.Status(this, "Selected:" + mo.TemplateID + "," + mo.InstanceID);
           }
         }
       }

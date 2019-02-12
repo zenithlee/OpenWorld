@@ -357,10 +357,21 @@ namespace Massive
       {
         lock (World.CollisionObjectArray)
         {
+          //TODO: unstable
           foreach (CollisionObject co in World.CollisionObjectArray)
-          {
-            if (co.CollisionShape.IsConvex)
+          {  
+            
+            if ( co.UserObject != null)
             {
+              MSceneObject mso = (MSceneObject)co.UserObject;
+              if ( mso != null)
+              {
+                if (mso.Type == EType.Terrain) continue; //very heavy, rather skip               
+              }
+            }
+           // if (co.CollisionShape.IsConvex)
+            {
+             // Console.WriteLine(co.UserObject.ToString());
               World.DebugDrawObject(co.WorldTransform, co.CollisionShape, Color4.AntiqueWhite);
             }
           }

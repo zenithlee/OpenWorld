@@ -39,7 +39,7 @@ namespace Massive
     static int lineVertexBuffer;
     static int vertexCount;
     protected List<PositionColored> lines = new List<PositionColored>();
-    public bool UserColorCoding = false;
+    public bool UserColorCoding = true;
 
     public MPhysicsDebug()
     {

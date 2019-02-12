@@ -17,7 +17,32 @@ namespace OpenWorld.Handlers
 
     public MTeleportHandler()
     {
+      Globals.Network.TeleportHandler += Network_TeleportHandler;
+
       MMessageBus.TeleportRequestHandler += MMessageBus_TeleportRequestHandler;
+      MMessageBus.TeleportCompleteHandler += MMessageBus_TeleportCompleteHandler;
+    }
+
+    private void MMessageBus_TeleportCompleteHandler(object sender, MoveEvent e)
+    {
+      //throw new NotImplementedException();
+      if (Globals.Avatar.Target != null)
+      {
+        MGravityCalculator.CalculateGravityAtAvatar();
+        Globals.Avatar.SetRotation(Globals.LocalUpRotation());
+      }
+    }
+
+    private void Network_TeleportHandler(object sender, MoveEvent e)
+    {
+      MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(e.InstanceID);
+      if (mo != null)
+      {
+        mo.SetPosition(e.Position);
+        mo.SetRotation(e.Rotation);
+      }
+      //throw new NotImplementedException();
+      MMessageBus.TeleportComplete(this, e.InstanceID, e.Position, e.Rotation);
     }
 
     private void MMessageBus_TeleportRequestHandler(object sender, TeleportRequestHandler e)

@@ -85,10 +85,11 @@ namespace OpenWorld.Forms
 
     private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
-      DataGridViewRow dg = dataGridView1.SelectedRows[0];
-      if (dg == null) return;
-      ServerIPBox.Text = dg.Cells[1].Value.ToString();
-      Join();
+      /// removed because the double-click is unreliable and causes false connections
+      //DataGridViewRow dg = dataGridView1.SelectedRows[0];
+      //if (dg == null) return;
+      //ServerIPBox.Text = dg.Cells[1].Value.ToString();
+      //Join();
     }
   }
 }

@@ -118,7 +118,7 @@ namespace Massive
     {
       if (_physics == null) return;
       TargetRotation = rot;
-      //_physics.SetRotation(rot);
+     // _physics.SetRotation(rot);
     }
 
     public void InputH(double h)
@@ -317,7 +317,7 @@ namespace Massive
       {
         if (_physics != null)
         {
-          Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, Time.DeltaTime * 10);
+          Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, Time.DeltaTime * 15);
           _physics.SetRotation(rot);
         }
       }

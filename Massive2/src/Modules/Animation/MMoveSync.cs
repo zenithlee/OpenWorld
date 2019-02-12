@@ -36,8 +36,11 @@ namespace Massive
 
     public void Stop()
     {
-      msoParent = null;
+      if (msoParent == null) return;
+      msoParent.SetPosition(TargetPosition);
+      msoParent.SetRotation(TargetRotation, false);
 
+      msoParent = null;
     }
 
 

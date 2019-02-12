@@ -20,6 +20,7 @@ namespace OpenWorld.Controllers
     MBuildParts _buildParts;
     UserDetails _userDetails;
     MPropertyChangeHandler _propertyHandler;
+    MMoveHandler _moveHandler;
     MNavigationPointer _navPointer;
     BookmarkController _bookmarkController;
 
@@ -35,24 +36,12 @@ namespace OpenWorld.Controllers
       Globals.Network.ConnectedToServerHandler += Network_ConnectedToServerHandler;
       //Globals.Network.LoggedInHandler += Network_LoggedInHandler;
       MMessageBus.LoggedIn += MMessageBus_LoggedIn;
-
-      Globals.Network.PositionChangeHandler += Network_PositionChangeHandler;
-      Globals.Network.TeleportHandler += Network_TeleportHandler;
+      
 
       MMessageBus.MoveAvatarRequestEventHandler += MMessageBus_MoveAvatarRequestEventHandler;
-      MMessageBus.MoveRequestEventHandler += MMessageBus_MoveRequestEventHandler;
-      MMessageBus.TextureRequestHandler += MMessageBus_TextureRequestHandler;
     }
 
-    private void MMessageBus_TextureRequestHandler(object sender, TextureRequestEvent e)
-    {
-      Globals.Network.TextureRequest(e.InstanceID, e.TextureID);
-    }
-
-    private void MMessageBus_MoveRequestEventHandler(object sender, MoveEvent e)
-    {
-      Globals.Network.PositionRequest(e.InstanceID, e.Position, e.Rotation);
-    }
+    
 
     //relay move avatar request to server
     private void MMessageBus_MoveAvatarRequestEventHandler(object sender, MoveEvent e)
@@ -75,6 +64,7 @@ namespace OpenWorld.Controllers
       _propertyHandler = new MPropertyChangeHandler();
       _navPointer = new MNavigationPointer();
       _bookmarkController = new BookmarkController();
+      _moveHandler = new MMoveHandler();
 
       MStateMachine state = new MStateMachine(Globals.GUIThreadOwner);
 
@@ -103,9 +93,16 @@ namespace OpenWorld.Controllers
     void CreateAvatar()
     {
       MServerObject m = new MServerObject();
-      m.Name = "AVATAR01";
-      m.TemplateID = "AVATAR01";
-      m.TextureID = "AVATAR01M";
+
+      string sAvatar = "AVATAR02";
+      if (!string.IsNullOrEmpty(Globals.UserAccount.AvatarID))
+      {
+        sAvatar = Globals.UserAccount.AvatarID;
+        m.Name = sAvatar;
+        m.TemplateID = sAvatar;
+        m.TextureID = sAvatar+"M";
+      }
+      
       m.InstanceID = Globals.UserAccount.UserID;
       m.OwnerID = m.InstanceID;
       m.Position = Globals.UserAccount.HomePosition;
@@ -151,44 +148,7 @@ namespace OpenWorld.Controllers
 
     }
 
-    private void Network_TeleportHandler(object sender, MoveEvent e)
-    {
-      MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(e.InstanceID);
-      if (mo != null)
-      {
-        mo.SetPosition(e.Position);
-        mo.SetRotation(e.Rotation);
-      }
-      //throw new NotImplementedException();
-    }
-
-    private void Network_PositionChangeHandler(object sender, Massive.Events.MoveEvent e)
-    {
-      //throw new NotImplementedException();
-      if (!e.InstanceID.Equals(Globals.UserAccount.UserID))
-      {
-        MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(e.InstanceID);
-        if (mo != null)
-        {
-          MMoveSync ms = (MMoveSync)mo.FindModuleByType(MObject.EType.MoveSync);
-          if (ms == null)
-          {
-            ms = new MMoveSync(mo, e.Position, e.Rotation);
-            mo.Add(ms);
-          }
-          else
-          {
-            ms.SetTarget(e.Position, e.Rotation);
-          }
-        }
-      }
-      else
-      {
-        MMessageBus.AvatarMoved(this, e.InstanceID, e.Position, e.Rotation);
-      }
-      //Console.WriteLine(e.Position);
-    }
-
+    
 
 
     //1 client connects to server and receives this callback

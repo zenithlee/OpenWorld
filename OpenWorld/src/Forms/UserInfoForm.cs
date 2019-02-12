@@ -49,7 +49,7 @@ namespace OpenWorld.Forms
     bool ValidateEmail(string s)
     {
       if (string.IsNullOrEmpty(s)) return false;
-      bool result = true;      
+      bool result = true;
 
       if (s.Contains(' ')) result = false;
       if (!s.Contains('@')) result = false;
@@ -60,7 +60,7 @@ namespace OpenWorld.Forms
     bool CheckValidate()
     {
       bool valid = true;
-      if ( !ValidateEmail(Globals.UserAccount.Email))
+      if (!ValidateEmail(Globals.UserAccount.Email))
       {
         EmailBox.BackColor = ErrorColor;
         valid = false;
@@ -79,7 +79,7 @@ namespace OpenWorld.Forms
       EmailBox.Text = Globals.UserAccount.Email;
       UserNameBox.Text = Globals.UserAccount.UserName;
       PasswordBox.Text = Globals.UserAccount.Password;
-      UserIDBox.Text = Globals.UserAccount.UserID;      
+      UserIDBox.Text = Globals.UserAccount.UserID;
 
       switch (Globals.UserAccount.AvatarID)
       {
@@ -94,7 +94,7 @@ namespace OpenWorld.Forms
           break;
       }
 
-      
+
     }
 
     void SaveData()
@@ -126,23 +126,38 @@ namespace OpenWorld.Forms
     }
 
     private void Network_DetailsChanged(object sender, ChangeDetailsEvent e)
-    {      
+    {
       Status(e.Success, e.Message);
+
+      Invoke((MethodInvoker)delegate
+      {
+        UserIDBox.Text = Globals.UserAccount.UserID;
+        EmailBox.Text = Globals.UserAccount.Email;
+        UserNameBox.Text = Globals.UserAccount.UserName;
+      });
+
       //AccessKeyBox.Invoke((MethodInvoker)delegate
       //{
-       // AccessKeyBox.Text = Helper.HashString(EmailBox.Text);
+      // AccessKeyBox.Text = Helper.HashString(EmailBox.Text);
       //});      
     }
 
- 
+
 
     private void SaveButton_Click(object sender, EventArgs e)
     {
       SaveData();
       CheckValidate();
       StatusLabel.Text = "Update Details...";
-      
-      Globals.Network.ChangeDetailsRequest(Globals.UserAccount);
+
+      if (Globals.Network.Connected == false)
+      {
+        StatusLabel.Text = "Not Logged in to a server... log in to a server to register with it.";
+      }
+      else
+      {
+        Globals.Network.ChangeDetailsRequest(Globals.UserAccount);
+      }
     }
 
     private void DoneButton_Click(object sender, EventArgs e)

@@ -14,6 +14,13 @@ namespace OpenWorld.Handlers
     public MTextureHandler()
     {
       Globals.Network.TextureHandler += Network_TextureHandler;
+      MMessageBus.TextureRequestHandler += MMessageBus_TextureRequestHandler;
+    }
+
+    //sends local testure changes to the server
+    private void MMessageBus_TextureRequestHandler(object sender, TextureRequestEvent e)
+    {
+      Globals.Network.TextureRequest(e.InstanceID, e.TextureID);
     }
 
     private void Network_TextureHandler(object sender, Massive.Events.TextureEvent e)

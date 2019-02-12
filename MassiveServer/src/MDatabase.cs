@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,22 +17,46 @@ namespace MassiveServer.src
     //in the db, make sure to only allow entry for localhost users
     private MySqlConnection connection = null;
     public string DatabaseName = "wonderland";
-    public string Hostname = "10.0.0.3";
+    public string Hostname = "127.0.0.1";
     public string UserName = "root";
     public string Password = "root";
     public string Port = "3306";
     public string ResultText = "";
     string ConnectionString;
+    public string ConfigFile = "mysql_config.json";
 
     public MDatabase()
     {
+      LoadSettings();
       Setup();
     }
 
     public void Setup()
     {
+      
       ConnectionString = string.Format("Server={0}; database={1}; UID={2}; password={3}; port={4};",
         Hostname, DatabaseName, UserName, Password, Port);
+    }
+
+    public void SaveSettings()
+    {
+      string sData = DatabaseName + "|" + Hostname + "|" + UserName + "|" + Password + "|" + Port;
+      File.WriteAllText(ConfigFile, sData);
+    }
+
+    void LoadSettings()
+    {
+      if (File.Exists(ConfigFile))
+      {
+        string sData = File.ReadAllText(ConfigFile);
+        string[] items = sData.Split('|');
+        DatabaseName = items[0];
+        Hostname = items[1];
+        UserName = items[2];
+        Password = items[3];
+        Port = items[4];
+      }
+
     }
 
     public int QueryParam(string sQuery, Dictionary<string,string> Params)

@@ -52,7 +52,8 @@ namespace Massive
 
     MForest Forest;
 
-    public MTerrainTile(int TX, int TY, int Zoom, double Radius) : base("TerrainSlice", EType.Terrain)
+    public MTerrainTile(int TX, int TY, int Zoom, double Radius) 
+      : base("TerrainSlice", EType.Terrain)
     {
       stopwatch = new Stopwatch();
       TileX = TX;
@@ -86,7 +87,7 @@ namespace Massive
 
     public override void Render(Matrix4d viewproj, Matrix4d parentmodel)
     {
-      Forest.transform.Position = this.transform.Position;
+      //Forest.transform.Position = this.transform.Position;
       base.Render(viewproj, parentmodel);
     }
 
@@ -263,7 +264,7 @@ namespace Massive
       {
         Console.WriteLine("MTerrainTile.SetupPhysics " + TileX + "," + TileY);
         //string sText = string.Format("PHYSICS: Cache\\earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);                
-        _physics = new MPhysicsObject(this, "Terrain_collider", 0, MPhysicsObject.EShape.ConcaveMesh, false, this.transform.Scale);
+        _physics = new MPhysicsObject(this, "Terrain_collider", 0, MPhysicsObject.EShape.ConcaveMesh, false, this.transform.Scale);        
         DoSetupPhysics = false;
       }
     }

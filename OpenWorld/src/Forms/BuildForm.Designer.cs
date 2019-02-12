@@ -38,6 +38,8 @@
       this.DeleteButton = new System.Windows.Forms.Button();
       this.SelectedLabel = new System.Windows.Forms.Label();
       this.textureControl1 = new OpenWorld.src.Controls.TextureControl();
+      this.ZoneCheckTimer = new System.Windows.Forms.Timer(this.components);
+      this.CanIBuildHere = new System.Windows.Forms.Label();
       this.tableLayoutPanel2.SuspendLayout();
       this.tableLayoutPanel3.SuspendLayout();
       this.SuspendLayout();
@@ -89,10 +91,12 @@
       // 
       // tableLayoutPanel3
       // 
-      this.tableLayoutPanel3.ColumnCount = 3;
-      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+      this.tableLayoutPanel3.ColumnCount = 4;
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+      this.tableLayoutPanel3.Controls.Add(this.CanIBuildHere, 3, 0);
       this.tableLayoutPanel3.Controls.Add(this.Duplicate, 1, 0);
       this.tableLayoutPanel3.Controls.Add(this.DeleteButton, 1, 0);
       this.tableLayoutPanel3.Controls.Add(this.SelectedLabel, 0, 0);
@@ -108,10 +112,10 @@
       // Duplicate
       // 
       this.Duplicate.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.Duplicate.Location = new System.Drawing.Point(111, 0);
+      this.Duplicate.Location = new System.Drawing.Point(166, 0);
       this.Duplicate.Margin = new System.Windows.Forms.Padding(0);
       this.Duplicate.Name = "Duplicate";
-      this.Duplicate.Size = new System.Drawing.Size(111, 28);
+      this.Duplicate.Size = new System.Drawing.Size(83, 28);
       this.Duplicate.TabIndex = 2;
       this.Duplicate.Text = "Duplicate";
       this.Duplicate.UseVisualStyleBackColor = true;
@@ -120,10 +124,10 @@
       // DeleteButton
       // 
       this.DeleteButton.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.DeleteButton.Location = new System.Drawing.Point(222, 0);
+      this.DeleteButton.Location = new System.Drawing.Point(83, 0);
       this.DeleteButton.Margin = new System.Windows.Forms.Padding(0);
       this.DeleteButton.Name = "DeleteButton";
-      this.DeleteButton.Size = new System.Drawing.Size(111, 28);
+      this.DeleteButton.Size = new System.Drawing.Size(83, 28);
       this.DeleteButton.TabIndex = 1;
       this.DeleteButton.Text = "Delete";
       this.DeleteButton.UseVisualStyleBackColor = true;
@@ -136,7 +140,7 @@
       this.SelectedLabel.ForeColor = System.Drawing.Color.White;
       this.SelectedLabel.Location = new System.Drawing.Point(3, 0);
       this.SelectedLabel.Name = "SelectedLabel";
-      this.SelectedLabel.Size = new System.Drawing.Size(105, 28);
+      this.SelectedLabel.Size = new System.Drawing.Size(77, 28);
       this.SelectedLabel.TabIndex = 3;
       this.SelectedLabel.Text = "...";
       this.SelectedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -148,6 +152,23 @@
       this.textureControl1.Name = "textureControl1";
       this.textureControl1.Size = new System.Drawing.Size(327, 161);
       this.textureControl1.TabIndex = 4;
+      // 
+      // ZoneCheckTimer
+      // 
+      this.ZoneCheckTimer.Interval = 1000;
+      this.ZoneCheckTimer.Tick += new System.EventHandler(this.ZoneCheckTimer_Tick);
+      // 
+      // CanIBuildHere
+      // 
+      this.CanIBuildHere.AutoSize = true;
+      this.CanIBuildHere.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.CanIBuildHere.ForeColor = System.Drawing.Color.White;
+      this.CanIBuildHere.Location = new System.Drawing.Point(252, 0);
+      this.CanIBuildHere.Name = "CanIBuildHere";
+      this.CanIBuildHere.Size = new System.Drawing.Size(78, 28);
+      this.CanIBuildHere.TabIndex = 4;
+      this.CanIBuildHere.Text = "BUILD";
+      this.CanIBuildHere.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // BuildForm
       // 
@@ -178,5 +199,7 @@
     private System.Windows.Forms.Button Duplicate;
     private src.Controls.TextureControl textureControl1;
     private System.Windows.Forms.Label SelectedLabel;
+    private System.Windows.Forms.Timer ZoneCheckTimer;
+    private System.Windows.Forms.Label CanIBuildHere;
   }
 }

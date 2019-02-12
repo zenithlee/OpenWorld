@@ -15,6 +15,10 @@ namespace OpenWorld.src.Controls
 {
   public partial class StatusControl : UserControl
   {
+
+    public Color ErrorColor = Color.LightCoral;
+    public Color DefaultColor = Color.White;
+
     public StatusControl()
     {
       InitializeComponent();
@@ -38,26 +42,26 @@ namespace OpenWorld.src.Controls
       {
         if (Globals.Network.Connected == false)
         {
-          StatusBox.BackColor = Color.Red;
-          StatusBox.Text = "SERVER DISCONNECTED";
+          StatusBox.BackColor = ErrorColor;
+          StatusBox.Text = "SERVER DISCONNECTED\r\n";
         }
         else
         {
-          StatusBox.BackColor = Color.White;
-          StatusBox.Text = "Connected";
+          StatusBox.BackColor = DefaultColor;
+          StatusBox.Text = "Connected\r\n";
         }
       }));
     }
 
     private void MMessageBus_ErrorHandler(object sender, ErrorEvent e)
     {
-      StatusBox.BackColor = Color.Red;
+      StatusBox.BackColor = ErrorColor;
       StatusBox.Text += e.ErrorMessage + "\r\n";
     }
 
     private void MMessageBus_InfoEventHandler(object sender, InfoEvent e)
     {
-      StatusBox.BackColor = Color.White;
+      StatusBox.BackColor = DefaultColor;
       StatusBox.Text = e.Message;
     }
 

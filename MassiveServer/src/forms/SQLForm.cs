@@ -12,25 +12,33 @@ namespace MassiveServer.src.forms
 {
   public partial class SQLForm : Form
   {
-    MDatabase db = new MDatabase();
+    MDatabase db;
 
-    public SQLForm()
+    public SQLForm(MDatabase _indb)
     {
+      db = _indb;
       InitializeComponent();
 
+      SchemaBox.Text = db.DatabaseName;
       HostnameBox.Text = db.Hostname;
       UsernameBox.Text = db.UserName;
-      PasswordBox.Text = db.Password;
+      PasswordBox.Text = db.Password;      
       PortBox.Text = db.Port;
     }
 
     private void Execute_Click(object sender, EventArgs e)
-    {
+    {      
       ExecuteQuery();
     }
 
     void ExecuteQuery()
     {
+      db.DatabaseName = SchemaBox.Text;
+      db.Hostname = HostnameBox.Text;
+      db.UserName = UsernameBox.Text;
+      db.Password = PasswordBox.Text;
+      db.Port = PortBox.Text;
+      db.SaveSettings();
       dataGridView1.DataSource = db.QueryReader(QueryBox.Text);
       ResultBox.Text = db.ResultText;
     }

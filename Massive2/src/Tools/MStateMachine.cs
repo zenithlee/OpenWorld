@@ -17,7 +17,7 @@ namespace Massive.Tools
     };
     public static eStates CurrentState = eStates.CheckTerms;
 
-    public static double BuildThreshold = 40;
+    
     //when true, the user can't build here
     public static bool ZoneLocked = false;
 

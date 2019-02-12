@@ -72,6 +72,7 @@
       this.postgresDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.mUserAccountBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.CMDTimer = new System.Windows.Forms.Timer(this.components);
+      this.ShowDebug = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel1.SuspendLayout();
       this.panel1.SuspendLayout();
       this.tableLayoutPanel3.SuspendLayout();
@@ -92,24 +93,26 @@
       // 
       // tableLayoutPanel1
       // 
-      this.tableLayoutPanel1.ColumnCount = 6;
+      this.tableLayoutPanel1.ColumnCount = 7;
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
-      this.tableLayoutPanel1.Controls.Add(this.MaxConnectionsLabel, 4, 0);
+      this.tableLayoutPanel1.Controls.Add(this.MaxConnectionsLabel, 5, 0);
       this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 1);
       this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 0);
-      this.tableLayoutPanel1.Controls.Add(this.ZoneList, 1, 1);
-      this.tableLayoutPanel1.Controls.Add(this.label3, 3, 0);
-      this.tableLayoutPanel1.Controls.Add(this.UniverseList, 1, 1);
-      this.tableLayoutPanel1.Controls.Add(this.ObjectCountLabel, 1, 0);
+      this.tableLayoutPanel1.Controls.Add(this.ZoneList, 2, 1);
+      this.tableLayoutPanel1.Controls.Add(this.label3, 4, 0);
+      this.tableLayoutPanel1.Controls.Add(this.UniverseList, 3, 1);
+      this.tableLayoutPanel1.Controls.Add(this.ObjectCountLabel, 2, 0);
       this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 2);
-      this.tableLayoutPanel1.Controls.Add(this.AliveMeter, 5, 0);
-      this.tableLayoutPanel1.Controls.Add(this.DatabaseButton, 2, 0);
-      this.tableLayoutPanel1.Controls.Add(this.ConnectionsList, 3, 1);
+      this.tableLayoutPanel1.Controls.Add(this.AliveMeter, 6, 0);
+      this.tableLayoutPanel1.Controls.Add(this.DatabaseButton, 3, 0);
+      this.tableLayoutPanel1.Controls.Add(this.ConnectionsList, 4, 1);
+      this.tableLayoutPanel1.Controls.Add(this.ShowDebug, 1, 0);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -117,7 +120,7 @@
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(1085, 445);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(1128, 445);
       this.tableLayoutPanel1.TabIndex = 9;
       // 
       // MaxConnectionsLabel
@@ -127,7 +130,7 @@
       this.MaxConnectionsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
       this.MaxConnectionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.MaxConnectionsLabel.ForeColor = System.Drawing.Color.White;
-      this.MaxConnectionsLabel.Location = new System.Drawing.Point(901, 0);
+      this.MaxConnectionsLabel.Location = new System.Drawing.Point(944, 0);
       this.MaxConnectionsLabel.Margin = new System.Windows.Forms.Padding(0);
       this.MaxConnectionsLabel.Name = "MaxConnectionsLabel";
       this.MaxConnectionsLabel.Size = new System.Drawing.Size(120, 32);
@@ -139,6 +142,7 @@
       // panel1
       // 
       this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+      this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
       this.panel1.Controls.Add(this.label4);
       this.panel1.Controls.Add(this.RegisterLobbyButton);
       this.panel1.Controls.Add(this.PublicIPBox);
@@ -155,7 +159,7 @@
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel1.Location = new System.Drawing.Point(3, 35);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(194, 375);
+      this.panel1.Size = new System.Drawing.Size(314, 375);
       this.panel1.TabIndex = 20;
       // 
       // label4
@@ -205,7 +209,7 @@
       this.ChatBox.Location = new System.Drawing.Point(13, 235);
       this.ChatBox.Multiline = true;
       this.ChatBox.Name = "ChatBox";
-      this.ChatBox.Size = new System.Drawing.Size(175, 87);
+      this.ChatBox.Size = new System.Drawing.Size(281, 87);
       this.ChatBox.TabIndex = 13;
       this.ChatBox.Text = "Server is updating. Please close and restart to install updates.";
       // 
@@ -213,7 +217,7 @@
       // 
       this.FlushButton.BackColor = System.Drawing.Color.Gold;
       this.FlushButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.FlushButton.Location = new System.Drawing.Point(13, 328);
+      this.FlushButton.Location = new System.Drawing.Point(233, 177);
       this.FlushButton.Name = "FlushButton";
       this.FlushButton.Size = new System.Drawing.Size(65, 39);
       this.FlushButton.TabIndex = 12;
@@ -266,9 +270,9 @@
       // 
       this.StopButton.BackColor = System.Drawing.Color.Crimson;
       this.StopButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.StopButton.Location = new System.Drawing.Point(10, 177);
+      this.StopButton.Location = new System.Drawing.Point(233, 132);
       this.StopButton.Name = "StopButton";
-      this.StopButton.Size = new System.Drawing.Size(61, 39);
+      this.StopButton.Size = new System.Drawing.Size(65, 39);
       this.StopButton.TabIndex = 1;
       this.StopButton.Text = "Stop";
       this.StopButton.UseVisualStyleBackColor = false;
@@ -277,7 +281,7 @@
       // 
       this.TestButton.BackColor = System.Drawing.SystemColors.MenuHighlight;
       this.TestButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.TestButton.Location = new System.Drawing.Point(123, 328);
+      this.TestButton.Location = new System.Drawing.Point(229, 328);
       this.TestButton.Name = "TestButton";
       this.TestButton.Size = new System.Drawing.Size(65, 39);
       this.TestButton.TabIndex = 3;
@@ -338,7 +342,7 @@
       // 
       this.ZoneList.Dock = System.Windows.Forms.DockStyle.Fill;
       this.ZoneList.FormattingEnabled = true;
-      this.ZoneList.Location = new System.Drawing.Point(203, 35);
+      this.ZoneList.Location = new System.Drawing.Point(323, 35);
       this.ZoneList.Name = "ZoneList";
       this.ZoneList.Size = new System.Drawing.Size(94, 375);
       this.ZoneList.TabIndex = 12;
@@ -350,11 +354,11 @@
       this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
       this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.label3.ForeColor = System.Drawing.Color.White;
-      this.label3.Location = new System.Drawing.Point(403, 0);
+      this.label3.Location = new System.Drawing.Point(523, 0);
       this.label3.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
       this.label3.Name = "label3";
       this.label3.Padding = new System.Windows.Forms.Padding(2);
-      this.label3.Size = new System.Drawing.Size(498, 32);
+      this.label3.Size = new System.Drawing.Size(421, 32);
       this.label3.TabIndex = 9;
       this.label3.Text = "Connections";
       this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -363,7 +367,7 @@
       // 
       this.UniverseList.Dock = System.Windows.Forms.DockStyle.Fill;
       this.UniverseList.FormattingEnabled = true;
-      this.UniverseList.Location = new System.Drawing.Point(303, 35);
+      this.UniverseList.Location = new System.Drawing.Point(423, 35);
       this.UniverseList.Name = "UniverseList";
       this.UniverseList.Size = new System.Drawing.Size(94, 375);
       this.UniverseList.TabIndex = 9;
@@ -374,7 +378,7 @@
       this.ObjectCountLabel.AutoSize = true;
       this.ObjectCountLabel.Dock = System.Windows.Forms.DockStyle.Fill;
       this.ObjectCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.ObjectCountLabel.Location = new System.Drawing.Point(203, 0);
+      this.ObjectCountLabel.Location = new System.Drawing.Point(323, 0);
       this.ObjectCountLabel.Name = "ObjectCountLabel";
       this.ObjectCountLabel.Size = new System.Drawing.Size(94, 32);
       this.ObjectCountLabel.TabIndex = 17;
@@ -383,13 +387,13 @@
       // 
       // statusStrip1
       // 
-      this.tableLayoutPanel1.SetColumnSpan(this.statusStrip1, 5);
+      this.tableLayoutPanel1.SetColumnSpan(this.statusStrip1, 6);
       this.statusStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusText});
       this.statusStrip1.Location = new System.Drawing.Point(0, 413);
       this.statusStrip1.Name = "statusStrip1";
-      this.statusStrip1.Size = new System.Drawing.Size(1021, 32);
+      this.statusStrip1.Size = new System.Drawing.Size(1064, 32);
       this.statusStrip1.TabIndex = 23;
       this.statusStrip1.Text = "statusStrip1";
       // 
@@ -403,7 +407,7 @@
       // 
       this.AliveMeter.BackColor = System.Drawing.Color.Silver;
       this.AliveMeter.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.AliveMeter.Location = new System.Drawing.Point(1021, 0);
+      this.AliveMeter.Location = new System.Drawing.Point(1064, 0);
       this.AliveMeter.Margin = new System.Windows.Forms.Padding(0);
       this.AliveMeter.Name = "AliveMeter";
       this.AliveMeter.Size = new System.Drawing.Size(64, 32);
@@ -413,7 +417,7 @@
       // DatabaseButton
       // 
       this.DatabaseButton.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.DatabaseButton.Location = new System.Drawing.Point(300, 0);
+      this.DatabaseButton.Location = new System.Drawing.Point(420, 0);
       this.DatabaseButton.Margin = new System.Windows.Forms.Padding(0);
       this.DatabaseButton.Name = "DatabaseButton";
       this.DatabaseButton.Size = new System.Drawing.Size(100, 32);
@@ -434,9 +438,9 @@
             this.state});
       this.tableLayoutPanel1.SetColumnSpan(this.ConnectionsList, 3);
       this.ConnectionsList.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.ConnectionsList.Location = new System.Drawing.Point(403, 35);
+      this.ConnectionsList.Location = new System.Drawing.Point(523, 35);
       this.ConnectionsList.Name = "ConnectionsList";
-      this.ConnectionsList.Size = new System.Drawing.Size(679, 375);
+      this.ConnectionsList.Size = new System.Drawing.Size(602, 375);
       this.ConnectionsList.TabIndex = 26;
       this.ConnectionsList.UseCompatibleStateImageBehavior = false;
       this.ConnectionsList.View = System.Windows.Forms.View.Details;
@@ -480,11 +484,23 @@
       this.CMDTimer.Interval = 5000;
       this.CMDTimer.Tick += new System.EventHandler(this.CMDTimer_Tick);
       // 
+      // ShowDebug
+      // 
+      this.ShowDebug.AutoSize = true;
+      this.ShowDebug.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ShowDebug.Location = new System.Drawing.Point(203, 3);
+      this.ShowDebug.Name = "ShowDebug";
+      this.ShowDebug.Size = new System.Drawing.Size(114, 26);
+      this.ShowDebug.TabIndex = 27;
+      this.ShowDebug.Text = "Display Messages";
+      this.ShowDebug.UseVisualStyleBackColor = true;
+      this.ShowDebug.CheckedChanged += new System.EventHandler(this.ShowDebug_CheckedChanged);
+      // 
       // MainWindow
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1085, 445);
+      this.ClientSize = new System.Drawing.Size(1128, 445);
       this.Controls.Add(this.tableLayoutPanel1);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "MainWindow";
@@ -547,6 +563,7 @@
     private System.Windows.Forms.Button RegisterLobbyButton;
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.Timer CMDTimer;
+    private System.Windows.Forms.CheckBox ShowDebug;
   }
 }
 

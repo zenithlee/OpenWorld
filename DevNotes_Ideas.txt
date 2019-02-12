@@ -1,0 +1,9 @@
+Instance Rendering
+
+pass the flat glInstanceID on to the shader.
+	flat in int InstanceID;
+Switch textures based on lookup array
+
+
+Tutorial sites:
+http://ogldev.atspace.co.uk/index.html

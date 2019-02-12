@@ -18,6 +18,7 @@ namespace OpenWorld.Handlers
     private void MMessageBus_ObjectDeletedEvent(object sender, DeleteEvent e)
     {
       MSceneObject o = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(e.InstanceID);
+      if (o == null) return;
 
       MPhysicsObject po = (MPhysicsObject)o.FindModuleByType(MObject.EType.PhysicsObject);
       MScene.Physics.Remove(po);

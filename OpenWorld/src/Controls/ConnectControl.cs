@@ -14,10 +14,12 @@ namespace OpenWorld.src.Controls
 {
   public partial class ConnectControl : UserControl
   {
+    public enum eConnectState { Connected, Disconnected, Error };
+
     public ConnectControl()
     {
       InitializeComponent();
-      
+
       Globals.Network.ConnectedToMASSIVEHandler += Network_ConnectedToMASSIVEHandler;
       Globals.Network.ConnectedToServerHandler += Network_ConnectedToServerHandler;
       Globals.Network.LoggedOutHandler += Network_LoggedOutHandler;
@@ -29,26 +31,43 @@ namespace OpenWorld.src.Controls
     {
       if (Globals.Network.Connected == false)
       {
-        ConnectedCheck.BackColor = Color.Red;
+        ConnectedCheck.ImageIndex = 2;
+      }
+    }
+
+    void SetButtonState(eConnectState state)
+    {
+      if ( state == eConnectState.Connected)
+      {
+        ConnectedCheck.Checked = true;
+        ConnectedCheck.ImageIndex = 0;
+      }
+      if (state == eConnectState.Disconnected)
+      {
+        ConnectedCheck.Checked = false;
+        ConnectedCheck.ImageIndex = 0;
+      }
+      if (state == eConnectState.Error)
+      {
+        ConnectedCheck.Checked = false;
         ConnectedCheck.ImageIndex = 1;
       }
     }
 
     private void Network_ConnectedToServerHandler(object sender, Massive.Events.StatusEvent e)
     {
-      if ( Globals.Network.Connected == false)
+      if (Globals.Network.Connected == false)
       {
-        ConnectedCheck.BackColor = Color.Transparent;
-        ConnectedCheck.Checked = true;
-        ConnectedCheck.ImageIndex = 0;
+        SetButtonState(eConnectState.Disconnected);
       }
     }
 
     private void Network_ConnectedToMASSIVEHandler(object sender, Massive.Events.StatusEvent e)
     {
-      ConnectedCheck.BackColor = Color.Transparent;
-      ConnectedCheck.ImageIndex = 0;
-      ConnectedCheck.Checked = true;
+      if (Globals.Network.Connected == true)
+      {
+        SetButtonState(eConnectState.Connected);
+      }
     }
 
     private void Network_ErrorEventHandler(object sender, Massive.Events.ErrorEvent e)
@@ -56,19 +75,17 @@ namespace OpenWorld.src.Controls
       //ConnectedCheck.BackColor = Color.Red;
       //ConnectedCheck.Checked = false;
       //ConnectedCheck.ImageIndex = 1;
-      Console.WriteLine(e.ErrorMessage);
+      //Console.WriteLine(e.ErrorMessage);
     }
 
     private void Network_LoggedOutHandler(object sender, Massive.Events.LoggedOutEvent e)
     {
-      ConnectedCheck.BackColor = Color.White;
-      ConnectedCheck.Checked = false;
-      ConnectedCheck.ImageIndex = 1;
-    }    
+      SetButtonState(eConnectState.Disconnected);
+    }
 
-    private void ConnectedCheck_CheckedChanged(object sender, EventArgs e)
+    private void ConnectedCheck_Click(object sender, EventArgs e)
     {
-      if ( ConnectedCheck.Checked == true)
+      if (Globals.Network.Connected == false)
       {
         // Globals.Network.Setup();
         MMessageBus.LobbyLoadRequest(this, new ChangeDetailsEvent(true, "Getting Lobby"));

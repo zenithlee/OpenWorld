@@ -437,6 +437,8 @@ namespace Massive
         Globals.ShaderOverride = simpleDepthShader;
         GL.DepthFunc(DepthFunction.Less);
         GL.Enable(EnableCap.DepthTest);
+        Background.Render(lightmatrix, offsetmat);
+        Background2.Render(lightmatrix, offsetmat);
         ModelRoot.Render(lightmatrix, offsetmat);
         Globals.RenderPass = Globals.eRenderPass.Normal;
         Globals.ShaderOverride = null;

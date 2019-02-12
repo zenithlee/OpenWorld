@@ -132,7 +132,7 @@ namespace OpenWorld.Handlers
     public void Spawn(MServerObject m)
     {
       MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(m.InstanceID);
-      if (mo != null) return;
+      if (mo != null) return; //if the object already exists, never mind
       MSceneObject mt = (MSceneObject)MScene.TemplateRoot.FindModuleByName(m.TemplateID);
       if (mt == null)
       {
@@ -183,11 +183,11 @@ namespace OpenWorld.Handlers
 
       if (MassiveTools.IsURL(sMaterialID))
       {
-        mat = (MMaterial)new MMaterial("URLShader");
-        mat.MaterialID = sMaterialID;
+        mat = (MMaterial)new MMaterial("URLShader");        
         MShader DefaultShader = (MShader)MScene.MaterialRoot.FindModuleByName(MShader.DEFAULT_SHADER);
         mat.AddShader(DefaultShader);
         mat.ReplaceTexture(Globals.TexturePool.GetTexture(sMaterialID));
+        mat.MaterialID = sMaterialID;
         MScene.MaterialRoot.Add(mat);
         mo.SetMaterial(mat);
         mo.material.Setup();

@@ -31,13 +31,15 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+      this.DebugPhysicsCheck = new System.Windows.Forms.CheckBox();
+      this.label3 = new System.Windows.Forms.Label();
       this.TerrainPhysicsCheck = new System.Windows.Forms.CheckBox();
       this.label2 = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
       this.GravityCheck = new System.Windows.Forms.CheckBox();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.label3 = new System.Windows.Forms.Label();
-      this.DebugPhysicsCheck = new System.Windows.Forms.CheckBox();
+      this.label4 = new System.Windows.Forms.Label();
+      this.DebugDepthCheck = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel2.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -46,6 +48,8 @@
       this.tableLayoutPanel2.ColumnCount = 2;
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel2.Controls.Add(this.DebugDepthCheck, 1, 3);
+      this.tableLayoutPanel2.Controls.Add(this.label4, 0, 3);
       this.tableLayoutPanel2.Controls.Add(this.DebugPhysicsCheck, 1, 2);
       this.tableLayoutPanel2.Controls.Add(this.label3, 0, 2);
       this.tableLayoutPanel2.Controls.Add(this.TerrainPhysicsCheck, 1, 1);
@@ -61,8 +65,73 @@
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
       this.tableLayoutPanel2.Size = new System.Drawing.Size(296, 435);
       this.tableLayoutPanel2.TabIndex = 2;
+      // 
+      // DebugPhysicsCheck
+      // 
+      this.DebugPhysicsCheck.AutoSize = true;
+      this.DebugPhysicsCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.DebugPhysicsCheck.ForeColor = System.Drawing.Color.White;
+      this.DebugPhysicsCheck.Location = new System.Drawing.Point(151, 67);
+      this.DebugPhysicsCheck.Name = "DebugPhysicsCheck";
+      this.DebugPhysicsCheck.Size = new System.Drawing.Size(142, 26);
+      this.DebugPhysicsCheck.TabIndex = 5;
+      this.DebugPhysicsCheck.Text = "Enabled";
+      this.DebugPhysicsCheck.UseVisualStyleBackColor = true;
+      this.DebugPhysicsCheck.CheckedChanged += new System.EventHandler(this.DebugPhysicsCheck_CheckedChanged);
+      // 
+      // label3
+      // 
+      this.label3.AutoSize = true;
+      this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.label3.ForeColor = System.Drawing.Color.White;
+      this.label3.Location = new System.Drawing.Point(3, 64);
+      this.label3.Name = "label3";
+      this.label3.Size = new System.Drawing.Size(142, 32);
+      this.label3.TabIndex = 4;
+      this.label3.Text = "Debug Physics";
+      this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.toolTip1.SetToolTip(this.label3, "Only applies to new terrain tiles");
       // 
       // TerrainPhysicsCheck
       // 
@@ -120,33 +189,31 @@
       this.GravityCheck.UseVisualStyleBackColor = true;
       this.GravityCheck.CheckedChanged += new System.EventHandler(this.GravityCheck_CheckedChanged);
       // 
-      // label3
+      // label4
       // 
-      this.label3.AutoSize = true;
-      this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.label3.ForeColor = System.Drawing.Color.White;
-      this.label3.Location = new System.Drawing.Point(3, 64);
-      this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(142, 32);
-      this.label3.TabIndex = 4;
-      this.label3.Text = "Debug Physics";
-      this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.toolTip1.SetToolTip(this.label3, "Only applies to new terrain tiles");
+      this.label4.AutoSize = true;
+      this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.label4.ForeColor = System.Drawing.Color.White;
+      this.label4.Location = new System.Drawing.Point(3, 96);
+      this.label4.Name = "label4";
+      this.label4.Size = new System.Drawing.Size(142, 32);
+      this.label4.TabIndex = 6;
+      this.label4.Text = "Debug Depth";
+      this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.toolTip1.SetToolTip(this.label4, "Only applies to new terrain tiles");
       // 
-      // DebugPhysicsCheck
+      // DebugDepthCheck
       // 
-      this.DebugPhysicsCheck.AutoSize = true;
-      this.DebugPhysicsCheck.Checked = true;
-      this.DebugPhysicsCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.DebugPhysicsCheck.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.DebugPhysicsCheck.ForeColor = System.Drawing.Color.White;
-      this.DebugPhysicsCheck.Location = new System.Drawing.Point(151, 67);
-      this.DebugPhysicsCheck.Name = "DebugPhysicsCheck";
-      this.DebugPhysicsCheck.Size = new System.Drawing.Size(142, 26);
-      this.DebugPhysicsCheck.TabIndex = 5;
-      this.DebugPhysicsCheck.Text = "Enabled";
-      this.DebugPhysicsCheck.UseVisualStyleBackColor = true;
-      this.DebugPhysicsCheck.CheckedChanged += new System.EventHandler(this.DebugPhysicsCheck_CheckedChanged);
+      this.DebugDepthCheck.AutoSize = true;
+      this.DebugDepthCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.DebugDepthCheck.ForeColor = System.Drawing.Color.White;
+      this.DebugDepthCheck.Location = new System.Drawing.Point(151, 99);
+      this.DebugDepthCheck.Name = "DebugDepthCheck";
+      this.DebugDepthCheck.Size = new System.Drawing.Size(142, 26);
+      this.DebugDepthCheck.TabIndex = 7;
+      this.DebugDepthCheck.Text = "Enabled";
+      this.DebugDepthCheck.UseVisualStyleBackColor = true;
+      this.DebugDepthCheck.CheckedChanged += new System.EventHandler(this.DebugDepthCheck_CheckedChanged);
       // 
       // SettingsForm
       // 
@@ -175,5 +242,7 @@
     private System.Windows.Forms.ToolTip toolTip1;
     private System.Windows.Forms.CheckBox DebugPhysicsCheck;
     private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.CheckBox DebugDepthCheck;
+    private System.Windows.Forms.Label label4;
   }
 }

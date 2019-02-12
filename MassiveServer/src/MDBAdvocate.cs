@@ -58,10 +58,7 @@ namespace MassiveServer
     public bool MoveObject(string UserID, string InstanceID, double[] Locus, double[] Rotation)
     {
       string sQuery = string.Format(
-        @"UPDATE objects 
-          SET `x`={0},`y`={1},`z`={2}, 
-          `rx`={3},`ry`={4},`rz`={5},`rw`={6}
-          WHERE `instanceid`='{7}' AND `ownerid`='{8}';",
+@"UPDATE objects SET `x`={0},`y`={1},`z`={2},`rx`={3},`ry`={4},`rz`={5},`rw`={6} WHERE `instanceid`='{7}' AND `ownerid`='{8}';",
         Locus[0], Locus[1], Locus[2],
         Rotation[0], Rotation[1], Rotation[2], Rotation[3],
         InstanceID, UserID);
@@ -119,6 +116,7 @@ namespace MassiveServer
       string sQuery = string.Format("SELECT * FROM `objects`;");
       DataTable dt = QueryReader(sQuery);
       //string sJSON = DataTableToJSON(dt);
+      //TODO: proximity select
       return dt;
     }
 
@@ -133,8 +131,7 @@ namespace MassiveServer
     public void AddPlayer(MUserAccount m)
     {
       string sQuery = string.Format(
-        @"INSERT IGNORE into users (userid, screenname, avatarid, email, password, ip) 
-        VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');",
+@"INSERT IGNORE into users (userid, screenname, avatarid, email, password, ip) VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');",
         m.UserID, m.UserName, m.AvatarID, m.Email, m.Password, m.ClientIP);
       Query(sQuery);
 
@@ -185,8 +182,8 @@ namespace MassiveServer
       foreach (DataRow dr in dt.Rows)
       {
         string sQuery = string.Format(
-         @"INSERT IGNORE into objects (`instanceid`, `ownerid`, `templateid`, `textureid`, `name`, `persist`, x,y,z, rx, ry, rz, rw) 
-        VALUES('{0}', '{1}', '{2}', '{3}', '{4}', {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12});",
+@"INSERT IGNORE into objects (`instanceid`, `ownerid`, `templateid`, `textureid`, `name`, `persist`, x,y,z, rx, ry, rz, rw) 
+VALUES('{0}', '{1}', '{2}', '{3}', '{4}', {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12});",
          dr[DB.INSTANCEID], dr[DB.OWNERID], dr[DB.TEMPLATEID], dr[DB.TEXTUREID], dr[DB.NAME], dr[DB.PERSIST],
          dr[DB.X], dr[DB.Y], dr[DB.Z], dr[DB.RX], dr[DB.RY], dr[DB.RZ], dr[DB.RW]
          );
@@ -211,13 +208,13 @@ namespace MassiveServer
       if (mu == null)
       {
         //generate a new UserID
-        if (string.IsNullOrEmpty(m.UserID))
-        {
+        //if (string.IsNullOrEmpty(m.UserID))
+        //{
           m.UserID = UidGen.GUID();
-        }
+        //}
         sQuery = string.Format(
-        @"INSERT  into users (`screenname`,`avatarid`,`email`,`password`, `userid`, `ip`) 
-          VALUES('{0}','{1}','{2}','{3}','{4}, {5}');",
+        @"INSERT into users (`screenname`,`avatarid`,`email`,`password`, `userid`, `ip`) 
+          VALUES('{0}','{1}','{2}','{3}','{4}','{5}');",
         m.UserName, m.AvatarID, m.Email, m.Password, m.UserID, m.ClientIP);
       }
       else
@@ -250,10 +247,10 @@ namespace MassiveServer
 
       string sCountQuery = String.Format("SELECT COUNT(*) from `objects` where ownerid='{0}'", m.UserID);
       int ObjectsOwned = QueryScalar(sCountQuery);
-
+      string DateMYSQL = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
       string sQuery = string.Format(
       @"UPDATE users SET date_accessed = '{0}',totalobjects='{1}' WHERE `userid`='{2}';",
-      DateTime.Now, ObjectsOwned, m.UserID);
+      DateMYSQL, ObjectsOwned, m.UserID);
 
       Query(sQuery);
 

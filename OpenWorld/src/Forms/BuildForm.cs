@@ -1,6 +1,8 @@
 ﻿using Massive;
 using Massive.Events;
+using Massive.Tools;
 using OpenTK;
+using OpenWorld.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,14 +13,14 @@ namespace OpenWorld.Forms
 {
   public partial class BuildForm : DToolForm
   {
-    MSceneObject SelectedItem;
-    string PendingID = "";
+    MSceneObject SelectedItem;    
     public BuildForm()
     {
       InitializeComponent();
       SetTitle("Building");
       MMessageBus.SelectEventHandler += MMessageBus_SelectEventHandler;
-      MMessageBus.ObjectDeletedEvent += MMessageBus_ObjectDeletedEvent;    
+      MMessageBus.ObjectDeletedEvent += MMessageBus_ObjectDeletedEvent;
+      ZoneCheckTimer.Start();
     }    
 
     private void MMessageBus_ObjectDeletedEvent(object sender, DeleteEvent e)
@@ -42,6 +44,11 @@ namespace OpenWorld.Forms
 
     void Add(string s)
     {
+      if (MStateMachine.ZoneLocked == true) {
+        MMessageBus.Error(this, "Can't build here, zone is locked / other building nearby");
+        return;
+      }
+      
       Vector3d pos = Globals.Avatar.GetPosition();
       pos += Globals.Avatar.Forward();
 
@@ -120,6 +127,23 @@ namespace OpenWorld.Forms
     {
       Rectangle r = Main.ClientRect;
       this.Location = new Point(r.Location.X + r.Width - this.Width, r.Y);
+    }
+
+    private void ZoneCheckTimer_Tick(object sender, EventArgs e)
+    {
+      if (Globals.Avatar == null) return;
+      if (Globals.Avatar.Target == null) return;
+      MBuildCheckService.ZoneLocked(Globals.Avatar.GetPosition());
+      if (MStateMachine.ZoneLocked)
+      {
+        CanIBuildHere.BackColor = Color.Red;
+        CanIBuildHere.Text = "Zone Locked";
+      }
+      else
+      {
+        CanIBuildHere.BackColor = Color.Green;
+        CanIBuildHere.Text = "Zone Unlocked";
+      }
     }
   }
 }

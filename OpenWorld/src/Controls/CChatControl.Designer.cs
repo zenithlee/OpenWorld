@@ -94,7 +94,7 @@
       this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
       this.imageList1.Images.SetKeyName(0, "icons8-cake-64.png");
       this.imageList1.Images.SetKeyName(1, "icons8-marker-80.png");
-      this.imageList1.Images.SetKeyName(2, "icons8-astronaut-helmet-24.png");
+      this.imageList1.Images.SetKeyName(2, "astronaut64.png");
       // 
       // ChatBox
       // 

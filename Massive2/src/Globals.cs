@@ -21,6 +21,9 @@ namespace Massive
     public static int DrawCalls = 0;    
     public static double Tweak1 = 8.5;
     public static double Tweak2 = 0;
+
+    public static double BuildThreshold = 20; //the closest distance a user can build to another user's block
+
     public static bool ApplicationExiting = false; //true when we're shutting down. Threads will monitor this 
 
     public static Control GUIThreadOwner;
@@ -60,7 +63,7 @@ namespace Massive
     public static MAvatar Avatar;
     public static MUserAccount UserAccount = new MUserAccount();
 
-    public static string LobbyDataURL = "http://bigfun.co.za/massive/lobby/";
+    public static string LobbyDataURL = "http://www.bigfun.co.za/massive/lobby/";
     
     
     public static void Log(object sender, string s)
