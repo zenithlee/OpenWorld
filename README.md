@@ -22,6 +22,9 @@ Run The MassiveServer on a Windows Machine
 Run OpenWorldMinimum to show basic login flow  
 Run OpenWorld to get a basic 3D browser, with crafting. Use this as a starting point for new browsers.  
 
+## Architecture
+The Massive2 dll is the engine.  It handles syncing the world with the server and the front-end.  
+OpenWorld is a 3D universe browser and builder powered by the Massive2 dll.  
 
 ## *Loading Terrain*
 Using Bing-type tiles  
