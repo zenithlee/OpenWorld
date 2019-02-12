@@ -34,12 +34,25 @@ namespace OpenWorld.Forms
       });
     }
 
-    private void MMessageBus_LobbyLoadedHandler(object sender, TableEvent e)
+    void SetupDatagrid(DataTable dt)
     {
-      dataGridView1.DataSource = e.Table;
+      dataGridView1.DataSource = dt;
+      if (dataGridView1.Columns.Count == 0)
+      {
+        MMessageBus.Error(this, "LobbyForm:Problem loading lobby");
+        return;
+      }
+      dataGridView1.Sort(dataGridView1.Columns[0], ListSortDirection.Ascending);
+      dataGridView1.Columns[1].Visible = false;
+
       DataGridViewRow dg = dataGridView1.Rows[0];
       if (dg == null) return;
       ServerIPBox.Text = dg.Cells[1].Value.ToString();
+    }
+
+    private void MMessageBus_LobbyLoadedHandler(object sender, TableEvent e)
+    {
+      SetupDatagrid(e.Table);
     }
 
     private void Network_ConnectedToServerHandler(object sender, Massive.Events.StatusEvent e)

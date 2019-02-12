@@ -24,6 +24,7 @@ namespace OpenWorld.Forms
     public ImageUploader()
     {
       InitializeComponent();
+      SetTitle("Image Uploader");
     }
 
     void Status(string s)
@@ -88,12 +89,14 @@ namespace OpenWorld.Forms
       if (e.Error != null)
       {
         Globals.Log(this, e.Error.Message);
+        Status(e.Error.Message);
+        Console.WriteLine(e.Error.Message);
         return;
       }
       string s = System.Text.Encoding.UTF8.GetString(e.Result, 0, e.Result.Length);
       //Console.WriteLine(s);
       Status(s);
-      sPublicFile = s;
+      sPublicFile = s.Replace("{HOST}", Globals.Network.ServerIP);
       DialogResult = DialogResult.OK;
       Close();
     }

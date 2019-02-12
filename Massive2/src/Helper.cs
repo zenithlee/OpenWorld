@@ -308,8 +308,6 @@ namespace Massive
       return WallShader;
     }
 
-   
-
     /**
      * Creates a copy of an existing object from the TemplateRoot
      * */

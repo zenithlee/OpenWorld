@@ -1,7 +1,8 @@
 <?php
 
 $uploads_dir = 'files/'; //Directory to save the file that comes from client application.
-$host = "https://bigfun.co.za/fu/";
+$host = "http://{HOST}/massive/fu/"; //client must replace {HOST} with connect public IP
+//server must add * domain to bindings for this domain to run uploader
 
 $tempfilepath = $_FILES["file"]["tmp_name"];
 
@@ -42,11 +43,11 @@ try {
     $extension = ".jpg";    
 
         $destpath = $uploads_dir . GUID() . $extension;
-        //if(move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $path)) {
-        if ( move_uploaded_file($tempfilepath, $destpath)) {
+$errorResult = move_uploaded_file($tempfilepath, $destpath);
+        if ( $errorResult ) {
           echo $host.$destpath;
         } else{
-            echo "ERROR moving " . $path;
+   echo "ERROR moving " . " " . $tempfilepath . "->" . $destpath . " ". $errorResult;
         }
       }
     else {

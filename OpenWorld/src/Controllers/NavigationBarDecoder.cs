@@ -95,7 +95,7 @@ namespace OpenWorld.Controllers
         if (GetNumbers(parts, out vt) == true)
         { 
           //y = lon, x = lat
-          Vector3d vr = MGISTools.LonLatMercatorToPosition(vt.Y, vt.X, radius + 4000) + ab.Position;
+          Vector3d vr = MGISTools.LonLatMercatorToPosition(vt.Y, vt.X, radius + 1000) + ab.Position;
           v = vr;
           return true;
         }

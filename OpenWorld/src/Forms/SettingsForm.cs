@@ -9,6 +9,7 @@ namespace OpenWorld.Forms
     public SettingsForm()
     {
       InitializeComponent();
+      SetTitle("Settings");
     }
 
     private void GravityCheck_CheckedChanged(object sender, EventArgs e)

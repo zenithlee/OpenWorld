@@ -17,7 +17,7 @@ namespace OpenWorld.Forms
     public BuildForm()
     {
       InitializeComponent();
-      SetTitle("Building");
+      SetTitle("Building and Texturing");
       MMessageBus.SelectEventHandler += MMessageBus_SelectEventHandler;
       MMessageBus.ObjectDeletedEvent += MMessageBus_ObjectDeletedEvent;
       ZoneCheckTimer.Start();
@@ -50,9 +50,16 @@ namespace OpenWorld.Forms
       }
       
       Vector3d pos = Globals.Avatar.GetPosition();
-      pos += Globals.Avatar.Forward();
+      pos += Globals.Avatar.Forward() - Globals.Avatar.Up() * 0.5;
 
       Quaterniond rot = Globals.LocalUpRotation();
+
+      if ( SelectedItem != null)
+      {
+        rot = SelectedItem.transform.Rotation;
+        pos = SelectedItem.transform.Position;
+      }
+
       Globals.Network.SpawnRequest(s, "TEXTURE01", s, s, pos, rot);
     }
 
