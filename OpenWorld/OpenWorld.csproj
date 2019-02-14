@@ -219,6 +219,12 @@
     <Compile Include="src\Forms\UserInfoForm.Designer.cs">
       <DependentUpon>UserInfoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Forms\UserStatusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\UserStatusForm.Designer.cs">
+      <DependentUpon>UserStatusForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Handlers\MCameraHandler.cs" />
     <Compile Include="src\Handlers\MDeleteHandler.cs" />
     <Compile Include="src\Handlers\MKeyboardHandler.cs" />
@@ -233,10 +239,12 @@
     <Compile Include="src\MBuildingBlock.cs" />
     <Compile Include="src\MBuildParts.cs" />
     <Compile Include="src\Models\ChatUser.cs" />
+    <Compile Include="src\Services\ImageUploadService.cs" />
     <Compile Include="src\Services\MBuildCheckService.cs" />
     <Compile Include="src\Services\ThemeService.cs" />
     <Compile Include="src\Widgets\MLinkerWidget.cs" />
     <Compile Include="src\Widgets\MPictureWidget.cs" />
+    <Compile Include="src\Widgets\MStatusWidget.cs" />
     <Compile Include="src\Widgets\MTeleporterWidget.cs" />
     <Compile Include="Version.cs" />
     <EmbeddedResource Include="Main.resx">
@@ -320,6 +328,10 @@
     <EmbeddedResource Include="src\Forms\UserInfoForm.resx">
       <DependentUpon>UserInfoForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\UserStatusForm.resx">
+      <DependentUpon>UserStatusForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packrelease.bat" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

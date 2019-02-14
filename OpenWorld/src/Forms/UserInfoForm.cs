@@ -11,10 +11,12 @@ namespace OpenWorld.Forms
   {
     Color OldBackColor = Color.Gray;
     Color ErrorColor = Color.Pink;
+    Color SuccessTextColor = Color.DarkGreen;
 
     public UserInfoForm()
     {
       InitializeComponent();
+      SetTitle("User Registration for Server");
     }
 
     private void UserInfoForm_Shown(object sender, EventArgs e)
@@ -38,12 +40,23 @@ namespace OpenWorld.Forms
 
     void SetupEvents()
     {
-      Globals.Network.USerDetailsChanged += Network_DetailsChanged;
+      //Globals.Network.USerDetailsChanged += Network_DetailsChanged;
+      //MMessageBus.UserDetailsChanged += MMessageBus_UserDetailsChanged;
+      MMessageBus.UserRegistered += MMessageBus_UserRegistered;
+    }
+
+    private void MMessageBus_UserRegistered(object sender, ChangeDetailsEvent e)
+    {
+      Status(e.Success, e.Message);
+
+      UserIDBox.Text = Globals.UserAccount.UserID;
+      EmailBox.Text = Globals.UserAccount.Email;
+      UserNameBox.Text = Globals.UserAccount.UserName;
     }
 
     void ClearEvents()
     {
-      Globals.Network.USerDetailsChanged -= Network_DetailsChanged;
+      MMessageBus.UserRegistered -= MMessageBus_UserRegistered;
     }
 
     bool ValidateEmail(string s)
@@ -68,6 +81,16 @@ namespace OpenWorld.Forms
       else
       {
         EmailBox.BackColor = OldBackColor;
+      }
+
+      if (string.IsNullOrEmpty(UserNameBox.Text))
+      {
+        UserNameBox.BackColor = ErrorColor;
+        valid = false;
+      }
+      else
+      {
+        UserNameBox.BackColor = OldBackColor;
       }
 
       return valid;
@@ -108,72 +131,52 @@ namespace OpenWorld.Forms
 
     void Status(bool Success, string s)
     {
-      if (StatusLabel.InvokeRequired)
+      if (Success == true)
       {
-        StatusLabel.BeginInvoke((MethodInvoker)delegate
-        {
-          if (Success == true)
-          {
-            StatusLabel.ForeColor = Color.Green;
-          }
-          else
-          {
-            StatusLabel.ForeColor = Color.Red;
-          }
-          StatusLabel.Text = s;
-        });
+        StatusLabel.ForeColor = SuccessTextColor;
       }
-    }
-
-    private void Network_DetailsChanged(object sender, ChangeDetailsEvent e)
-    {
-      Status(e.Success, e.Message);
-
-      Invoke((MethodInvoker)delegate
+      else
       {
-        UserIDBox.Text = Globals.UserAccount.UserID;
-        EmailBox.Text = Globals.UserAccount.Email;
-        UserNameBox.Text = Globals.UserAccount.UserName;
-      });
-
-      //AccessKeyBox.Invoke((MethodInvoker)delegate
-      //{
-      // AccessKeyBox.Text = Helper.HashString(EmailBox.Text);
-      //});      
+        StatusLabel.ForeColor = Color.Red;
+      }
+      StatusLabel.Text = s;
     }
-
-
 
     private void SaveButton_Click(object sender, EventArgs e)
     {
       SaveData();
-      CheckValidate();
+      if (CheckValidate() == false)
+      {
+        Status(false, "Please fill in the required fields");
+        return;
+      }
       StatusLabel.Text = "Update Details...";
 
       if (Globals.Network.Connected == false)
       {
-        StatusLabel.Text = "Not Logged in to a server... log in to a server to register with it.";
+        Status(false, "Not Logged in to a server... log in to a server to register with it.");
       }
       else
       {
-        Globals.Network.ChangeDetailsRequest(Globals.UserAccount);
+        //Globals.Network.ChangeDetailsRequest(Globals.UserAccount);
+        Globals.Network.UserRegisterRequest(Globals.UserAccount);
       }
     }
 
     private void DoneButton_Click(object sender, EventArgs e)
     {
       SaveData();
-      Globals.Network.USerDetailsChanged -= Network_DetailsChanged;
+      ClearEvents();
       MMessageBus.ChangedUserInfo(this);
       Close();
     }
 
     private void UserIDBox_TextChanged(object sender, EventArgs e)
     {
-      if (!string.IsNullOrEmpty(UserIDBox.Text))
-      {
-        MMessageBus.ChangeUserID(this, UserIDBox.Text);
-      }
+      // if (!string.IsNullOrEmpty(UserIDBox.Text))
+      //{
+      //        MMessageBus.ChangeUserID(this, UserIDBox.Text);
+      //    }
     }
 
     private void Avatar1_CheckedChanged(object sender, EventArgs e)

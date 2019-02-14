@@ -57,6 +57,9 @@ namespace Massive.Network
     public const string MERGEREQ = "MERGEREQ";
     public const string MERGE = "MERGE";
 
+    public const string REGISTERUSERREQ = "REGISTERUSERREQ";
+    public const string REGISTERUSER = "REGISTERUSER";
+
     public const string CHANGEDETAILSREQ = "CHANGEDETAILSREQ";
     public const string CHANGEDETAILS = "CHANGEDETAILS";
 

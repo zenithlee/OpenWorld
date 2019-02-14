@@ -10,6 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
+/// <summary>
+/// A directional light that casts shadows
+/// </summary>
+/// 
 namespace Massive
 {
   public class MLight : MSceneObject

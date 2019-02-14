@@ -157,8 +157,8 @@ namespace MassiveServer
       mu.UserID = dt.Rows[0]["userid"].ToString();
       mu.UserName = dt.Rows[0]["screenname"].ToString();
       mu.AvatarID = dt.Rows[0]["avatarid"].ToString();
-      mu.TotalObjects= (int)dt.Rows[0]["totalobjects"];
-      mu.Credit= (int)dt.Rows[0]["wallet"];
+      mu.TotalObjects = (int)dt.Rows[0]["totalobjects"];
+      mu.Credit = (int)dt.Rows[0]["wallet"];
       return mu;
     }
 
@@ -192,6 +192,23 @@ VALUES('{0}', '{1}', '{2}', '{3}', '{4}', {5}, {6}, {7}, {8}, {9}, {10}, {11}, {
       return n == 0 ? false : true;
     }
 
+    public string RegisterUser(MUserAccount m)
+    {
+      MUserAccount mu = GetPlayerByEmail(m.Email, m.Password);
+
+      if (mu != null) return mu.UserID;
+
+      string s = UidGen.GUID();
+      m.UserID = s;
+      string sQuery = string.Format(
+      @"INSERT into users (`screenname`,`avatarid`,`email`,`password`, `userid`, `ip`) 
+          VALUES('{0}','{1}','{2}','{3}','{4}','{5}');",
+      m.UserName, m.AvatarID, m.Email, m.Password, m.UserID, m.ClientIP);
+
+      Query(sQuery);
+      return m.UserID;
+    }
+
     public string UpdatePlayer(MUserAccount m)
     {
       MUserAccount mu = null;
@@ -210,7 +227,7 @@ VALUES('{0}', '{1}', '{2}', '{3}', '{4}', {5}, {6}, {7}, {8}, {9}, {10}, {11}, {
         //generate a new UserID
         //if (string.IsNullOrEmpty(m.UserID))
         //{
-          m.UserID = UidGen.GUID();
+        m.UserID = UidGen.GUID();
         //}
         sQuery = string.Format(
         @"INSERT into users (`screenname`,`avatarid`,`email`,`password`, `userid`, `ip`) 
@@ -254,7 +271,7 @@ VALUES('{0}', '{1}', '{2}', '{3}', '{4}', {5}, {6}, {7}, {8}, {9}, {10}, {11}, {
 
       Query(sQuery);
 
-      
+
 
       return m.UserID;
     }

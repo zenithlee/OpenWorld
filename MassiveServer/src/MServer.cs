@@ -263,6 +263,9 @@ namespace Massive.Server
         case MNetMessage.SPAWNREQUEST:
           SpawnRequest(c, m);
           break;
+        case MNetMessage.REGISTERUSERREQ: //Register user details or change/update user details
+          RegisterUser(c, m);
+          break;
         case MNetMessage.CHANGEDETAILSREQ: //Register user details or change/update user details
           ChangeDetails(c, m);
           break;
@@ -675,6 +678,24 @@ namespace Massive.Server
         Send(c, "Message", mr.Serialize());
       }
       ZoneChanged?.Invoke(this, new ZoneEvent(zone));
+    }
+
+    public void RegisterUser(MClient c, MNetMessage m)
+    {
+      MUserAccount mu = MUserAccount.Deserialize<MUserAccount>(m.Payload);
+      mu.CopyTo(c.Account);
+      c.Account.ClientIP = c.Address.ToString();
+      string UserID = _DataBase.RegisterUser(c.Account);
+
+      MNetMessage mn = new MNetMessage();
+      mn.Command = MNetMessage.REGISTERUSER;
+      mn.UserID = UserID;
+
+      MChangeDetailsResult res = new MChangeDetailsResult();
+      res.Success = true;
+      res.Message = "User Registered";
+      mn.Payload = res.Serialize();
+      Send(c, "Message", mn.Serialize());
     }
 
     public void ChangeDetails(MClient c, MNetMessage m)

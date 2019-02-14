@@ -31,27 +31,30 @@ namespace OpenWorld.src.Controls
     {
       if (Globals.Network.Connected == false)
       {
-        ConnectedCheck.ImageIndex = 2;
+        SetButtonState(eConnectState.Disconnected);
       }
     }
 
     void SetButtonState(eConnectState state)
     {
-      if ( state == eConnectState.Connected)
+      Invoke((MethodInvoker)delegate
       {
-        ConnectedCheck.Checked = true;
-        ConnectedCheck.ImageIndex = 0;
-      }
-      if (state == eConnectState.Disconnected)
-      {
-        ConnectedCheck.Checked = false;
-        ConnectedCheck.ImageIndex = 0;
-      }
-      if (state == eConnectState.Error)
-      {
-        ConnectedCheck.Checked = false;
-        ConnectedCheck.ImageIndex = 1;
-      }
+        if (state == eConnectState.Connected)
+        {
+          ConnectedCheck.Checked = true;
+          ConnectedCheck.ImageIndex = 0;
+        }
+        if (state == eConnectState.Disconnected)
+        {
+          ConnectedCheck.Checked = false;
+          ConnectedCheck.ImageIndex = 0;
+        }
+        if (state == eConnectState.Error)
+        {
+          ConnectedCheck.Checked = false;
+          ConnectedCheck.ImageIndex = 1;
+        }
+      });     
     }
 
     private void Network_ConnectedToServerHandler(object sender, Massive.Events.StatusEvent e)

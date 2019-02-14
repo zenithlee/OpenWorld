@@ -48,16 +48,7 @@ namespace Massive.Tools
     }
 
     public void PrepareRender()
-    {
-      //GL.Disable(EnableCap.DepthTest);
-      //GL.LineWidth(3);
-      
-      //GL.Enable(EnableCap.PolygonOffsetFill);
-      //GL.PolygonOffset(-22.5f, -2.5f);
-      // Set the render mode to be line rendering with a thick line width            
-      //GL.LineWidth(1.0f);
-      // Set the colour to be white
-      //GL.ColorP3(PackedPointerType.Int2101010Rev, 1296911743);
+    {      
       df = (DepthFunction)GL.GetInteger(GetPName.DepthFunc);
      
       if (outlinematerial != null)

@@ -74,8 +74,7 @@ namespace Massive
         format.Alignment = StringAlignment.Center;
         graphics.DrawString(Text, font, brush, new RectangleF(0, 0, (float)Width*16, (float)Height*16), format);
         graphics.Flush();
-        material.DiffuseTexture.LoadTexturFromImage(TextImage);
-        
+        material.DiffuseTexture.LoadTexturFromImage(TextImage);        
       }
     }
   }

@@ -47,6 +47,7 @@ namespace OpenWorld
 
     private void Network_TeleportHandler(object sender, MoveEvent e)
     {
+      if (e.InstanceID == null) return;
       if (e.InstanceID.Equals(Globals.UserAccount.UserID))
       {
         Reset();
@@ -330,6 +331,12 @@ namespace OpenWorld
             MMessageBus.Status(this, "Selected:" + mo.TemplateID + "," + mo.InstanceID);
           }
         }
+
+        MScene.SelectedObject = mo;
+      }
+      else
+      {
+        MScene.SelectedObject = null;
       }
     }
 

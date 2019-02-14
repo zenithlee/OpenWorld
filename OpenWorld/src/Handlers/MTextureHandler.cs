@@ -44,6 +44,7 @@ namespace OpenWorld.Handlers
           MScene.MaterialRoot.Add(mat);
           mo.SetMaterial(mat);
           mo.material.Setup();
+          MMessageBus.ChangedTexture(this, e.InstanceID, e.TextureID);
         }
         else
         {

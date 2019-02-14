@@ -13,15 +13,28 @@ namespace OpenWorld.Forms
 {
   public partial class BuildForm : DToolForm
   {
-    MSceneObject SelectedItem;    
+    MSceneObject SelectedItem;
     public BuildForm()
     {
       InitializeComponent();
       SetTitle("Building and Texturing");
       MMessageBus.SelectEventHandler += MMessageBus_SelectEventHandler;
       MMessageBus.ObjectDeletedEvent += MMessageBus_ObjectDeletedEvent;
+      MMessageBus.ObjectCreatedHandler += MMessageBus_ObjectCreatedHandler;
       ZoneCheckTimer.Start();
-    }    
+    }
+
+    void ClearEvents()
+    {
+      MMessageBus.SelectEventHandler -= MMessageBus_SelectEventHandler;
+      MMessageBus.ObjectDeletedEvent -= MMessageBus_ObjectDeletedEvent;
+      MMessageBus.ObjectCreatedHandler -= MMessageBus_ObjectCreatedHandler;
+    }
+
+    private void MMessageBus_ObjectCreatedHandler(object sender, CreateEvent e)
+    {
+      MScene.SelectedObject = e.CreatedObject;
+    }
 
     private void MMessageBus_ObjectDeletedEvent(object sender, DeleteEvent e)
     {
@@ -29,6 +42,7 @@ namespace OpenWorld.Forms
       if (e.InstanceID == SelectedItem.InstanceID)
       {
         SelectedItem = null;
+        SelectedLabel.Text = "...";
       }
     }
 
@@ -36,7 +50,7 @@ namespace OpenWorld.Forms
     {
       if (e == null) return;
       SelectedItem = e.Selected;
-      if ( SelectedItem != null)
+      if (SelectedItem != null)
       {
         SelectedLabel.Text = SelectedItem.Name;
       }
@@ -44,20 +58,33 @@ namespace OpenWorld.Forms
 
     void Add(string s)
     {
-      if (MStateMachine.ZoneLocked == true) {
+      if (MStateMachine.ZoneLocked == true)
+      {
         MMessageBus.Error(this, "Can't build here, zone is locked / other building nearby");
         return;
       }
-      
+
       Vector3d pos = Globals.Avatar.GetPosition();
-      pos += Globals.Avatar.Forward() - Globals.Avatar.Up() * 0.5;
+
+      if (s.Equals(MBuildParts.FOUNDATION01))
+      {
+        pos += Globals.Avatar.Forward() * 13 - Globals.Avatar.Up() * 1.0;
+      }
+      else
+      {
+        pos += Globals.Avatar.Forward() * 2 - Globals.Avatar.Up() * 1.0;
+      }
 
       Quaterniond rot = Globals.LocalUpRotation();
 
-      if ( SelectedItem != null)
+      if (SelectedItem != null)
       {
         rot = SelectedItem.transform.Rotation;
-        pos = SelectedItem.transform.Position;
+        //prevent smaller items getting lost in the foundation
+        if (SelectedItem.TemplateID != MBuildParts.FOUNDATION01)
+        {
+          pos = SelectedItem.transform.Position;
+        }
       }
 
       Globals.Network.SpawnRequest(s, "TEXTURE01", s, s, pos, rot);
@@ -106,7 +133,7 @@ namespace OpenWorld.Forms
     }
 
     private void BuildForm_Load(object sender, EventArgs e)
-    {      
+    {
       Populate();
       textureControl1.Setup();
     }
@@ -151,6 +178,11 @@ namespace OpenWorld.Forms
         CanIBuildHere.BackColor = Color.Green;
         CanIBuildHere.Text = "Zone Unlocked";
       }
+    }
+
+    private void BuildForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      ClearEvents();
     }
   }
 }

@@ -189,7 +189,7 @@
       this.SaveButton.Name = "SaveButton";
       this.SaveButton.Size = new System.Drawing.Size(88, 40);
       this.SaveButton.TabIndex = 8;
-      this.SaveButton.Text = "Update Details";
+      this.SaveButton.Text = "Register Details";
       this.SaveButton.UseVisualStyleBackColor = false;
       this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
       // 
@@ -204,9 +204,9 @@
       this.StatusLabel.Name = "StatusLabel";
       this.StatusLabel.Size = new System.Drawing.Size(294, 42);
       this.StatusLabel.TabIndex = 1;
-      this.StatusLabel.Text = "A valid email address is required to login.\r\nClick Update Details to Verify your " +
-    "account.";
-      this.StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.StatusLabel.Text = "A valid email address is required to login.\r\nClick Register Details to Verify you" +
+    "r account on the server.";
+      this.StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
       // UserNameBox
       // 
@@ -230,7 +230,7 @@
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(94, 32);
       this.label1.TabIndex = 0;
-      this.label1.Text = "Name";
+      this.label1.Text = "Name *";
       this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
       // 
       // label2
@@ -241,7 +241,7 @@
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(94, 32);
       this.label2.TabIndex = 3;
-      this.label2.Text = "Email (Required)";
+      this.label2.Text = "Email  *";
       this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
       // 
       // label4
@@ -257,7 +257,7 @@
       // 
       // UserIDBox
       // 
-      this.UserIDBox.BackColor = System.Drawing.Color.Silver;
+      this.UserIDBox.BackColor = System.Drawing.Color.DarkGray;
       this.UserIDBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
       this.UserIDBox.Dock = System.Windows.Forms.DockStyle.Fill;
       this.UserIDBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -276,7 +276,7 @@
       this.label5.Name = "label5";
       this.label5.Size = new System.Drawing.Size(94, 32);
       this.label5.TabIndex = 7;
-      this.label5.Text = "Password";
+      this.label5.Text = "Password *";
       this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
       // 
       // PasswordBox
@@ -288,8 +288,10 @@
       this.PasswordBox.Location = new System.Drawing.Point(103, 99);
       this.PasswordBox.MaxLength = 512;
       this.PasswordBox.Name = "PasswordBox";
+      this.PasswordBox.PasswordChar = '*';
       this.PasswordBox.Size = new System.Drawing.Size(390, 19);
       this.PasswordBox.TabIndex = 3;
+      this.PasswordBox.UseSystemPasswordChar = true;
       // 
       // tableLayoutPanel1
       // 

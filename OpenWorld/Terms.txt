@@ -35,3 +35,15 @@ We reserve the right, at our sole discretion, to modify or replace these Terms a
 Contact Us
 
 If you have any questions about these Terms, please contact us through the application or on our website.
+
+
+Licenses
+
+All software is open source.
+Individual licenses can be found at:
+OpenTK - https://github.com/opentk/opentk
+BulletSharp - https://github.com/AndresTraks/BulletSharp
+NetworkComms - https://github.com/MarcFletcher/NetworkComms.Net
+
+Icons:
+ICONS8 - https://icons8.com/

@@ -15,7 +15,6 @@ namespace OpenWorld.src.Controls
 {
   public partial class StatusControl : UserControl
   {
-
     public Color ErrorColor = Color.LightCoral;
     public Color DefaultColor = Color.White;
 
@@ -28,7 +27,14 @@ namespace OpenWorld.src.Controls
       //Globals.Network.ErrorEventHandler += Network_ErrorEventHandler;
       MMessageBus.ErrorHandler += MMessageBus_ErrorHandler;
       MMessageBus.InfoEventHandler += MMessageBus_InfoEventHandler;
-      MMessageBus.AvatarMovedEvent += MMessageBus_AvatarMovedEvent;      
+      MMessageBus.AvatarMovedEvent += MMessageBus_AvatarMovedEvent;
+      MMessageBus.UserRegistered += MMessageBus_UserRegistered;
+    }
+
+    private void MMessageBus_UserRegistered(object sender, ChangeDetailsEvent e)
+    {
+      StatusBox.BackColor = DefaultColor;
+      StatusBox.Text = e.Message + "\r\n";
     }
 
     private void MMessageBus_AvatarMovedEvent(object sender, MoveEvent e)

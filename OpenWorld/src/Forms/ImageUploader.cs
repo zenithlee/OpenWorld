@@ -1,6 +1,7 @@
 ﻿using Massive;
 using Massive.Platform;
 using Massive.Tools;
+using OpenWorld.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,46 +43,10 @@ namespace OpenWorld.Forms
       }
     }
 
-
-
     private void UploadButton_Click(object sender, EventArgs e)
-    {
-      Status("Uploading...");
-      if (string.IsNullOrEmpty(sLocalFile)) return;
-      //string sLocalCache = Path.Combine(Globals.AppDataPath, Helper.GUID() + ".jpg");
-      System.Net.WebClient Client = new System.Net.WebClient();
-      // Client.Credentials = CredentialCache.DefaultCredentials;
-      //Client.Headers.Add("Content-Type", "binary/octet-stream");
-      Image bmp = Bitmap.FromFile(sLocalFile);
-
-      int size = 800;
-      if (HDBox.Checked == true) size = 1024;
-
-      Image bmp2 = ImageTools.ScaleImageProportional(bmp, size, size);
-
-      FileInfo fi = new FileInfo(sLocalFile);
-      string extension = fi.Extension;
-
-      string tempname = Helper.HashString(DateTime.Now.ToString()) + extension;
-      string TempName = Path.Combine(MFileSystem.AppDataPath, tempname);
-
-      if (File.Exists(TempName))
-      {
-        File.Delete(TempName);
-      }
-
-      bmp2.Save(TempName);
-
-      bmp.Dispose();
-      bmp2.Dispose();
-
-      Client.Headers.Add("UserID:" + Globals.UserAccount.UserID);
-      Client.Headers.Add("Target:" + sTargetID);
-      Client.Headers.Add("Locus:" + sPublicFile);
-      string ServerIP = Globals.Network.ServerIP;
-      Client.UploadFileAsync(new Uri("http://" + ServerIP + "/massive/fu/fu.php"), "POST", TempName);
-      Client.UploadFileCompleted += Client_UploadFileCompleted;
-      Client.UploadProgressChanged += Client_UploadProgressChanged;
+    {      
+      ImageUploadService.UploadImage(sLocalFile,
+        Client_UploadFileCompleted, Client_UploadProgressChanged, HDBox.Checked);     
     }    
 
     private void Client_UploadFileCompleted(object sender, UploadFileCompletedEventArgs e)

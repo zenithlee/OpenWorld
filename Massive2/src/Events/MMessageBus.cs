@@ -20,6 +20,7 @@ namespace Massive.Events
 
     public static event EventHandler<ChangeDetailsEvent> LoggedIn;
     public static event EventHandler<ErrorEvent> ErrorHandler;
+    public static event EventHandler<ChangeDetailsEvent> UserRegistered;
     public static event EventHandler<ChangeDetailsEvent> UserDetailsChanged;
 
     public static event EventHandler<MoveEvent> AvatarMovedEvent;
@@ -55,6 +56,7 @@ namespace Massive.Events
 
     public static event EventHandler<DeleteRequestEvent> DeleteObjectRequestHandler;
     public static event EventHandler<TextureRequestEvent> TextureRequestHandler;
+    public static event EventHandler<TextureRequestEvent> TextureChangedHandler;
     //public static event EventHandler<UpdateEvent> UpdateHandler;
     public static event EventHandler<KeyboardEvent> KeyboardHandler;
 
@@ -97,9 +99,12 @@ namespace Massive.Events
       Globals.Network.PropertyChangeHandler += Network_PropertyChangeHandler;
       Globals.Network.LoggedInHandler += Network_LoggedInHandler; ;
       Globals.Network.USerDetailsChanged += Network_USerDetailsChanged;
+      Globals.Network.UserRegisteredHandler += Network_UserRegisteredHandler;
       Globals.Network.ErrorEventHandler += Network_ErrorEventHandler;
       Globals.Network.TableHandler += Network_TableHandler;      
     }
+
+    
 
 
     //passes the event onto the gui/render loop thread
@@ -165,6 +170,11 @@ namespace Massive.Events
     private void Network_LoggedInHandler(object sender, ChangeDetailsEvent e)
     {
       GUIEvent(LoggedIn, sender, e);
+    }
+
+    private void Network_UserRegisteredHandler(object sender, ChangeDetailsEvent e)
+    {
+      GUIEvent(UserRegistered, sender, e);
     }
 
     private void Network_USerDetailsChanged(object sender, ChangeDetailsEvent e)
@@ -319,6 +329,11 @@ namespace Massive.Events
     public static void ChangeTextureRequest(object sender, string sInstanceID, string sNewTextureID)
     {
       TextureRequestHandler?.Invoke(sender, new TextureRequestEvent(sInstanceID, sNewTextureID));
+    }
+
+    public static void ChangedTexture(object sender, string sInstanceID, string sNewTextureID)
+    {
+      GUIEvent(TextureChangedHandler, sender, new TextureRequestEvent(sInstanceID, sNewTextureID));      
     }
 
     public static void DeleteRequest(object sender, MSceneObject mo)

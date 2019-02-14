@@ -57,6 +57,9 @@ namespace Massive
     public event EventHandler<TextureEvent> TextureHandler;
     public event EventHandler<ChangePropertyEvent> PropertyChangeHandler;
     public event EventHandler<ChangeDetailsEvent> USerDetailsChanged;
+
+    public event EventHandler<ChangeDetailsEvent> UserRegisteredHandler;
+
     public event EventHandler<ChangeDetailsEvent> LoggedInHandler;
     public event EventHandler<LoggedOutEvent> LoggedOutHandler;
     public event EventHandler<ChatEvent> ChatEventHandler;
@@ -142,6 +145,9 @@ namespace Massive
           break;
         case MNetMessage.ERROR:
           Error(m);
+          break;
+        case MNetMessage.REGISTERUSER:
+          UserRegistered(m);
           break;
         case MNetMessage.CHANGEDETAILS:
           HandleDetailsChanged(m);
@@ -524,6 +530,41 @@ namespace Massive
       ChatEventHandler?.Invoke(this, new ChatEvent(cm));
     }
 
+    void UpdateAvatar(string OldID, string NewID)
+    {
+      //update avatar
+      MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(OldID);
+      if (mo != null)
+      {
+        mo.OwnerID = NewID;
+        mo.InstanceID = NewID;
+      }
+    }
+
+    public void UserRegisterRequest(MUserAccount mu)
+    {
+      MNetMessage m = new MNetMessage();
+      m.Command = MNetMessage.REGISTERUSERREQ;
+      //m.UserID = GetUserID();
+      m.Payload = mu.Serialize();
+      SendAsync(m);
+    }
+
+    void UserRegistered(MNetMessage m)
+    {
+      UpdateAvatar(Globals.UserAccount.UserID, m.UserID);
+
+      if (Globals.UserAccount.UserID == null)
+      {
+        Globals.UserAccount.UserID = m.UserID;
+      }
+      if (UserRegisteredHandler != null)
+      {
+        MChangeDetailsResult cd = MChangeDetailsResult.Deserialize<MChangeDetailsResult>(m.Payload);
+        UserRegisteredHandler(this, new ChangeDetailsEvent(cd.Success, cd.Message));
+      }
+    }
+
     void HandleDetailsChanged(MNetMessage m)
     {
       if (USerDetailsChanged != null)
@@ -641,29 +682,12 @@ namespace Massive
      * Sends a request to the server to spawn an object
      * */
     public void SpawnRequest(string TemplateID, string TextureID, string sName, string sTag,
-      Vector3d pos, Quaterniond Rot, string RequestedInstanceID = "", int StaticStorage = 1, double radius = 200)
+      Vector3d pos, Quaterniond Rot, string RequestedInstanceID = "", 
+      int StaticStorage = 1, double radius = 200)
     {
       if (Connected == false) return;
 
       List<MServerObject> Temp = new List<MServerObject>();
-      /*MServerObject p = new MServerObject();
-      p.OwnerID = Globals.UserAccount.UserID;
-      p.TemplateID = TemplateID;
-      p.InstanceID = RequestedInstanceID;
-      p.TextureID = TextureID;
-      p.StaticStorage = StaticStorage;
-      p.Name = sName;
-      p.Tag = sTag;
-      p.Radius = radius;
-      p.Position[0] = pos.X;
-      p.Position[1] = pos.Y;
-      p.Position[2] = pos.Z;
-      p.Rotation[0] = Rot.X;
-      p.Rotation[1] = Rot.Y;
-      p.Rotation[2] = Rot.Z;
-      p.Rotation[3] = Rot.W;
-      Temp.Add(p);
-      */
 
       DataTable dt = DB.CreateObjectTable();
       DataRow dr = dt.NewRow();

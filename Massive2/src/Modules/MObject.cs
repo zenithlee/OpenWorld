@@ -15,7 +15,7 @@ namespace Massive
   /// </summary>
   public class MObject : IDisposable
   {
-    public static int Indent = 0;
+    public static int Indent = 0; //fore debugging
     public bool Deletable = true;
     public string Name { get; set; }
     public string OwnerID { get; set; } = OWNER_NONE;

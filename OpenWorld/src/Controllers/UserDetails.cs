@@ -15,6 +15,12 @@ namespace OpenWorld.Controllers
     public UserDetails()
     {
       Globals.Network.USerDetailsChanged += Network_USerDetailsChanged;
+      MMessageBus.UserRegistered += MMessageBus_UserRegistered;
+    }
+
+    private void MMessageBus_UserRegistered(object sender, ChangeDetailsEvent e)
+    {
+      Save();
     }
 
     private void Network_USerDetailsChanged(object sender, ChangeDetailsEvent e)

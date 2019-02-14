@@ -26,6 +26,7 @@ namespace OpenWorld.Handlers
       MScene.ModelRoot.Remove(o);
       MScene.Priority1.Remove(o);
       MScene.Priority2.Remove(o);
+      MScene.SelectedObject = null;
 
       //o.Dispose(); //don't dispose, it disposes templates, let GC pick up unallocated objects
     }

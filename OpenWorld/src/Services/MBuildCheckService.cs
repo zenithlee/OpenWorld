@@ -47,7 +47,8 @@ namespace OpenWorld.Services
     }
 
     public static bool ZoneLocked(Vector3d pos, MObject mParent)
-    { 
+    {
+      if (mParent.OwnerID == null) return true;
       if (!mParent.OwnerID.Equals(Globals.UserAccount.UserID)        
         && !mParent.OwnerID.Equals(MObject.OWNER_NONE)
         && !mParent.OwnerID.Equals(MObject.OWNER_ADMIN)

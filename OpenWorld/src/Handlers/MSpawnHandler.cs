@@ -84,7 +84,20 @@ namespace OpenWorld.Handlers
         }
         
         o.Setup();
-      }
+      }      
+
+      AddSubmodules(bb, o);
+
+      return o;
+    }
+
+    /// <summary>
+    /// Submodules offer extra functionality for e.g. user interaction, linking click handlers to widgets
+    /// </summary>
+    /// <param name="bb"></param>
+    /// <param name="o"></param>
+    static void AddSubmodules(MBuildingBlock bb, MSceneObject o)
+    {
 
       if (bb.SubModule == "MDoor")
       {
@@ -112,6 +125,7 @@ namespace OpenWorld.Handlers
         o.Tag = "TELEPORTER01|XYZ:";
       }
 
+
       if (bb.SubModule == "MPicture")
       {
         MClickHandler mc = new MClickHandler();
@@ -121,7 +135,14 @@ namespace OpenWorld.Handlers
         o.Tag = "PICTURE01|This Picture|Description";
       }
 
-      return o;
+      if (bb.SubModule == "MStatus")
+      {
+        MClickHandler mc = new MClickHandler();
+        mc.DoubleClicked = MStatusWidget.Mc_DoubleClick;
+        mc.RightClicked = MStatusWidget.Mc_RightClick;
+        o.Add(mc);
+        o.Tag = "STATUS01|This Status|Description";
+      }
     }
 
     /// <summary>
@@ -156,6 +177,7 @@ namespace OpenWorld.Handlers
           Globals.Avatar.SetSceneObject(mo);
         }
         SetMaterial(mo, m.TextureID);
+        MMessageBus.Created(this, mo);
       }
 
       if (mo.OwnerID == Globals.UserAccount.UserID)

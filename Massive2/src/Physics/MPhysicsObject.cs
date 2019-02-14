@@ -48,29 +48,7 @@ namespace Massive
       {
         MPhysics.Instance.Remove(this);
       }
-    }
-
-    public void SetActive(bool b)
-    {
-      if (b == true)
-      {
-        // _rigidBody.ActivationState = ActivationState.ActiveTag;
-
-        if (!_rigidBody.IsInWorld)
-        {
-          MPhysics.Add(this);
-        }
-        _rigidBody.Activate();
-      }
-      else
-      {
-        // _rigidBody.ActivationState = ActivationState.DisableSimulation;        
-
-        MPhysics.Instance.Remove(this);
-        //_rigidBody.LinearFactor = new Vector3d(0, 0, 0);
-        //_rigidBody.CollisionFlags = CollisionFlags.DisableSpuCollisionProcessing;
-      }
-    }
+    }   
 
     public MPhysicsObject(MSceneObject inTarget, string name, double inmass, EShape inshape, bool IsTemplate, Vector3d Scale)
       : base(EType.PhysicsObject, name)
@@ -176,6 +154,28 @@ namespace Massive
       if (IsTemplate == false)
       {
         MPhysics.Add(this);
+      }
+    }
+
+    public void SetActive(bool b)
+    {
+      if (b == true)
+      {
+        // _rigidBody.ActivationState = ActivationState.ActiveTag;
+
+        if (!_rigidBody.IsInWorld)
+        {
+          MPhysics.Add(this);
+        }
+        _rigidBody.Activate();
+      }
+      else
+      {
+        // _rigidBody.ActivationState = ActivationState.DisableSimulation;        
+
+        MPhysics.Instance.Remove(this);
+        //_rigidBody.LinearFactor = new Vector3d(0, 0, 0);
+        //_rigidBody.CollisionFlags = CollisionFlags.DisableSpuCollisionProcessing;
       }
     }
 

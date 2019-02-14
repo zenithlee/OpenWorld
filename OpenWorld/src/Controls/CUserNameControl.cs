@@ -14,6 +14,14 @@ namespace ThisIsMassive.src.Controls
       InitializeComponent();
       MMessageBus.LoggedIn += MMessageBus_LoggedIn;
       MMessageBus.UserDetailsChanged += MMessageBus_UserDetailsChanged;
+      MMessageBus.UserRegistered += MMessageBus_UserRegistered;
+    }
+
+    private void MMessageBus_UserRegistered(object sender, ChangeDetailsEvent e)
+    {
+      SetName(Globals.UserAccount.UserName);
+      SetStatus(Globals.UserAccount.TotalObjects, Globals.UserAccount.MaxObjects);
+      SetCredit(Globals.UserAccount.Credit);
     }
 
     private void MMessageBus_UserDetailsChanged(object sender, ChangeDetailsEvent e)

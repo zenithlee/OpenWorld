@@ -43,7 +43,7 @@ namespace Massive
 
     public static MCamera Camera;
 
-    public MSceneObject SelectedObject;
+    public static MSceneObject SelectedObject;
     public static MPhysics Physics;
 
     new public EventHandler<GraphChangedEvent> GraphChanged;
@@ -572,6 +572,15 @@ namespace Massive
       //GL.Clear(ClearBufferMask.DepthBufferBit);
       ModelRoot.Render(viewproj, offsetmat);
 
+      if (SelectedObject != null)
+      {
+        GL.Clear(ClearBufferMask.DepthBufferBit);
+        ScreenPick.PrepareRender();
+        SelectedObject.Render(viewproj, offsetmat);
+        Globals.ShaderOverride = null; ;
+        ScreenPick.AfterRender();
+      }
+
       if (OnPostRender != null)
       {
         OnPostRender(this, new RenderEvent());
@@ -591,6 +600,9 @@ namespace Massive
       //selection overlay
 
       ///////////// SELECTION ///////////////////
+
+     
+
 
       if (SelectionRoot.Modules.Count > 0)
       {

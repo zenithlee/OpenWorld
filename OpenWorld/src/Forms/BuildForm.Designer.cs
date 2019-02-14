@@ -34,12 +34,12 @@
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.objectMoveControl1 = new OpenWorld.src.Controls.ObjectMoveControl();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+      this.CanIBuildHere = new System.Windows.Forms.Label();
       this.Duplicate = new System.Windows.Forms.Button();
       this.DeleteButton = new System.Windows.Forms.Button();
       this.SelectedLabel = new System.Windows.Forms.Label();
       this.textureControl1 = new OpenWorld.src.Controls.TextureControl();
       this.ZoneCheckTimer = new System.Windows.Forms.Timer(this.components);
-      this.CanIBuildHere = new System.Windows.Forms.Label();
       this.tableLayoutPanel2.SuspendLayout();
       this.tableLayoutPanel3.SuspendLayout();
       this.SuspendLayout();
@@ -109,6 +109,18 @@
       this.tableLayoutPanel3.Size = new System.Drawing.Size(333, 28);
       this.tableLayoutPanel3.TabIndex = 3;
       // 
+      // CanIBuildHere
+      // 
+      this.CanIBuildHere.AutoSize = true;
+      this.CanIBuildHere.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.CanIBuildHere.ForeColor = System.Drawing.Color.White;
+      this.CanIBuildHere.Location = new System.Drawing.Point(252, 0);
+      this.CanIBuildHere.Name = "CanIBuildHere";
+      this.CanIBuildHere.Size = new System.Drawing.Size(78, 28);
+      this.CanIBuildHere.TabIndex = 4;
+      this.CanIBuildHere.Text = "BUILD";
+      this.CanIBuildHere.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
       // Duplicate
       // 
       this.Duplicate.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -158,18 +170,6 @@
       this.ZoneCheckTimer.Interval = 1000;
       this.ZoneCheckTimer.Tick += new System.EventHandler(this.ZoneCheckTimer_Tick);
       // 
-      // CanIBuildHere
-      // 
-      this.CanIBuildHere.AutoSize = true;
-      this.CanIBuildHere.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.CanIBuildHere.ForeColor = System.Drawing.Color.White;
-      this.CanIBuildHere.Location = new System.Drawing.Point(252, 0);
-      this.CanIBuildHere.Name = "CanIBuildHere";
-      this.CanIBuildHere.Size = new System.Drawing.Size(78, 28);
-      this.CanIBuildHere.TabIndex = 4;
-      this.CanIBuildHere.Text = "BUILD";
-      this.CanIBuildHere.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-      // 
       // BuildForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -178,6 +178,7 @@
       this.Controls.Add(this.tableLayoutPanel2);
       this.Name = "BuildForm";
       this.Text = "BuildForm";
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BuildForm_FormClosing);
       this.Load += new System.EventHandler(this.BuildForm_Load);
       this.Shown += new System.EventHandler(this.BuildForm_Shown);
       this.Controls.SetChildIndex(this.tableLayoutPanel2, 0);
