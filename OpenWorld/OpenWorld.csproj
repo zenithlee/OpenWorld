@@ -225,6 +225,7 @@
     <Compile Include="src\Forms\UserStatusForm.Designer.cs">
       <DependentUpon>UserStatusForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Handlers\MAvatarHandler.cs" />
     <Compile Include="src\Handlers\MCameraHandler.cs" />
     <Compile Include="src\Handlers\MDeleteHandler.cs" />
     <Compile Include="src\Handlers\MKeyboardHandler.cs" />

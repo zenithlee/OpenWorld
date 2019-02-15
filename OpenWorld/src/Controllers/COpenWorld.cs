@@ -23,6 +23,7 @@ namespace OpenWorld.Controllers
     MMoveHandler _moveHandler;
     MNavigationPointer _navPointer;
     BookmarkController _bookmarkController;
+    MAvatarHandler _avatarHandler;
 
     public COpenWorld()
     {
@@ -36,17 +37,6 @@ namespace OpenWorld.Controllers
       Globals.Network.ConnectedToServerHandler += Network_ConnectedToServerHandler;
       //Globals.Network.LoggedInHandler += Network_LoggedInHandler;
       MMessageBus.LoggedIn += MMessageBus_LoggedIn;
-      
-
-      MMessageBus.MoveAvatarRequestEventHandler += MMessageBus_MoveAvatarRequestEventHandler;
-    }
-
-    
-
-    //relay move avatar request to server
-    private void MMessageBus_MoveAvatarRequestEventHandler(object sender, MoveEvent e)
-    {
-      Globals.Network.PositionRequest(Globals.UserAccount.UserID, e.Position, e.Rotation);
     }
 
     public void Setup()
@@ -65,6 +55,7 @@ namespace OpenWorld.Controllers
       _navPointer = new MNavigationPointer();
       _bookmarkController = new BookmarkController();
       _moveHandler = new MMoveHandler();
+      _avatarHandler = new MAvatarHandler();
 
       MStateMachine state = new MStateMachine(Globals.GUIThreadOwner);
 
@@ -92,9 +83,11 @@ namespace OpenWorld.Controllers
 
     void CreateAvatar()
     {
+      MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);
+      /*
       MServerObject m = new MServerObject();
 
-      string sAvatar = "AVATAR02";
+      string sAvatar = "AVATAR03";
       if (!string.IsNullOrEmpty(Globals.UserAccount.AvatarID))
       {
         sAvatar = Globals.UserAccount.AvatarID;
@@ -107,6 +100,7 @@ namespace OpenWorld.Controllers
       m.OwnerID = m.InstanceID;
       m.Position = Globals.UserAccount.HomePosition;
       _spawnHandler.Spawn(m);
+      */
     }
 
     void ParseCmdLine()

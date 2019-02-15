@@ -122,7 +122,7 @@ namespace OpenWorld
       BasicShader.SetInt("material.normalmap", MShader.LOCATION_NORMALMAP);
       BasicShader.SetInt("material.shadowMap", MShader.LOCATION_SHADOWMAP);
 
-      MMaterial Avatar1Mat = new MMaterial("AVATAR01M");
+     /* MMaterial Avatar1Mat = new MMaterial("AVATAR01M");
       Avatar1Mat.AddShader(BasicShader);
       Avatar1Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar01.jpg"));
       MScene.MaterialRoot.Add(Avatar1Mat);
@@ -131,12 +131,13 @@ namespace OpenWorld
       Avatar2Mat.AddShader(BasicShader);
       Avatar2Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar02.jpg"));
       MScene.MaterialRoot.Add(Avatar2Mat);
+      */
 
       foreach (KeyValuePair<string, MBuildingBlock> k in Blocks)
       {
         MBuildingBlock b = k.Value;
         if (b.Type != "MMaterial") continue;
-        MMaterial MATM = new MMaterial(b.TextureID);
+        MMaterial MATM = new MMaterial(b.MaterialID);
         MATM.AddShader(BasicShader);
         MATM.SetDiffuseTexture(Globals.TexturePool.GetTexture(b.Path));
         MScene.MaterialRoot.Add(MATM);

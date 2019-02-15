@@ -196,7 +196,10 @@ VALUES('{0}', '{1}', '{2}', '{3}', '{4}', {5}, {6}, {7}, {8}, {9}, {10}, {11}, {
     {
       MUserAccount mu = GetPlayerByEmail(m.Email, m.Password);
 
-      if (mu != null) return mu.UserID;
+      if (mu != null)
+      {      
+        return mu.UserID;
+      }
 
       string s = UidGen.GUID();
       m.UserID = s;
@@ -210,38 +213,12 @@ VALUES('{0}', '{1}', '{2}', '{3}', '{4}', {5}, {6}, {7}, {8}, {9}, {10}, {11}, {
     }
 
     public string UpdatePlayer(MUserAccount m)
-    {
-      MUserAccount mu = null;
-      if (string.IsNullOrEmpty(m.UserID))
-      {
-        mu = GetPlayerByEmail(m.Email, m.Password);
-      }
-      else
-      {
-        mu = GetPlayerByUserID(m.UserID);
-      }
-
-      string sQuery = "";
-      if (mu == null)
-      {
-        //generate a new UserID
-        //if (string.IsNullOrEmpty(m.UserID))
-        //{
-        m.UserID = UidGen.GUID();
-        //}
-        sQuery = string.Format(
-        @"INSERT into users (`screenname`,`avatarid`,`email`,`password`, `userid`, `ip`) 
-          VALUES('{0}','{1}','{2}','{3}','{4}','{5}');",
-        m.UserName, m.AvatarID, m.Email, m.Password, m.UserID, m.ClientIP);
-      }
-      else
-      {
-        sQuery = string.Format(
+    {          
+        string sQuery = string.Format(
         @"UPDATE users 
           SET screenname = '{0}', avatarid = '{1}', email='{2}', password='{3}' 
           WHERE `userid`='{4}';",
         m.UserName, m.AvatarID, m.Email, m.Password, m.UserID);
-      }
 
       Query(sQuery);
       return m.UserID;

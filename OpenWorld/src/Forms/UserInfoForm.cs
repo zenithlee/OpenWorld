@@ -41,7 +41,7 @@ namespace OpenWorld.Forms
     void SetupEvents()
     {
       //Globals.Network.USerDetailsChanged += Network_DetailsChanged;
-      //MMessageBus.UserDetailsChanged += MMessageBus_UserDetailsChanged;
+      MMessageBus.UserDetailsChanged += MMessageBus_UserRegistered;
       MMessageBus.UserRegistered += MMessageBus_UserRegistered;
     }
 
@@ -212,6 +212,32 @@ namespace OpenWorld.Forms
     private void UserInfoForm_FormClosing(object sender, FormClosingEventArgs e)
     {
       ClearEvents();
+    }
+
+    void UpdateData()
+    {
+      SaveData();
+      if (CheckValidate() == false)
+      {
+        Status(false, "Please fill in the required fields");
+        return;
+      }
+      StatusLabel.Text = "Update Details...";
+
+      if (Globals.Network.Connected == false)
+      {
+        Status(false, "Not Logged in to a server... log in to a server to register with it.");
+      }
+      else
+      {
+        //Globals.Network.ChangeDetailsRequest(Globals.UserAccount);
+        Globals.Network.ChangeDetailsRequest(Globals.UserAccount);
+      }
+    }
+
+    private void UpdateDetailsButton_Click(object sender, EventArgs e)
+    {
+      UpdateData();
     }
   }
 }

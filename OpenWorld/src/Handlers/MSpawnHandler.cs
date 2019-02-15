@@ -19,6 +19,34 @@ namespace OpenWorld.Handlers
     public MSpawnHandler()
     {
       Globals.Network.SpawnHandler += Network_SpawnHandler;
+      MMessageBus.ChangeAvatarRequestHandler += MMessageBus_ChangeAvatarRequestHandler;
+    }
+
+    private void MMessageBus_ChangeAvatarRequestHandler(object sender, ChangeAvatarEvent e)
+    {
+      MBuildingBlock bb = MBuildParts.GetBlock(e.TemplateID);
+      if (bb == null)
+      {
+        Console.WriteLine("MSpawnHandler: Missing Template:" + e.TemplateID);
+        return;
+      }
+
+      MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(e.UserID);
+      if (mo != null)
+      {
+        MMessageBus.DeleteRequest(this, mo);
+      }
+
+      MServerObject m = new MServerObject();
+      m.InstanceID = e.UserID;
+      m.TemplateID = e.TemplateID;
+      m.OwnerID = e.UserID;
+      m.TextureID = bb.MaterialID;
+
+      m.Position = Globals.UserAccount.CurrentPosition;
+      m.Rotation = MassiveTools.ArrayFromQuaterniond(Globals.Avatar.GetRotation());
+      Spawn(m);
+
     }
 
     private void Network_SpawnHandler(object sender, Massive.Events.ObjectSpawnedEvent e)
@@ -43,7 +71,7 @@ namespace OpenWorld.Handlers
         case "ConcaveMesh": return MPhysicsObject.EShape.ConcaveMesh;
         case "ConvexHull": return MPhysicsObject.EShape.ConvexHull;
         case "HACD": return MPhysicsObject.EShape.HACD;
-        default: return MPhysicsObject.EShape.Sphere;
+        default: return MPhysicsObject.EShape.NULL;
       }
     }
 
@@ -66,25 +94,27 @@ namespace OpenWorld.Handlers
         Vector3d size = MassiveTools.VectorFromArray(bb.Size);
 
         MPhysicsObject.EShape shape = GetShape(bb.PhysicsShape);
+        if (shape != MPhysicsObject.EShape.NULL)
+        {
+          MPhysicsObject mpo = new MPhysicsObject(o, TemplateID + "_physics", bb.Weight, shape,
+            true, size);
+          mpo.SetSleep(15);
+          mpo.SetFriction(0);
+          if (shape != MPhysicsObject.EShape.Sphere)
+          {
+            mpo.SetAngularFactor(0.0, 0.0, 0.0);
+            mpo.SetDamping(0.7, 0.5);
+            mpo.SetRestitution(0.5);
+          }
+          else
+          {
+            mpo.SetDamping(0.1, 0.1);
+            mpo.SetRestitution(0.8);
+          }
+        }
 
-        MPhysicsObject mpo = new MPhysicsObject(o, TemplateID + "_physics", bb.Weight, shape,
-          true, size);        
-        mpo.SetSleep(15);
-        mpo.SetFriction(0);
-        if ( shape != MPhysicsObject.EShape.Sphere)
-        {
-          mpo.SetAngularFactor(0.0, 0.0, 0.0);
-          mpo.SetDamping(0.7, 0.5);
-          mpo.SetRestitution(0.5);
-        }
-        else
-        {
-          mpo.SetDamping(0.1, 0.1);
-          mpo.SetRestitution(0.8);
-        }
-        
         o.Setup();
-      }      
+      }
 
       AddSubmodules(bb, o);
 
@@ -189,10 +219,14 @@ namespace OpenWorld.Handlers
 
     void SetMaterial(MSceneObject mo, string sMaterialID)
     {
+      if (sMaterialID == null)
+      {
+        sMaterialID = MMaterial.DEFAULT_MATERIAL;
+      }
       //MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(e.InstanceID);
       MObject o = MScene.MaterialRoot.FindModuleByName(sMaterialID);
       MMaterial mat = null;
-      
+
       if (o != null && o.Type == MObject.EType.Material)
       {
         mat = (MMaterial)o;
@@ -205,7 +239,7 @@ namespace OpenWorld.Handlers
 
       if (MassiveTools.IsURL(sMaterialID))
       {
-        mat = (MMaterial)new MMaterial("URLShader");        
+        mat = (MMaterial)new MMaterial("URLShader");
         MShader DefaultShader = (MShader)MScene.MaterialRoot.FindModuleByName(MShader.DEFAULT_SHADER);
         mat.AddShader(DefaultShader);
         mat.ReplaceTexture(Globals.TexturePool.GetTexture(sMaterialID));

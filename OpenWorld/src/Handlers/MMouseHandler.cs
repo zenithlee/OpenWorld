@@ -143,7 +143,7 @@ namespace OpenWorld
       }
 
       Quaterniond rot = rota
-      * Quaterniond.FromEulerAngles(0, 0.8 * accx * Math.PI / 180.0, 0);
+      * Quaterniond.FromEulerAngles(0, 0.8 * accx * (Math.PI / 180.0), 0);
 
       //Quaterniond rot2 =        
       //Quaterniond.FromEulerAngles(0, dx, 0);
@@ -157,7 +157,6 @@ namespace OpenWorld
       {
         MScene.Camera.TargetOffset *= 0.999;
       }
-
 
       DownPoint = e;
     }

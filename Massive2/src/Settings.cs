@@ -22,7 +22,7 @@ namespace Massive
     public static bool TerrainPhysics = true;
     public static bool Gravity = true;
     public static Vector3d OffsetFirstPerson = Vector3d.Zero;
-    public static Vector3d OffsetThirdPerson = new Vector3d(0, 1.5, 2);
+    public static Vector3d OffsetThirdPerson = new Vector3d(0, 1.3, 2);
 
     public static string CDNIP = "127.0.0.1";
     public static string UpdateServerIP = "10.0.0.3";

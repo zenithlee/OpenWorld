@@ -23,6 +23,7 @@ namespace OpenWorld.Forms
     public string Description;
     public string sLocalFile;
     public string sPublicFile;
+    Color BGColor = Color.White;
 
     public UserStatusForm()
     {
@@ -100,7 +101,7 @@ namespace OpenWorld.Forms
       Font font = new Font("Arial", 22);
       Font fontb = new Font("Arial", 18, FontStyle.Bold);
       Brush brush = new SolidBrush(Color.Black);
-      Brush whitebrush = new SolidBrush(Color.FromArgb(128, 255, 255, 250));
+      Brush whitebrush = new SolidBrush(BGColor);
       Pen blackpen = new Pen(Color.Black, 2);
 
       g.FillRectangle(whitebrush, new RectangleF(0, 0, b.Width, b.Height));
@@ -161,6 +162,13 @@ namespace OpenWorld.Forms
     void Status(string s)
     {
       UploadStatusLabel.Text = s;
+    }
+
+    private void WhiteButton_CheckedChanged(object sender, EventArgs e)
+    {
+      RadioButton b = (RadioButton)sender;
+      BGColor = b.BackColor;
+      UserStatusText.BackColor = b.BackColor;
     }
   }
 

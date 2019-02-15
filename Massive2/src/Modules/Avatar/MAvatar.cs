@@ -319,6 +319,7 @@ namespace Massive
         {
           Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, Time.DeltaTime * 15);
           _physics.SetRotation(rot);
+          //_physics.SetRotation(TargetRotation);
         }
       }
       if (MoveMode == eMoveMode.Flying)

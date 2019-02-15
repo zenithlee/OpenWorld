@@ -587,13 +587,12 @@ namespace Massive
     {
       if (Disposed) return;
       Matrix4d rm = Matrix4d.CreateFromQuaternion(rot);
-      Matrix4d pm = Matrix4d.CreateTranslation(_rigidBody.CenterOfMassPosition);
+      Matrix4d pm = rm * Matrix4d.CreateTranslation(_rigidBody.CenterOfMassPosition);
       //_rigidBody.MotionState.WorldTransform = pm* rm;
-      _rigidBody.WorldTransform = rm * pm;
-      _rigidBody.CenterOfMassTransform = rm * pm;
-      //_rigidBody.LinearVelocity = new Vector3d(0, 0, 0);
+      //_rigidBody.WorldTransform = pm;
+      _rigidBody.CenterOfMassTransform = pm;      
       _rigidBody.AngularVelocity = new Vector3d(0, 0, 0);
-      // MScene.Physics.World.UpdateAabbs();     
+//       MScene.Physics.World.UpdateAabbs();     
     }
 
     public void SetPosition(Vector3d pos)
@@ -608,7 +607,7 @@ namespace Massive
       //_rigidBody.MotionState.WorldTransform = rm;            
       _rigidBody.LinearVelocity = new Vector3d(0, 0, 0);
       _rigidBody.AngularVelocity = new Vector3d(0, 0, 0);
-      _rigidBody.WorldTransform = rm;
+      //_rigidBody.WorldTransform = rm;
       _rigidBody.CenterOfMassTransform = rm;
 
       if (Tag != null)

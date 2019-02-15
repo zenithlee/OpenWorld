@@ -13,6 +13,22 @@ namespace OpenWorld.Handlers
     public MDeleteHandler()
     {
       MMessageBus.ObjectDeletedEvent += MMessageBus_ObjectDeletedEvent;
+
+      MMessageBus.DeleteObjectRequestHandler += MMessageBus_DeleteObjectRequestHandler;
+    }
+
+    private void MMessageBus_DeleteObjectRequestHandler(object sender, DeleteRequestEvent e)
+    {
+      MSceneObject o = e.TargetObject;
+      if (o == null) return;
+
+      MPhysicsObject po = (MPhysicsObject)o.FindModuleByType(MObject.EType.PhysicsObject);
+      MScene.Physics.Remove(po);
+
+      MScene.ModelRoot.Remove(o);
+      MScene.Priority1.Remove(o);
+      MScene.Priority2.Remove(o);
+      MScene.SelectedObject = null;
     }
 
     private void MMessageBus_ObjectDeletedEvent(object sender, DeleteEvent e)

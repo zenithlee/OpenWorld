@@ -120,7 +120,7 @@ namespace Massive
       ConstraintSolver solver = new MultiBodyConstraintSolver();
 
       World = new DiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConf);
-      World.SolverInfo.NumIterations = 20;
+      World.SolverInfo.NumIterations = 10;
       World.DispatchInfo.UseContinuous = true;
 
       World.Gravity = new Vector3d(0, -9.8, 0);
@@ -436,7 +436,7 @@ namespace Massive
             Console.Error.WriteLine("EXCEPTION: MPhysics StepSimulation : " + e.Message);
           }
         }
-        Thread.Sleep(5);
+        Thread.Sleep(3);
       }
       Thread.Sleep(100);
       DisposeWorld();

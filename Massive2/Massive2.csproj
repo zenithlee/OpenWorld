@@ -99,8 +99,7 @@
     <Reference Include="AssimpNet">
       <HintPath>..\packages\AssimpNet.3.3.2\lib\net45\AssimpNet.dll</HintPath>
     </Reference>
-    <Reference Include="BulletSharp, Version=2.87.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="BulletSharp">
       <HintPath>..\dlls\64\BulletSharp.dll</HintPath>
     </Reference>
     <Reference Include="irrKlang.NET4, Version=1.0.6617.18810, Culture=neutral, PublicKeyToken=a854741bd80517c7, processorArchitecture=x86">
