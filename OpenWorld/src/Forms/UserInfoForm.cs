@@ -209,6 +209,16 @@ namespace OpenWorld.Forms
       }
     }
 
+    private void Avatar4_CheckedChanged(object sender, EventArgs e)
+    {
+      if (Avatar4.Checked == true)
+      {
+        Globals.UserAccount.AvatarID = MBuildParts.AVATAR04;
+        MMessageBus.ChangedUserInfo(this);
+        MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);
+      }
+    }
+
     private void UserInfoForm_FormClosing(object sender, FormClosingEventArgs e)
     {
       ClearEvents();
@@ -239,5 +249,7 @@ namespace OpenWorld.Forms
     {
       UpdateData();
     }
+
+    
   }
 }

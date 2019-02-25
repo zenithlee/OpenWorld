@@ -26,7 +26,7 @@ namespace OpenWorld.Services
       //string sLocalCache = Path.Combine(Globals.AppDataPath, Helper.GUID() + ".jpg");
       System.Net.WebClient Client = new System.Net.WebClient();
       // Client.Credentials = CredentialCache.DefaultCredentials;
-      //Client.Headers.Add("Content-Type", "binary/octet-stream");
+     
       Image bmp = Bitmap.FromFile(sLocalFile);
 
       int size = 800;
@@ -50,9 +50,20 @@ namespace OpenWorld.Services
       bmp.Dispose();
       bmp2.Dispose();
 
-      Client.Headers.Add("UserID:" + Globals.UserAccount.UserID);      
-      string ServerIP = Globals.Network.ServerIP;
-      Client.UploadFileAsync(new Uri("http://" + ServerIP + "/massive/fu/fu.php"), "POST", TempName);
+      Client.Headers.Add("Content-Type", "binary/octet-stream");
+      Client.Headers.Add("UserID:" + Globals.UserAccount.UserID);
+
+      string CDNLocation = "";
+      if ( !string.IsNullOrEmpty(Globals.Network.ServerDomain))
+      {
+        CDNLocation = Globals.Network.ServerDomain;
+      }
+      else
+      {
+        CDNLocation = Globals.Network.ServerIP;
+      }
+      
+      Client.UploadFileAsync(new Uri("http://" + CDNLocation + "/massive/fu/fu.php"), "POST", TempName);
       Client.UploadFileCompleted += Client_UploadFileCompleted;
       Client.UploadProgressChanged += Client_UploadProgressChanged;
     }

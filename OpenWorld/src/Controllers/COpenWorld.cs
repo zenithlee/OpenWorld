@@ -83,24 +83,7 @@ namespace OpenWorld.Controllers
 
     void CreateAvatar()
     {
-      MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);
-      /*
-      MServerObject m = new MServerObject();
-
-      string sAvatar = "AVATAR03";
-      if (!string.IsNullOrEmpty(Globals.UserAccount.AvatarID))
-      {
-        sAvatar = Globals.UserAccount.AvatarID;
-        m.Name = sAvatar;
-        m.TemplateID = sAvatar;
-        m.TextureID = sAvatar+"M";
-      }
-      
-      m.InstanceID = Globals.UserAccount.UserID;
-      m.OwnerID = m.InstanceID;
-      m.Position = Globals.UserAccount.HomePosition;
-      _spawnHandler.Spawn(m);
-      */
+      MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);      
     }
 
     void ParseCmdLine()
@@ -111,7 +94,6 @@ namespace OpenWorld.Controllers
       {
         Globals.UserAccount.UserID = args[1];
       }
-
     }
 
     //1 client connects to MASSIVE server and receives this callback
@@ -139,11 +121,7 @@ namespace OpenWorld.Controllers
       //12717655889.4, 146353256822.3, -7581841339.4(18.4096672612293, -33.9328163657347, 0)     
       Globals.Network.TeleportRequest(Globals.UserAccount.UserID, Home,
         Quaterniond.Identity);
-
     }
-
-    
-
 
     //1 client connects to server and receives this callback
     private void Network_ConnectedToServerHandler(object sender, Massive.Events.StatusEvent e)

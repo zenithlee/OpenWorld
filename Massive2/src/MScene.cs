@@ -152,9 +152,9 @@ namespace Massive
       UtilityRoot.Add(Renderer);
 
       DefaultShader = new MShader(MShader.DEFAULT_SHADER);
-      DefaultShader.Load("Shaders\\default_v.glsl",
-        "Shaders\\default_f.glsl",
-        "Shaders\\Terrain\\eval.glsl", "Shaders\\Terrain\\control.glsl");
+      DefaultShader.Load("default_v.glsl",
+        "default_f.glsl",
+        "Terrain\\eval.glsl", "Terrain\\control.glsl");
       DefaultShader.Bind();
       DefaultShader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
       DefaultShader.SetInt("material.specular", MShader.LOCATION_SPECULAR);
@@ -165,7 +165,7 @@ namespace Massive
       Helper.CheckGLError(this, "TestPoint 1");
 
       // MShader GUIShader = new MShader("DefaultGUIShader");
-      // GUIShader.Load("Shaders\\gui_v.glsl", "Shaders\\gui_f.glsl");
+      // GUIShader.Load("gui_v.glsl", "gui_f.glsl");
       //GUIShader.Bind();
       //GUIShader.Deletable = false;
 
@@ -248,9 +248,9 @@ namespace Massive
       MMaterial DepthMaterial = new MMaterial("Depth");
       DepthMaterial.Deletable = false;
       simpleDepthShader = new MShader("simpleDepthShader");
-      simpleDepthShader.Load("Shaders\\shadow_mapping_depth_v.glsl",
-        "Shaders\\shadow_mapping_depth_f.glsl",
-        "Shaders\\Terrain\\eval.glsl", "Shaders\\Terrain\\control.glsl")
+      simpleDepthShader.Load("shadow_mapping_depth_v.glsl",
+        "shadow_mapping_depth_f.glsl",
+        "Terrain\\eval.glsl", "Terrain\\control.glsl")
         ;
       DepthMaterial.shader = simpleDepthShader;
       DepthMaterial.Add(simpleDepthShader);
@@ -281,9 +281,9 @@ namespace Massive
       // ScreenPick.Deletable = false;
 
       MShader debugDepthQuad = new MShader("debugDepthQuad");
-      debugDepthQuad.Load("Shaders\\debug_quad_v.glsl",
-        "Shaders\\debug_quad_f.glsl",
-        "Shaders\\Terrain\\eval.glsl", "Shaders\\Terrain\\control.glsl");
+      debugDepthQuad.Load("debug_quad_v.glsl",
+        "debug_quad_f.glsl",
+        "Terrain\\eval.glsl", "Terrain\\control.glsl");
       debugDepthQuad.Bind();
       debugDepthQuad.SetInt("depthMap", 0);
       //debugDepthQuad.SetFloat("near_plane", light.NearPlane);
@@ -313,9 +313,9 @@ namespace Massive
     {
       Helper.CheckGLError(this, "TestPoint 3a");
       MShader BackgroundShader = new MShader("BackgroundShader");
-      BackgroundShader.Load("Shaders\\default_v.glsl",
-        "Shaders\\unlit_f.glsl",
-        "Shaders\\Terrain\\eval.glsl", "Shaders\\Terrain\\control.glsl"
+      BackgroundShader.Load("default_v.glsl",
+        "unlit_f.glsl",
+        "Terrain\\eval.glsl", "Terrain\\control.glsl"
         );
 
       BackgroundShader.Bind();
@@ -401,11 +401,14 @@ namespace Massive
       {
         MMaterial mat = (MMaterial)MaterialRoot.Modules[i];
         mat.shader.Bind();
+        mat.shader.SetMat4("view", MTransform.GetFloatMatrix(view));
+        mat.shader.SetMat4("projection", MTransform.GetFloatMatrix(projection));
+
+
         // set light uniforms
         Fog.Bind(mat.shader);
 
         //TODO: use nearest lights
-
         mat.shader.SetInt("NumLights", LightRoot.Modules.Count);
         //TODO sort lights closest to furthest (because there is max lights =10 in shader)
 

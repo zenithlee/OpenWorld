@@ -51,5 +51,12 @@ namespace OpenWorld.Controls
       f.Setup();
       f.Show(this.ParentForm);
     }
+
+    private void DebugButton_Click(object sender, EventArgs e)
+    {
+      DebugForm f = new DebugForm();
+      f.Setup();
+      f.Show(this.ParentForm);
+    }
   }
 }

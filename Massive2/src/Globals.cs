@@ -19,8 +19,8 @@ namespace Massive
     public static int Index = 0;
     public static int Editor = 1;
     public static int DrawCalls = 0;    
-    public static double Tweak1 = 8.5;
-    public static double Tweak2 = 0;
+   // public static double Tweak1 = 8.5;
+    //public static double Tweak2 = 0;
 
     public static double BuildThreshold = 20; //the closest distance a user can build to another user's block
 

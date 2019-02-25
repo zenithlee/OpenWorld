@@ -15,6 +15,7 @@ namespace OpenWorld.src.Controllers
   {
     private string name = "";
     private string iP = "127.0.0.1";
+    private string domain = "bigfun.co.za";
     private string worldType = "Real World";
     private DateTime lastUsed = DateTime.Now;
     private int users = 0;
@@ -24,5 +25,6 @@ namespace OpenWorld.src.Controllers
     public DateTime LastUsed { get => lastUsed; set => lastUsed = value; }
     public string WorldType { get => worldType; set => worldType = value; }
     public int Users { get => users; set => users = value; }
+    public string Domain { get => domain; set => domain = value; }
   }
 }

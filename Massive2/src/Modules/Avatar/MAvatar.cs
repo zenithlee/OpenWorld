@@ -78,8 +78,8 @@ namespace Massive
       _physics = null;
       if (Target != null)
       {
-        _physics = (MPhysicsObject)Target.FindModuleByType(EType.PhysicsObject);        
-      }      
+        _physics = (MPhysicsObject)Target.FindModuleByType(EType.PhysicsObject);
+      }
     }
 
     public Vector3d GetPosition()
@@ -118,7 +118,7 @@ namespace Massive
     {
       if (_physics == null) return;
       TargetRotation = rot;
-     // _physics.SetRotation(rot);
+      // _physics.SetRotation(rot);
     }
 
     public void InputH(double h)
@@ -257,7 +257,6 @@ namespace Massive
     {
       if (Target != null)
       {
-
         Quaterniond ir = _physics._rigidBody.CenterOfMassTransform.ExtractRotation();
         //Quaterniond d = Quaterniond.FromAxisAngle(Globals.GlobalUpVector, deltax);
         //Quaterniond d = Quaterniond.FromAxisAngle(Vector3d.UnitY, deltax);

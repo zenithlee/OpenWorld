@@ -195,7 +195,11 @@ namespace Massive
       {
         po.SetRotation(q);
       }
-      transform.Rotation = q;
+      else
+      {
+        transform.Rotation = q;
+      }
+      
       if (NotifyDescendents == true)
       {
         ParentChanged();

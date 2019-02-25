@@ -90,13 +90,15 @@ namespace Massive
     public string ServerIP { get => serverIP; set => serverIP = value; }
     public string LocalIP = "127.0.0.1";
 
+    private string serverDomain = "bigfun.co.za";
+    public string ServerDomain { get => serverDomain; set => serverDomain = value; }
+
     private int serverPort = 50895;
     public int ServerPort { get => serverPort; set => serverPort = value; }
 
     public static bool isServer => _instance.IsServer;
-
     private bool isServer1 = false;
-    public bool IsServer { get => isServer1; set => isServer1 = value; }
+    public bool IsServer { get => isServer1; set => isServer1 = value; }    
 
     public bool Connected = false;
     public bool Ready = false;

@@ -1,5 +1,6 @@
 ﻿using FastColoredTextBoxNS;
 using Massive;
+using Massive.Platform;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,7 +32,7 @@ namespace ThisIsMassive.src.Forms
     public void SetObject(MShader mo)
     { 
       CurrentShader = mo;
-      string sShader = File.ReadAllText(Path.Combine(Globals.AssetsPath, mo.FragmentShaderPath));
+      string sShader = File.ReadAllText(Path.Combine(MFileSystem.AssetsPath, mo.FragmentShaderPath));
       //sShader = sShader.Replace("\r", "\r\n");
       CodeBox.Text = sShader;
     }
@@ -43,7 +44,7 @@ namespace ThisIsMassive.src.Forms
 
     void CompileAndRun()
     {
-      string sVertShader = File.ReadAllText(Path.Combine(Globals.AssetsPath, CurrentShader.VertexShaderPath));
+      string sVertShader = File.ReadAllText(Path.Combine(MFileSystem.AssetsPath, CurrentShader.VertexShaderPath));
       string Error = CurrentShader.LoadFromString(sVertShader, CodeBox.Text);
       CurrentShader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
       CurrentShader.SetInt("material.specular", MShader.LOCATION_SPECULAR);

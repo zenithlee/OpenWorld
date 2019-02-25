@@ -37,7 +37,7 @@ namespace Massive
     {
     }
 
-    int GetLocation(string sName)
+    public int GetLocation(string sName)
     {      
        return GL.GetUniformLocation(ProgramID, sName);        
     }
@@ -103,7 +103,7 @@ namespace Massive
     public void SetMatrices(string sPropName, Matrix4[] matrices)
     {
       int location = GetLocation(sPropName);      
-      GL.UniformMatrix4(location, matrices.Length, false, ref matrices[0].Row0.X);
+      GL.UniformMatrix4(location, matrices.Length, true, ref matrices[0].Row0.X);
     }
 
     //public void SetMat4d(string sPropName, Matrix4d d)
@@ -132,14 +132,14 @@ namespace Massive
       ProgramID = GL.CreateProgram();
 
       int vertexShader = GL.CreateShader(ShaderType.VertexShader);
-      string sVertexPath = Path.Combine(MFileSystem.AssetsPath, VertexShaderPath);
+      string sVertexPath = Path.Combine(MFileSystem.ShadersPath, VertexShaderPath);
       if (!File.Exists(sVertexPath))
       {
         Log(vertexShader + " : File not found:" + sVertexPath + ". Needs AppPathConfig?");
       }
       else
       {
-        GL.ShaderSource(vertexShader, File.ReadAllText(Path.Combine(MFileSystem.AssetsPath, VertexShaderPath)));
+        GL.ShaderSource(vertexShader, File.ReadAllText(Path.Combine(MFileSystem.ShadersPath, VertexShaderPath)));
         GL.CompileShader(vertexShader);
       }
 
@@ -151,14 +151,14 @@ namespace Massive
       }
 
       int fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
-      string sFragmentPath = Path.Combine(MFileSystem.AssetsPath, FragmentShaderPath);
+      string sFragmentPath = Path.Combine(MFileSystem.ShadersPath, FragmentShaderPath);
       if (!File.Exists(sFragmentPath))
       {
         Log(sFragmentPath + " : File not found");
       }
       else
       {
-        GL.ShaderSource(fragmentShader, File.ReadAllText(Path.Combine(MFileSystem.AssetsPath, FragmentShaderPath)));
+        GL.ShaderSource(fragmentShader, File.ReadAllText(Path.Combine(MFileSystem.ShadersPath, FragmentShaderPath)));
         GL.CompileShader(fragmentShader);
       }
 

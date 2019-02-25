@@ -153,6 +153,12 @@
     <Compile Include="src\Forms\ChatForm.Designer.cs">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Forms\DebugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\DebugForm.Designer.cs">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Forms\DToolForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -228,6 +234,7 @@
     <Compile Include="src\Handlers\MAvatarHandler.cs" />
     <Compile Include="src\Handlers\MCameraHandler.cs" />
     <Compile Include="src\Handlers\MDeleteHandler.cs" />
+    <Compile Include="src\Handlers\MGnomonHandler.cs" />
     <Compile Include="src\Handlers\MKeyboardHandler.cs" />
     <Compile Include="src\Handlers\MLightHandler.cs" />
     <Compile Include="src\Handlers\MMouseHandler.cs" />
@@ -295,6 +302,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\DebugForm.resx">
+      <DependentUpon>DebugForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\DToolForm.resx">
       <DependentUpon>DToolForm.cs</DependentUpon>

@@ -11,12 +11,7 @@ using System.Threading.Tasks;
 namespace Massive
 {
   public class MMesh : MSceneObject
-  {
-   // int EBO;
-    //List<MVertex> vertices;
-    // MVertex[] _vertices;
-    //List<uint> indices;
-    //protected uint[] _indices;
+  {  
     List<MTexture> textures;
     
     public int FaceCount = 0;

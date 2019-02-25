@@ -46,7 +46,8 @@ namespace Massive
         if (m.Renderable)
         {
           MSceneObject mo = (MSceneObject)m;
-          if (mo.Type != EType.Mesh)
+          //meshes use their parent's transforms
+          if ((mo.Type != EType.Mesh) && (mo.Type != EType.BoneMesh))
           {
             mo.DistanceFromAvatar = Vector3d.Distance(mo.transform.Position, AvatarPos);
           }

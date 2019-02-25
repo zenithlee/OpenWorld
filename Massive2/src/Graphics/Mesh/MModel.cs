@@ -72,9 +72,7 @@ namespace Massive
           Console.WriteLine(e.InnerException.Message);
         }
         return false;
-      }
-
-      
+      }      
       return true;
     }
 

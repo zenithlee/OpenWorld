@@ -19,6 +19,7 @@ using Massive.Tools;
 using Massive.GIS;
 using System.Threading;
 using Massive.Events;
+using Massive.Platform;
 
 namespace Massive
 {
@@ -382,6 +383,25 @@ namespace Massive
         if (material != null)
         {
           material.SetDiffuseTexture(rgb);
+        }
+      }
+
+      //string sText2 = string.Format("earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);
+      string sText2 = string.Format("earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);
+      //string sText = string.Format("earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);
+      sText2 = Path.Combine(MFileSystem.AssetsPath, "Textures\\terrain\\dirt.jpg");
+      if (File.Exists(sText2))
+      {
+        //MTexture rgb = Globals.TexturePool.GetTexture(sText);
+        MTexture rgb = new MTexture(TileX + "," + TileY + " BIOME");
+        rgb.Readable = false;
+        rgb.LoadTextureData(sText2);
+        rgb.DoAssign = true;
+        rgb._TextureUnit = TextureUnit.Texture1;
+        rgb._TextureWrapMode = TextureWrapMode.Repeat;
+        if (material != null)
+        {
+          material.SetMultiTexture(rgb);
         }
       }
     }

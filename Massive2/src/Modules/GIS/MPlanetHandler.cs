@@ -132,10 +132,10 @@ namespace Massive
     void CreateShaders()
     {
       MShader SkyShader = Helper.CreateShader("SkyShader");
-      SkyShader.Load("Shaders\\default_v.glsl",
-        "Shaders\\sky_f.glsl",
-        "Shaders\\Terrain\\eval.glsl",
-        "Shaders\\Terrain\\control.glsl"
+      SkyShader.Load("default_v.glsl",
+        "sky_f.glsl",
+        "Terrain\\eval.glsl",
+        "Terrain\\control.glsl"
         );
       SkyShader.Bind();
       SkyShader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
@@ -318,7 +318,7 @@ namespace Massive
            water.transform.Scale = m.Radius * 2.00;
            MMaterial waterman = new MMaterial("Watermat");
            MShader shader = new MShader("watershader");
-           shader.Load("Shaders\\ocean_vs.glsl", "Shaders\\ocean_fs.glsl");
+           shader.Load("ocean_vs.glsl", "ocean_fs.glsl");
            shader.Bind();
            shader.SetInt("diffuseTexture", 0);
            shader.SetInt("shadowMap", 1);

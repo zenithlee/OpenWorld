@@ -406,7 +406,6 @@ namespace Massive
           }
         }
 
-
         if (AddQueue.Count > 0)
         {
           MPhysicsObject po = AddQueue[0];
@@ -423,7 +422,6 @@ namespace Massive
           RemoveQueue.RemoveAt(0);
           World.RemoveRigidBody(po._rigidBody);
         }
-
 
         if (World != null)
         {

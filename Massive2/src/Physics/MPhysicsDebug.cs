@@ -217,16 +217,13 @@ namespace Massive
       //GL.BindVertexArray(0);
       //GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
       //GL.UseProgram(0);
-
-      
-
       //GL.ClearColor(Color4.Black);
       GL.Clear(ClearBufferMask.DepthBufferBit);      
 
       int loca = GL.GetUniformLocation(shaderProgram, "mcolor");
       if ( UserColorCoding == true)
       {
-        for (int ri = 0; ri < positionArray.Count() - 2; ri += 2)
+        for (int ri = 0; ri <= positionArray.Count() - 2; ri += 2)
         {
           Vector4 v = colorArray[ri];
           GL.Uniform4(loca, ref v);

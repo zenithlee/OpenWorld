@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using BulletSharp;
+using Massive2.Graphics.Character;
 
 namespace Massive
 {
@@ -60,8 +61,8 @@ namespace Massive
       MCube c = new MCube(sName);
       c.transform.Position = pos;
       c.Setup();
-      parent.Add(c);      
-      c.SetMaterial((MMaterial)MScene.MaterialRoot.FindModuleByName(MMaterial.DEFAULT_MATERIAL));      
+      parent.Add(c);
+      c.SetMaterial((MMaterial)MScene.MaterialRoot.FindModuleByName(MMaterial.DEFAULT_MATERIAL));
       return c;
     }
 
@@ -79,6 +80,24 @@ namespace Massive
       sphere.material = (MMaterial)MScene.MaterialRoot.FindModuleByName(MMaterial.DEFAULT_MATERIAL);
       sphere.Add(sphere.material);
       return sphere;
+    }
+
+    public static MAnimatedModel CreateAnimatedModel(MObject parent, string sName, string Filename, Vector3d pos)
+    {
+      if (parent == null) parent = MScene.ModelRoot;
+      MAnimatedModel m = new MAnimatedModel(MObject.EType.AnimatedModel, sName);
+      m.transform.Position = pos;
+
+      try
+      {
+        m.Load(Filename);
+      }
+      catch (Exception e)
+      {
+        Console.WriteLine(e.Message + " --- Helper.CreateAnimatedModel: Failed to load model:" + sName + " :" + Filename);
+      }
+      parent.Add(m);
+      return m;
     }
 
     public static MModel CreateModel(MObject parent, string sName, string Filename, Vector3d pos)
@@ -133,7 +152,7 @@ namespace Massive
       MModel m = new MModel(MObject.EType.Model, sName);
       m.OwnerID = OwnerID;
       m.transform.Position = pos;
-
+      parent.Add(m);
       for (int i = 0; i < mo.Modules.Count; i++)
       {
         if (mo.Modules[i].Type != MObject.EType.Mesh) continue;
@@ -152,9 +171,45 @@ namespace Massive
         mesh.VerticesLength = mr.VerticesLength;
         mesh.Normals = mr.Normals;
         //mesh.material = mo.material;
-        m.material = mo.material;
-        parent.Add(m);
+        m.material = mo.material;      
       }
+
+      return m;
+    }
+
+    public static MAnimatedModel SpawnAnimatedModel(MObject parent, string TemplateID, string OwnerID, string sName, Vector3d pos)
+    {
+      MAnimatedModel mo = (MAnimatedModel)MScene.TemplateRoot.FindModuleByInstanceID(TemplateID);
+      //MMesh sm = (MMesh)mo.FindModuleByType(MObject.EType.Mesh);
+
+      MAnimatedModel m = new MAnimatedModel(MObject.EType.AnimatedModel, sName);
+      m.OwnerID = OwnerID;
+      m.transform.Position = pos;
+      mo.CopyTo(m);
+      parent.Add(m);
+
+      for (int i = 0; i < mo.Modules.Count; i++)
+      {
+        if (mo.Modules[i].Type != MObject.EType.BoneMesh) continue;
+
+        MAnimatedMesh mr = (MAnimatedMesh)mo.Modules[i];
+       // m.Add(mr);
+        MAnimatedMesh mesh = new MAnimatedMesh(sName);
+        mesh.OwnerID = mr.OwnerID;
+        m.Add(mesh);
+        mesh.VBO = mr.VBO;
+        mesh.VAO = mr.VAO;
+        mesh.EBO = mr.EBO;
+        mesh.Indices = mr.Indices;
+        mesh.IndicesLength = mr.IndicesLength;
+        mesh.Vertices = mr.Vertices;
+        mesh.VerticesLength = mr.VerticesLength;
+        mesh.Normals = mr.Normals;
+        //mesh.material = mo.material;
+        m.material = mo.material;
+        //parent.Add(m);
+      }
+   
 
       return m;
     }
@@ -273,10 +328,10 @@ namespace Massive
         string sCaller = stackTrace.GetFrame(1).GetMethod().Name;
         sCaller += " @" + stackTrace.GetFrame(1).GetFileLineNumber();
 
-        for ( int i=0; i< stackTrace.FrameCount; i++ )
+        for (int i = 0; i < stackTrace.FrameCount; i++)
         {
-          StackFrame frame = stackTrace.GetFrame(i);          
-          sCaller += " >"+frame.GetMethod().Name;
+          StackFrame frame = stackTrace.GetFrame(i);
+          sCaller += " >" + frame.GetMethod().Name;
         }
 
         //Console.WriteLine(c + " @" + Extra + " OPENGL:" + mo.Name + "(" + sCaller + "): ");
@@ -294,10 +349,10 @@ namespace Massive
     public static MShader CreateShader(string sName)
     {
       MShader WallShader = new MShader(sName);
-      WallShader.Load("Shaders\\default_v.glsl",
-        "Shaders\\default_f.glsl",
-        "Shaders\\Terrain\\eval.glsl",
-        "Shaders\\Terrain\\control.glsl"
+      WallShader.Load("default_v.glsl",
+        "default_f.glsl",
+        "Terrain\\eval.glsl",
+        "Terrain\\control.glsl"
         );
       WallShader.Bind();
       WallShader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
@@ -346,10 +401,14 @@ namespace Massive
       }
       if (m.Type == MObject.EType.Model)
       {
-        t = SpawnModel(TargetRoot, TemplateID, OwnerID, sName, Pos);        
+        t = SpawnModel(TargetRoot, TemplateID, OwnerID, sName, Pos);
+      }
+      if (m.Type == MObject.EType.AnimatedModel)
+      {
+        t = SpawnAnimatedModel(TargetRoot, TemplateID, OwnerID, sName, Pos);
       }
 
-      if ( m.Type == MObject.EType.InstanceMesh)
+      if (m.Type == MObject.EType.InstanceMesh)
       {
         t = SpawnInstanced(TargetRoot, TemplateID, OwnerID, sName, Pos);
       }

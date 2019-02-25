@@ -36,11 +36,13 @@
       this.label2 = new System.Windows.Forms.Label();
       this.ResponseText = new System.Windows.Forms.TextBox();
       this.IPLabel = new System.Windows.Forms.Label();
+      this.label3 = new System.Windows.Forms.Label();
+      this.HostNameBox = new System.Windows.Forms.TextBox();
       this.SuspendLayout();
       // 
       // RegisterButton
       // 
-      this.RegisterButton.Location = new System.Drawing.Point(362, 312);
+      this.RegisterButton.Location = new System.Drawing.Point(362, 377);
       this.RegisterButton.Name = "RegisterButton";
       this.RegisterButton.Size = new System.Drawing.Size(86, 37);
       this.RegisterButton.TabIndex = 0;
@@ -61,9 +63,9 @@
       // 
       this.UniName.Location = new System.Drawing.Point(13, 30);
       this.UniName.Name = "UniName";
-      this.UniName.Size = new System.Drawing.Size(259, 20);
+      this.UniName.Size = new System.Drawing.Size(262, 20);
       this.UniName.TabIndex = 2;
-      this.UniName.Text = "My Universe";
+      this.UniName.Text = "The World";
       // 
       // StyleCombo
       // 
@@ -81,7 +83,7 @@
             "Banter",
             "Adult",
             "Anonymous"});
-      this.StyleCombo.Location = new System.Drawing.Point(13, 76);
+      this.StyleCombo.Location = new System.Drawing.Point(16, 115);
       this.StyleCombo.Name = "StyleCombo";
       this.StyleCombo.Size = new System.Drawing.Size(259, 21);
       this.StyleCombo.TabIndex = 3;
@@ -90,7 +92,7 @@
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(12, 60);
+      this.label2.Location = new System.Drawing.Point(15, 99);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(64, 13);
       this.label2.TabIndex = 4;
@@ -98,27 +100,47 @@
       // 
       // ResponseText
       // 
-      this.ResponseText.Location = new System.Drawing.Point(13, 137);
+      this.ResponseText.Location = new System.Drawing.Point(13, 202);
       this.ResponseText.Multiline = true;
       this.ResponseText.Name = "ResponseText";
       this.ResponseText.Size = new System.Drawing.Size(435, 169);
       this.ResponseText.TabIndex = 5;
-      this.ResponseText.Text = "Register Server in Lobby\r\nUnused Servers expire after 30 days";
+      this.ResponseText.Text = "Register Server in Lobby\r\nUnused Servers expire after 30 days\r\nIIS Servers runnin" +
+    "g multiple sites should use a domain";
       // 
       // IPLabel
       // 
       this.IPLabel.AutoSize = true;
-      this.IPLabel.Location = new System.Drawing.Point(13, 100);
+      this.IPLabel.Location = new System.Drawing.Point(16, 139);
       this.IPLabel.Name = "IPLabel";
       this.IPLabel.Size = new System.Drawing.Size(17, 13);
       this.IPLabel.TabIndex = 6;
       this.IPLabel.Text = "IP";
       // 
+      // label3
+      // 
+      this.label3.AutoSize = true;
+      this.label3.Location = new System.Drawing.Point(13, 57);
+      this.label3.Name = "label3";
+      this.label3.Size = new System.Drawing.Size(311, 13);
+      this.label3.TabIndex = 7;
+      this.label3.Text = "Domain / Host Name. E.g. bigfun.co.za where images are stored";
+      // 
+      // HostNameBox
+      // 
+      this.HostNameBox.Location = new System.Drawing.Point(16, 73);
+      this.HostNameBox.Name = "HostNameBox";
+      this.HostNameBox.Size = new System.Drawing.Size(259, 20);
+      this.HostNameBox.TabIndex = 8;
+      this.HostNameBox.Text = "bigfun.co.za";
+      // 
       // RegisterForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(458, 360);
+      this.ClientSize = new System.Drawing.Size(458, 426);
+      this.Controls.Add(this.HostNameBox);
+      this.Controls.Add(this.label3);
       this.Controls.Add(this.IPLabel);
       this.Controls.Add(this.ResponseText);
       this.Controls.Add(this.label2);
@@ -144,5 +166,7 @@
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.TextBox ResponseText;
     private System.Windows.Forms.Label IPLabel;
+    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.TextBox HostNameBox;
   }
 }

@@ -25,11 +25,15 @@ namespace MassiveServer.src.forms
       ResponseText.Text = "Registering...";
       string sName = UniName.Text;
       string sStyle = StyleCombo.Text;
+      string sDomain = HostNameBox.Text;
 
       WebClient wc = new WebClient();
       try { 
       string Result = wc.DownloadString("http://bigfun.co.za/massive/lobby/?f=register&name=" 
-        + sName + "&style=" + sStyle + "&ip=" + MExternalIPSniffer.externalip
+        + sName 
+        + "&style=" + sStyle 
+        + "&domain=" + sDomain
+        + "&ip=" + MExternalIPSniffer.externalip
         + "&ownerid=" + GUID);
       if (!string.IsNullOrEmpty(Result))
       {

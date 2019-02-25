@@ -38,5 +38,25 @@ namespace OpenWorld.Forms
     {
       Globals._scene.light.DebugDepth = DebugDepthCheck.Checked;
     }
+
+    private void TweakBar1_Scroll(object sender, EventArgs e)
+    {
+      Settings.Tweak1 = TweakBar1.Value;
+    }
+
+    private void TweakBar2_Scroll(object sender, EventArgs e)
+    {
+      Settings.Tweak2 = TweakBar2.Value;
+    }
+
+    private void TweakBar3_Scroll(object sender, EventArgs e)
+    {
+      Settings.Tweak3 = TweakBar3.Value;
+    }
+
+    private void TweakBar4_Scroll(object sender, EventArgs e)
+    {
+      Settings.Tweak4 = TweakBar4.Value;
+    }
   }
 }

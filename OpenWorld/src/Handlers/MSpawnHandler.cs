@@ -81,40 +81,45 @@ namespace OpenWorld.Handlers
       if (bb == null) return null;
 
       MSceneObject o = null;
+      if ( bb.Type == MBuildParts.MAnimatedModel)
+      {
+        o = Helper.CreateAnimatedModel(MScene.TemplateRoot, TemplateID, bb.Model, Vector3d.Zero);
+      }
+
       if (bb.Type == MBuildParts.MModel)
       {
-        o = Helper.CreateModel(MScene.TemplateRoot, TemplateID, bb.Model, Vector3d.Zero);
-        o.TemplateID = TemplateID;
-        o.InstanceID = TemplateID;
-        o.IsTransparent = bb.IsTransparent;
-
-        MMaterial mat = (MMaterial)MScene.MaterialRoot.FindModuleByName(bb.MaterialID);
-        o.SetMaterial(mat);
-
-        Vector3d size = MassiveTools.VectorFromArray(bb.Size);
-
-        MPhysicsObject.EShape shape = GetShape(bb.PhysicsShape);
-        if (shape != MPhysicsObject.EShape.NULL)
-        {
-          MPhysicsObject mpo = new MPhysicsObject(o, TemplateID + "_physics", bb.Weight, shape,
-            true, size);
-          mpo.SetSleep(15);
-          mpo.SetFriction(0);
-          if (shape != MPhysicsObject.EShape.Sphere)
-          {
-            mpo.SetAngularFactor(0.0, 0.0, 0.0);
-            mpo.SetDamping(0.7, 0.5);
-            mpo.SetRestitution(0.5);
-          }
-          else
-          {
-            mpo.SetDamping(0.1, 0.1);
-            mpo.SetRestitution(0.8);
-          }
-        }
-
-        o.Setup();
+        o = Helper.CreateModel(MScene.TemplateRoot, TemplateID, bb.Model, Vector3d.Zero);       
       }
+
+      MMaterial mat = (MMaterial)MScene.MaterialRoot.FindModuleByName(bb.MaterialID);
+      o.SetMaterial(mat);
+
+      Vector3d size = MassiveTools.VectorFromArray(bb.Size);
+
+      MPhysicsObject.EShape shape = GetShape(bb.PhysicsShape);
+      if (shape != MPhysicsObject.EShape.NULL)
+      {
+        MPhysicsObject mpo = new MPhysicsObject(o, TemplateID + "_physics", bb.Weight, shape,
+          true, size);
+        mpo.SetSleep(15);
+        mpo.SetFriction(0);
+        if (shape != MPhysicsObject.EShape.Sphere)
+        {
+          mpo.SetAngularFactor(0.0, 0.0, 0.0);
+          mpo.SetDamping(0.7, 0.5);
+          mpo.SetRestitution(0.5);
+        }
+        else
+        {
+          mpo.SetDamping(0.1, 0.1);
+          mpo.SetRestitution(0.8);
+        }
+      }
+
+      o.TemplateID = TemplateID;
+      o.InstanceID = TemplateID;
+      o.IsTransparent = bb.IsTransparent;
+      o.Setup();
 
       AddSubmodules(bb, o);
 
@@ -206,7 +211,15 @@ namespace OpenWorld.Handlers
         {
           Globals.Avatar.SetSceneObject(mo);
         }
-        SetMaterial(mo, m.TextureID);
+        if ( mo.Type == MObject.EType.AnimatedModel)
+        {
+
+        }
+        else
+        {
+          SetMaterial(mo, m.TextureID);
+        }
+        
         MMessageBus.Created(this, mo);
       }
 

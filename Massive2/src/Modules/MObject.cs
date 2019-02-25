@@ -36,7 +36,7 @@ namespace Massive
       Primitive, PrimitiveCube, PrimitiveSphere, PrimitiveTriangle, Model, ModelURL, Mesh, BoneMesh, Terrain,
       AstroBody, InstanceMesh,
       Grass, Water, Sand, Rock,
-      Animation, Animator, Teleport, MoveSync,
+      AnimatedModel, Animation, Animator, Teleport, MoveSync,
       Shader, Material, Texture,
       Camera, DirectionalLight, PointLight,
       Text2D, Text3D, GUI,

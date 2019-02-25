@@ -30,6 +30,7 @@
     {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserInfoForm));
       this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+      this.Avatar4 = new System.Windows.Forms.RadioButton();
       this.Avatar3 = new System.Windows.Forms.RadioButton();
       this.Avatar2 = new System.Windows.Forms.RadioButton();
       this.Avatar1 = new System.Windows.Forms.RadioButton();
@@ -65,6 +66,7 @@
       this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
       this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
       this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel4.Controls.Add(this.Avatar4, 4, 0);
       this.tableLayoutPanel4.Controls.Add(this.Avatar3, 2, 0);
       this.tableLayoutPanel4.Controls.Add(this.Avatar2, 1, 0);
       this.tableLayoutPanel4.Controls.Add(this.Avatar1, 0, 0);
@@ -75,6 +77,19 @@
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel4.Size = new System.Drawing.Size(390, 58);
       this.tableLayoutPanel4.TabIndex = 13;
+      // 
+      // Avatar4
+      // 
+      this.Avatar4.Appearance = System.Windows.Forms.Appearance.Button;
+      this.Avatar4.AutoSize = true;
+      this.Avatar4.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.Avatar4.Location = new System.Drawing.Point(195, 3);
+      this.Avatar4.Name = "Avatar4";
+      this.Avatar4.Size = new System.Drawing.Size(192, 52);
+      this.Avatar4.TabIndex = 8;
+      this.Avatar4.Text = "4";
+      this.Avatar4.UseVisualStyleBackColor = true;
+      this.Avatar4.CheckedChanged += new System.EventHandler(this.Avatar4_CheckedChanged);
       // 
       // Avatar3
       // 
@@ -429,5 +444,6 @@
     private System.Windows.Forms.Button CloseButton;
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
     private System.Windows.Forms.Button UpdateDetailsButton;
+    private System.Windows.Forms.RadioButton Avatar4;
   }
 }

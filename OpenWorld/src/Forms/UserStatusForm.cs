@@ -135,7 +135,7 @@ namespace OpenWorld.Forms
       }
       string s = System.Text.Encoding.UTF8.GetString(e.Result, 0, e.Result.Length);
       //Console.WriteLine(s);
-      Status(s);
+      Status("Upload Complete");
       sPublicFile = s.Replace("{HOST}", Globals.Network.ServerIP);
       Globals.Network.ChangePropertyRequest(Target.InstanceID, Description);
       MMessageBus.ChangeTextureRequest(this, Target.InstanceID, sPublicFile);     

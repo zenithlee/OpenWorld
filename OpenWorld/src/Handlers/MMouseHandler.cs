@@ -303,7 +303,9 @@ namespace OpenWorld
       if (index != -1)
       {
         //Console.WriteLine("Clicked:" + index);
-        MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByIndex(index, null);
+        MObject mobj = MScene.ModelRoot.FindModuleByIndex(index, null);
+        if (!mobj.Renderable) return;
+        MSceneObject mo = (MSceneObject)mobj;
 
         if (mo != null)
         {
@@ -330,6 +332,7 @@ namespace OpenWorld
             MMessageBus.Status(this, "Selected:" + mo.TemplateID + "," + mo.InstanceID);
           }
         }
+        
 
         MScene.SelectedObject = mo;
       }

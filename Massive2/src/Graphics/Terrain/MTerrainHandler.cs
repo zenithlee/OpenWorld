@@ -50,10 +50,10 @@ namespace Massive
      // TerrainShader = Helper.CreateShader(MShader.TERRAIN_SHADER);
 
       TerrainShader = new MShader(MShader.TERRAIN_SHADER);
-      TerrainShader.Load("Shaders\\default_v.glsl",
-        "Shaders\\Terrain\\terrain_f.glsl",
-        "Shaders\\Terrain\\eval.glsl",
-        "Shaders\\Terrain\\control.glsl"
+      TerrainShader.Load("default_v.glsl",
+        "Terrain\\terrain_f.glsl",
+        "Terrain\\eval.glsl",
+        "Terrain\\control.glsl"
         );
       TerrainShader.Bind();
       TerrainShader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);

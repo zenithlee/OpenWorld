@@ -36,31 +36,6 @@ namespace OpenWorld.Handlers
       Globals.UserAccount.AvatarID = e.TemplateID;      
     }
 
-    void CreateAvatar()
-    {
-      MServerObject m = new MServerObject();
-
-      string sAvatar = "AVATAR03";
-      if (!string.IsNullOrEmpty(Globals.UserAccount.AvatarID))
-      {
-        sAvatar = Globals.UserAccount.AvatarID;
-        m.Name = sAvatar;
-        m.TemplateID = sAvatar;
-        m.TextureID = sAvatar + "M";
-      }
-
-      m.InstanceID = Globals.UserAccount.UserID;
-      m.OwnerID = m.InstanceID;
-      m.Position = Globals.UserAccount.HomePosition;
-     // MMessageBus.Spawn
-      /*
-      Globals.Network.SpawnRequest(Globals.UserAccount.AvatarID, m.TemplateID, Globals.UserAccount.UserID,
-        "", MassiveTools.VectorFromArray(m.Position), 
-        MassiveTools.QuaternionFromArray(m.Rotation), Globals.UserAccount.UserID,
-        0, 100);
-        */
-      //_spawnHandler.Spawn(m);
-      
-    }
+    
   }
 }

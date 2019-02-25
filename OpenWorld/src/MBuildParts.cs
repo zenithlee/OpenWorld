@@ -27,6 +27,7 @@ namespace OpenWorld
     public const string AVATAR01 = "AVATAR01";
     public const string AVATAR02 = "AVATAR02";
     public const string AVATAR03 = "AVATAR03";
+    public const string AVATAR04 = "AVATAR04";
 
     public const string PERSON01 = "PERSON01";
 
@@ -84,6 +85,7 @@ namespace OpenWorld
     public static string ASTEROIDBELT = "ASTEROIDBELT";
     public static string SPACESTATION01 = "SPACESTATION01";
 
+    public const string MAnimatedModel = "MAnimatedModel";
     public const string MModel = "MModel";
     public const string MSphere = "MSphere";
     public const string MCube = "MCube";
@@ -110,10 +112,10 @@ namespace OpenWorld
     void SetupMaterials()
     {
       MShader BasicShader = new MShader("BasicShader");
-      BasicShader.Load("Shaders\\default_v.glsl",
-        "Shaders\\default_f.glsl",
-        "Shaders\\Terrain\\eval.glsl",
-        "Shaders\\Terrain\\control.glsl"
+      BasicShader.Load("default_v.glsl",
+        "default_f.glsl",
+        "Terrain\\eval.glsl",
+        "Terrain\\control.glsl"
         );
       BasicShader.Bind();
       BasicShader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
@@ -122,26 +124,40 @@ namespace OpenWorld
       BasicShader.SetInt("material.normalmap", MShader.LOCATION_NORMALMAP);
       BasicShader.SetInt("material.shadowMap", MShader.LOCATION_SHADOWMAP);
 
-     /* MMaterial Avatar1Mat = new MMaterial("AVATAR01M");
-      Avatar1Mat.AddShader(BasicShader);
-      Avatar1Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar01.jpg"));
-      MScene.MaterialRoot.Add(Avatar1Mat);
-
-      MMaterial Avatar2Mat = new MMaterial("AVATAR02M");
-      Avatar2Mat.AddShader(BasicShader);
-      Avatar2Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar02.jpg"));
-      MScene.MaterialRoot.Add(Avatar2Mat);
-      */
+      MShader BoneShader = new MShader("AnimatedShader");
+      string sVertFile = "Animation\\animated_vs.glsl";
+      string sFragPath = "Animation\\animated_fs.glsl";
+      BoneShader.Load(sVertFile,
+        sFragPath,
+        "",
+        ""
+        );
+      BoneShader.Bind();
+      BoneShader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
+      BoneShader.SetInt("material.specular", MShader.LOCATION_SPECULAR);
+      BoneShader.SetInt("material.multitex", MShader.LOCATION_MULTITEX);
+      BoneShader.SetInt("material.normalmap", MShader.LOCATION_NORMALMAP);
+      BoneShader.SetInt("material.shadowMap", MShader.LOCATION_SHADOWMAP);
 
       foreach (KeyValuePair<string, MBuildingBlock> k in Blocks)
       {
-        MBuildingBlock b = k.Value;
-        if (b.Type != "MMaterial") continue;
-        MMaterial MATM = new MMaterial(b.MaterialID);
-        MATM.AddShader(BasicShader);
-        MATM.SetDiffuseTexture(Globals.TexturePool.GetTexture(b.Path));
-        MScene.MaterialRoot.Add(MATM);
-      }      
+        MBuildingBlock b = k.Value;        
+        if (b.Type == "MMaterial")
+        {
+          MMaterial MATM = new MMaterial(b.MaterialID);
+          MATM.AddShader(BasicShader);
+          MATM.SetDiffuseTexture(Globals.TexturePool.GetTexture(b.Path));
+          MScene.MaterialRoot.Add(MATM);
+        }
+        else
+        if (b.Type == "MBoneMaterial")
+        {
+          MMaterial MATM = new MMaterial(b.MaterialID);
+          MATM.AddShader(BoneShader);
+          MATM.SetDiffuseTexture(Globals.TexturePool.GetTexture(b.Path));
+          MScene.MaterialRoot.Add(MATM);
+        }
+      }
     }
 
     public static Dictionary<string, MBuildingBlock> GetBlocks()

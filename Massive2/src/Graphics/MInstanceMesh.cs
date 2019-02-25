@@ -180,8 +180,8 @@ namespace Massive
       MMaterial InstanceMat = new MMaterial("InstanceMaterial");
       MShader shader = new MShader("InstanceShader");
       //shader.LoadFromString(sVertexShader, sFragmentShader);
-      shader.Load("Shaders\\instanced_v.glsl",
-        "Shaders\\instanced_f.glsl",
+      shader.Load("instanced_v.glsl",
+        "instanced_f.glsl",
         "", ""
         );
       shader.Bind();

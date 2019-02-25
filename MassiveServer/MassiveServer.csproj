@@ -268,6 +268,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="php\lobby\lobby.json" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -284,7 +285,11 @@
   <ItemGroup>
     <Content Include="cmd\zservercmd.txt" />
     <Content Include="Laurent-Baumann-Aqua-Blend-Finder-Toolbar-Burn.ico" />
-    <Content Include="php\fu.php" />
+    <Content Include="php\fu\fu.php" />
+    <Content Include="php\fu\test.php" />
+    <Content Include="php\fu\upload.php" />
+    <Content Include="php\lobby\index.php" />
+    <Content Include="php\lobby\upload.php" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MassiveNetwork\MassiveNetwork.csproj">
@@ -293,6 +298,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="php\fu\files\" />
     <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <ItemGroup>

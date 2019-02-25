@@ -30,6 +30,11 @@ namespace Massive
     public static string TileDataPath = @".\Assets\Terrain\";
 
     public static bool DebugNetwork = false;
-    public static bool DebugRender = false;    
+    public static bool DebugRender = false;
+
+    public static float Tweak1 = 0;
+    public static float Tweak2 = 0;
+    public static float Tweak3 = 0;
+    public static float Tweak4 = 0;
   }
 }

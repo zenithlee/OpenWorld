@@ -34,16 +34,16 @@ namespace Massive.Tools
     {
       pickmaterial = new MMaterial("ScreenPick");
       pickmaterial.shader = new MShader("ScreenPickShader");
-      pickmaterial.shader.Load("Shaders\\default_v.glsl", 
-        "Shaders\\pick_select_f.glsl",        
-        "Shaders\\Terrain\\eval.glsl", "Shaders\\Terrain\\control.glsl");
+      pickmaterial.shader.Load("default_v.glsl", 
+        "pick_select_f.glsl",        
+        "Terrain\\eval.glsl", "Terrain\\control.glsl");
       Add(pickmaterial);
 
       outlinematerial = new MMaterial("OutlineMaterial");
       outlinematerial.shader = new MShader("OutlineShader");
-      outlinematerial.shader.Load("Shaders\\default_v.glsl", 
-        "Shaders\\outline_f.glsl",        
-        "Shaders\\Terrain\\eval.glsl", "Shaders\\Terrain\\control.glsl");
+      outlinematerial.shader.Load("default_v.glsl", 
+        "outline_f.glsl",        
+        "Terrain\\eval.glsl", "Terrain\\control.glsl");
       Add(outlinematerial);
     }
 

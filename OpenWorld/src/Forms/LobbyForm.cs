@@ -79,6 +79,7 @@ namespace OpenWorld.Forms
     void Join()
     {
       Globals.Network.ServerIP = ServerIPBox.Text;
+      Globals.Network.ServerDomain = DomainBox.Text;
       Globals.Network.Setup();
     }
 
@@ -90,10 +91,18 @@ namespace OpenWorld.Forms
 
     private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
     {
-      DataGridViewRow dg = dataGridView1.SelectedRows[0];
+     
+    }
+
+    private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
+    {
+      if (dataGridView1.SelectedRows.Count == 0) return;
+     DataGridViewRow dg = dataGridView1.SelectedRows[0];
       if (dg == null) return;
-      ServerIPBox.Text = dg.Cells[1].Value.ToString();
+      //todo: get this from lobby model
       NameLabel.Text = dg.Cells[0].Value.ToString();
+      ServerIPBox.Text = dg.Cells[1].Value.ToString();
+      DomainBox.Text = dg.Cells[5].Value.ToString();
     }
 
     private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -104,5 +113,7 @@ namespace OpenWorld.Forms
       //ServerIPBox.Text = dg.Cells[1].Value.ToString();
       //Join();
     }
+
+  
   }
 }

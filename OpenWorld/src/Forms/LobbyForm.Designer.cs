@@ -37,6 +37,7 @@
       this.ServerIPBox = new System.Windows.Forms.TextBox();
       this.NameLabel = new System.Windows.Forms.Label();
       this.timer1 = new System.Windows.Forms.Timer(this.components);
+      this.DomainBox = new System.Windows.Forms.TextBox();
       this.tableLayoutPanel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
       this.tableLayoutPanel2.SuspendLayout();
@@ -71,22 +72,24 @@
       this.dataGridView1.Size = new System.Drawing.Size(756, 461);
       this.dataGridView1.TabIndex = 0;
       this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
-      this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
+      this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
       // 
       // tableLayoutPanel2
       // 
-      this.tableLayoutPanel2.ColumnCount = 3;
-      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.01754F));
-      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.98245F));
-      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
-      this.tableLayoutPanel2.Controls.Add(this.JoinButton, 2, 0);
-      this.tableLayoutPanel2.Controls.Add(this.ServerIPBox, 1, 0);
+      this.tableLayoutPanel2.ColumnCount = 4;
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.34503F));
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.32164F));
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129F));
+      this.tableLayoutPanel2.Controls.Add(this.DomainBox, 0, 0);
+      this.tableLayoutPanel2.Controls.Add(this.JoinButton, 3, 0);
+      this.tableLayoutPanel2.Controls.Add(this.ServerIPBox, 2, 0);
       this.tableLayoutPanel2.Controls.Add(this.NameLabel, 0, 0);
       this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
       this.tableLayoutPanel2.Name = "tableLayoutPanel2";
       this.tableLayoutPanel2.RowCount = 1;
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel2.Size = new System.Drawing.Size(756, 36);
       this.tableLayoutPanel2.TabIndex = 1;
       // 
@@ -94,9 +97,9 @@
       // 
       this.JoinButton.Dock = System.Windows.Forms.DockStyle.Fill;
       this.JoinButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this.JoinButton.Location = new System.Drawing.Point(630, 3);
+      this.JoinButton.Location = new System.Drawing.Point(628, 3);
       this.JoinButton.Name = "JoinButton";
-      this.JoinButton.Size = new System.Drawing.Size(123, 30);
+      this.JoinButton.Size = new System.Drawing.Size(125, 30);
       this.JoinButton.TabIndex = 0;
       this.JoinButton.Text = "Join";
       this.JoinButton.UseVisualStyleBackColor = true;
@@ -105,9 +108,9 @@
       // ServerIPBox
       // 
       this.ServerIPBox.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.ServerIPBox.Location = new System.Drawing.Point(204, 3);
+      this.ServerIPBox.Location = new System.Drawing.Point(344, 3);
       this.ServerIPBox.Name = "ServerIPBox";
-      this.ServerIPBox.Size = new System.Drawing.Size(420, 20);
+      this.ServerIPBox.Size = new System.Drawing.Size(278, 20);
       this.ServerIPBox.TabIndex = 1;
       // 
       // NameLabel
@@ -116,10 +119,19 @@
       this.NameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
       this.NameLabel.Location = new System.Drawing.Point(3, 0);
       this.NameLabel.Name = "NameLabel";
-      this.NameLabel.Size = new System.Drawing.Size(195, 36);
+      this.NameLabel.Size = new System.Drawing.Size(127, 36);
       this.NameLabel.TabIndex = 2;
       this.NameLabel.Text = "Servers";
       this.NameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      // 
+      // DomainBox
+      // 
+      this.DomainBox.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.DomainBox.Location = new System.Drawing.Point(136, 3);
+      this.DomainBox.Name = "DomainBox";
+      this.DomainBox.Size = new System.Drawing.Size(202, 20);
+      this.DomainBox.TabIndex = 3;
+      this.DomainBox.Text = "bigfun.co.za";
       // 
       // LobbyForm
       // 
@@ -149,5 +161,6 @@
     private System.Windows.Forms.Timer timer1;
     private System.Windows.Forms.TextBox ServerIPBox;
     private System.Windows.Forms.Label NameLabel;
+    private System.Windows.Forms.TextBox DomainBox;
   }
 }

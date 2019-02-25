@@ -13,6 +13,7 @@ namespace Massive.Platform
   {
     public static string ProjectPath = @".\";    
     public static string AssetsPath = @".\Assets\";
+    public static string ShadersPath = @".\Assets\Shaders\";
     public static string AppDataPath = @".\Assets\UserData";
     public static string CachePath = @".\Assets\UserData\Cache";
     public static string RegistryPath = "Assets\\Registry.json";
