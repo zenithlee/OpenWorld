@@ -26,6 +26,8 @@ namespace Massive.Events
     public static event EventHandler<MoveEvent> AvatarMovedEvent;
     public static event EventHandler<InfoEvent> UpdateRequiredHandler;
     public static event EventHandler<InfoEvent> AvatarSetupHandler;
+    public static event EventHandler<TextEvent> AvatarAnimationChangeRequest;
+    public static event EventHandler<TextEvent> AvatarAnimationChanged;
 
     public static event EventHandler<CreateObjectRequestEvent> CreateObjectRequestHandler;
     public static event EventHandler<CreateEvent> ObjectCreatedHandler;
@@ -260,6 +262,15 @@ namespace Massive.Events
     public static void AvatarSetup(object sender)
     {
       AvatarSetupHandler?.Invoke(sender, new InfoEvent("Avatar Setup"));
+    }
+
+    public static void AvatarSetAnimation(object sender, string sAnimation)
+    {
+      AvatarAnimationChangeRequest?.Invoke(sender, new TextEvent(sAnimation));
+    }
+    public static void AvatarAnimationChange(object sender, string sAnimation)
+    {
+      AvatarAnimationChanged?.Invoke(sender, new TextEvent(sAnimation));
     }
 
     public static void AddZone(object sender, MServerZone zone)

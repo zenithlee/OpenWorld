@@ -133,9 +133,11 @@ namespace OpenWorld
 
       Vector3d op = MScene.Camera.Focus.transform.Position;
 
-      Quaterniond rota = Extensions.LookAt(Globals.Avatar.GetPosition(),
-                 Globals.Avatar.GetPosition() + Globals.LocalUpVector, Vector3d.UnitY);
-      //      * Globals.Avatar.Target.transform.Rotation;
+      //Quaterniond rota = Extensions.LookAt(Globals.Avatar.GetPosition(),
+      //         Globals.Avatar.GetPosition() + Globals.LocalUpVector, Vector3d.UnitY);
+      Quaterniond rota = Extensions.LookAt(MScene.Camera.transform.Position,
+               MScene.Camera.transform.Position + Globals.LocalUpVector, Vector3d.UnitY);
+
       if (double.IsNaN(rota.X))
       {
         //rota = Quaterniond.Identity;
@@ -144,7 +146,7 @@ namespace OpenWorld
 
       Quaterniond rot = rota
       * Quaterniond.FromEulerAngles(0, 0.8 * accx * (Math.PI / 180.0), 0);
-
+      
       //Quaterniond rot2 =        
       //Quaterniond.FromEulerAngles(0, dx, 0);
       Globals.Avatar.SetRotation(rot);
@@ -304,6 +306,7 @@ namespace OpenWorld
       {
         //Console.WriteLine("Clicked:" + index);
         MObject mobj = MScene.ModelRoot.FindModuleByIndex(index, null);
+        if (mobj == null) return;
         if (!mobj.Renderable) return;
         MSceneObject mo = (MSceneObject)mobj;
 

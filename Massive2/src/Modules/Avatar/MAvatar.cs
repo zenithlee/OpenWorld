@@ -1,4 +1,5 @@
 ﻿using Massive.Events;
+using Massive2.Graphics.Character;
 using OpenTK;
 using System;
 
@@ -18,6 +19,7 @@ namespace Massive
 
     public enum eMoveMode { Walking, Flying };
     eMoveMode MoveMode = eMoveMode.Walking;
+    public double CurrentSpeed = 0;
 
     IControllerContext Controller;
 
@@ -40,7 +42,7 @@ namespace Massive
         if (MoveMode == eMoveMode.Walking)
         {
           Controller = new MWalkController(this);
-          MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, "AVATAR02");
+          //MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, "AVATAR02");
           _physics.SetAngularFactor(1.0, 1.0, 1.0);
           _physics.SetDamping(0.95, 0.5);
         }
@@ -48,19 +50,11 @@ namespace Massive
         {
           Controller = new MFlyBirdController(this);
           // LoadTargetModel(@"Models\vehicles\swallow01.fbx");
-          MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, "AVATAR03");
+          //MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, "AVATAR03");
           _physics.SetAngularFactor(0.7, 0.7, 0.7);
           _physics.SetDamping(0.21, 0.9);
         }
       }
-    }
-
-    void LoadTargetModel(string sPath)
-    {
-      Vector3d Pos = GetPosition();
-      Target = ModelPool.GetMesh(sPath);
-      Target.transform.Position = Pos;
-      SetSceneObject(Target);
     }
 
     public bool Owns(MObject mo)
@@ -311,6 +305,21 @@ namespace Massive
     {
       base.Update();
       if (Target == null) return;
+
+      if (Target is MAnimatedModel)
+      {
+        CurrentSpeed = _physics._rigidBody.LinearVelocity.Length;
+       // Console.WriteLine("MAvatar.Update:"+CurrentSpeed);
+        MAnimatedModel ma = (MAnimatedModel)Target;
+        if (CurrentSpeed == 0)
+        {
+          ma.SetAnimation("idle", CurrentSpeed);
+        }
+        else
+        {
+          ma.SetAnimation("walk", CurrentSpeed);
+        }
+      }
 
       if (MoveMode == eMoveMode.Walking)
       {

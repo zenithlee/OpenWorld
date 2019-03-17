@@ -6,6 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// Hides objects that are out of range. 
+/// each MSceneObject has a DistanceToAvatar attribute that is constantly being updated by MDistanceClipper
+/// </summary>
+
 namespace Massive
 {
   public class MDistanceClipper : MObject
@@ -13,7 +18,7 @@ namespace Massive
     public Vector3d AvatarPos;
 
     int SkipCounter = 0;
-    int SkipMax = 40;
+    int SkipMax = 60;
 
     public MDistanceClipper() : base(EType.Other, "DistanceClipper")
     {
@@ -32,6 +37,8 @@ namespace Massive
       SkipCounter = 0;
 
       CalcObject(MScene.ModelRoot);
+      CalcObject(MScene.Background);
+      CalcObject(MScene.Background2);
     }
 
     //This is a potentially slow operation and can be called every nth frame.

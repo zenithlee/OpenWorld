@@ -111,17 +111,19 @@ namespace Massive
     //do all bullet related setup things on the bullet thread
     private void _backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      collisionConf = new DefaultCollisionConfiguration();
+      collisionConf = new DefaultCollisionConfiguration();      
       //try 
       //dispatcher = new CollisionDispatcherMultiThreaded(collisionConf); //crashes
       dispatcher = new CollisionDispatcher(collisionConf);
 
       broadphase = new DbvtBroadphase();
-      ConstraintSolver solver = new MultiBodyConstraintSolver();
+      //ConstraintSolver solver = new MultiBodyConstraintSolver();
+      ConstraintSolver solver = new MultiBodyConstraintSolver();      
 
       World = new DiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConf);
-      World.SolverInfo.NumIterations = 10;
+      World.SolverInfo.NumIterations = 8;      
       World.DispatchInfo.UseContinuous = true;
+      World.DispatchInfo.UseEpa = false;
 
       World.Gravity = new Vector3d(0, -9.8, 0);
 

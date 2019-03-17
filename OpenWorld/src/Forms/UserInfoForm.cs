@@ -213,6 +213,11 @@ namespace OpenWorld.Forms
     {
       if (Avatar4.Checked == true)
       {
+        MObject mo = MScene.TemplateRoot.FindModuleByName(Globals.UserAccount.AvatarID);
+        MScene.TemplateRoot.Remove(mo);
+        mo = MScene.ModelRoot.FindModuleByInstanceID(Globals.UserAccount.UserID);
+        MScene.Priority1.Remove(mo);
+
         Globals.UserAccount.AvatarID = MBuildParts.AVATAR04;
         MMessageBus.ChangedUserInfo(this);
         MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);

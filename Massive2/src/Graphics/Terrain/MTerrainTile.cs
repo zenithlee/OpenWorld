@@ -63,11 +63,11 @@ namespace Massive
       //Heights = new float[] { x_res * z_res };
       PointsOfInterest = new List<MPOI>();
       Suburbs = new List<MPOI>();
-      DistanceThreshold = 64000;
+      DistanceThreshold = 7000;
 
       Forest = new MForest();
       Forest.transform.Scale = new Vector3d(1, 1, 1);
-      Forest.DistanceThreshold = 5000;
+      Forest.DistanceThreshold = 3000;
       Forest.CastsShadow = true;
       // Add(Forest);
       MScene.Background2.Add(Forest);
@@ -345,7 +345,7 @@ namespace Massive
 
     public void CreateMaterial()
     {
-      material = new MMaterial("TileM");
+      material = new MMaterial("TerrainMaterial");
       MScene.MaterialRoot.Add(material);
       material.AddShader(TerrainShader);
       SetMaterial(material);

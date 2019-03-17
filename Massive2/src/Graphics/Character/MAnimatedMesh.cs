@@ -54,7 +54,7 @@ namespace Massive2.Graphics.Character
 
       
       //bones data
-      int BoneDataSize = VertexBoneData.Size;
+      int BoneDataSize = (4 + 4) * 4;
       GL.GenBuffers(1, out VBO_bones);
       GL.BindBuffer(BufferTarget.ArrayBuffer, VBO_bones);      
       GL.BufferData(BufferTarget.ArrayBuffer, bones_id_weights_for_each_vertex.Length 
@@ -85,9 +85,9 @@ namespace Massive2.Graphics.Character
       //bones
       GL.BindBuffer(BufferTarget.ArrayBuffer, VBO_bones);
       GL.EnableVertexAttribArray(3);
-      GL.VertexAttribPointer(3, 4, VertexAttribPointerType.Float, false, BoneDataSize, IntPtr.Zero); // for INT Ipointer      
+      GL.VertexAttribIPointer(3, 4, VertexAttribIntegerType.UnsignedInt, BoneDataSize, IntPtr.Zero); // for INT Ipointer      
       GL.EnableVertexAttribArray(4);
-      GL.VertexAttribPointer(4, 4, VertexAttribPointerType.Float, false, BoneDataSize, sizeof(float) * 4);
+      GL.VertexAttribPointer(4, 4, VertexAttribPointerType.Float, false, BoneDataSize, sizeof(uint) * 4);
       GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
       
       //indices
@@ -100,8 +100,8 @@ namespace Massive2.Graphics.Character
     
     public override void Render(Matrix4d viewproj, Matrix4d parentmodel)
     {
-      //  base.Render(viewproj, parentmodel);
-      Draw(viewproj, parentmodel);
+        base.Render(viewproj, parentmodel);
+      //Draw(viewproj, parentmodel);
     }
     
       public void Draw(Matrix4d viewproj, Matrix4d parentmodel)

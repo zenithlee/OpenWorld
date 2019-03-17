@@ -40,15 +40,15 @@
       this.label1 = new System.Windows.Forms.Label();
       this.GravityCheck = new System.Windows.Forms.CheckBox();
       this.TweakBar1 = new System.Windows.Forms.TrackBar();
+      this.TweakBar3 = new System.Windows.Forms.TrackBar();
+      this.TweakBar4 = new System.Windows.Forms.TrackBar();
       this.TweakBar2 = new System.Windows.Forms.TrackBar();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.TweakBar4 = new System.Windows.Forms.TrackBar();
-      this.TweakBar3 = new System.Windows.Forms.TrackBar();
       this.tableLayoutPanel2.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweakBar1)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.TweakBar2)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.TweakBar4)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.TweakBar3)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.TweakBar4)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.TweakBar2)).BeginInit();
       this.SuspendLayout();
       // 
       // tableLayoutPanel2
@@ -56,8 +56,6 @@
       this.tableLayoutPanel2.ColumnCount = 2;
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel2.Controls.Add(this.TweakBar3, 0, 5);
-      this.tableLayoutPanel2.Controls.Add(this.TweakBar4, 0, 5);
       this.tableLayoutPanel2.Controls.Add(this.DebugDepthCheck, 1, 3);
       this.tableLayoutPanel2.Controls.Add(this.label4, 0, 3);
       this.tableLayoutPanel2.Controls.Add(this.DebugPhysicsCheck, 1, 2);
@@ -67,15 +65,19 @@
       this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
       this.tableLayoutPanel2.Controls.Add(this.GravityCheck, 1, 0);
       this.tableLayoutPanel2.Controls.Add(this.TweakBar1, 0, 4);
-      this.tableLayoutPanel2.Controls.Add(this.TweakBar2, 1, 4);
+      this.tableLayoutPanel2.Controls.Add(this.TweakBar3, 0, 6);
+      this.tableLayoutPanel2.Controls.Add(this.TweakBar4, 0, 7);
+      this.tableLayoutPanel2.Controls.Add(this.TweakBar2, 0, 5);
       this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 21);
       this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-      this.tableLayoutPanel2.RowCount = 7;
+      this.tableLayoutPanel2.RowCount = 9;
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -195,48 +197,45 @@
       this.TweakBar1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.TweakBar1.LargeChange = 10;
       this.TweakBar1.Location = new System.Drawing.Point(3, 131);
-      this.TweakBar1.Maximum = 100;
+      this.TweakBar1.Maximum = 360;
       this.TweakBar1.Name = "TweakBar1";
       this.TweakBar1.Size = new System.Drawing.Size(142, 27);
       this.TweakBar1.TabIndex = 8;
       this.TweakBar1.TickFrequency = 10;
       this.TweakBar1.Scroll += new System.EventHandler(this.TweakBar1_Scroll);
       // 
-      // TweakBar2
+      // TweakBar3
       // 
-      this.TweakBar2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.TweakBar2.LargeChange = 10;
-      this.TweakBar2.Location = new System.Drawing.Point(151, 131);
-      this.TweakBar2.Maximum = 100;
-      this.TweakBar2.Name = "TweakBar2";
-      this.TweakBar2.Size = new System.Drawing.Size(142, 27);
-      this.TweakBar2.TabIndex = 9;
-      this.TweakBar2.TickFrequency = 10;
-      this.TweakBar2.Scroll += new System.EventHandler(this.TweakBar2_Scroll);
+      this.TweakBar3.LargeChange = 10;
+      this.TweakBar3.Location = new System.Drawing.Point(3, 197);
+      this.TweakBar3.Maximum = 360;
+      this.TweakBar3.Name = "TweakBar3";
+      this.TweakBar3.Size = new System.Drawing.Size(142, 27);
+      this.TweakBar3.TabIndex = 11;
+      this.TweakBar3.TickFrequency = 10;
+      this.TweakBar3.Scroll += new System.EventHandler(this.TweakBar3_Scroll);
       // 
       // TweakBar4
       // 
-      this.TweakBar4.Dock = System.Windows.Forms.DockStyle.Fill;
       this.TweakBar4.LargeChange = 10;
-      this.TweakBar4.Location = new System.Drawing.Point(151, 164);
-      this.TweakBar4.Maximum = 100;
+      this.TweakBar4.Location = new System.Drawing.Point(3, 230);
+      this.TweakBar4.Maximum = 360;
       this.TweakBar4.Name = "TweakBar4";
       this.TweakBar4.Size = new System.Drawing.Size(142, 27);
       this.TweakBar4.TabIndex = 10;
       this.TweakBar4.TickFrequency = 10;
       this.TweakBar4.Scroll += new System.EventHandler(this.TweakBar4_Scroll);
       // 
-      // TweakBar3
+      // TweakBar2
       // 
-      this.TweakBar3.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.TweakBar3.LargeChange = 10;
-      this.TweakBar3.Location = new System.Drawing.Point(3, 164);
-      this.TweakBar3.Maximum = 100;
-      this.TweakBar3.Name = "TweakBar3";
-      this.TweakBar3.Size = new System.Drawing.Size(142, 27);
-      this.TweakBar3.TabIndex = 11;
-      this.TweakBar3.TickFrequency = 10;
-      this.TweakBar3.Scroll += new System.EventHandler(this.TweakBar3_Scroll);
+      this.TweakBar2.LargeChange = 10;
+      this.TweakBar2.Location = new System.Drawing.Point(3, 164);
+      this.TweakBar2.Maximum = 360;
+      this.TweakBar2.Name = "TweakBar2";
+      this.TweakBar2.Size = new System.Drawing.Size(142, 27);
+      this.TweakBar2.TabIndex = 9;
+      this.TweakBar2.TickFrequency = 10;
+      this.TweakBar2.Scroll += new System.EventHandler(this.TweakBar2_Scroll);
       // 
       // SettingsForm
       // 
@@ -252,9 +251,9 @@
       this.tableLayoutPanel2.ResumeLayout(false);
       this.tableLayoutPanel2.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweakBar1)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.TweakBar2)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.TweakBar4)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.TweakBar3)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.TweakBar4)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.TweakBar2)).EndInit();
       this.ResumeLayout(false);
 
     }

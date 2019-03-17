@@ -189,6 +189,8 @@ namespace OpenWorld.Handlers
     {
       MSceneObject mo = (MSceneObject)MScene.ModelRoot.FindModuleByInstanceID(m.InstanceID);
       if (mo != null) return; //if the object already exists, never mind
+
+      //check if the object template exists. All user objects must exist as a template first
       MSceneObject mt = (MSceneObject)MScene.TemplateRoot.FindModuleByName(m.TemplateID);
       if (mt == null)
       {
@@ -211,11 +213,11 @@ namespace OpenWorld.Handlers
         {
           Globals.Avatar.SetSceneObject(mo);
         }
-        if ( mo.Type == MObject.EType.AnimatedModel)
+       // if ( mo.Type == MObject.EType.AnimatedModel)
         {
 
         }
-        else
+       // else
         {
           SetMaterial(mo, m.TextureID);
         }

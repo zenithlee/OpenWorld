@@ -167,7 +167,7 @@ namespace Massive
       material = m;
     }
 
-    public void SetMaterial(MMaterial m)
+    public virtual void SetMaterial(MMaterial m)
     {
       Modules.Remove(material);
       material = m;

@@ -205,7 +205,7 @@ namespace Massive
         mesh.Vertices = mr.Vertices;
         mesh.VerticesLength = mr.VerticesLength;
         mesh.Normals = mr.Normals;
-        //mesh.material = mo.material;
+        mesh.material = mo.material;
         m.material = mo.material;
         //parent.Add(m);
       }

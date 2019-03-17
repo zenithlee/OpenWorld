@@ -20,8 +20,8 @@ namespace Massive
 
     public static MModel GetMesh(string sFilename)
     {
-      AssimpContext importer = new AssimpContext();
-      importer.SetConfig(new NormalSmoothingAngleConfig(66.0f));
+      //AssimpContext importer = new AssimpContext();
+      //importer.SetConfig(new NormalSmoothingAngleConfig(66.0f));
 
       if (Pool.ContainsKey(sFilename))
       {

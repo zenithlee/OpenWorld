@@ -126,13 +126,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Events\TextEvent.cs" />
     <Compile Include="src\Events\BooleanEvent.cs" />
     <Compile Include="src\Events\BookmarkEvent.cs" />
     <Compile Include="src\Graphics\Character\BoneMatrix.cs" />
     <Compile Include="src\Graphics\Character\AnimatedVertex.cs" />
     <Compile Include="src\Graphics\Character\MAnimatedMesh.cs" />
-    <Compile Include="src\Graphics\Character\MAnimatedModel3.cs" />
-    <Compile Include="src\Graphics\Character\MAnimatedModel2.cs" />
     <Compile Include="src\Graphics\Character\MBone.cs" />
     <Compile Include="src\Graphics\Character\MBoneAnimation.cs" />
     <Compile Include="src\Graphics\Character\MBoneWeight.cs" />
@@ -178,47 +177,6 @@
     <Compile Include="src\Events\RenderEvent.cs" />
     <Compile Include="src\Events\UpdateEvent.cs" />
     <Compile Include="src\Events\ZoneEvent.cs" />
-    <Compile Include="src\Graphics\Character\old3\Animations\AnimationClip.cs" />
-    <Compile Include="src\Graphics\Character\old3\Animations\BlendShape.cs" />
-    <Compile Include="src\Graphics\Character\old3\Animations\Clip.cs" />
-    <Compile Include="src\Graphics\Character\old3\Animations\InterpolationClip.cs" />
-    <Compile Include="src\Graphics\Character\old3\Animations\KeyframeSeries.cs" />
-    <Compile Include="src\Graphics\Character\old3\Animations\Pose.cs" />
-    <Compile Include="src\Graphics\Character\old3\ArmatureBone.cs" />
-    <Compile Include="src\Graphics\Character\old3\ArrayTexture.cs" />
-    <Compile Include="src\Graphics\Character\old3\Camera.cs" />
-    <Compile Include="src\Graphics\Character\old3\FloatArrayTexture.cs" />
-    <Compile Include="src\Graphics\Character\old3\LightCamera.cs" />
-    <Compile Include="src\Graphics\Character\old3\Materials\BlenderMaterial.cs" />
-    <Compile Include="src\Graphics\Character\old3\Materials\FireMaterial.cs" />
-    <Compile Include="src\Graphics\Character\old3\Materials\LambertianMaterial.cs" />
-    <Compile Include="src\Graphics\Character\old3\Materials\Material.cs" />
-    <Compile Include="src\Graphics\Character\old3\Materials\NullMaterial.cs" />
-    <Compile Include="src\Graphics\Character\old3\Materials\POMMaterial.cs" />
-    <Compile Include="src\Graphics\Character\old3\MatrixTexture.cs" />
-    <Compile Include="src\Graphics\Character\old3\MeshContainer.cs" />
-    <Compile Include="src\Graphics\Character\old3\MeshGroup.cs" />
-    <Compile Include="src\Graphics\Character\old3\MeshImporter.cs" />
-    <Compile Include="src\Graphics\Character\old3\MeshImporter_Animations.cs" />
-    <Compile Include="src\Graphics\Character\old3\MeshImporter_BlendShapes.cs" />
-    <Compile Include="src\Graphics\Character\old3\MeshImporter_Bones.cs" />
-    <Compile Include="src\Graphics\Character\old3\MeshNode.cs" />
-    <Compile Include="src\Graphics\Character\old3\MobileObject.cs" />
-    <Compile Include="src\Graphics\Character\old3\MorphState.cs" />
-    <Compile Include="src\Graphics\Character\old3\PlaceableObject.cs" />
-    <Compile Include="src\Graphics\Character\old3\PointLight.cs" />
-    <Compile Include="src\Graphics\Character\old3\SceneTreeNode.cs" />
-    <Compile Include="src\Graphics\Character\old3\ShaderLibrary.cs" />
-    <Compile Include="src\Graphics\Character\old3\ShaderProgram.cs" />
-    <Compile Include="src\Graphics\Character\old3\SkeletalMeshGroup.cs" />
-    <Compile Include="src\Graphics\Character\old3\SkeletalMeshNode.cs" />
-    <Compile Include="src\Graphics\Character\old3\SkeletalTriMesh.cs" />
-    <Compile Include="src\Graphics\Character\old3\Stages\StageTilesNode.cs" />
-    <Compile Include="src\Graphics\Character\old3\Texture.cs" />
-    <Compile Include="src\Graphics\Character\old3\TextureManager.cs" />
-    <Compile Include="src\Graphics\Character\old3\TriMesh.cs" />
-    <Compile Include="src\Graphics\Character\old3\Utils.cs" />
-    <Compile Include="src\Graphics\Character\old3\Vector4Texture.cs" />
     <Compile Include="src\Graphics\Mesh\MRemoteModel.cs" />
     <Compile Include="src\Graphics\Mesh\MSpherePatch.cs" />
     <Compile Include="src\Graphics\MFog.cs" />
@@ -362,36 +320,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="OpenTK.dll.config" />
-    <None Include="src\Graphics\Character\old3\shaders\blendermaterial.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\bloomX.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\bloomY.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\copy.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\fireShader.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\fireShader.vert" />
-    <None Include="src\Graphics\Character\old3\shaders\fsq.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\fsq.vert" />
-    <None Include="src\Graphics\Character\old3\shaders\lambertian.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\logluminance.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\on_screen_quad.vert" />
-    <None Include="src\Graphics\Character\old3\shaders\parallaxmapping.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\parallaxmapping.vert" />
-    <None Include="src\Graphics\Character\old3\shaders\particle.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\particle.geom" />
-    <None Include="src\Graphics\Character\old3\shaders\particle.vert" />
-    <None Include="src\Graphics\Character\old3\shaders\pos_tex_nor_tan.vert" />
-    <None Include="src\Graphics\Character\old3\shaders\shadowmap.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\simple.vert" />
-    <None Include="src\Graphics\Character\old3\shaders\simple2d.vert" />
-    <None Include="src\Graphics\Character\old3\shaders\skeletal_mesh.vert" />
-    <None Include="src\Graphics\Character\old3\shaders\ssao.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\tonemap.frag" />
-    <None Include="src\Graphics\Character\old3\shaders\view_shadowmap.frag" />
-    <None Include="src\Graphics\Character\old\skeletal_mesh.vert" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\Graphics\Character\old2\" />
-    <Folder Include="src\Graphics\Character\simple\" />
-    <Folder Include="src\Modules\Character\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

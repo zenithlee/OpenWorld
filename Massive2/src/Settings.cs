@@ -13,7 +13,7 @@ namespace Massive
   public static class Settings
   {
     public static int MaxTerrains = 1;
-    public static int MaxTreesPerTerrain = 2000;
+    public static int MaxTreesPerTerrain = 1000;
     public static bool DrawPlanets = true;
     public static bool DrawBackdrop = true;
     public static bool DrawTrees = true;

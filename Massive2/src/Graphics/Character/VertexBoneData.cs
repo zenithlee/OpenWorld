@@ -9,29 +9,38 @@ using System.Threading.Tasks;
 
 namespace Massive2.Graphics.Character
 {
-  [StructLayout(LayoutKind.Explicit)]
+  [StructLayout(LayoutKind.Sequential)]
   public struct VertexBoneData
   {
-    public const int Size = (4 + 4) * 4;
-    const int NUM_BONES_PER_VEREX = 4;
-    [FieldOffset(0)]
-    public Vector4 ids;   // we have 4 bone ids for EACH vertex & 4 weights for EACH vertex
-    [FieldOffset(16)]
+    //public const int Size = (4 + 4) * 4;
+    //const int NUM_BONES_PER_VEREX = 4; 
+    // uint[] = has unknown size for 'extra internal stuff'
+    public uint id0;   // we have 4 bone ids for EACH vertex & 4 weights for EACH vertex    
+    public uint id1;
+    public uint id2;
+    public uint id3;
     public Vector4 weights;
-    
+
     public void InitVertexBoneData()
     {
-      ids = new Vector4( 0, 0, 0, 0 );
-      weights = new Vector4( 0f, 0f, 0f, 0f );
+      id0 = 0;
+      id1 = 0;
+      id2 = 0;
+      id3 = 0;
+      weights = new Vector4(0f, 0f, 0f, 0f);
     }
 
-    public void addBoneData(float bone_id, float weight)
+    public void addBoneData(uint bone_id, float weight)
     {
+      const int NUM_BONES_PER_VEREX = 4;
       for (int i = 0; i < NUM_BONES_PER_VEREX; i++)
       {
         if (weights[i] == 0.0)
         {
-          ids[i] = bone_id;
+          if (i == 0) id0 = bone_id;
+          if (i == 1) id1 = bone_id;
+          if (i == 2) id2 = bone_id;
+          if (i == 3) id3 = bone_id;
           weights[i] = weight;
           return;
         }

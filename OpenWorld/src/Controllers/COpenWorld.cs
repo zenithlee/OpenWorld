@@ -28,7 +28,7 @@ namespace OpenWorld.Controllers
     public COpenWorld()
     {
       Settings.TerrainPhysics = true;
-      Settings.DrawTrees = true;
+      Settings.DrawTrees = false;
       Settings.DrawTerrains = true;
       Settings.DrawBackdrop = true;
       Settings.DrawPlanets = true;

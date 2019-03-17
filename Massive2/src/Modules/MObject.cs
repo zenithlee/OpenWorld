@@ -383,7 +383,7 @@ namespace Massive
 
     public override string ToString()
     {
-      return Name + "(" + Parent + ")";
+      return Name + "<-" + Parent;
     }
   }
 }
