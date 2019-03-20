@@ -22,6 +22,18 @@ namespace OpenWorld.Forms
       SetTitle("Assets");
       AssetsList = new List<MSceneObject>();
       Populate();
+      MMessageBus.ObjectCreatedHandler += MMessageBus_ObjectCreatedHandler;
+      MMessageBus.ObjectDeletedEvent += MMessageBus_ObjectDeletedEvent;
+    }
+
+    private void MMessageBus_ObjectDeletedEvent(object sender, DeleteEvent e)
+    {
+      Populate();
+    }
+
+    private void MMessageBus_ObjectCreatedHandler(object sender, CreateEvent e)
+    {
+      Populate();
     }
 
     void Style()
@@ -58,6 +70,7 @@ namespace OpenWorld.Forms
         }
       }
 
+      AssetsView.DataSource = null;
       AssetsView.DataSource = AssetsList;
       AssetsView.Columns["OwnerID"].Visible = false;
       AssetsView.Columns["OwnerID"].ReadOnly = true;
@@ -88,6 +101,13 @@ namespace OpenWorld.Forms
 
       MMessageBus.TeleportRequest(this, row.transform.Position + row.BoundingBox.Size(), row.transform.Rotation);
 
+    }
+
+    private void AssetsForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      AssetsView.DataSource = null;
+      MMessageBus.ObjectCreatedHandler -= MMessageBus_ObjectCreatedHandler;
+      MMessageBus.ObjectDeletedEvent -= MMessageBus_ObjectDeletedEvent;
     }
   }
 }

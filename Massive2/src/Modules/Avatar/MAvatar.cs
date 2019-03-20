@@ -1,4 +1,5 @@
 ﻿using Massive.Events;
+using Massive.Graphics.Character;
 using Massive2.Graphics.Character;
 using OpenTK;
 using System;
@@ -7,7 +8,6 @@ namespace Massive
 {
   public class MAvatar : MObject
   {
-
     public MSceneObject Target;
 
     public Quaterniond TargetRotation;
@@ -19,7 +19,8 @@ namespace Massive
 
     public enum eMoveMode { Walking, Flying };
     eMoveMode MoveMode = eMoveMode.Walking;
-    public double CurrentSpeed = 0;
+    public float CurrentSpeed = 0;
+    public float WalkSpeed = 1.9f;
 
     IControllerContext Controller;
 
@@ -141,7 +142,8 @@ namespace Massive
     {
       if (_physics == null) return;
       _physics.SetActive(true);
-      _physics._rigidBody.ApplyTorque(_physics.GetRotation() * new Vector3d(0, h, 0));
+      //_physics._rigidBody.ApplyTorque(_physics.GetRotation() * new Vector3d(0, h, 0));
+      TargetRotation = _physics.GetRotation() * Quaterniond.FromEulerAngles(0, h, 0);
     }
 
     int Counter = 0;
@@ -160,19 +162,18 @@ namespace Massive
         Vector3d ap = GetPosition();
         Vector3d pos = ap + Forward() * 0.5;
         MPhysics.Instance.RayCastRequest(pos, pos + Forward() - Up() * height, this, (result) =>
-          {
+          {            
             if (result.Result == true)
             {
               //Console.WriteLine("HIT " + Counter + " " + result.Depth);
               Counter++;
               if (result.Depth < 0.9)
               {
-                InputB1(70);
+                //InputB1(70);
               }
             }
           });
       }
-
     }
 
     public void Reset()
@@ -308,16 +309,25 @@ namespace Massive
 
       if (Target is MAnimatedModel)
       {
-        CurrentSpeed = _physics._rigidBody.LinearVelocity.Length;
+        CurrentSpeed = (float)_physics._rigidBody.LinearVelocity.Length;
        // Console.WriteLine("MAvatar.Update:"+CurrentSpeed);
+       
         MAnimatedModel ma = (MAnimatedModel)Target;
         if (CurrentSpeed == 0)
-        {
-          ma.SetAnimation("idle", CurrentSpeed);
+        {          
+          ma._animationController.PlayAnimation("idle", CurrentSpeed);
         }
         else
         {
-          ma.SetAnimation("walk", CurrentSpeed);
+          if ( CurrentSpeed >= WalkSpeed)
+          {
+            ma._animationController.PlayAnimation("run", CurrentSpeed);
+          }
+          else
+          {
+            ma._animationController.PlayAnimation("walk", CurrentSpeed);
+          }
+          
         }
       }
 
@@ -325,8 +335,9 @@ namespace Massive
       {
         if (_physics != null)
         {
-          Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, Time.DeltaTime * 15);
-          _physics.SetRotation(rot);
+          //Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, Time.DeltaTime * 15);
+          Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, 0.2);
+          _physics.SetRotation(rot);          
           //_physics.SetRotation(TargetRotation);
         }
       }

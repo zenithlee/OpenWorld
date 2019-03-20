@@ -63,8 +63,17 @@ namespace OpenWorld
 
     private void Application_Idle(object sender, EventArgs e)
     {
-      openWorld.Render();
+      if (Settings.DebugRender == false)
+      {
+        openWorld.Render();
+      }
       glControl1.SwapBuffers();
+    }
+
+    private void timer1_Tick(object sender, EventArgs e)
+    {
+      keyboardHandler.Update();
+      openWorld.Update();
     }
 
     void SetupGLControl()
@@ -92,7 +101,7 @@ namespace OpenWorld
       ClientRect.X = p.X;
       ClientRect.Y = p.Y;
       ClientRect.Width = glControl1.Width;
-      ClientRect.Height = glControl1.Height;      
+      ClientRect.Height = glControl1.Height;
 
       int w = 800;
       int h = 600;
@@ -132,11 +141,6 @@ namespace OpenWorld
       MKeyboardHandler.KeyState[(int)e.KeyCode] = false;
     }
 
-    private void timer1_Tick(object sender, EventArgs e)
-    {
-      keyboardHandler.Update();
-      openWorld.Update();
-    }
 
     private void Form1_FormClosing(object sender, FormClosingEventArgs e)
     {
@@ -144,7 +148,7 @@ namespace OpenWorld
       timer1.Stop();
       Application.Idle -= Application_Idle;
       openWorld.Dispose();
-      
+
     }
 
     void UpdateWindowVariables()
@@ -164,7 +168,7 @@ namespace OpenWorld
 
     private void Main_Shown(object sender, EventArgs e)
     {
-      UpdateWindowVariables();      
+      UpdateWindowVariables();
     }
   }
 }

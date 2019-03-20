@@ -15,7 +15,7 @@ namespace Massive
     public string Text = "123";
     public string OldText = "";
     Bitmap TextImage;
-    Graphics graphics;
+    System.Drawing.Graphics graphics;
    
     Font font = new Font("Arial", 24);
     Brush brush = new SolidBrush(Color.Black);
@@ -46,7 +46,7 @@ namespace Massive
       material.SetDiffuseTexture(tex);
 
       TextImage = new Bitmap((int)(Width * 16), (int)(Height * 16), PixelFormat.Format32bppArgb);
-      graphics = Graphics.FromImage(TextImage); ;
+      graphics = System.Drawing.Graphics.FromImage(TextImage); ;
 
       material.DiffuseTexture.Filename = "";
 

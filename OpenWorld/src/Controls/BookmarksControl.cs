@@ -145,5 +145,18 @@ namespace OpenWorld.src.Controls
         contextMenuStrip1.Close();
       }
     }
+
+    private void setGPSToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      Button b = (Button)contextMenuStrip1.SourceControl;
+      if (b != null)
+      {
+        MBookmark bm = (MBookmark)b.Tag;
+        if (bm != null)
+        {
+          MMessageBus.Navigate(this, MassiveTools.VectorFromArray(bm.Position));
+        }
+      }
+    }
   }
 }

@@ -213,12 +213,17 @@ namespace OpenWorld.Forms
     {
       if (Avatar4.Checked == true)
       {
-        MObject mo = MScene.TemplateRoot.FindModuleByName(Globals.UserAccount.AvatarID);
-        MScene.TemplateRoot.Remove(mo);
-        mo = MScene.ModelRoot.FindModuleByInstanceID(Globals.UserAccount.UserID);
-        MScene.Priority1.Remove(mo);
-
         Globals.UserAccount.AvatarID = MBuildParts.AVATAR04;
+        MMessageBus.ChangedUserInfo(this);
+        MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);
+      }
+    }
+
+    private void Avatar5_CheckedChanged(object sender, EventArgs e)
+    {
+      if (Avatar5.Checked == true)
+      {
+        Globals.UserAccount.AvatarID = MBuildParts.AVATAR05;
         MMessageBus.ChangedUserInfo(this);
         MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);
       }
@@ -255,6 +260,6 @@ namespace OpenWorld.Forms
       UpdateData();
     }
 
-    
+
   }
 }

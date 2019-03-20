@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Massive2.Graphics.Character
+namespace Massive.Graphics.Character
 {
   [StructLayout(LayoutKind.Sequential)]
   public struct VertexBoneData

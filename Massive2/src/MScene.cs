@@ -118,6 +118,9 @@ namespace Massive
       //GL.PolygonMode(MaterialFace.Front, _renderMode);
     }
 
+    /// <summary>
+    /// The main setup point for the initial scene graph and tools
+    /// </summary>
     public void SetupInitialObjects()
     {
       Root = new MObject(MObject.EType.Null, "Root");
@@ -250,7 +253,7 @@ namespace Massive
       simpleDepthShader = new MShader("simpleDepthShader");
       simpleDepthShader.Load("shadow_mapping_depth_v.glsl",
         "shadow_mapping_depth_f.glsl",
-        "Terrain\\eval.glsl", "Terrain\\control.glsl")
+        "", "")
         ;
       DepthMaterial.shader = simpleDepthShader;
       DepthMaterial.Add(simpleDepthShader);
@@ -421,16 +424,20 @@ namespace Massive
         }
 
         mat.shader.SetVec3("viewPos", MTransform.GetVector3(Camera.transform.Position - Globals.GlobalOffset));
-        mat.shader.SetVec3("sunPos", MTransform.GetVector3(-Globals.GlobalOffset));
+        mat.shader.SetVec3("sunPos", MTransform.GetVector3(light.transform.Position -Globals.GlobalOffset));
         mat.shader.SetInt("Closeup", Closeup);
         light.Bind(mat);
       }
 
-      /////////////////////// DEPTH LIGHT ///////////////////////
+      /////////////////////// DEPTH LIGHT FOR SHADOWS ///////////////////////
       GL.Viewport(0, 0, MScreen.Width, MScreen.Height);
+
+//      GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 
       if (light.Shadows)
       {
+        GL.Enable(EnableCap.CullFace);
+        GL.CullFace(CullFaceMode.Back);
         Globals.RenderPass = Globals.eRenderPass.ShadowDepth;
         //============================
         //render depthmap from light using depth shader        
@@ -440,15 +447,16 @@ namespace Massive
         Globals.ShaderOverride = simpleDepthShader;
         GL.DepthFunc(DepthFunction.Less);
         GL.Enable(EnableCap.DepthTest);
+       
         Background.Render(lightmatrix, offsetmat);
-        Background2.Render(lightmatrix, offsetmat);
+        Background2.Render(lightmatrix, offsetmat);        
         ModelRoot.Render(lightmatrix, offsetmat);
         Globals.RenderPass = Globals.eRenderPass.Normal;
         Globals.ShaderOverride = null;
       }
 
       //============================
-      ////////////////// RENDER ////////////////////
+      ////////////////// NORMAL RENDER ////////////////////
       GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
       //Helper.CheckGLError(this, "Render 1");
       //set FBO      
@@ -496,7 +504,7 @@ namespace Massive
       // render Depth map to quad for visual debugging
       // ---------------------------------------------
       //GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
-      if (light.DebugDepth == true)
+      if (Settings.DebugDepth == true)
       {
         debugQuad.Bind();
 
@@ -571,7 +579,7 @@ namespace Massive
       projection = Camera.GetProjection(true);
       viewproj = view * projection;
 
-      //Background.Render(viewproj, offsetmat);
+     // Background.Render(viewproj, offsetmat);
       //GL.Clear(ClearBufferMask.DepthBufferBit);
       ModelRoot.Render(viewproj, offsetmat);
 

@@ -110,19 +110,21 @@ namespace Massive
       Planted = false;
     }
 
+    /*
     private void Bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
       //UploadBuffer();
       GL.BindBuffer(BufferTarget.ArrayBuffer, instanceVBO);
       GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)0, sizeofmat * TotalInstances, mats);
     }
+    */
 
-    void UploadBuffer()
+    void UploadBufferFull()
     {
       GL.BindBuffer(BufferTarget.ArrayBuffer, instanceVBO);
       GL.BufferData(BufferTarget.ArrayBuffer, sizeofmat * Settings.MaxTreesPerTerrain, mats, BufferUsageHint.StaticDraw);
       //GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)0, sizeofmat * MaxInstances, mats);
-
+      
       Matrix4 mat = new Matrix4();
       int mat4size = Marshal.SizeOf(mat);
 
@@ -142,6 +144,7 @@ namespace Massive
       GL.VertexAttribDivisor(4, 1);
       GL.VertexAttribDivisor(5, 1);
       GL.VertexAttribDivisor(6, 1);
+     
     }
 
     public override void Setup()
@@ -217,8 +220,8 @@ namespace Massive
       GL.BindBuffer(BufferTarget.ElementArrayBuffer, treemesh.EBO);
 
       GL.GenBuffers(1, out instanceVBO);
-      Helper.CheckGLError(this);
-      UploadBuffer();
+      Helper.CheckGLError(this);      
+      UploadBufferFull();
       Helper.CheckGLError(this);
 
       GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
@@ -302,9 +305,10 @@ namespace Massive
       material.shader.SetBool("ShadowEnabled", CastsShadow);
       
       GL.BindVertexArray(treemesh.VAO);
-      GL.BindBuffer(BufferTarget.ElementArrayBuffer, treemesh.EBO);
+      //GL.BindBuffer(BufferTarget.ElementArrayBuffer, treemesh.EBO);      
 
-      UploadBuffer();
+      UploadBufferFull();      
+
       material.Render(viewproj, parentmodel);      
       GL.DrawArraysInstanced(PrimitiveType.Triangles, 0, treemesh.Vertices.Length, TotalInstances);      
       Helper.CheckGLError(this);

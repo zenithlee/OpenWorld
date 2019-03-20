@@ -6,11 +6,7 @@ using OpenTK;
 using OpenWorld.Widgets;
 using OpernWorld.Widgets;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenWorld.Handlers
 {
@@ -42,6 +38,7 @@ namespace OpenWorld.Handlers
       m.TemplateID = e.TemplateID;
       m.OwnerID = e.UserID;
       m.TextureID = bb.MaterialID;
+      m.Name = Globals.UserAccount.UserName;
 
       m.Position = Globals.UserAccount.CurrentPosition;
       m.Rotation = MassiveTools.ArrayFromQuaterniond(Globals.Avatar.GetRotation());
@@ -78,7 +75,11 @@ namespace OpenWorld.Handlers
     public static MSceneObject LoadTemplate(string TemplateID)
     {
       MBuildingBlock bb = MBuildParts.GetBlock(TemplateID);
-      if (bb == null) return null;
+      if (bb == null)
+      {
+        Console.WriteLine("WARNING: MSpawnHandler.LoadTemplate " + TemplateID + " not found in blocks");
+        return null;
+      }        
 
       MSceneObject o = null;
       if ( bb.Type == MBuildParts.MAnimatedModel)
@@ -92,6 +93,10 @@ namespace OpenWorld.Handlers
       }
 
       MMaterial mat = (MMaterial)MScene.MaterialRoot.FindModuleByName(bb.MaterialID);
+      if ( mat == null)
+      {
+        Console.WriteLine("MSpawnHandler.LoadTemplate " + bb.MaterialID + " was null");
+      }
       o.SetMaterial(mat);
 
       Vector3d size = MassiveTools.VectorFromArray(bb.Size);

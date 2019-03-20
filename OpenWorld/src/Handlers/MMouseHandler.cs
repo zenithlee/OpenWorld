@@ -146,10 +146,11 @@ namespace OpenWorld
 
       Quaterniond rot = rota
       * Quaterniond.FromEulerAngles(0, 0.8 * accx * (Math.PI / 180.0), 0);
-      
+
       //Quaterniond rot2 =        
       //Quaterniond.FromEulerAngles(0, dx, 0);
-      Globals.Avatar.SetRotation(rot);
+      Globals.Avatar.SetRotation(rot);      
+      Globals.Avatar.InputRollH(accx*100);
       double dist = Vector3d.Distance(MScene.Camera.transform.Position, MScene.Camera.transform.Position + MScene.Camera.TargetOffset);
       if (dist < 45)
       {

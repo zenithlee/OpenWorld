@@ -121,7 +121,7 @@ namespace Massive.Tools
       Matrix4d offsetmat = Matrix4d.CreateTranslation(-Globals.GlobalOffset);
 
       pickmaterial.shader.SetVec3("object_index", rgb);
-      Root.Render(viewproj, Matrix4d.Identity);
+      Root.Render(viewproj, offsetmat);
 
       Globals.ShaderOverride = null;
     }

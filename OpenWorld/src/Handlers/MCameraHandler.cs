@@ -174,7 +174,7 @@ namespace OpenWorld.Handlers
         else
         {
           MMessageBus.AvatarMoved(this, Globals.UserAccount.UserID, AP, Globals.Avatar.GetRotation());
-          Console.WriteLine("Click " + Globals.Avatar.GetRotation());
+          //Console.WriteLine("Click " + Globals.Avatar.GetRotation());
         }
       }
     }

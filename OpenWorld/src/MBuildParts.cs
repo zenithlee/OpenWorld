@@ -28,6 +28,7 @@ namespace OpenWorld
     public const string AVATAR02 = "AVATAR02";
     public const string AVATAR03 = "AVATAR03";
     public const string AVATAR04 = "AVATAR04";
+    public const string AVATAR05 = "AVATAR05";
 
     public const string PERSON01 = "PERSON01";
 

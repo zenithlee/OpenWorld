@@ -72,45 +72,6 @@ namespace Massive
       GL.BindVertexArray(0);
 
       base.Setup();
-    }
-
-    public void Draw(MShader shader)
-    {
-      // bind appropriate textures
-      int diffuseNr = 1;
-      int specularNr = 1;
-      int normalNr = 1;
-      int heightNr = 1;
-      for (int i = 0; i < textures.Count(); i++)
-      {
-        GL.ActiveTexture(TextureUnit.Texture0 + i); // active proper texture unit before binding
-                                                    // retrieve texture number (the N in diffuse_textureN)
-        string number = "";
-        string name = textures[i].texture_type;
-        if (name == "texture_diffuse")
-          number = (diffuseNr++).ToString();
-        else if (name == "texture_specular")
-          number = (specularNr++).ToString(); // transfer unsigned int to stream
-        else if (name == "texture_normal")
-          number = (normalNr++).ToString(); // transfer unsigned int to stream
-        else if (name == "texture_height")
-          number = (heightNr++).ToString(); // transfer unsigned int to stream
-
-        // now set the sampler to the correct texture unit
-        int loc = GL.GetUniformLocation(shader.ProgramID, (name + number));
-        GL.Uniform1(loc, i);
-        // and finally bind the texture
-        //GL.BindTexture(TextureTarget.ProxyTexture2D, textures[i].TextureID);
-        shader.Bind();
-      }
-
-      // draw mesh
-      GL.BindVertexArray(VAO);
-      GL.DrawElements(BeginMode.Triangles, Indices.Length, DrawElementsType.UnsignedInt, 0);
-      GL.BindVertexArray(0);
-
-      // always good practice to set everything back to defaults once configured.
-      // GL.ActiveTexture(TextureUnit.Texture0);
-    }
+    }    
   }
 }

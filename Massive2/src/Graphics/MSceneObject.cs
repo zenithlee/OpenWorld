@@ -17,12 +17,12 @@ namespace Massive
     public Matrix4d WorldTransform = Matrix4d.Identity;
     public MBoundingBox BoundingBox;
     public double SizeHint = 0;
-    public string TemplateID = "CUBE1";
+    public string TemplateID { get; set; } = "CUBE1" ;
     public bool CastsShadow = true;
     public bool IsAvatar = false;
     public bool IsTransparent = false;
     public double DistanceFromAvatar { get; set; } = 0;
-    public double DistanceThreshold = 1000;
+    public double DistanceThreshold { get; set; } = 1000;
 
     // public MTransform transform { get => _transform; set => _transform = value; }
     public TexturedVertex[] Vertices = new TexturedVertex[0];

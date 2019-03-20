@@ -132,6 +132,7 @@
     <Compile Include="src\Graphics\Character\BoneMatrix.cs" />
     <Compile Include="src\Graphics\Character\AnimatedVertex.cs" />
     <Compile Include="src\Graphics\Character\MAnimatedMesh.cs" />
+    <Compile Include="src\Graphics\Character\MAnimationController.cs" />
     <Compile Include="src\Graphics\Character\MBone.cs" />
     <Compile Include="src\Graphics\Character\MBoneAnimation.cs" />
     <Compile Include="src\Graphics\Character\MBoneWeight.cs" />

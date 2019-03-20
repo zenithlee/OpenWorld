@@ -20,7 +20,7 @@ namespace Massive
 
       var newImage = new Bitmap(newWidth, newHeight);
 
-      using (var graphics = Graphics.FromImage(newImage))
+      using (var graphics = System.Drawing.Graphics.FromImage(newImage))
         graphics.DrawImage(image, 0, 0, newWidth, newHeight);
 
       return newImage;

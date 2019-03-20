@@ -359,7 +359,7 @@ namespace Massive.Events
 
     public static void Created(object sender, MSceneObject mo)
     {
-      ObjectCreatedHandler?.Invoke(sender, new CreateEvent(mo));
+      GUIEvent(ObjectCreatedHandler,sender, new CreateEvent(mo));
     }
 
     public static void Focus(object sender, MSceneObject mo)

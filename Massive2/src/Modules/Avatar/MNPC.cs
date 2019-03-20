@@ -1,4 +1,6 @@
-﻿using OpenTK;
+﻿using Massive.Graphics.Character;
+using Massive2.Graphics.Character;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +45,13 @@ namespace Massive
       }
       MSceneObject msoParent = (MSceneObject)Parent;
       msoParent.SetRotation(OriginalRotation * Quaterniond.FromEulerAngles(0, accum, 0));
+
+      if (Parent is MAnimatedModel)
+      {
+        MAnimatedModel m = (MAnimatedModel)Parent;
+        m._animationController.PlayAnimation("idle", 1);
+      }
+
     }
 
     public override void Update()

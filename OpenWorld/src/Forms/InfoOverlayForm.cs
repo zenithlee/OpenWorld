@@ -91,7 +91,14 @@ namespace OpenWorld.Forms
       UserInfo.Text += " |> " +sDist;
       //Location = Main.ClientLocation;
       //Location.Offset(10, Main.RenderClientSize.Height - Height);
-
+      if (string.IsNullOrEmpty(sStatus))
+      {
+        UserInfo.BackColor = Color.Black;
+      }
+      else
+      {
+        UserInfo.BackColor = Color.DarkRed;
+      }
       UserInfo.Text += "\r\n"+sStatus;
     }
 
@@ -105,6 +112,7 @@ namespace OpenWorld.Forms
     private void timer1_Tick(object sender, EventArgs e)
     {
       sStatus = "";
+      timer1.Stop();
     }
   }
 }

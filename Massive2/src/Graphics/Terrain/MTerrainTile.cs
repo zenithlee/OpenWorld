@@ -69,6 +69,7 @@ namespace Massive
       Forest.transform.Scale = new Vector3d(1, 1, 1);
       Forest.DistanceThreshold = 3000;
       Forest.CastsShadow = true;
+      CastsShadow = true;
       // Add(Forest);
       MScene.Background2.Add(Forest);
     }

@@ -72,7 +72,7 @@
       dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
       dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
       this.AssetsView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-      this.AssetsView.Size = new System.Drawing.Size(680, 598);
+      this.AssetsView.Size = new System.Drawing.Size(1049, 598);
       this.AssetsView.TabIndex = 2;
       this.AssetsView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AssetsView_CellDoubleClick);
       this.AssetsView.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.AssetsView_RowPrePaint);
@@ -82,14 +82,15 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));      
+      this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
       this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.ClientSize = new System.Drawing.Size(684, 621);
+      this.ClientSize = new System.Drawing.Size(1053, 621);
       this.Controls.Add(this.AssetsView);
       this.DoubleBuffered = true;
       this.Name = "AssetsForm";
       this.Opacity = 0.8D;
       this.Text = "AssetsForm";
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AssetsForm_FormClosing);
       this.Controls.SetChildIndex(this.AssetsView, 0);
       ((System.ComponentModel.ISupportInitialize)(this.AssetsView)).EndInit();
       this.ResumeLayout(false);

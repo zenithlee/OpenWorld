@@ -25,7 +25,7 @@ namespace OpenWorld.Handlers
       MMessageBus.LateUpdateHandler += MMessageBus_LateUpdateHandler;
 
 
-      ScreenPos = new Vector3d(0, -3.5, 0);
+      ScreenPos = new Vector3d(-7.5, -3.5, 0);
     }
 
     private void MMessageBus_LateUpdateHandler(object sender, UpdateEvent e)
@@ -85,7 +85,8 @@ namespace OpenWorld.Handlers
     {
       if (Widget.Enabled)
       {
-        //ScreenPos = new Vector3d(Globals.Tweak1, Globals.Tweak2, 0);
+        //ScreenPos = new Vector3d(Settings.Tweak1 * 0.01, Settings.Tweak2*0.01, Settings.Tweak3*0.01);
+        
         Widget.transform.Position = ScreenPos;
         Vector3d AP = Globals.Avatar.GetPosition();
 

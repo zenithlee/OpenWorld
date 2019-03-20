@@ -1,17 +1,10 @@
-﻿using OpenTK;
-using OpenTK.Graphics;
+﻿using Massive.Graphics.Character;
+using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-
-using System.Diagnostics;
-using Massive;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Security.Cryptography;
-using BulletSharp;
-using Massive2.Graphics.Character;
+using System.Text;
 
 namespace Massive
 {

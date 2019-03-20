@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Massive2.Graphics
+namespace Massive.Graphics.Character
 {
   public struct BoneMatrix
   {

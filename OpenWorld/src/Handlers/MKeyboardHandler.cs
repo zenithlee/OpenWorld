@@ -133,7 +133,14 @@ namespace OpenWorld.Handlers
 
       if (Control.ModifierKeys == Keys.Shift)
       {
-        mult *= 10;
+        if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Walking)
+        {
+          mult *= 2;
+        }
+        else
+        {
+          mult *= 10;
+        }
       }
 
       if (Control.ModifierKeys == Keys.Control)
@@ -175,7 +182,7 @@ namespace OpenWorld.Handlers
 
       if (KeyState[(int)Keys.Space])
       {
-        Globals.Avatar.InputB1(Time.DeltaTime * mult * 140);
+        Globals.Avatar.InputB1(Time.DeltaTime * mult * 240);
       }
 
       if (KeyState[(int)Keys.W])
@@ -184,7 +191,7 @@ namespace OpenWorld.Handlers
       }
       if (KeyState[(int)Keys.A])
       {
-        Globals.Avatar.InputH(-Time.DeltaTime * mult);
+        Globals.Avatar.InputYawH(Time.DeltaTime * (1.0/mult) *100);
       }
       if (KeyState[(int)Keys.S])
       {
@@ -192,7 +199,7 @@ namespace OpenWorld.Handlers
       }
       if (KeyState[(int)Keys.D])
       {
-        Globals.Avatar.InputH(Time.DeltaTime * mult);
+        Globals.Avatar.InputYawH(-Time.DeltaTime * (1.0/mult) *100);
       }
     }
 

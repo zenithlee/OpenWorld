@@ -1,4 +1,5 @@
-﻿using Massive2.Graphics.Character;
+﻿using Massive.Graphics.Character;
+using Massive2.Graphics.Character;
 using OpenTK;
 using System;
 using System.Collections.Generic;

@@ -33,6 +33,8 @@ namespace OpenWorld.Controllers
       Settings.DrawBackdrop = true;
       Settings.DrawPlanets = true;
 
+      Settings.DebugDepth = true;
+
       Globals.Network.ConnectedToMASSIVEHandler += Network_ConnectedToMASSIVEHandler;
       Globals.Network.ConnectedToServerHandler += Network_ConnectedToServerHandler;
       //Globals.Network.LoggedInHandler += Network_LoggedInHandler;
@@ -69,7 +71,7 @@ namespace OpenWorld.Controllers
       ParseCmdLine();
 
       //TODO: get from server     
-      Globals.UserAccount.HomePosition = MassiveTools.ArrayFromVector(new Vector3d(12717655405.872, 146353256617.827, -7581841152.6841));
+      Globals.UserAccount.HomePosition = MassiveTools.ArrayFromVector(new Vector3d(12717655836.0836, 146353256922.555, -7581841295.85195));
       Globals.UserAccount.CurrentPosition = Globals.UserAccount.HomePosition;
 
       Globals._scene.Setup();

@@ -1,16 +1,13 @@
 ﻿using Assimp;
 using Assimp.Configs;
-using Massive;
 using Massive.Platform;
+using Massive.Tools;
 using OpenTK;
+using OpenTK.Graphics.OpenGL4;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL4;
-using Massive.Tools;
 
 /// <summary>
 /// From Blender:
@@ -25,63 +22,60 @@ using Massive.Tools;
 /// </summary>
 
 
-namespace Massive2.Graphics.Character
+namespace Massive.Graphics.Character
 {
   public class MAnimatedModel : MSceneObject
   {
-    const uint MAX_BONES = 100;
-    List<MAnimatedMesh> Meshes;
-    Scene scene;
+    const uint MAX_BONES = 100; //must match animation shader
+    //List<MAnimatedMesh> Meshes;
+    public Scene scene; //assimp
     Matrix4x4 m_global_inverse_transform;
     int m_num_bones = 0;
     Dictionary<string, uint> m_bone_mapping; // maps a bone name and their index
-    List<BoneMatrix> m_bone_matrices = new List<BoneMatrix>();
-    float ticks_per_second = 25.0f;
-    float FrameCounter = 0;
-    double TotalTime = 5;
-    double fps = 25;
-    string ActiveAnimation = "idle";
-    double ActiveSpeed = 0;
-    float BaseSpeed = 1.1f;
+    List<BoneMatrix> m_bone_matrices = new List<BoneMatrix>();        
+    public MAnimationController _animationController;
 
     public static Matrix4[] debug_transforms = new Matrix4[MAX_BONES];
 
     public MAnimatedModel(EType type = EType.AnimatedModel, string sName = "AnimatedModel")
       : base(type, sName)
     {
-      Meshes = new List<MAnimatedMesh>();
+     // Meshes = new List<MAnimatedMesh>();
       m_bone_mapping = new Dictionary<string, uint>();
-    }
-
-    public void SetAnimation(string sName, double Speed)
-    {
-      ActiveAnimation = sName;
-      ActiveSpeed = Speed;
+      _animationController = new MAnimationController();
     }
 
     public override void SetMaterial(MMaterial m)
     {
       base.SetMaterial(m);
-      foreach( MAnimatedMesh mesh in Meshes)
+      foreach( MObject mo in Modules)
       {
-        mesh.material = material;
+        if ( mo is MAnimatedMesh)
+        {
+          MAnimatedMesh mao = (MAnimatedMesh)mo;
+          mao.SetMaterial(material);
+        }
       }
+      //foreach( MAnimatedMesh mesh in Meshes)
+      //{
+//        mesh.SetMaterial(material);
+  //    }
     }
 
     public void CopyTo(MAnimatedModel m)
     {
       //do not call base(MSceneObject) CopyTo here because it is handled by SpawnHandler and adds extra Physics
-      m.material = material;
-      m.Meshes = Meshes;
+      m.SetMaterial(material);
+      //m.Meshes = Meshes;
       m.scene = scene;
       m.m_global_inverse_transform = m_global_inverse_transform;
       m.m_num_bones = m_num_bones;
       m.m_bone_matrices = m_bone_matrices;
-      m.m_bone_mapping = m_bone_mapping;
-      m.ticks_per_second = ticks_per_second;
-     // m._debug = _debug;
-      m.FrameCounter = FrameCounter;
-      m.TotalTime = TotalTime;
+      m.m_bone_mapping = m_bone_mapping;      
+      m._animationController = new MAnimationController();
+      m._animationController.Setup(this);
+      _animationController.CopyTo(m._animationController);
+     
     }
 
     public void Load(string sName)
@@ -119,7 +113,7 @@ namespace Massive2.Graphics.Character
         mesh.transform.Scale = tr.ExtractScale();
         mesh.AddMaterial(this.material);
 
-        Meshes.Add(mesh); //accumulate all meshes in one vector
+        //Meshes.Add(mesh); //accumulate all meshes in one vector        
         Add(mesh);
       }
     }
@@ -278,6 +272,7 @@ namespace Massive2.Graphics.Character
     public override void Setup()
     {
       initShaders(material.shader.ProgramID);
+      _animationController.Setup(this);
      // _debug = new MPhysicsDebug();
       base.Setup();
     }
@@ -328,57 +323,53 @@ namespace Massive2.Graphics.Character
 
     public override void Update()
     {
-      FrameCounter+= BaseSpeed+(float)ActiveSpeed; //= (float)Time.DeltaTime ;
-
-      if (FrameCounter > TotalTime) FrameCounter = 0;
+      _animationController.Update();
+      
 
       base.Update();
     }
 
     public override void Render(Matrix4d viewproj, Matrix4d parentmodel)
     {
-      material.Bind();
+      if (Globals.RenderPass == Globals.eRenderPass.Pick) return;
+
+      int bonesLocation = 0;
+      if (Globals.RenderPass == Globals.eRenderPass.ShadowDepth)
+      { 
+        Globals.ShaderOverride.SetInt("HasBones", 1);
+        bonesLocation = Globals.ShaderOverride.GetLocation("bones");
+      }
+      else
+      {
+        material.Bind();
+        bonesLocation = material.shader.GetLocation("bones");
+      }
+      
       Matrix4x4[] transforms = new Matrix4x4[MAX_BONES];
       for (int i = 0; i < MAX_BONES; i++)
       {
         transforms[i] = Matrix4x4.Identity;
       }
  
-      Animation ani = FindAnimation(ActiveAnimation);
+      Animation ani = _animationController.GetCurrentAnimation();
       if (ani != null)
       {
-        TotalTime = ani.DurationInTicks;
+        _animationController.TotalTime = ani.DurationInTicks;
         CalcAnimation2(scene.RootNode, ani, Matrix4x4.Identity);
         for (uint i = 0; i < m_num_bones; i++)
         {
           transforms[i] = m_bone_matrices[(int)i].final_world_transform;
         }
       }
+      
+      GL.UniformMatrix4(bonesLocation, transforms.Length, true, ref transforms[0].A1);    
 
+      base.Render(viewproj, parentmodel);
 
-      // Matrix4[] tktransforms = new Matrix4[MAX_BONES];
-     // for (int i = 0; i < MAX_BONES; i++)
-     // {
-     //   debug_transforms[i] = TKMatrix(transforms[i]);
-     // }
-
-
-      CalculateDrawMatrices(viewproj, parentmodel);
-      material.shader.SetMat4("mvp", mvp);
-      material.shader.SetMat4("model", modelMatrix);
-      material.shader.SetBool("selected", Selected);
-      material.shader.SetBool("CastsShadow", CastsShadow);
-
-      for (int i = 0; i < Meshes.Count(); i++)
-      {
-        MAnimatedMesh mesh = Meshes[i];
-        int location = material.shader.GetLocation("bones");
-        GL.UniformMatrix4(location, transforms.Length, true, ref transforms[0].A1);
-        mesh.Render(viewproj, WorldTransform);
+      if (Globals.RenderPass == Globals.eRenderPass.ShadowDepth)
+      {       
+        Globals.ShaderOverride.SetInt("HasBones", 0);
       }
-     // DebugBones(viewproj, WorldTransform, transforms);
-     //TODO rendering shadow matrices reversed
-      base.Render(viewproj, WorldTransform);
     }
 
     Matrix4x4 FindRotation(NodeAnimationChannel n)
@@ -393,7 +384,7 @@ namespace Massive2.Graphics.Character
         VectorKey pk = n.PositionKeys[c];
         VectorKey ps = n.ScalingKeys[c];
 
-        if (FrameCounter <= q.Time)
+        if (_animationController.FrameCounter <= q.Time)
         {
           result =
                (Matrix4x4)q.Value.GetMatrix()
@@ -447,17 +438,7 @@ namespace Massive2.Graphics.Character
       return null;
     }
 
-    Animation FindAnimation(string sName)
-    {
-      foreach (Animation ani in scene.Animations)
-      {
-        if (ani.Name.Contains(sName))
-        {
-          return ani;
-        }
-      }
-      return null;
-    }
+    
 
     public static OpenTK.Matrix4 TKMatrix(Assimp.Matrix4x4 input)
     {
@@ -465,6 +446,16 @@ namespace Massive2.Graphics.Character
                                  input.A2, input.B2, input.C2, input.D2,
                                  input.A3, input.B3, input.C3, input.D3,
                                  input.A4, input.B4, input.C4, input.D4);
+    }
+
+    public static Matrix4x4 FromTKMatrix(Matrix4d input)
+    {
+      Matrix4 fm = MTransform.GetFloatMatrix(input);
+
+      return new Matrix4x4(fm.M11, fm.M21, fm.M31, fm.M41,
+                           fm.M12, fm.M22, fm.M32, fm.M42,
+                           fm.M13, fm.M23, fm.M33, fm.M43,
+                           fm.M14, fm.M24, fm.M34, fm.M44);
     }
 
     public static OpenTK.Matrix4d TKMatrixd(Assimp.Matrix4x4 input)

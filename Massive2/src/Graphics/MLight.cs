@@ -18,9 +18,6 @@ namespace Massive
 {
   public class MLight : MSceneObject
   {
-    private bool debugDepth = false;
-    public bool DebugDepth { get => debugDepth; set => debugDepth = value; }
-
     public Vector3d TargetVector;
     int depthMapFBO;
     public int depthMap;

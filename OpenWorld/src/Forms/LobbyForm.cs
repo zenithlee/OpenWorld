@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace OpenWorld.Forms
 {
-  public partial class LobbyForm : Form
+  public partial class LobbyForm : DToolForm
   {
     LobbyController _lobbyController;
     public LobbyForm()

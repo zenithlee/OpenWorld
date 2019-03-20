@@ -28,7 +28,7 @@ namespace Massive
     public double Shininess = 32f;
 
     public Vector2 TexCoordScale = new Vector2(1, 1);
-    public Vector2 Tex2CoordScale = new Vector2(1, 1);
+    public Vector2 Tex2CoordScale = new Vector2(3, 3);
 
     public bool UseMultitexture = false;
     public bool UseNormalMap = false;
@@ -48,8 +48,9 @@ namespace Massive
         shader.SetInt("Editor", Globals.Editor);
         //shader.SetFloat("Ambient", (float)Ambient);
         shader.SetFloat("Opacity", (float)Opacity);
-        shader.SetFloat("iTime", (float)Time.TotalTime);
+        shader.SetFloat("iTime", (float)Time.TotalTime * 0.001f);
         shader.SetVec2("TexCoordScale", TexCoordScale);
+       // Tex2CoordScale.X = Tex2CoordScale.Y = Settings.Tweak1;
         shader.SetVec2("Tex2CoordScale", Tex2CoordScale);
         shader.SetBool("UseMultitexture", UseMultitexture);
         shader.SetBool("UseNormalMap", UseNormalMap);

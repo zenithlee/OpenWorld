@@ -36,6 +36,7 @@
       this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.RenameTextBox = new System.Windows.Forms.ToolStripTextBox();
       this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.setGPSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.contextMenuStrip1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -57,9 +58,10 @@
       // 
       this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.renameToolStripMenuItem,
-            this.deleteToolStripMenuItem});
+            this.deleteToolStripMenuItem,
+            this.setGPSToolStripMenuItem});
       this.contextMenuStrip1.Name = "contextMenuStrip1";
-      this.contextMenuStrip1.Size = new System.Drawing.Size(153, 70);
+      this.contextMenuStrip1.Size = new System.Drawing.Size(153, 92);
       this.contextMenuStrip1.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStrip1_Closed);
       this.contextMenuStrip1.Opened += new System.EventHandler(this.contextMenuStrip1_Opened);
       // 
@@ -89,6 +91,13 @@
       this.deleteToolStripMenuItem.Text = "Delete";
       this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
       // 
+      // setGPSToolStripMenuItem
+      // 
+      this.setGPSToolStripMenuItem.Name = "setGPSToolStripMenuItem";
+      this.setGPSToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+      this.setGPSToolStripMenuItem.Text = "Set GPS";
+      this.setGPSToolStripMenuItem.Click += new System.EventHandler(this.setGPSToolStripMenuItem_Click);
+      // 
       // BookmarksControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -109,5 +118,6 @@
     private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     private System.Windows.Forms.ToolStripTextBox RenameTextBox;
+    private System.Windows.Forms.ToolStripMenuItem setGPSToolStripMenuItem;
   }
 }

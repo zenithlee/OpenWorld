@@ -36,27 +36,36 @@ namespace OpenWorld.Forms
 
     private void DebugDepthCheck_CheckedChanged(object sender, EventArgs e)
     {
-      Globals._scene.light.DebugDepth = DebugDepthCheck.Checked;
+      Settings.DebugDepth = DebugDepthCheck.Checked;
     }
 
     private void TweakBar1_Scroll(object sender, EventArgs e)
     {
       Settings.Tweak1 = TweakBar1.Value;
+      Tweak1Label.Text = Settings.Tweak1.ToString();
     }
 
     private void TweakBar2_Scroll(object sender, EventArgs e)
     {
       Settings.Tweak2 = TweakBar2.Value;
+      Tweak2Label.Text = Settings.Tweak2.ToString();
     }
 
     private void TweakBar3_Scroll(object sender, EventArgs e)
     {
       Settings.Tweak3 = TweakBar3.Value;
+      Tweak3Label.Text = Settings.Tweak3.ToString();
     }
 
     private void TweakBar4_Scroll(object sender, EventArgs e)
     {
       Settings.Tweak4 = TweakBar4.Value;
+      Tweak4Label.Text = Settings.Tweak4.ToString();
+    }
+
+    private void DebugPicking_CheckedChanged(object sender, EventArgs e)
+    {
+      Settings.DebugRender = !Settings.DebugRender;
     }
   }
 }

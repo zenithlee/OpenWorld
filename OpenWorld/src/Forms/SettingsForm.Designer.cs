@@ -31,6 +31,8 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+      this.DebugPicking = new System.Windows.Forms.CheckBox();
+      this.label5 = new System.Windows.Forms.Label();
       this.DebugDepthCheck = new System.Windows.Forms.CheckBox();
       this.label4 = new System.Windows.Forms.Label();
       this.DebugPhysicsCheck = new System.Windows.Forms.CheckBox();
@@ -44,6 +46,10 @@
       this.TweakBar4 = new System.Windows.Forms.TrackBar();
       this.TweakBar2 = new System.Windows.Forms.TrackBar();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.Tweak1Label = new System.Windows.Forms.Label();
+      this.Tweak2Label = new System.Windows.Forms.Label();
+      this.Tweak3Label = new System.Windows.Forms.Label();
+      this.Tweak4Label = new System.Windows.Forms.Label();
       this.tableLayoutPanel2.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweakBar1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.TweakBar3)).BeginInit();
@@ -56,6 +62,11 @@
       this.tableLayoutPanel2.ColumnCount = 2;
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel2.Controls.Add(this.Tweak4Label, 1, 8);
+      this.tableLayoutPanel2.Controls.Add(this.Tweak3Label, 1, 7);
+      this.tableLayoutPanel2.Controls.Add(this.Tweak2Label, 1, 6);
+      this.tableLayoutPanel2.Controls.Add(this.DebugPicking, 1, 4);
+      this.tableLayoutPanel2.Controls.Add(this.label5, 0, 4);
       this.tableLayoutPanel2.Controls.Add(this.DebugDepthCheck, 1, 3);
       this.tableLayoutPanel2.Controls.Add(this.label4, 0, 3);
       this.tableLayoutPanel2.Controls.Add(this.DebugPhysicsCheck, 1, 2);
@@ -64,25 +75,54 @@
       this.tableLayoutPanel2.Controls.Add(this.label2, 0, 1);
       this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
       this.tableLayoutPanel2.Controls.Add(this.GravityCheck, 1, 0);
-      this.tableLayoutPanel2.Controls.Add(this.TweakBar1, 0, 4);
-      this.tableLayoutPanel2.Controls.Add(this.TweakBar3, 0, 6);
-      this.tableLayoutPanel2.Controls.Add(this.TweakBar4, 0, 7);
-      this.tableLayoutPanel2.Controls.Add(this.TweakBar2, 0, 5);
+      this.tableLayoutPanel2.Controls.Add(this.TweakBar1, 0, 5);
+      this.tableLayoutPanel2.Controls.Add(this.TweakBar3, 0, 7);
+      this.tableLayoutPanel2.Controls.Add(this.TweakBar4, 0, 8);
+      this.tableLayoutPanel2.Controls.Add(this.TweakBar2, 0, 6);
+      this.tableLayoutPanel2.Controls.Add(this.Tweak1Label, 1, 5);
       this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tableLayoutPanel2.ForeColor = System.Drawing.Color.White;
       this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 21);
       this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-      this.tableLayoutPanel2.RowCount = 9;
+      this.tableLayoutPanel2.RowCount = 10;
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel2.Size = new System.Drawing.Size(296, 435);
       this.tableLayoutPanel2.TabIndex = 2;
+      // 
+      // DebugPicking
+      // 
+      this.DebugPicking.AutoSize = true;
+      this.DebugPicking.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.DebugPicking.ForeColor = System.Drawing.Color.White;
+      this.DebugPicking.Location = new System.Drawing.Point(151, 131);
+      this.DebugPicking.Name = "DebugPicking";
+      this.DebugPicking.Size = new System.Drawing.Size(142, 26);
+      this.DebugPicking.TabIndex = 13;
+      this.DebugPicking.Text = "Enabled";
+      this.DebugPicking.UseVisualStyleBackColor = true;
+      this.DebugPicking.CheckedChanged += new System.EventHandler(this.DebugPicking_CheckedChanged);
+      // 
+      // label5
+      // 
+      this.label5.AutoSize = true;
+      this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.label5.ForeColor = System.Drawing.Color.White;
+      this.label5.Location = new System.Drawing.Point(3, 128);
+      this.label5.Name = "label5";
+      this.label5.Size = new System.Drawing.Size(142, 32);
+      this.label5.TabIndex = 12;
+      this.label5.Text = "Debug Picking";
+      this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.toolTip1.SetToolTip(this.label5, "Only applies to new terrain tiles");
       // 
       // DebugDepthCheck
       // 
@@ -196,10 +236,10 @@
       // 
       this.TweakBar1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.TweakBar1.LargeChange = 10;
-      this.TweakBar1.Location = new System.Drawing.Point(3, 131);
+      this.TweakBar1.Location = new System.Drawing.Point(3, 163);
       this.TweakBar1.Maximum = 360;
       this.TweakBar1.Name = "TweakBar1";
-      this.TweakBar1.Size = new System.Drawing.Size(142, 27);
+      this.TweakBar1.Size = new System.Drawing.Size(142, 25);
       this.TweakBar1.TabIndex = 8;
       this.TweakBar1.TickFrequency = 10;
       this.TweakBar1.Scroll += new System.EventHandler(this.TweakBar1_Scroll);
@@ -207,7 +247,7 @@
       // TweakBar3
       // 
       this.TweakBar3.LargeChange = 10;
-      this.TweakBar3.Location = new System.Drawing.Point(3, 197);
+      this.TweakBar3.Location = new System.Drawing.Point(3, 227);
       this.TweakBar3.Maximum = 360;
       this.TweakBar3.Name = "TweakBar3";
       this.TweakBar3.Size = new System.Drawing.Size(142, 27);
@@ -218,7 +258,7 @@
       // TweakBar4
       // 
       this.TweakBar4.LargeChange = 10;
-      this.TweakBar4.Location = new System.Drawing.Point(3, 230);
+      this.TweakBar4.Location = new System.Drawing.Point(3, 260);
       this.TweakBar4.Maximum = 360;
       this.TweakBar4.Name = "TweakBar4";
       this.TweakBar4.Size = new System.Drawing.Size(142, 27);
@@ -229,13 +269,57 @@
       // TweakBar2
       // 
       this.TweakBar2.LargeChange = 10;
-      this.TweakBar2.Location = new System.Drawing.Point(3, 164);
+      this.TweakBar2.Location = new System.Drawing.Point(3, 194);
       this.TweakBar2.Maximum = 360;
       this.TweakBar2.Name = "TweakBar2";
       this.TweakBar2.Size = new System.Drawing.Size(142, 27);
       this.TweakBar2.TabIndex = 9;
       this.TweakBar2.TickFrequency = 10;
       this.TweakBar2.Scroll += new System.EventHandler(this.TweakBar2_Scroll);
+      // 
+      // Tweak1Label
+      // 
+      this.Tweak1Label.AutoSize = true;
+      this.Tweak1Label.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.Tweak1Label.Location = new System.Drawing.Point(151, 160);
+      this.Tweak1Label.Name = "Tweak1Label";
+      this.Tweak1Label.Size = new System.Drawing.Size(142, 31);
+      this.Tweak1Label.TabIndex = 14;
+      this.Tweak1Label.Text = "0";
+      this.Tweak1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
+      // Tweak2Label
+      // 
+      this.Tweak2Label.AutoSize = true;
+      this.Tweak2Label.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.Tweak2Label.Location = new System.Drawing.Point(151, 191);
+      this.Tweak2Label.Name = "Tweak2Label";
+      this.Tweak2Label.Size = new System.Drawing.Size(142, 33);
+      this.Tweak2Label.TabIndex = 15;
+      this.Tweak2Label.Text = "0";
+      this.Tweak2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
+      // Tweak3Label
+      // 
+      this.Tweak3Label.AutoSize = true;
+      this.Tweak3Label.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.Tweak3Label.Location = new System.Drawing.Point(151, 224);
+      this.Tweak3Label.Name = "Tweak3Label";
+      this.Tweak3Label.Size = new System.Drawing.Size(142, 33);
+      this.Tweak3Label.TabIndex = 16;
+      this.Tweak3Label.Text = "0";
+      this.Tweak3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
+      // Tweak4Label
+      // 
+      this.Tweak4Label.AutoSize = true;
+      this.Tweak4Label.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.Tweak4Label.Location = new System.Drawing.Point(151, 257);
+      this.Tweak4Label.Name = "Tweak4Label";
+      this.Tweak4Label.Size = new System.Drawing.Size(142, 33);
+      this.Tweak4Label.TabIndex = 17;
+      this.Tweak4Label.Text = "0";
+      this.Tweak4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // SettingsForm
       // 
@@ -274,5 +358,11 @@
     private System.Windows.Forms.TrackBar TweakBar2;
     private System.Windows.Forms.TrackBar TweakBar3;
     private System.Windows.Forms.TrackBar TweakBar4;
+    private System.Windows.Forms.CheckBox DebugPicking;
+    private System.Windows.Forms.Label label5;
+    private System.Windows.Forms.Label Tweak4Label;
+    private System.Windows.Forms.Label Tweak3Label;
+    private System.Windows.Forms.Label Tweak2Label;
+    private System.Windows.Forms.Label Tweak1Label;
   }
 }

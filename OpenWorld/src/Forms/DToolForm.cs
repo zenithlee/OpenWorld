@@ -52,7 +52,7 @@ namespace OpenWorld.Forms
         Point Delta = Location;
         Delta.Offset(Control.MousePosition.X - ClickPoint.X, Control.MousePosition.Y - ClickPoint.Y);
         Location = Delta;
-        Console.WriteLine(Location.X + "," + Delta.X);
+       // Console.WriteLine(Location.X + "," + Delta.X);
         ClickPoint = Control.MousePosition;
       }
     }

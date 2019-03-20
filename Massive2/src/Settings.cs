@@ -31,6 +31,7 @@ namespace Massive
 
     public static bool DebugNetwork = false;
     public static bool DebugRender = false;
+    public static bool DebugDepth = false;
 
     public static float Tweak1 = 0;
     public static float Tweak2 = 0;
