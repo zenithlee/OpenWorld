@@ -200,22 +200,6 @@ namespace Massive
             new TexturedVertex(new Vector3(-w,  w,  w), new Vector3(0.0f,  1.0f,  0.0f), new Vector2( 1.0f, 0.0f))
       };
 
-      /*
-      GL.GenVertexArrays(1, out VAO);
-      GL.GenBuffers(1, out VBO);
-      // fill buffer      
-      GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
-      GL.BufferData(BufferTarget.ArrayBuffer, (Vertices.Length) * TexturedVertex.Size, Vertices, BufferUsageHint.DynamicDraw);
-      // link vertex attributes
-      GL.BindVertexArray(VAO);
-      GL.EnableVertexAttribArray(0);
-      GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, TexturedVertex.Size, 0);
-      GL.EnableVertexAttribArray(1);
-      GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, TexturedVertex.Size, 3 * sizeof(float));
-      GL.EnableVertexAttribArray(2);
-      GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, TexturedVertex.Size, 6 * sizeof(float));
-      */
-
       GL.BindBuffer(BufferTarget.ArrayBuffer, treemesh.VBO);
       GL.BindBuffer(BufferTarget.ElementArrayBuffer, treemesh.EBO);
 
@@ -226,8 +210,6 @@ namespace Massive
 
       GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
       GL.BindVertexArray(0);
-
-     // UploadBuffer();
     }
 
     void SetupTree()
@@ -285,7 +267,7 @@ namespace Massive
     public override void Render(Matrix4d viewproj, Matrix4d parentmodel)
     {
       if (Settings.DrawTrees == false) return;
-      if (Globals.ShaderOverride != null) return;
+      //if (Globals.ShaderOverride != null) return;
       if (DistanceFromAvatar > DistanceThreshold) return;
       if ( tree != null) { 
       tree.transform.Position = this.transform.Position;
@@ -298,11 +280,20 @@ namespace Massive
       if (material == null) return;
       CalculateDrawMatrices(viewproj, parentmodel);
 
-      material.Bind();
-      material.shader.SetMat4("mvp", mvp);
-      material.shader.SetMat4("model", modelMatrix);
+      MShader temp = material.shader;
+      if ( Globals.ShaderOverride != null)
+      {
+        temp = Globals.ShaderOverride;
+      }
+      else
+      {
+        material.Bind();
+      }
+      
+      temp.SetMat4("mvp", mvp);
+      temp.SetMat4("model", modelMatrix);
       //material.shader.SetBool("selected", Selected);
-      material.shader.SetBool("ShadowEnabled", CastsShadow);
+      temp.SetBool("ShadowEnabled", CastsShadow);
       
       GL.BindVertexArray(treemesh.VAO);
       //GL.BindBuffer(BufferTarget.ElementArrayBuffer, treemesh.EBO);      

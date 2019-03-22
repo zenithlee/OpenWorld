@@ -17,9 +17,26 @@ namespace OpenWorld.Handlers
     {
       MLight light = (MLight)MScene.UtilityRoot.FindModuleByType(MObject.EType.DirectionalLight);
       if (light == null) return;
+
+      
+      MMoveSync ms = null;
+      MObject ms0 = light.FindModuleByType(MObject.EType.MoveSync);
+      if (ms == null)
+      {
+        ms = new MMoveSync(light, e.Position
+          + Globals.LocalUpVector * 5
+          + Globals.LocalUpRotation() * new Vector3d(10, 10, 0), Quaterniond.Identity);
+      }
+      else
+      {
+        ms = (MMoveSync)ms0;
+      }
+      light.Add(ms);
+      /*
       light.transform.Position = e.Position
           + Globals.LocalUpVector * 5
-          + Globals.LocalUpRotation() * new Vector3d(20, 20, 0);
+          + Globals.LocalUpRotation() * new Vector3d(10, 10, 0);
+          */
       light.LookAt(Globals.Avatar.GetPosition());
       //light.DebugDepth = true;
     }

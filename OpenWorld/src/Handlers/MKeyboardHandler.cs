@@ -178,7 +178,7 @@ namespace OpenWorld.Handlers
       //ShiftDown = KeyState[(int)Keys.ShiftKey];
       //ControlDown = KeyState[(int)Keys.ControlKey];
       //AltDown = KeyState[(int)Keys.CapsLock];
-      double mult = GetMultiplier() * 25;
+      double mult = GetMultiplier() * 15;
 
       if (KeyState[(int)Keys.Space])
       {

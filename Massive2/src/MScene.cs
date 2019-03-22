@@ -406,7 +406,7 @@ namespace Massive
         mat.shader.Bind();
         mat.shader.SetMat4("view", MTransform.GetFloatMatrix(view));
         mat.shader.SetMat4("projection", MTransform.GetFloatMatrix(projection));
-
+        mat.shader.SetVec3("Tweak", new Vector3(Settings.Tweak1, Settings.Tweak2, Settings.Tweak3));
 
         // set light uniforms
         Fog.Bind(mat.shader);

@@ -29,6 +29,7 @@ namespace OpenWorld
     public const string AVATAR03 = "AVATAR03";
     public const string AVATAR04 = "AVATAR04";
     public const string AVATAR05 = "AVATAR05";
+    public const string AVATAR06 = "AVATAR06";
 
     public const string PERSON01 = "PERSON01";
 
@@ -187,12 +188,7 @@ namespace OpenWorld
       MBuildingBlock b = new MBuildingBlock("FOUNDATION01");
       b.Size = new double[] { 1, 1, 1 };
       b.Model = Path.Combine(MFileSystem.AssetsPath, "Models", "Construction", "foundation01.3ds");
-      Blocks.Add(b.Name, b);
-      b = new MBuildingBlock("Test1");
-      Blocks.Add(b.Name, b);
-      b = new MBuildingBlock("Test2");
-      Blocks.Add(b.Name, b);
-      string sTemp = JsonConvert.SerializeObject(Blocks);
+      Blocks.Add(b.Name, b);            
     }
   }
 }

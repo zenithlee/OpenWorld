@@ -24,6 +24,8 @@ namespace Massive
     public double DistanceFromAvatar { get; set; } = 0;
     public double DistanceThreshold { get; set; } = 1000;
 
+    public Vector3d Offset;
+
     // public MTransform transform { get => _transform; set => _transform = value; }
     public TexturedVertex[] Vertices = new TexturedVertex[0];
     public int VerticesLength = 0;

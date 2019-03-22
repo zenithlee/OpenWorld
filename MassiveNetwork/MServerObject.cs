@@ -7,6 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// a serializable and transmittable version of the game object
+/// </summary>
+
 namespace Massive.Network
 {
   public class MServerObject
@@ -29,6 +33,7 @@ namespace Massive.Network
     public double[] Position = new double[3] { 0, 0, 0 };
     public double[] Rotation = new double[4] { 0, 0, 0, 1 };
     public double[] Scale = new double[3];
+    public double[] Offset = new double[3];
     public double Radius = 200;
 
     public string Serialize()

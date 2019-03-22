@@ -28,12 +28,12 @@ namespace OpenWorld.Controllers
     public COpenWorld()
     {
       Settings.TerrainPhysics = true;
-      Settings.DrawTrees = false;
+      Settings.DrawTrees = true;
       Settings.DrawTerrains = true;
       Settings.DrawBackdrop = true;
       Settings.DrawPlanets = true;
 
-      Settings.DebugDepth = true;
+      Settings.DebugDepth = false;
 
       Globals.Network.ConnectedToMASSIVEHandler += Network_ConnectedToMASSIVEHandler;
       Globals.Network.ConnectedToServerHandler += Network_ConnectedToServerHandler;

@@ -71,7 +71,7 @@ namespace Massive
       Forest.CastsShadow = true;
       CastsShadow = true;
       // Add(Forest);
-      MScene.Background2.Add(Forest);
+      MScene.Background.Add(Forest);
     }
 
     public override void Update()

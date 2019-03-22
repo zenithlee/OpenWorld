@@ -39,7 +39,7 @@ namespace OpenWorld.Handlers
       m.OwnerID = e.UserID;
       m.TextureID = bb.MaterialID;
       m.Name = Globals.UserAccount.UserName;
-
+      m.Offset = bb.Offset;
       m.Position = Globals.UserAccount.CurrentPosition;
       m.Rotation = MassiveTools.ArrayFromQuaterniond(Globals.Avatar.GetRotation());
       Spawn(m);
@@ -203,7 +203,7 @@ namespace OpenWorld.Handlers
       }
 
       //if ((m.Name == Globals.UserAccount.UserID) && ( m.OwnerID == Globals.UserAccount.UserID)){
-      mo = Helper.Spawn(m.TemplateID, m.OwnerID, m.Name, m.Tag,
+      mo = Helper.Spawn(m,
           MassiveTools.VectorFromArray(m.Position),
           MassiveTools.QuaternionFromArray(m.Rotation));
       if (mo == null)

@@ -12,7 +12,7 @@ namespace Massive.Graphics.Character
     public float FrameCounter = 0;
     public double TotalTime = 5;    
     MAnimatedModel _model;    
-    float BaseSpeed = 1.2f;
+    float BaseSpeed = 1.5f;
     float Speed = 1;
 
     public void Setup(MAnimatedModel model)
@@ -41,7 +41,7 @@ namespace Massive.Graphics.Character
     {
       foreach (Animation ani in scene.Animations)
       {
-        if (ani.Name.Contains(sName))
+        if (ani.Name.ToLower().Contains(sName.ToLower()))
         {
           return ani;
         }

@@ -1,4 +1,6 @@
 ﻿using Massive.Graphics.Character;
+using Massive.Network;
+using Massive.Tools;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using System;
@@ -359,16 +361,13 @@ namespace Massive
     /**
      * Creates a copy of an existing object from the TemplateRoot
      * */
-    public static MSceneObject Spawn(string TemplateID,
-      string OwnerID,
-      string sName,
-      string Tag,
+    public static MSceneObject Spawn(MServerObject mso,          
       Vector3d Pos, Quaterniond Rot)
     {
-      MSceneObject m = (MSceneObject)MScene.TemplateRoot.FindModuleByInstanceID(TemplateID);
+      MSceneObject m = (MSceneObject)MScene.TemplateRoot.FindModuleByInstanceID(mso.TemplateID);
       if (m == null)
       {
-        Console.WriteLine("TEMPLATE NOT LOADED INTO MScene.TemplateRoot:" + TemplateID);
+        Console.WriteLine("TEMPLATE NOT LOADED INTO MScene.TemplateRoot:" + mso.TemplateID);
         return null;
       }
 
@@ -386,36 +385,37 @@ namespace Massive
 
       if (m.Type == MObject.EType.PrimitiveCube)
       {
-        t = CreateCube(TargetRoot, sName, Pos);
+        t = CreateCube(TargetRoot, mso.Name, Pos);
       }
       if (m.Type == MObject.EType.PrimitiveSphere)
       {
-        t = CreateSphere(TargetRoot, 2, sName, Pos);
+        t = CreateSphere(TargetRoot, 2, mso.Name, Pos);
       }
       if (m.Type == MObject.EType.Model)
       {
-        t = SpawnModel(TargetRoot, TemplateID, OwnerID, sName, Pos);
+        t = SpawnModel(TargetRoot, mso.TemplateID, mso.OwnerID, mso.Name, Pos);
       }
       if (m.Type == MObject.EType.AnimatedModel)
       {
-        t = SpawnAnimatedModel(TargetRoot, TemplateID, OwnerID, sName, Pos);
+        t = SpawnAnimatedModel(TargetRoot, mso.TemplateID, mso.OwnerID, mso.Name, Pos);
       }
 
       if (m.Type == MObject.EType.InstanceMesh)
       {
-        t = SpawnInstanced(TargetRoot, TemplateID, OwnerID, sName, Pos);
+        t = SpawnInstanced(TargetRoot, mso.TemplateID, mso.OwnerID, mso.Name, Pos);
       }
 
       t.transform.Position = Pos;
       t.transform.Rotation = Rot;
+      t.Offset = MassiveTools.VectorFromArray(mso.Offset);
 
       m.CopyTo(t);
-      t.OwnerID = OwnerID;
+      t.OwnerID = mso.OwnerID;
 
       t.transform.Position = Pos;
       t.transform.Rotation = Rot;
 
-      t.Tag = Tag;
+      t.Tag = mso.Tag;
 
       MClickHandler ch = (MClickHandler)m.FindModuleByType(MObject.EType.ClickHandler);
       if (ch != null)

@@ -24,6 +24,7 @@ namespace OpenWorld
     private double weight = 1;
     private string subModule;
     private bool isTransparent = false;
+    private double[] offset = new double[] { 0, 0, 0 };
 
     public string Name { get => name; set => name = value; }    
     public string TemplateID { get => templateID; set => templateID = value; }
@@ -37,6 +38,7 @@ namespace OpenWorld
     public string Path { get => path; set => path = value; }
     public string SubModule { get => subModule; set => subModule = value; }
     public bool IsTransparent { get => isTransparent; set => isTransparent = value; }
+    public double[] Offset { get => offset; set => offset = value; }
 
     public MBuildingBlock(string sName)
     {

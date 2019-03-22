@@ -175,7 +175,12 @@ namespace Massive
       rc.RayFromWorld = From;
       rc.RayToWorld = To;
 
+      try { 
       World.RayTestRef(ref From, ref To, rc);
+      } catch ( Exception e)
+      {
+        Console.WriteLine("MPhysics.RayCast:" +e.Message);
+      }
 
       if (rc.HasHit)
       {

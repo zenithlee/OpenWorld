@@ -92,7 +92,12 @@ namespace OpenWorld.Handlers
     {
       if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Walking)
       {
-        DestinationPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
+        double offy = Settings.OffsetThirdPerson.Y;
+        if ( Globals.Avatar.Target != null ){
+          offy += Globals.Avatar.Target.Offset.Y;
+        }
+
+        DestinationPosition = AP + Globals.Avatar.Up() * (offy )
                - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;
       }
       else
@@ -148,7 +153,7 @@ namespace OpenWorld.Handlers
         TargetUp = Vector3d.UnitY;
       }
 
-      MScene.Camera.UpVector = Vector3d.Lerp(upv, TargetUp, Time.DeltaTime * Speed * 2);
+      MScene.Camera.UpVector = Vector3d.Lerp(upv, TargetUp, Time.DeltaTime * Speed * 1);
     }
 
     /// <summary>

@@ -33,7 +33,9 @@ namespace Massive.Graphics.Character
     int m_num_bones = 0;
     Dictionary<string, uint> m_bone_mapping; // maps a bone name and their index
     List<BoneMatrix> m_bone_matrices = new List<BoneMatrix>();        
-    public MAnimationController _animationController;
+    public MAnimationController _animationController;    
+    Matrix4x4[] transforms = new Matrix4x4[MAX_BONES];
+
 
     public static Matrix4[] debug_transforms = new Matrix4[MAX_BONES];
 
@@ -43,6 +45,12 @@ namespace Massive.Graphics.Character
      // Meshes = new List<MAnimatedMesh>();
       m_bone_mapping = new Dictionary<string, uint>();
       _animationController = new MAnimationController();
+
+
+      for (int i = 0; i < MAX_BONES; i++)
+      {
+        transforms[i] = Matrix4x4.Identity;
+      }
     }
 
     public override void SetMaterial(MMaterial m)
@@ -72,6 +80,7 @@ namespace Massive.Graphics.Character
       m.m_num_bones = m_num_bones;
       m.m_bone_matrices = m_bone_matrices;
       m.m_bone_mapping = m_bone_mapping;      
+      //controller must not be linked otherwise all animations have the same controller
       m._animationController = new MAnimationController();
       m._animationController.Setup(this);
       _animationController.CopyTo(m._animationController);
@@ -344,13 +353,7 @@ namespace Massive.Graphics.Character
         material.Bind();
         bonesLocation = material.shader.GetLocation("bones");
       }
-      
-      Matrix4x4[] transforms = new Matrix4x4[MAX_BONES];
-      for (int i = 0; i < MAX_BONES; i++)
-      {
-        transforms[i] = Matrix4x4.Identity;
-      }
- 
+
       Animation ani = _animationController.GetCurrentAnimation();
       if (ani != null)
       {
@@ -358,7 +361,8 @@ namespace Massive.Graphics.Character
         CalcAnimation2(scene.RootNode, ani, Matrix4x4.Identity);
         for (uint i = 0; i < m_num_bones; i++)
         {
-          transforms[i] = m_bone_matrices[(int)i].final_world_transform;
+          transforms[i] = m_bone_matrices[(int)i].final_world_transform 
+            * Matrix4x4.FromTranslation(new Vector3D((float)Offset.X, (float)Offset.Y, (float)Offset.Z));
         }
       }
       

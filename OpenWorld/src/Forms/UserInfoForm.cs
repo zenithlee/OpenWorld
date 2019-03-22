@@ -229,6 +229,16 @@ namespace OpenWorld.Forms
       }
     }
 
+    private void Avatar6_CheckedChanged(object sender, EventArgs e)
+    {
+      if (Avatar6.Checked == true)
+      {
+        Globals.UserAccount.AvatarID = MBuildParts.AVATAR06;
+        MMessageBus.ChangedUserInfo(this);
+        MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);
+      }
+    }
+
     private void UserInfoForm_FormClosing(object sender, FormClosingEventArgs e)
     {
       ClearEvents();

@@ -30,6 +30,7 @@
     {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserInfoForm));
       this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+      this.Avatar5 = new System.Windows.Forms.RadioButton();
       this.Avatar4 = new System.Windows.Forms.RadioButton();
       this.Avatar3 = new System.Windows.Forms.RadioButton();
       this.Avatar2 = new System.Windows.Forms.RadioButton();
@@ -52,7 +53,7 @@
       this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
       this.UpdateDetailsButton = new System.Windows.Forms.Button();
       this.CloseButton = new System.Windows.Forms.Button();
-      this.Avatar5 = new System.Windows.Forms.RadioButton();
+      this.Avatar6 = new System.Windows.Forms.RadioButton();
       this.tableLayoutPanel4.SuspendLayout();
       this.tableLayoutPanel3.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
@@ -69,6 +70,7 @@
       this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
       this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
       this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel4.Controls.Add(this.Avatar6, 5, 0);
       this.tableLayoutPanel4.Controls.Add(this.Avatar5, 4, 0);
       this.tableLayoutPanel4.Controls.Add(this.Avatar4, 3, 0);
       this.tableLayoutPanel4.Controls.Add(this.Avatar3, 2, 0);
@@ -81,6 +83,21 @@
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel4.Size = new System.Drawing.Size(390, 58);
       this.tableLayoutPanel4.TabIndex = 13;
+      // 
+      // Avatar5
+      // 
+      this.Avatar5.Appearance = System.Windows.Forms.Appearance.Button;
+      this.Avatar5.AutoSize = true;
+      this.Avatar5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Avatar5.BackgroundImage")));
+      this.Avatar5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+      this.Avatar5.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.Avatar5.Location = new System.Drawing.Point(259, 3);
+      this.Avatar5.Name = "Avatar5";
+      this.Avatar5.Size = new System.Drawing.Size(58, 52);
+      this.Avatar5.TabIndex = 9;
+      this.Avatar5.Text = "5";
+      this.Avatar5.UseVisualStyleBackColor = true;
+      this.Avatar5.CheckedChanged += new System.EventHandler(this.Avatar5_CheckedChanged);
       // 
       // Avatar4
       // 
@@ -400,18 +417,20 @@
       this.CloseButton.Text = "X";
       this.CloseButton.UseVisualStyleBackColor = false;
       // 
-      // Avatar5
+      // Avatar6
       // 
-      this.Avatar5.Appearance = System.Windows.Forms.Appearance.Button;
-      this.Avatar5.AutoSize = true;
-      this.Avatar5.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.Avatar5.Location = new System.Drawing.Point(259, 3);
-      this.Avatar5.Name = "Avatar5";
-      this.Avatar5.Size = new System.Drawing.Size(58, 52);
-      this.Avatar5.TabIndex = 9;
-      this.Avatar5.Text = "5";
-      this.Avatar5.UseVisualStyleBackColor = true;
-      this.Avatar5.CheckedChanged += new System.EventHandler(this.Avatar5_CheckedChanged);
+      this.Avatar6.Appearance = System.Windows.Forms.Appearance.Button;
+      this.Avatar6.AutoSize = true;
+      this.Avatar6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Avatar6.BackgroundImage")));
+      this.Avatar6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+      this.Avatar6.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.Avatar6.Location = new System.Drawing.Point(323, 3);
+      this.Avatar6.Name = "Avatar6";
+      this.Avatar6.Size = new System.Drawing.Size(64, 52);
+      this.Avatar6.TabIndex = 10;
+      this.Avatar6.Text = "6";
+      this.Avatar6.UseVisualStyleBackColor = true;
+      this.Avatar6.CheckedChanged += new System.EventHandler(this.Avatar6_CheckedChanged);
       // 
       // UserInfoForm
       // 
@@ -463,5 +482,6 @@
     private System.Windows.Forms.Button UpdateDetailsButton;
     private System.Windows.Forms.RadioButton Avatar4;
     private System.Windows.Forms.RadioButton Avatar5;
+    private System.Windows.Forms.RadioButton Avatar6;
   }
 }
