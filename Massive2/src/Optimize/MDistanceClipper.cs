@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 /// each MSceneObject has a DistanceToAvatar attribute that is constantly being updated by MDistanceClipper
 /// </summary>
 
-namespace Massive
+namespace Massive.Optimize
 {
   public class MDistanceClipper : MObject
   {
@@ -20,7 +20,7 @@ namespace Massive
     int SkipCounter = 0;
     int SkipMax = 60;
 
-    public MDistanceClipper() : base(EType.Other, "DistanceClipper")
+    public MDistanceClipper() : base(EType.DistanceClipper, "DistanceClipper")
     {
 
     }
@@ -28,6 +28,7 @@ namespace Massive
     public override void Update()
     {
       base.Update();
+      if (Settings.DistanceClippingEnabled == false) return;
       AvatarPos = Globals.Avatar.GetPosition();
       SkipCounter++;
       if (SkipCounter < SkipMax)
@@ -58,6 +59,18 @@ namespace Massive
           {
             mo.DistanceFromAvatar = Vector3d.Distance(mo.transform.Position, AvatarPos);
           }
+
+          if (mo.DistanceFromAvatar > mo.DistanceThreshold)
+          {
+            mo.Index = -2;
+            mo.Clipped = true;
+            //return;
+          }
+          else
+          {
+            mo.Clipped = false;
+          }
+
         }
         CalcObject(m);
 

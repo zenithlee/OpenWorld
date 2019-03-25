@@ -366,6 +366,7 @@ namespace Massive.Graphics.Character
         }
       }
       
+      //upload animated bones to GPU
       GL.UniformMatrix4(bonesLocation, transforms.Length, true, ref transforms[0].A1);    
 
       base.Render(viewproj, parentmodel);

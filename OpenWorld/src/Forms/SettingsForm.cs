@@ -67,5 +67,15 @@ namespace OpenWorld.Forms
     {
       Settings.DebugRender = !Settings.DebugRender;
     }
+
+    private void FrustrumCullingCheck_CheckedChanged(object sender, EventArgs e)
+    {
+      Settings.FrustrumCullingEnabled = FrustrumCullingCheck.Checked;
+    }
+
+    private void DistanceClippingcheck_CheckedChanged(object sender, EventArgs e)
+    {
+      Settings.DistanceClippingEnabled = DistanceClippingcheck.Checked;
+    }
   }
 }

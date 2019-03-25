@@ -41,7 +41,7 @@ namespace Massive
       Camera, DirectionalLight, PointLight,
       Text2D, Text3D, GUI,
       RenderSettings,
-      Sky,
+      Sky, FrustrumCuller, DistanceClipper,
       Sound, Music, AudioListener,
       PhysicsObject, PhysicsEngine, PhysicsCharacter,
       Fog,

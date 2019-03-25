@@ -1,4 +1,5 @@
 ﻿using Massive.Events;
+using Massive.Optimize;
 using Massive.Platform;
 using Massive.Services;
 using Massive.Tools;
@@ -38,6 +39,7 @@ namespace Massive
     public static MObject LightRoot;
 
     public static MDistanceClipper DistanceClipper;
+    public static MFrustrumCuller FrustrumCuller;
 
     public static MGUI GUIRoot;
 
@@ -190,6 +192,8 @@ namespace Massive
 
       DistanceClipper = new MDistanceClipper();
       UtilityRoot.Add(DistanceClipper);
+      FrustrumCuller = new MFrustrumCuller();
+      UtilityRoot.Add(FrustrumCuller);
 
       Globals.Avatar = new MAvatar("Player1");
       UtilityRoot.Add(Globals.Avatar);
@@ -516,7 +520,8 @@ namespace Massive
         debugQuad.Render(lightmatrix, Matrix4d.Identity);
       }
 
-      Globals.GlobalOffset = Vector3d.Zero;
+     ///do not reset
+      /// Globals.GlobalOffset = Vector3d.Zero;
 
       //projection = Camera.GetProjection(true);
       //GUIRoot.Render(Matrix4d.Identity, Matrix4d.Identity);
@@ -558,17 +563,18 @@ namespace Massive
         AstroRoot.Render(viewproj, offsetmat);
       }
 
+      GL.Clear(ClearBufferMask.DepthBufferBit);
+
       //============================
       if (Background.Modules.Count > 0)
-      {
+      {        
         projection = Camera.GetFullProjection();
-        viewproj = view * projection;
-        GL.Clear(ClearBufferMask.DepthBufferBit);
+        viewproj = view * projection;        
         Background.Render(viewproj, offsetmat);
         Background2.Render(viewproj, offsetmat);
-      }
+      }      
 
-      GL.Clear(ClearBufferMask.DepthBufferBit);
+      
       ModelRoot.Render(viewproj, offsetmat);
 
       // Near Field

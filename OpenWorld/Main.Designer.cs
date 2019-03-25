@@ -31,12 +31,12 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.connectControl1 = new OpenWorld.src.Controls.ConnectControl();
       this.navBarControl1 = new OpenWorld.Controls.NavBarControl();
       this.positionControl1 = new OpenWorld.src.Controls.StatusControl();
       this.toolbarControl1 = new OpenWorld.Controls.ToolbarControl();
       this.bookmarksControl1 = new OpenWorld.src.Controls.BookmarksControl();
-      this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -62,6 +62,11 @@
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
       this.tableLayoutPanel1.Size = new System.Drawing.Size(1000, 654);
       this.tableLayoutPanel1.TabIndex = 0;
+      // 
+      // timer1
+      // 
+      this.timer1.Interval = 20;
+      this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
       // 
       // connectControl1
       // 
@@ -106,11 +111,6 @@
       this.bookmarksControl1.Size = new System.Drawing.Size(952, 26);
       this.bookmarksControl1.TabIndex = 4;
       // 
-      // timer1
-      // 
-      this.timer1.Interval = 20;
-      this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-      // 
       // Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -120,7 +120,7 @@
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.KeyPreview = true;
       this.Name = "Main";
-      this.Text = "Open World";
+      this.Text = "Open World | bigfun.co.za";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
       this.Load += new System.EventHandler(this.Form1_Load);
       this.Shown += new System.EventHandler(this.Main_Shown);

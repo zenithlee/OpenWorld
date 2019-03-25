@@ -20,8 +20,10 @@ namespace Massive
 
     public Vector3d VelocityLimit = new Vector3d(3, 3, 3);
     public Vector3d CreateScale = Vector3d.One;
-    public enum EShape { NULL, Box, Sphere, Capsule, ConvexHull, ConcaveMesh, HACD };
+    public enum EShape { NULL, Box, Sphere, Capsule, ConvexHull, ConcaveMesh, ConcaveProxy, HACD };
     public EShape Shape = EShape.Box;
+
+    public bool IsProxy = false;
 
     // public Vector3d Thrust = new Vector3d(0, 0, 0);
     //private Vector3 cThrust = new Vector3(0, 0, 0);
@@ -32,7 +34,7 @@ namespace Massive
 
     CollisionShape collisionShape;
     public RigidBody _rigidBody;
-    MSceneObject Target;
+    public MSceneObject Target;
 
     bool Disposed = false;
     //private bool active = true;
@@ -85,15 +87,19 @@ namespace Massive
         //collisionShape = new MultiSphereShape(new Vector3d[] { Vector3d.Zero }, new double[] { Scale.X });
       }
       if (inshape == EShape.ConvexHull)
-      {
-        //mass = 0;        
+      {       
         collisionShape = CreateConvexHullMesh(inTarget, mass, Scale);
       }
 
       if (inshape == EShape.ConcaveMesh)
-      {
-        //mass = 0;
+      {        
         collisionShape = CreateConcaveMesh(inTarget, mass, Scale);
+      }
+
+      if (inshape == EShape.ConcaveProxy)
+      {
+        IsProxy = true;
+        collisionShape = CreateConcaveMeshProxy(inTarget, mass, Scale);
       }
 
       if (inshape == EShape.HACD)
@@ -304,8 +310,59 @@ namespace Massive
 
         TexturedVertex v1 = mesh.Vertices[index0];
         TexturedVertex v2 = mesh.Vertices[index1];
-        TexturedVertex v3 = mesh.Vertices[index2];
+        TexturedVertex v3 = mesh.Vertices[index2];        
+        trimesh.AddTriangle(MassiveTools.Vector3dFromVector3(v1._position) * Scale,
+          MassiveTools.Vector3dFromVector3(v2._position) * Scale,
+          MassiveTools.Vector3dFromVector3(v3._position) * Scale);
+      }
 
+      BvhTriangleMeshShape gmp = new BvhTriangleMeshShape(trimesh, true);
+      gmp.Margin = 0.1;
+      return gmp;
+    }
+
+    /// <summary>
+    /// creates a temporary placeholder collision mesh, replaced within the physics thread
+    /// </summary>
+    /// <param name="mo"></param>
+    /// <param name="inmass"></param>
+    /// <param name="Scale"></param>
+    /// <returns></returns>
+    CollisionShape CreateConcaveMeshProxy(MSceneObject mo, double inmass, Vector3d Scale)
+    {
+      MMesh mesh = null;
+      if ((mo.Type == EType.Mesh) || (mo.Type == EType.Terrain))
+        mesh = (MMesh)mo;
+      else
+      {
+        mesh = (MMesh)mo.FindModuleByType(EType.Mesh);
+      }
+
+      if (mesh == null) return null;
+
+      //  Matrix4d trans = Matrix4d.CreateTranslation(mo.transform.Position);
+
+      Matrix4d trans = Matrix4d.CreateFromQuaternion(mo.transform.Rotation)
+      * Matrix4d.CreateTranslation(mo.transform.Position);
+
+      //      CompoundCollisionAlgorithm.CompoundChildShapePairCallback = MyCompoundChildShapeCallback;
+      //    convexDecompositionObjectOffset = new Vector3(10, 0, 0);
+
+      mass = inmass;
+      //TriangleIndexVertexArray tm = new TriangleIndexVertexArray();
+      Scale = new Vector3d(1, 1, 1);
+      TriangleMesh trimesh = new TriangleMesh();
+
+      int tcount = mesh.Indices.Count() / 3;
+      for (int i = 0; i < 2; i++)
+      {
+        int index0 = mesh.Indices[i * 3];
+        int index1 = mesh.Indices[i * 3 + 1];
+        int index2 = mesh.Indices[i * 3 + 2];
+
+        TexturedVertex v1 = mesh.Vertices[index0];
+        TexturedVertex v2 = mesh.Vertices[index1];
+        TexturedVertex v3 = mesh.Vertices[index2];
         trimesh.AddTriangle(MassiveTools.Vector3dFromVector3(v1._position) * Scale,
           MassiveTools.Vector3dFromVector3(v2._position) * Scale,
           MassiveTools.Vector3dFromVector3(v3._position) * Scale);

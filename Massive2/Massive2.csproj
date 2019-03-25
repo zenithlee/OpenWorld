@@ -140,6 +140,7 @@
     <Compile Include="src\Graphics\Character\VertexBoneData.cs" />
     <Compile Include="src\Graphics\Character\MAnimatedModel.cs" />
     <Compile Include="src\Graphics\MGeomShader.cs" />
+    <Compile Include="src\Graphics\Terrain\MGrass.cs" />
     <Compile Include="src\Graphics\TexturedVertex.cs" />
     <Compile Include="src\Modules\Widgets\MLinker.cs" />
     <Compile Include="src\Modules\Widgets\MTeleporter.cs" />
@@ -245,7 +246,9 @@
     <Compile Include="src\Modules\Widgets\MDoor.cs" />
     <Compile Include="src\Modules\Input\MKey.cs" />
     <Compile Include="src\Network\MZone.cs" />
+    <Compile Include="src\Optimize\Frustrum.cs" />
     <Compile Include="src\Optimize\MDistanceClipper.cs" />
+    <Compile Include="src\Optimize\MFrustrumCuller.cs" />
     <Compile Include="src\Physics\MPhysicsCharacter.cs" />
     <Compile Include="src\Physics\MPhysicsDebug.cs" />
     <Compile Include="src\Physics\MRaycastTask.cs" />

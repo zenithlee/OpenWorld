@@ -67,6 +67,12 @@ namespace Massive
       );
     }
 
+
+    public Matrix4 getViewMatrix()
+    {
+      return MTransform.GetFloatMatrix(GetViewMatrix());
+    }
+
     //from 1m to far
     public Matrix4d GetFullProjection(double Near=1, double Far=20000)
     {
@@ -102,10 +108,6 @@ namespace Massive
       return Vector3d.Cross(Vector3d.UnitY, Direction());
     }
 
-    public Matrix4 getViewMatrix()
-    {
-      return MTransform.GetFloatMatrix(GetViewMatrix());
-    }
 
     public Matrix4 getMVP()
     {

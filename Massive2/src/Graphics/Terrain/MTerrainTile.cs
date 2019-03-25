@@ -264,9 +264,12 @@ namespace Massive
       if (IsSetup == false) return;
       if (_physics == null)
       {
+        stopwatch.Start();
         Console.WriteLine("MTerrainTile.SetupPhysics " + TileX + "," + TileY);
         //string sText = string.Format("PHYSICS: Cache\\earth\\{0}\\biome\\{1}_{2}.png", ZoomLevel, TileX, TileY);                
-        _physics = new MPhysicsObject(this, "Terrain_collider", 0, MPhysicsObject.EShape.ConcaveMesh, false, this.transform.Scale);        
+        _physics = new MPhysicsObject(this, "Terrain_collider", 0, MPhysicsObject.EShape.ConcaveProxy, false, this.transform.Scale);
+        stopwatch.Stop();
+        Console.WriteLine("MTerrainTile.SetupPhysics " + TileX + "," + TileY + " completed in  " + stopwatch.ElapsedTicks);        
         DoSetupPhysics = false;
       }
     }
@@ -526,7 +529,6 @@ namespace Massive
       }
     }
 
-
     public Vector3d GetPointOnSurface(Vector3d pt)
     {
       int index = (int)(pt.Z * z_res + pt.X);
@@ -543,8 +545,8 @@ namespace Massive
     {
       Vertices = new TexturedVertex[x_res * z_res];
       Indices = new int[6 * x_res * z_res];
-
       int i = 0;
+      
       for (float z = 0; z < z_res; z++)
       {
         Vector3d zpl = Vector3d.Lerp(Boundary.TL, Boundary.BL, z / (float)(z_res - 1));
@@ -552,8 +554,8 @@ namespace Massive
         for (double x = x_res; x > 0; x--)
         {
           Vector3d xp = Vector3d.Lerp(zpr, zpl, x / (float)(x_res - 1)) - transform.Position;
+          BoundingBox.Expand(xp);
           // Console.WriteLine("x:" + x + ",z:" + z + " = " + xp);
-
           Vertices[i]._position.X = (float)(xp.X);
           Vertices[i]._position.Y = (float)(xp.Y);
           Vertices[i]._position.Z = (float)(xp.Z);
@@ -561,7 +563,6 @@ namespace Massive
           Vertices[i]._normal.Y = 1;
           Vertices[i]._normal.Z = 0;
           Vertices[i]._textureCoordinate = new Vector2((float)(x_res - x) / (float)(x_res - 1), (float)z / (float)(z_res - 1));
-
           i++;
         }
       }
@@ -580,11 +581,7 @@ namespace Massive
           Indices[i++] = (y + 1) * x_res + x + 1;
         }
       }
-
-
       //base.Setup();
-
-
     }
   }
 }

@@ -154,7 +154,7 @@ namespace Massive
       GL.ActiveTexture(_TextureUnit); // activate the texture unit first before binding texture      
       GL.BindTexture(TextureTarget.Texture2D, TextureID);
 
-      GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
+      GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.NearestMipmapLinear);
       GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
       GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)_TextureWrapMode);
       GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)_TextureWrapMode);

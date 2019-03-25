@@ -19,8 +19,10 @@ namespace Massive
 
     public enum eMoveMode { Walking, Flying };
     eMoveMode MoveMode = eMoveMode.Walking;
-    public float CurrentSpeed = 0;
-    public float WalkSpeed = 1.9f;
+
+    public enum eMoveState { Idle, Walk, Run, Jump, Fight1, Fight2 };
+    eMoveState MoveState = eMoveState.Idle;
+    public float CurrentSpeed = 0;    
 
     IControllerContext Controller;
 
@@ -146,6 +148,30 @@ namespace Massive
       TargetRotation = _physics.GetRotation() * Quaterniond.FromEulerAngles(0, h, 0);
     }
 
+    public void Walk(double v)
+    {
+      MoveState = eMoveState.Walk;
+      InputV(v);
+    }
+
+    public void Run(double v)
+    {
+      MoveState = eMoveState.Run;
+      InputV(v);
+    }
+
+    public void Turn(double v)
+    {
+      MoveState = eMoveState.Walk;
+      InputYawH(v);
+    }
+
+    public void RunTurn(double v)
+    {
+      MoveState = eMoveState.Run;
+      InputYawH(v);
+    }
+
     int Counter = 0;
     public void InputV(double v)
     {
@@ -162,7 +188,7 @@ namespace Massive
         Vector3d ap = GetPosition();
         Vector3d pos = ap + Forward() * 0.5;
         MPhysics.Instance.RayCastRequest(pos, pos + Forward() - Up() * height, this, (result) =>
-          {            
+          {
             if (result.Result == true)
             {
               //Console.WriteLine("HIT " + Counter + " " + result.Depth);
@@ -302,6 +328,28 @@ namespace Massive
       }
     }
 
+    void SyncAnimationToState()
+    {
+      MAnimatedModel ma = (MAnimatedModel)Target;
+
+      if (CurrentSpeed == 0)
+      {
+        MoveState = eMoveState.Idle;
+      }
+      switch (MoveState)
+      {
+        case eMoveState.Idle:
+          ma._animationController.PlayAnimation("idle", CurrentSpeed);
+          break;
+        case eMoveState.Walk:
+          ma._animationController.PlayAnimation("walk", CurrentSpeed);
+          break;
+        case eMoveState.Run:
+          ma._animationController.PlayAnimation("run", CurrentSpeed);
+          break;
+      }
+    }
+
     public override void Update()
     {
       base.Update();
@@ -310,25 +358,8 @@ namespace Massive
       if (Target is MAnimatedModel)
       {
         CurrentSpeed = (float)_physics._rigidBody.LinearVelocity.Length;
-       // Console.WriteLine("MAvatar.Update:"+CurrentSpeed);
-       
-        MAnimatedModel ma = (MAnimatedModel)Target;
-        if (CurrentSpeed == 0)
-        {          
-          ma._animationController.PlayAnimation("idle", CurrentSpeed);
-        }
-        else
-        {
-          if ( CurrentSpeed >= WalkSpeed)
-          {
-            ma._animationController.PlayAnimation("run", CurrentSpeed);
-          }
-          else
-          {
-            ma._animationController.PlayAnimation("walk", CurrentSpeed);
-          }
-          
-        }
+        // Console.WriteLine("MAvatar.Update:"+CurrentSpeed);
+        SyncAnimationToState();
       }
 
       if (MoveMode == eMoveMode.Walking)
@@ -337,7 +368,7 @@ namespace Massive
         {
           //Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, Time.DeltaTime * 15);
           Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, 0.2);
-          _physics.SetRotation(rot);          
+          _physics.SetRotation(rot);
           //_physics.SetRotation(TargetRotation);
         }
       }

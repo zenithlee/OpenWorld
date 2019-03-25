@@ -12,7 +12,7 @@ namespace Massive.Graphics.Character
     public float FrameCounter = 0;
     public double TotalTime = 5;    
     MAnimatedModel _model;    
-    float BaseSpeed = 1.5f;
+    float BaseSpeed = 1.2f;
     float Speed = 1;
 
     public void Setup(MAnimatedModel model)

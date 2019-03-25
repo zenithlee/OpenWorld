@@ -13,7 +13,7 @@ namespace OpenWorld.Handlers
 {
   class MKeyboardHandler
   {
-    Form Parent;    
+    Form Parent;
     public static bool ShiftDown = false;
     public static bool ControlDown = false;
     public static bool AltDown = false;
@@ -21,7 +21,7 @@ namespace OpenWorld.Handlers
 
     public MKeyboardHandler(Form f, Control c)
     {
-      Parent = f;      
+      Parent = f;
       c.KeyDown += C_KeyDown;
       c.KeyUp += C_KeyUp;
       f.KeyDown += FormKey;
@@ -32,6 +32,9 @@ namespace OpenWorld.Handlers
     {
       switch (e.KeyCode)
       {
+        case Keys.ShiftKey:
+          ShiftDown = false;
+          break;
         case Keys.F2:
           MMessageBus.ChangeModeRequest(this, MAvatar.eMoveMode.Walking);
           break;
@@ -64,6 +67,9 @@ namespace OpenWorld.Handlers
     {
       switch (e.KeyCode)
       {
+        case Keys.ShiftKey:
+          ShiftDown = true;
+          break;
         case Keys.Add:
           MMessageBus.Rotate(this, new Quaterniond(0, 45 * Math.PI / 180.0, 0));
           break;
@@ -178,28 +184,64 @@ namespace OpenWorld.Handlers
       //ShiftDown = KeyState[(int)Keys.ShiftKey];
       //ControlDown = KeyState[(int)Keys.ControlKey];
       //AltDown = KeyState[(int)Keys.CapsLock];
-      double mult = GetMultiplier() * 15;
+      double mult = GetMultiplier() * 6;
 
       if (KeyState[(int)Keys.Space])
       {
-        Globals.Avatar.InputB1(Time.DeltaTime * mult * 240);
+        Globals.Avatar.InputB1(Time.DeltaTime * mult * 140);
       }
 
       if (KeyState[(int)Keys.W])
       {
-        Globals.Avatar.InputV(Time.DeltaTime * mult);
+        if (ShiftDown == true)
+        {
+          Globals.Avatar.Run(mult *1.5 * 0.1);
+        }
+        else
+        {
+          Globals.Avatar.Walk(mult * 0.1);
+          //Globals.Avatar.InputV(Time.DeltaTime * mult);
+        }
+
       }
       if (KeyState[(int)Keys.A])
       {
-        Globals.Avatar.InputYawH(Time.DeltaTime * (1.0/mult) *100);
+        if (ShiftDown == true)
+        {
+          Globals.Avatar.RunTurn(Time.DeltaTime * (1.0 / mult) * 100);
+        }
+        else
+        {
+          Globals.Avatar.Turn(Time.DeltaTime * (1.0 / mult) * 100);
+        }
+        //Globals.Avatar.InputYawH(Time.DeltaTime * (1.0/mult) *100);
       }
+
       if (KeyState[(int)Keys.S])
       {
-        Globals.Avatar.InputV(Time.DeltaTime * -mult);
+        if (ShiftDown == true)
+        {
+          Globals.Avatar.Run(Time.DeltaTime * -mult);
+        }
+        else
+        {
+          Globals.Avatar.Walk(Time.DeltaTime * -mult);
+          //Globals.Avatar.InputV(Time.DeltaTime * mult);
+        }
+        //Globals.Avatar.InputV(Time.DeltaTime * -mult);
       }
+
       if (KeyState[(int)Keys.D])
       {
-        Globals.Avatar.InputYawH(-Time.DeltaTime * (1.0/mult) *100);
+        if (ShiftDown == true)
+        {
+          Globals.Avatar.RunTurn(-Time.DeltaTime * (1.0 / mult) * 100);
+        }
+        else
+        {
+          Globals.Avatar.Turn(-Time.DeltaTime * (1.0 / mult) * 100);
+        }
+          
       }
     }
 
@@ -233,7 +275,7 @@ namespace OpenWorld.Handlers
       if (KeyState[(int)Keys.S])
       {
         //Globals.Avatar.InputB1();
-        Globals.Avatar.Brake(Time.DeltaTime * mult * BaseEnergy/10.0);
+        Globals.Avatar.Brake(Time.DeltaTime * mult * BaseEnergy / 10.0);
       }
 
       if (KeyState[(int)Keys.Up])

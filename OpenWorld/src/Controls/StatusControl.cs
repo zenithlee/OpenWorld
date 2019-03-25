@@ -83,7 +83,7 @@ namespace OpenWorld.src.Controls
 
     void SetPosition(Vector3d pos)
     {
-      Invoke(new MethodInvoker(delegate ()
+      BeginInvoke(new MethodInvoker(delegate ()
       {
         PositionBox.Text = pos.ToString();
       }));      

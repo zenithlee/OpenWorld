@@ -195,7 +195,7 @@ void main()
     public override void Render(Matrix4d viewproj, Matrix4d parentmodel)
     {      
       Bind();
-      //GL.PolygonMode(MaterialFace.FrontAndBack, _renderMode);
+      GL.PolygonMode(MaterialFace.Front, _renderMode);
       GL.Enable(EnableCap.CullFace);
       GL.CullFace(CullFaceMode.Back);
       GL.Viewport(0, 0, MScreen.Width, MScreen.Height);

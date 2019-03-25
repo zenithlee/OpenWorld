@@ -265,7 +265,7 @@ namespace Massive.Events
     }
 
     public static void AvatarSetAnimation(object sender, string sAnimation)
-    {
+    {      
       AvatarAnimationChangeRequest?.Invoke(sender, new TextEvent(sAnimation));
     }
     public static void AvatarAnimationChange(object sender, string sAnimation)
@@ -324,7 +324,7 @@ namespace Massive.Events
 
     public static void Status(object sender, string sMessage)
     {
-      InfoEventHandler?.Invoke(sender, new InfoEvent(sMessage));
+      GUIEvent(InfoEventHandler, sender, new InfoEvent(sMessage));      
     }
 
     

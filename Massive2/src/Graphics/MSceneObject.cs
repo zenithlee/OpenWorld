@@ -17,12 +17,14 @@ namespace Massive
     public Matrix4d WorldTransform = Matrix4d.Identity;
     public MBoundingBox BoundingBox;
     public double SizeHint = 0;
-    public string TemplateID { get; set; } = "CUBE1" ;
+    public string TemplateID { get; set; } = "CUBE1";
     public bool CastsShadow = true;
     public bool IsAvatar = false;
     public bool IsTransparent = false;
     public double DistanceFromAvatar { get; set; } = 0;
     public double DistanceThreshold { get; set; } = 1000;
+    public bool Culled { get; set; } =false;
+    public bool Clipped { get; set; } = false;
 
     public Vector3d Offset;
 
@@ -73,6 +75,8 @@ namespace Massive
     public override void Render(Matrix4d viewproj, Matrix4d parentmodel)
     {
       //early outs
+      if (Culled == true) return;
+      if (Clipped == true) return;
       if (!Enabled) return;
       if (!Visible) return;
       if ((Globals.RenderPass == Globals.eRenderPass.ShadowDepth) && (CastsShadow == false)) return;

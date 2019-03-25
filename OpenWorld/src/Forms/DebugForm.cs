@@ -1,4 +1,5 @@
-﻿using Massive.Graphics.Character;
+﻿using Massive;
+using Massive.Graphics.Character;
 using Massive2.Graphics.Character;
 using OpenTK;
 using System;
@@ -11,37 +12,54 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace OpenWorld.Forms 
+namespace OpenWorld.Forms
 {
   public partial class DebugForm : DToolForm
   {
-    List<Matrix4> AssetsList;
+    BindingList<MSceneObject> AssetsList;
 
     public DebugForm()
     {
       InitializeComponent();
       SetTitle("Debug");
-      AssetsList = new List<Matrix4>();
+      AssetsList = new BindingList<MSceneObject>();
       timer1.Start();
     }
 
     public void Setup()
     {
       AssetsList.Clear();
+
+
+      foreach (MObject mo in MScene.Background.Modules)
+      {
+        if (!mo.Renderable) continue;
+        MSceneObject mso = (MSceneObject)mo;
+        AssetsList.Add(mso);
+      }
+
+      /*
       foreach (Matrix4 mo in MAnimatedModel.debug_transforms)
       {                
         AssetsList.Add(mo);
       }
-
-      DebugTable.DataSource = AssetsList;
-      DebugTable.Refresh();
+  */
+      try
+      {
+        DebugTable.DataSource = AssetsList;
+        DebugTable.Refresh();
+      }
+      catch (Exception e)
+      {
+        Console.WriteLine("DebugForm:"+e.Message);
+      }
       //DebugTable.Columns["OwnerID"].Visible = false;
-    
+
     }
 
     private void timer1_Tick(object sender, EventArgs e)
     {
-      Setup();      
+      Setup();
     }
   }
 }

@@ -389,6 +389,13 @@ namespace Massive
       }
     }
 
+    public MPhysicsObject SwapProxy(MPhysicsObject po)
+    {
+      MPhysicsObject por = new MPhysicsObject(po.Target, po.Name, po.Mass, MPhysicsObject.EShape.ConcaveMesh, false, po.CreateScale);
+      po.Target.Modules.Remove(po);      
+      return po;
+    }
+
     public void DoPhysicsUpdate()
     {
       //BackgroundWorker worker = (BackgroundWorker)sender;
@@ -417,6 +424,11 @@ namespace Massive
         {
           MPhysicsObject po = AddQueue[0];
           AddQueue.RemoveAt(0);
+
+          if ( po.IsProxy == true)
+          {
+            po = SwapProxy(po);
+          }
           if (!World.CollisionObjectArray.Contains(po._rigidBody))
           {
             World.AddRigidBody(po._rigidBody);

@@ -110,13 +110,7 @@ namespace Massive.GIS
             }
           }
         }
-
-
-      }
-      else
-      {
-        _terrainHandler.CullTiles();
-      }
+      }      
     }
 
     /// <summary>

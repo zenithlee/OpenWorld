@@ -20,5 +20,16 @@ namespace Massive
     {
       return P2 - P1;
     }
+
+    public void Expand(Vector3d e)
+    {
+      if (e.X < P1.X) P1.X = e.X;
+      if (e.Y < P1.Y) P1.X = e.Y;
+      if (e.Z < P1.Z) P1.Z = e.Z;
+
+      if (e.X > P2.X) P2.X = e.X;
+      if (e.Y > P2.Y) P2.Y = e.Y;
+      if (e.Z > P2.Z) P2.Z = e.Z;
+    }
   }
 }

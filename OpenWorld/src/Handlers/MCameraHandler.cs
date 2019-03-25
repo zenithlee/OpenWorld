@@ -131,16 +131,16 @@ namespace OpenWorld.Handlers
      // if (dist >1000)
       //{
         //dist = MathHelper.Clamp(Speed * dist, 1, 10);
-///        MScene.Camera.transform.Position = Extensions.SmoothStep(MScene.Camera.transform.Position,
-   //       RenderedPosition, Time.DeltaTime * 20);
-        //MScene.Camera.Focus.transform.Position = Extensions.SmoothStep(MScene.Camera.Focus.transform.Position, MScene.Camera.transform.Position + Globals.Avatar.Forward() * 10
-         // + MScene.Camera.TargetOffset, Time.DeltaTime * 20);
+        MScene.Camera.transform.Position = Extensions.SmoothStep(MScene.Camera.transform.Position,
+          RenderedPosition, Time.DeltaTime * 7);
+        MScene.Camera.Focus.transform.Position = Extensions.SmoothStep(MScene.Camera.Focus.transform.Position, MScene.Camera.transform.Position + Globals.Avatar.Forward() * 10
+          + MScene.Camera.TargetOffset, Time.DeltaTime * 8);
      // }
       //else
       {
-        MScene.Camera.transform.Position = RenderedPosition;
-        MScene.Camera.Focus.transform.Position = AP + Globals.Avatar.Forward() * 10
-        + MScene.Camera.TargetOffset;
+        //MScene.Camera.transform.Position = RenderedPosition;        
+        //MScene.Camera.Focus.transform.Position = AP + Globals.Avatar.Forward() * 10
+        //+ MScene.Camera.TargetOffset;
       }
 
       Vector3d upv = MScene.Camera.UpVector;
@@ -157,7 +157,7 @@ namespace OpenWorld.Handlers
     }
 
     /// <summary>
-    /// If we have moved greated than 1m, inform the network
+    /// If we have moved greated than 1m from our last position, inform the network
     /// TODO: move to avatar handler
     /// </summary>
     /// <param name="AP"></param>
