@@ -1,4 +1,5 @@
-﻿using OpenWorld.Forms;
+﻿using Massive.Events;
+using OpenWorld.Forms;
 using System;
 using System.Windows.Forms;
 
@@ -57,6 +58,12 @@ namespace OpenWorld.Controls
       DebugForm f = new DebugForm();
       f.Setup();
       f.Show(this.ParentForm);
+    }
+
+    private void ModeButton_Click(object sender, EventArgs e)
+    {
+      MMessageBus.ChangeModeRequest(this, Massive.MAvatar.eMoveMode.Flying);
+      MMessageBus.GravityStateChanged(this, new BooleanEvent(false));
     }
   }
 }

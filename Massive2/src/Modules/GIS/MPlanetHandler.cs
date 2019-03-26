@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 /**
  * 
- * Reference date 2000/01/01
+ * Universe Reference Date : 2000/01/01
  * Universe Reference point : Sol Center "0,0,0"
  * Units: Meters, kg
  * 

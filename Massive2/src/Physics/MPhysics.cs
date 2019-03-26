@@ -264,7 +264,7 @@ namespace Massive
 
     public static void Add(MPhysicsObject po)
     {
-      if (po != null)
+      if ((po != null) && (Instance != null))
       {
         Instance.AddQueue.Add(po);
       }
@@ -392,7 +392,8 @@ namespace Massive
     public MPhysicsObject SwapProxy(MPhysicsObject po)
     {
       MPhysicsObject por = new MPhysicsObject(po.Target, po.Name, po.Mass, MPhysicsObject.EShape.ConcaveMesh, false, po.CreateScale);
-      po.Target.Modules.Remove(po);      
+      po.Target.Modules.Remove(po);
+      Globals.Tasks--;
       return po;
     }
 
@@ -429,13 +430,13 @@ namespace Massive
           {
             po = SwapProxy(po);
           }
-          if (!World.CollisionObjectArray.Contains(po._rigidBody))
+          if ((World != null ) && (!World.CollisionObjectArray.Contains(po._rigidBody)))
           {
             World.AddRigidBody(po._rigidBody);
           }
         }
 
-        if (RemoveQueue.Count > 0)
+        if ((RemoveQueue.Count > 0) && ( World!= null))
         {
           MPhysicsObject po = RemoveQueue[0];
           RemoveQueue.RemoveAt(0);
@@ -444,14 +445,14 @@ namespace Massive
 
         if (World != null)
         {
-          try
-          {
+         // try
+         // {
             World.StepSimulation(Time.DeltaTime, 10);
-          }
-          catch (Exception e)
-          {
-            Console.Error.WriteLine("EXCEPTION: MPhysics StepSimulation : " + e.Message);
-          }
+         // }
+          //catch (Exception e)
+         // {
+           // Console.Error.WriteLine("EXCEPTION: MPhysics StepSimulation : " + e.Message);
+         // }
         }
         Thread.Sleep(3);
       }

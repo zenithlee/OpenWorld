@@ -188,7 +188,7 @@ namespace OpenWorld.Handlers
 
       if (KeyState[(int)Keys.Space])
       {
-        Globals.Avatar.InputB1(Time.DeltaTime * mult * 140);
+        Globals.Avatar.InputB1(mult * 40);
       }
 
       if (KeyState[(int)Keys.W])
@@ -259,13 +259,13 @@ namespace OpenWorld.Handlers
 
       if (KeyState[(int)Keys.Space])
       {
-        Globals.Avatar.Jump(Time.DeltaTime * mult * 40);
+        Globals.Avatar.Jump(mult * 40);
       }
 
       if (KeyState[(int)Keys.W])
       {
         //Globals.Avatar.InputPitchV(Time.DeltaTime * 50);
-        Globals.Avatar.InputB1(Time.DeltaTime * mult * 26);
+        Globals.Avatar.InputB1(mult * 2);
         Globals.Avatar.Throttle = 1;
       }
       else
@@ -275,45 +275,45 @@ namespace OpenWorld.Handlers
       if (KeyState[(int)Keys.S])
       {
         //Globals.Avatar.InputB1();
-        Globals.Avatar.Brake(Time.DeltaTime * mult * BaseEnergy / 10.0);
+        Globals.Avatar.Brake( mult * BaseEnergy *0.1);
       }
 
       if (KeyState[(int)Keys.Up])
       {
-        Globals.Avatar.InputPitchV(-Time.DeltaTime * -BaseEnergy);
+        Globals.Avatar.InputPitchV( BaseEnergy);
 
       }
 
       if (KeyState[(int)Keys.Down])
       {
-        Globals.Avatar.InputPitchV(Time.DeltaTime * -BaseEnergy);
+        Globals.Avatar.InputPitchV(-BaseEnergy);
       }
 
       if (KeyState[(int)Keys.Q])
       {
-        Globals.Avatar.InputRollH(-Time.DeltaTime * BaseEnergy);
+        Globals.Avatar.InputRollHDirect(-BaseEnergy * mult * 0.05);
       }
       if (KeyState[(int)Keys.E])
       {
-        Globals.Avatar.InputRollH(Time.DeltaTime * BaseEnergy);
+        Globals.Avatar.InputRollHDirect( BaseEnergy * mult * 0.05);
       }
 
       if (KeyState[(int)Keys.Left])
       {
-        Globals.Avatar.InputRollH(-Time.DeltaTime * BaseEnergy);
+        Globals.Avatar.InputRollHDirect( -BaseEnergy);
       }
       if (KeyState[(int)Keys.Right])
       {
-        Globals.Avatar.InputRollH(Time.DeltaTime * BaseEnergy);
+        Globals.Avatar.InputRollHDirect(BaseEnergy);
       }
 
       if (KeyState[(int)Keys.A])
       {
-        Globals.Avatar.InputYawH(Time.DeltaTime * BaseEnergy);
+        Globals.Avatar.InputYawHDirect(BaseEnergy * mult * 0.01);
       }
       if (KeyState[(int)Keys.D])
       {
-        Globals.Avatar.InputYawH(-Time.DeltaTime * BaseEnergy);
+        Globals.Avatar.InputYawHDirect(-BaseEnergy * mult * 0.01);
       }
     }
 

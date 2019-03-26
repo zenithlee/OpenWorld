@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Massive.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,11 +22,12 @@ namespace Massive.Tools
     //when true, the user can't build here
     public static bool ZoneLocked = false;
 
-    public static event EventHandler<EventArgs> StateChanged;
+    public static event EventHandler<StateEvent> StateChanged;
 
 
     public MStateMachine(Control inOwner)
     {
+      Console.WriteLine("NEW STATE MACHINE CREATED");
       Owner = inOwner;
     }
 
@@ -38,7 +40,7 @@ namespace Massive.Tools
         Owner.Invoke((MethodInvoker)
           delegate
           {
-            StateChanged(null, new EventArgs());
+            StateChanged(null, new StateEvent(NewState));
           });
       }
     }

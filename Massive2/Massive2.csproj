@@ -126,6 +126,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Events\StateEvent.cs" />
     <Compile Include="src\Events\TextEvent.cs" />
     <Compile Include="src\Events\BooleanEvent.cs" />
     <Compile Include="src\Events\BookmarkEvent.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="src\Graphics\MGeomShader.cs" />
     <Compile Include="src\Graphics\Terrain\MGrass.cs" />
     <Compile Include="src\Graphics\TexturedVertex.cs" />
+    <Compile Include="src\Modules\Avatar\MAvatarSound.cs" />
     <Compile Include="src\Modules\Widgets\MLinker.cs" />
     <Compile Include="src\Modules\Widgets\MTeleporter.cs" />
     <Compile Include="src\MScene.cs" />

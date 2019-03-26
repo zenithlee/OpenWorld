@@ -43,6 +43,12 @@ namespace OpenWorld
 
       MMessageBus.ChangeModeHandler += MMessageBus_ChangeModeHandler;
       Globals.Network.TeleportHandler += Network_TeleportHandler;
+      MMessageBus.AvatarChangedHandler += MMessageBus_AvatarChangedHandler;
+    }
+
+    private void MMessageBus_AvatarChangedHandler(object sender, ChangeAvatarEvent e)
+    {
+      Initialize();
     }
 
     private void Network_TeleportHandler(object sender, MoveEvent e)
@@ -91,13 +97,18 @@ namespace OpenWorld
       return mult;
     }
 
-    private void C_MouseMove(object sender, MouseEventArgs e)
+    void Initialize()
     {
       if (isInitialized == false)
       {
         isInitialized = true;
         RotateAvatarWalking(new Point(10, 0));
       }
+    }
+
+    private void C_MouseMove(object sender, MouseEventArgs e)
+    {
+     // Initialize();
 
       if (isDown == true)
       {
@@ -150,7 +161,7 @@ namespace OpenWorld
       //Quaterniond rot2 =        
       //Quaterniond.FromEulerAngles(0, dx, 0);
       Globals.Avatar.SetRotation(rot);      
-      Globals.Avatar.InputRollH(accx*100);
+      Globals.Avatar.InputRollHDirect(accx*100);
       double dist = Vector3d.Distance(MScene.Camera.transform.Position, MScene.Camera.transform.Position + MScene.Camera.TargetOffset);
       if (dist < 45)
       {
@@ -170,13 +181,13 @@ namespace OpenWorld
       double dy = (e.Y - DownPoint.Y);
       double dx = (e.X - DownPoint.X) * mult;
 
-      Quaterniond rot = Globals.Avatar.GetTargetRotation()
-        * Quaterniond.FromEulerAngles(0, -dx * Math.PI / 180.0, 0)
-      * Quaterniond.FromEulerAngles(0, 0, dy * Math.PI / 180.0);
+      //Quaterniond rot = Globals.Avatar.GetTargetRotation()
+        //* Quaterniond.FromEulerAngles(0, -dx * Math.PI / 180.0, 0)
+      //* Quaterniond.FromEulerAngles(0, 0, dy * Math.PI / 180.0);
 
       //Globals.Avatar.SetRotation(rot);
-      Globals.Avatar.InputRollH(dx * 0.5);
-      Globals.Avatar.InputPitchV(-dy * 0.5);
+      Globals.Avatar.InputRollHDirect(dx * 0.5);
+      Globals.Avatar.InputPitchVDirect(dy * 0.5);
 
       DownPoint = e;
 

@@ -93,11 +93,12 @@ namespace OpenWorld.Handlers
       if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Walking)
       {
         double offy = Settings.OffsetThirdPerson.Y;
-        if ( Globals.Avatar.Target != null ){
+        if (Globals.Avatar.Target != null)
+        {
           offy += Globals.Avatar.Target.Offset.Y;
         }
 
-        DestinationPosition = AP + Globals.Avatar.Up() * (offy )
+        DestinationPosition = AP + Globals.Avatar.Up() * (offy)
                - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;
       }
       else
@@ -128,14 +129,29 @@ namespace OpenWorld.Handlers
     public void UpdateMovement(Vector3d AP)
     {
       double dist = Vector3d.Distance(MScene.Camera.transform.Position, DestinationPosition);
-     // if (dist >1000)
+
+      double mult = 0.25;
+      if (Globals.Avatar.MoveState == MAvatar.eMoveState.Run)
+      {
+        mult = 1;
+      }
+
+      if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Flying)
+      {
+        mult = 1;
+      }
+
+      if (dist > 1000)
+      {
+        mult = 2;
+      }
       //{
-        //dist = MathHelper.Clamp(Speed * dist, 1, 10);
-        MScene.Camera.transform.Position = Extensions.SmoothStep(MScene.Camera.transform.Position,
-          RenderedPosition, Time.DeltaTime * 7);
-        MScene.Camera.Focus.transform.Position = Extensions.SmoothStep(MScene.Camera.Focus.transform.Position, MScene.Camera.transform.Position + Globals.Avatar.Forward() * 10
-          + MScene.Camera.TargetOffset, Time.DeltaTime * 8);
-     // }
+      //dist = MathHelper.Clamp(Speed * dist, 1, 10);
+      MScene.Camera.transform.Position = Extensions.SmoothStep(MScene.Camera.transform.Position,
+        RenderedPosition, mult);
+      MScene.Camera.Focus.transform.Position = Extensions.SmoothStep(MScene.Camera.Focus.transform.Position, MScene.Camera.transform.Position + Globals.Avatar.Forward() * 10
+        + MScene.Camera.TargetOffset, mult);
+      // }
       //else
       {
         //MScene.Camera.transform.Position = RenderedPosition;        

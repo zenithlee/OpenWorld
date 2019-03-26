@@ -25,6 +25,8 @@ namespace OpenWorld.Controllers
     BookmarkController _bookmarkController;
     MAvatarHandler _avatarHandler;
 
+    MStateMachine _state;
+
     public COpenWorld()
     {
       Settings.TerrainPhysics = true;
@@ -39,6 +41,15 @@ namespace OpenWorld.Controllers
       Globals.Network.ConnectedToServerHandler += Network_ConnectedToServerHandler;
       //Globals.Network.LoggedInHandler += Network_LoggedInHandler;
       MMessageBus.LoggedIn += MMessageBus_LoggedIn;
+
+      _state = new MStateMachine(Globals.GUIThreadOwner);
+      MStateMachine.StateChanged += MStateMachine_StateChanged;
+      MStateMachine.ChangeState(MStateMachine.eStates.Splash);
+    }
+
+    private void MStateMachine_StateChanged(object sender, StateEvent e)
+    {
+
     }
 
     public void Setup()
@@ -59,7 +70,7 @@ namespace OpenWorld.Controllers
       _moveHandler = new MMoveHandler();
       _avatarHandler = new MAvatarHandler();
 
-      MStateMachine state = new MStateMachine(Globals.GUIThreadOwner);
+
 
       Globals._scene.SetupInitialObjects();
 
@@ -71,8 +82,7 @@ namespace OpenWorld.Controllers
       ParseCmdLine();
 
       //TODO: get from server     
-      Globals.UserAccount.HomePosition = MassiveTools.ArrayFromVector(new Vector3d(12717655836.0836, 146353256922.555, -7581841295.85195));
-      Globals.UserAccount.CurrentPosition = Globals.UserAccount.HomePosition;
+      
 
       Globals._scene.Setup();
       _navPointer.Setup();
@@ -80,12 +90,13 @@ namespace OpenWorld.Controllers
       Globals._scene.Play();
       //Settings.DebugNetwork = true;
       CreateAvatar();
-      MStateMachine.ChangeState(MStateMachine.eStates.Viewing);
     }
 
     void CreateAvatar()
     {
-      MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);      
+      Globals.UserAccount.HomePosition = MassiveTools.ArrayFromVector(new Vector3d(12717655836.0836, 146353256922.555, -7581841295.85195));
+      Globals.UserAccount.CurrentPosition = Globals.UserAccount.HomePosition;
+      MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, Globals.UserAccount.AvatarID);
     }
 
     void ParseCmdLine()
@@ -131,9 +142,38 @@ namespace OpenWorld.Controllers
       Console.WriteLine("Connected to Server");
     }
 
+    void CheckSetupStarted()
+    {
+      if (Globals.Tasks > 0)
+      {
+        MStateMachine.ChangeState(MStateMachine.eStates.Setup);
+      }
+    }
+
+
+    void CheckSetupComplete()
+    {
+      if (Globals.Tasks <= 0)
+      {
+        MStateMachine.ChangeState(MStateMachine.eStates.Viewing);
+        MPlanetHandler.GetUpAt(MassiveTools.VectorFromArray((Globals.UserAccount.CurrentPosition)));
+        CreateAvatar();
+      }
+    }
     public void Update()
     {
-      /// MPlanetHandler.GetUpAt(MassiveTools.VectorFromArray((Globals.UserAccount.CurrentPosition)));
+      if (MStateMachine.CurrentState == MStateMachine.eStates.Splash)
+      {
+        CheckSetupStarted();
+      }
+      
+      if (MStateMachine.CurrentState == MStateMachine.eStates.Setup)
+      {
+        CheckSetupComplete();
+      }
+
+      
+
       Globals._scene.Update();
     }
 

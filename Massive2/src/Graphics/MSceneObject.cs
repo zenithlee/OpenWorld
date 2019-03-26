@@ -275,7 +275,7 @@ namespace Massive
           MSound s = new MSound();
           os.CopyTo(s);
           s.Error = os.Error;
-          s.Load(os.Filename);
+          s.Load(os.Filename, mo);
           mo.Add(s);
 
         }

@@ -8,6 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+/// <summary>
+/// An Astronomical body, Typically 1:1 scale planet
+/// </summary>
+
 //TILES
 
 // tile number is the top left of the tile
@@ -91,10 +96,10 @@ namespace Massive.GIS
       Vector3d TilePos = GetTileFromPoint(e.Position);
       Vector3d LonLat = GetLonLatOnShere(e.Position);
       //Console.WriteLine(AvatarDistanceToSurface);
+
+      //If we're near enough to a planet to see the surface detail, show any nearby tiles
       if (AvatarDistanceToSurface < DistanceToPlanetThreshold)
       {        
-        ///_terrainHandler.UpdateForest((int)TilePos.X, (int)TilePos.Y, (int)TilePos.Z);
-
         int NumTiles = Settings.MaxTerrains;
         _terrainHandler.GetPOI((int)TilePos.X, (int)TilePos.Y, LonLat);
 
@@ -102,12 +107,7 @@ namespace Massive.GIS
         {
           for (int x = -NumTiles; x <= NumTiles; x++)
           {
-            _terrainHandler.UpdateTileMesh((int)TilePos.X + x, (int)TilePos.Y + y, (int)TilePos.Z, LonLat);
-            if (Settings.TerrainPhysics == true)
-            {
-              //removed: handled in setup until proper loading
-              //_terrainHandler.SetupPhysics((int)TilePos.X, (int)TilePos.Y, (int)TilePos.Z);
-            }
+            _terrainHandler.UpdateTileMesh((int)TilePos.X + x, (int)TilePos.Y + y, (int)TilePos.Z, LonLat);            
           }
         }
       }      

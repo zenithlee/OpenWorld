@@ -1,8 +1,11 @@
 ﻿using Massive.Events;
 using Massive.Graphics.Character;
+using Massive.Modules.Avatar;
+using Massive.Platform;
 using Massive2.Graphics.Character;
 using OpenTK;
 using System;
+using System.IO;
 
 namespace Massive
 {
@@ -21,15 +24,25 @@ namespace Massive
     eMoveMode MoveMode = eMoveMode.Walking;
 
     public enum eMoveState { Idle, Walk, Run, Jump, Fight1, Fight2 };
-    eMoveState MoveState = eMoveState.Idle;
-    public float CurrentSpeed = 0;    
+    public eMoveState MoveState = eMoveState.Idle;
+    public float CurrentSpeed = 0;
 
     IControllerContext Controller;
+
+    MAvatarSound _sound;
 
     public MAvatar(string name)
       : base(EType.Player, "UserAvatar")
     {
       Controller = new MWalkController(this);
+      _sound = new MAvatarSound();
+      MMessageBus.ChangeModeHandler += MMessageBus_ChangeModeHandler;
+      Add(_sound);
+    }
+
+    private void MMessageBus_ChangeModeHandler(object sender, ChangeModeEvent e)
+    {
+      SetMoveMode(e.NewMode);
     }
 
     public eMoveMode GetMoveMode()
@@ -45,15 +58,12 @@ namespace Massive
         if (MoveMode == eMoveMode.Walking)
         {
           Controller = new MWalkController(this);
-          //MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, "AVATAR02");
           _physics.SetAngularFactor(1.0, 1.0, 1.0);
           _physics.SetDamping(0.95, 0.5);
         }
         else
         {
           Controller = new MFlyBirdController(this);
-          // LoadTargetModel(@"Models\vehicles\swallow01.fbx");
-          //MMessageBus.ChangeAvatarRequest(this, Globals.UserAccount.UserID, "AVATAR03");
           _physics.SetAngularFactor(0.7, 0.7, 0.7);
           _physics.SetDamping(0.21, 0.9);
         }
@@ -130,13 +140,30 @@ namespace Massive
     {
       if (_physics == null) return;
       _physics.SetActive(true);
-      _physics._rigidBody.ApplyTorque(GetRotation() * new Vector3d(0, 0, h));
+      //_physics._rigidBody.ApplyTorque(GetRotation() * new Vector3d(0, 0, h));
+      TargetRotation = _physics.GetRotation() * Quaterniond.FromEulerAngles(h, 0, 0);
+    }
+
+    public void InputRollHDirect(double h)
+    {
+      if (_physics == null) return;
+      _physics.SetActive(true);
+      _physics._rigidBody.ApplyTorque(GetRotation() * new Vector3d(0, 0, h));      
     }
 
     public void InputPitchV(double h)
     {
       if (_physics == null) return;
       _physics.SetActive(true);
+      TargetRotation = _physics.GetRotation() * Quaterniond.FromEulerAngles(h, 0, 0);
+      //_physics._rigidBody.ApplyTorque(_physics.GetRotation() * new Vector3d(h, 0, 0));
+    }
+
+    public void InputPitchVDirect(double h)
+    {
+      if (_physics == null) return;
+      _physics.SetActive(true);
+      //TargetRotation = _physics.GetRotation() * Quaterniond.FromEulerAngles(0, h, 0);
       _physics._rigidBody.ApplyTorque(_physics.GetRotation() * new Vector3d(h, 0, 0));
     }
 
@@ -146,6 +173,13 @@ namespace Massive
       _physics.SetActive(true);
       //_physics._rigidBody.ApplyTorque(_physics.GetRotation() * new Vector3d(0, h, 0));
       TargetRotation = _physics.GetRotation() * Quaterniond.FromEulerAngles(0, h, 0);
+    }
+
+    public void InputYawHDirect(double h)
+    {
+      if (_physics == null) return;
+      _physics.SetActive(true);
+      _physics._rigidBody.ApplyTorque(_physics.GetRotation() * new Vector3d(0, h, 0));      
     }
 
     public void Walk(double v)
@@ -291,8 +325,7 @@ namespace Massive
 
     public void Hide()
     {
-      if (Target != null)
-      {
+      if (Target != null)      {
         Target.Visible = false;
       }
     }
@@ -326,6 +359,17 @@ namespace Massive
           _physics._rigidBody.ApplyCentralForce(-Globals.LocalGravity * 8);
         }
       }
+      else
+      {
+        //Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, 0.2);
+        //_physics.SetRotation(rot);
+      }
+
+      //aply auto leveler
+      
+      TargetRotation = Globals.LocalUpRotation();      
+      Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, 0.02);
+      _physics.SetRotation(rot);
     }
 
     void SyncAnimationToState()
@@ -345,7 +389,7 @@ namespace Massive
           ma._animationController.PlayAnimation("walk", CurrentSpeed);
           break;
         case eMoveState.Run:
-          ma._animationController.PlayAnimation("run", CurrentSpeed);
+          ma._animationController.PlayAnimation("run", CurrentSpeed * 0.5f);
           break;
       }
     }
@@ -358,7 +402,7 @@ namespace Massive
       if (Target is MAnimatedModel)
       {
         CurrentSpeed = (float)_physics._rigidBody.LinearVelocity.Length;
-        // Console.WriteLine("MAvatar.Update:"+CurrentSpeed);
+        //Console.WriteLine("MAvatar.Update:"+CurrentSpeed);
         SyncAnimationToState();
       }
 

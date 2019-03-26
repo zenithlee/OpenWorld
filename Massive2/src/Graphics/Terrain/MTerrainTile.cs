@@ -162,7 +162,7 @@ namespace Massive
 
     private void Bw_DoWork(object sender, DoWorkEventArgs e)
     {
-
+      Globals.Tasks++;
       SetupMesh();
       if (_backgroundWorker.CancellationPending) return;
       CreateMaterial();

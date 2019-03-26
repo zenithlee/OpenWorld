@@ -217,15 +217,12 @@ namespace OpenWorld.Handlers
         if (mo.InstanceID == Globals.UserAccount.UserID)
         {
           Globals.Avatar.SetSceneObject(mo);
+          MMessageBus.AvatarChanged(this, Globals.UserAccount.UserID, mo.TemplateID);
         }
-       // if ( mo.Type == MObject.EType.AnimatedModel)
-        {
-
-        }
-       // else
-        {
-          SetMaterial(mo, m.TextureID);
-        }
+     
+     
+        SetMaterial(mo, m.TextureID);
+     
         
         MMessageBus.Created(this, mo);
       }

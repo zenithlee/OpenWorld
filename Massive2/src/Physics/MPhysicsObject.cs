@@ -173,7 +173,9 @@ namespace Massive
         {
           MPhysics.Add(this);
         }
+        if (!_rigidBody.IsActive) { 
         _rigidBody.Activate();
+        }
       }
       else
       {

@@ -272,7 +272,7 @@ namespace Massive
       Camera.OwnerID = MObject.OWNER_SYSTEM;
       Camera.transform.Position = new Vector3d(9, 5, 9);
       UtilityRoot.Add(Camera);
-      //audioListener = new MAudioListener();
+      audioListener = new MAudioListener();
       Camera.Add(audioListener);
       // Camera.Deletable = false;
 
@@ -356,6 +356,8 @@ namespace Massive
     public override void Update()
     {
       if (Playing == false) return;
+
+      Console.WriteLine(Globals.Tasks);
 
       UtilityRoot.Update();
       ModelRoot.Update();

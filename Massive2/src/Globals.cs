@@ -18,7 +18,8 @@ namespace Massive
     public static int VERSION = 1;
     public static int Index = 0;
     public static int Editor = 1;
-    public static int DrawCalls = 0;    
+    public static int DrawCalls = 0;
+    public static int Tasks = 0;
    // public static double Tweak1 = 8.5;
     //public static double Tweak2 = 0;
 

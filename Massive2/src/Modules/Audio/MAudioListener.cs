@@ -35,8 +35,8 @@ namespace Massive
       Vector3d fwd = transform.Forward();
       Vector3D audiofwd = new Vector3D((float)fwd.X, (float)fwd.Y, (float)fwd.Z);
       
-      //engine.SetListenerPosition(pos, audiofwd);
-      //engine.Update();
+      engine.SetListenerPosition(pos, audiofwd);
+      engine.Update();
     }
 
   }
