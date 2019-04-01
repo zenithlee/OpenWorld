@@ -11,7 +11,7 @@ using System;
 
 namespace OpenWorld.Handlers
 {
-  public class MCameraHandler
+  public class MCameraHandler : MObject
   {
     MCamera _camera;
 
@@ -34,11 +34,13 @@ namespace OpenWorld.Handlers
     //MSceneObject Target;
 
     public MCameraHandler()
+      :base(EType.Other, "MCameraHandler")
     {
+      MScene.UtilityRoot.Add(this);
       _camera = MScene.Camera;
 
       Globals.Network.TeleportHandler += Network_TeleportHandler;
-      MMessageBus.UpdateHandler += MMessageBus_UpdateHandler;
+      //MMessageBus.UpdateHandler += MMessageBus_UpdateHandler;
       MStateMachine.StateChanged += MStateMachine_StateChanged;
     }
 
@@ -95,16 +97,24 @@ namespace OpenWorld.Handlers
         double offy = Settings.OffsetThirdPerson.Y;
         if (Globals.Avatar.Target != null)
         {
-          offy += Globals.Avatar.Target.Offset.Y;
+          //offy += Globals.Avatar.Target.Offset.Y;
         }
 
-        DestinationPosition = AP + Globals.Avatar.Up() * (offy)
-               - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;
+        DestinationPosition = AP 
+               + Globals.Avatar.Up() * (offy) 
+               + Globals.Avatar.Up() * _camera.CameraOffset.Y
+               - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z 
+               + Globals.Avatar.Forward() * _camera.CameraOffset.Z
+               ;
       }
       else
       {
-        DestinationPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
-               - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z;
+        DestinationPosition = AP 
+               + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
+               + Globals.Avatar.Up() * _camera.CameraOffset.Y
+               - Globals.Avatar.Forward() * Settings.OffsetThirdPerson.Z
+               + Globals.Avatar.Forward() * _camera.CameraOffset.Z
+               ;
 
         MScene.Camera.Focus.transform.Position = AP + Globals.Avatar.Forward() * 10;
       }
@@ -117,8 +127,9 @@ namespace OpenWorld.Handlers
 
       if (task.Result == true)
       {
-        RenderedPosition = AP + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
-             - Globals.Avatar.Forward() * 0.5;
+        RenderedPosition = AP 
+            + Globals.Avatar.Up() * Settings.OffsetThirdPerson.Y
+            - Globals.Avatar.Forward() * 0.5;
       }
       else
       {
@@ -130,10 +141,10 @@ namespace OpenWorld.Handlers
     {
       double dist = Vector3d.Distance(MScene.Camera.transform.Position, DestinationPosition);
 
-      double mult = 0.25;
+      double mult = 10.25;
       if (Globals.Avatar.MoveState == MAvatar.eMoveState.Run)
       {
-        mult = 1;
+        mult = 2;
       }
 
       if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Flying)
@@ -143,16 +154,25 @@ namespace OpenWorld.Handlers
 
       if (dist > 1000)
       {
-        mult = 2;
+        mult = 20;
       }
       //{
       //dist = MathHelper.Clamp(Speed * dist, 1, 10);
       MScene.Camera.transform.Position = Extensions.SmoothStep(MScene.Camera.transform.Position,
-        RenderedPosition, mult);
-      MScene.Camera.Focus.transform.Position = Extensions.SmoothStep(MScene.Camera.Focus.transform.Position, MScene.Camera.transform.Position + Globals.Avatar.Forward() * 10
-        + MScene.Camera.TargetOffset, mult);
+        RenderedPosition, mult * 0.05);
+      MScene.Camera.Focus.transform.Position = Extensions.SmoothStep(MScene.Camera.Focus.transform.Position, 
+        MScene.Camera.transform.Position + Globals.Avatar.Forward() * 10
+        + MScene.Camera.TargetOffset, mult * 0.1);
+      
       // }
       //else
+/*
+      MScene.Camera.transform.Position = Vector3d.Lerp(MScene.Camera.transform.Position,
+        RenderedPosition, mult * Time.DeltaTime);
+      MScene.Camera.Focus.transform.Position = Vector3d.Lerp(MScene.Camera.Focus.transform.Position,
+        MScene.Camera.transform.Position + Globals.Avatar.Forward() * 10
+        + MScene.Camera.TargetOffset, mult * Time.DeltaTime);
+        */
       {
         //MScene.Camera.transform.Position = RenderedPosition;        
         //MScene.Camera.Focus.transform.Position = AP + Globals.Avatar.Forward() * 10
@@ -194,13 +214,14 @@ namespace OpenWorld.Handlers
         }
         else
         {
+          //TODO: follow this event down the rabbit hole and optimize out where possible
           MMessageBus.AvatarMoved(this, Globals.UserAccount.UserID, AP, Globals.Avatar.GetRotation());
-          //Console.WriteLine("Click " + Globals.Avatar.GetRotation());
+          //Console.WriteLine("Avatar " + Globals.Avatar.GetRotation());
         }
       }
     }
 
-    public void Update()
+    public override void Update()
     {
       Throttle += Time.DeltaTime;
 
@@ -211,7 +232,8 @@ namespace OpenWorld.Handlers
       TargetUp = Globals.Avatar.Up();
 
       SetDestinationPosition(AP);
-      CheckClipping(AP);
+      //CheckClipping(AP);
+      RenderedPosition = DestinationPosition;
       UpdateMovement(AP);
       CheckNetworkUpdating(AP);
 

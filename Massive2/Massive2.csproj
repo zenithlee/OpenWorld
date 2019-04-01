@@ -142,6 +142,7 @@
     <Compile Include="src\Graphics\Character\MAnimatedModel.cs" />
     <Compile Include="src\Graphics\MGeomShader.cs" />
     <Compile Include="src\Graphics\Terrain\MGrass.cs" />
+    <Compile Include="src\Graphics\Terrain\MGrassPlanter.cs" />
     <Compile Include="src\Graphics\TexturedVertex.cs" />
     <Compile Include="src\Modules\Avatar\MAvatarSound.cs" />
     <Compile Include="src\Modules\Widgets\MLinker.cs" />
@@ -262,8 +263,10 @@
     <Compile Include="src\Tools\ImageTools.cs" />
     <Compile Include="src\Tools\MassiveTools.cs" />
     <Compile Include="src\Tools\MBackgroundQueue.cs" />
+    <Compile Include="src\Tools\MBarycentric.cs" />
     <Compile Include="src\Tools\ModelPool.cs" />
     <Compile Include="src\Tools\MGISTools.cs" />
+    <Compile Include="src\Tools\MPerlin.cs" />
     <Compile Include="src\Tools\MStateMachine.cs" />
     <Compile Include="src\Tools\RectD.cs" />
     <Compile Include="src\UI\MInputBox.cs" />

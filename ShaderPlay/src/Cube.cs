@@ -9,18 +9,20 @@ using System.Threading.Tasks;
 
 namespace ShaderPlay
 {
-  public class Cube
+  public class Cube : IModel
   {
-    int VAO = 0;
+    
     int VBO = 0;
 
-    public Cube(string _name)
+    public Cube()
     {
 
     }
 
-    public void CreateGeometry()
+    public override void Setup()
     {
+      base.Setup();
+
       float w = 0.5f;
       TexturedVertex[] Vertices = new TexturedVertex[] { 
             // back face
@@ -70,6 +72,8 @@ namespace ShaderPlay
         };
 
       GL.GenVertexArrays(1, out VAO);
+
+      GL.DeleteBuffer(VBO);
       GL.GenBuffers(1, out VBO);
       // fill buffer      
       GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
@@ -86,7 +90,7 @@ namespace ShaderPlay
       GL.BindVertexArray(0);
     }
 
-    public void Render()
+    public override void Render()
     {
       // render Cube
       GL.BindVertexArray(VAO);

@@ -12,6 +12,7 @@ namespace Massive
   {
     public const string DEFAULT_MATERIAL = "MATERIAL01";
 
+    public bool IsUsed = false;
     public MShader shader { get; set; }
     public string MaterialID;
 
@@ -34,6 +35,9 @@ namespace Massive
     public bool UseNormalMap = false;
 
     public int IsSky = 0;
+    public bool Dirty = true;
+
+    public int pEditor = 1;
 
     public MMaterial(string inname) : base(EType.Material, inname)
     {
@@ -44,20 +48,24 @@ namespace Massive
       if (shader != null)
       {
         shader.Bind();
-        shader.SetInt("isSky", IsSky);
-        shader.SetInt("Editor", Globals.Editor);
-        //shader.SetFloat("Ambient", (float)Ambient);
-        shader.SetFloat("Opacity", (float)Opacity);
+        if (Dirty == true)
+        {
+          shader.SetInt("isSky", IsSky);          
+          shader.SetInt("Editor", Globals.Editor);
+          pEditor = Globals.Editor;
+          shader.SetBool("UseMultitexture", UseMultitexture);
+          shader.SetBool("UseNormalMap", UseNormalMap);
+          shader.SetFloat("material.shininess", (float)Shininess);
+          shader.SetVec2("TexCoordScale", TexCoordScale);
+          shader.SetVec2("Tex2CoordScale", Tex2CoordScale);
+          shader.SetFloat("Opacity", (float)Opacity);
+          shader.SetFloat("Ambient", (float)Ambient);          
+          Dirty = false;
+        }
         shader.SetFloat("iTime", (float)Time.TotalTime * 0.001f);
-        shader.SetVec2("TexCoordScale", TexCoordScale);
-       // Tex2CoordScale.X = Tex2CoordScale.Y = Settings.Tweak1;
-        shader.SetVec2("Tex2CoordScale", Tex2CoordScale);
-        shader.SetBool("UseMultitexture", UseMultitexture);
-        shader.SetBool("UseNormalMap", UseNormalMap);
-        shader.SetFloat("material.shininess", (float)Shininess);
       }
 
-      if ( DiffuseTexture == null)
+      if (DiffuseTexture == null)
       {
         //GL.BindTexture(TextureTarget.Texture2D, 0);
       }

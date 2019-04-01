@@ -5,6 +5,7 @@ using OpenWorld.Controllers;
 using OpenWorld.Forms;
 using OpenWorld.Handlers;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -20,7 +21,7 @@ namespace OpenWorld
     MKeyboardHandler keyboardHandler;
     MMouseHandler mouseHandler;
     InfoOverlayForm _infoForm;
-    WindowManager _windowManager;
+    WindowManager _windowManager;    
 
     public static Rectangle ClientRect;
 
@@ -28,7 +29,7 @@ namespace OpenWorld
     {
       InitializeComponent();
       SetupGLControl();
-      Globals.GUIThreadOwner = this;
+      Globals.GUIThreadOwner = this;      
     }
 
     private void Form1_Load(object sender, EventArgs e)
@@ -63,6 +64,8 @@ namespace OpenWorld
 
     private void Application_Idle(object sender, EventArgs e)
     {
+      keyboardHandler.Update();
+      openWorld.Update();
       if (Settings.DebugRender == false)
       {
         openWorld.Render();
@@ -72,8 +75,7 @@ namespace OpenWorld
 
     private void timer1_Tick(object sender, EventArgs e)
     {
-      keyboardHandler.Update();
-      openWorld.Update();
+      
     }
 
     void SetupGLControl()

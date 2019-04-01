@@ -216,6 +216,8 @@ namespace Massive
       {
         MPlanetHandler mpi = new MPlanetHandler();
         UtilityRoot.Add(mpi);
+        MGrass grass = new MGrass();
+        Background2.Add(grass);
       }
 
       Priority1 = new MObject(MObject.EType.Null, "Priority1");
@@ -357,7 +359,7 @@ namespace Massive
     {
       if (Playing == false) return;
 
-      Console.WriteLine(Globals.Tasks);
+      //Console.WriteLine(Globals.Tasks);
 
       UtilityRoot.Update();
       ModelRoot.Update();
@@ -367,7 +369,7 @@ namespace Massive
         Background2.Update();
       }
 
-      MMessageBus.NotifyUpdate(this);
+     // MMessageBus.NotifyUpdate(this);
       Overlay.Update();
       MMessageBus.NotifyLateUpdate(this);
     }
@@ -409,10 +411,11 @@ namespace Massive
       for (int i = 0; i < MaterialRoot.Modules.Count; i++)
       {
         MMaterial mat = (MMaterial)MaterialRoot.Modules[i];
+        if (mat.IsUsed == false) continue;
         mat.shader.Bind();
         mat.shader.SetMat4("view", MTransform.GetFloatMatrix(view));
         mat.shader.SetMat4("projection", MTransform.GetFloatMatrix(projection));
-        mat.shader.SetVec3("Tweak", new Vector3(Settings.Tweak1, Settings.Tweak2, Settings.Tweak3));
+        mat.shader.SetVec4("Tweak", new Vector4(Settings.Tweak1, Settings.Tweak2, Settings.Tweak3, Settings.Tweak4));
 
         // set light uniforms
         Fog.Bind(mat.shader);
@@ -455,6 +458,7 @@ namespace Massive
         GL.Enable(EnableCap.DepthTest);
        
         Background.Render(lightmatrix, offsetmat);
+        GL.Clear(ClearBufferMask.DepthBufferBit);
         Background2.Render(lightmatrix, offsetmat);        
         ModelRoot.Render(lightmatrix, offsetmat);
         Globals.RenderPass = Globals.eRenderPass.Normal;

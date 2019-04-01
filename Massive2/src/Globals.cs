@@ -47,6 +47,7 @@ namespace Massive
       return rot;
     }
 
+    //Important: The offset required to bring the double-precision scene into single-precision range.
     public static Vector3d GlobalOffset = Vector3d.Zero;
     public static Vector3d GlobalOffsetCalc = Vector3d.Zero;
 

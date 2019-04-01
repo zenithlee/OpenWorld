@@ -10,13 +10,12 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace ShaderPlay
 {
-  class Renderer
+  public class Renderer
   {
-    Cube cube;
-    Triangle triangle;
+    public enum eModels { Triangle, Cube, Sphere, Plane, Model};
+    public eModels Model;
 
-    int depthMapFBO;
-    int depthMap;
+    IModel CurrentModel;    
 
     public MShader simpleDepthShader;
     public MShader debugDepthQuad;
@@ -24,7 +23,10 @@ namespace ShaderPlay
     bool IsSetup = false;
     public bool ShowNormals = false;
 
-    float Rotation = 45;
+    float XRotation = 45;
+    float YRotation = 45;
+    float ZRotation = 45;
+
     public bool DoRotation = true;
 
     MShader _shader;
@@ -32,22 +34,35 @@ namespace ShaderPlay
     MTexture _texture;
     MCamera _camera;
 
-    Vector3 lightPos = new Vector3(1, 1, 1);
+    Vector3 lightPos = new Vector3(2, 2, 2);
 
     public Renderer()
     {
+      Globals.renderer = this;
+    }
 
+    public void SetModel(eModels newmodel)
+    {
+      Model = newmodel;
+
+      switch (Model)
+      {
+        case eModels.Cube:
+          CurrentModel = new Cube();
+          break;
+        case eModels.Triangle:
+          CurrentModel = new Triangle();          
+          break;
+      }
+
+      CurrentModel.Setup();
     }
 
     public void Setup(MShader shader)
     {
       _shader = shader;
-      cube = new Cube("Cube");
-      cube.CreateGeometry();
-
-      triangle = new Triangle();
-      triangle.Setup();
-
+      CurrentModel = new Cube();
+      CurrentModel.Setup();
 
       _camera = new MCamera();
       _camera.Setup();
@@ -98,6 +113,7 @@ namespace ShaderPlay
 
       _texture = new MTexture();
       _texture.Setup(@"textures\wood.png", @"textures\asteroid01.jpg");
+      Globals.texture = _texture;
 
       IsSetup = true;
     }
@@ -120,12 +136,14 @@ namespace ShaderPlay
 
       if ( DoRotation == true)
       {
-        Rotation += 0.5f;
+        XRotation += 0.5f;
+        YRotation += 0.5f;
+        ZRotation += 0.5f;
       }
       
-      float xr = Rotation * (float)Math.PI / 180.0f;
-      float yr = Rotation * (float)Math.PI / 180.0f;
-      float zr = Rotation * 1.2f * (float)Math.PI / 180.0f;
+      float xr = XRotation * (float)Math.PI / 180.0f;
+      float yr = YRotation * (float)Math.PI / 180.0f;
+      float zr = ZRotation * 1.2f * (float)Math.PI / 180.0f;
       Matrix4 model = Matrix4.Identity;
       model =
         Matrix4.CreateScale(1f, 1f, 1f) *
@@ -137,9 +155,8 @@ namespace ShaderPlay
       _shader.SetMat4("model", model);
       _shader.SetFloat("time", time);
       _shader.SetVec3("lightPos", lightPos);
-
       
-      cube.Render();
+      CurrentModel.Render();
       if (ShowNormals == true)
       {
          GL.Clear( ClearBufferMask.DepthBufferBit);
@@ -147,8 +164,7 @@ namespace ShaderPlay
         _geoShader.SetMat4("projection", _camera.GetMatrix());
         _geoShader.SetMat4("view", _camera.GetView());
         _geoShader.SetMat4("model", model);      
-        cube.Render();
-       
+        CurrentModel.Render();       
       }
 
     }

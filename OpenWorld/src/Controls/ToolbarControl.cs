@@ -1,4 +1,5 @@
-﻿using Massive.Events;
+﻿using Massive;
+using Massive.Events;
 using OpenWorld.Forms;
 using System;
 using System.Windows.Forms;
@@ -9,7 +10,7 @@ namespace OpenWorld.Controls
   {
     ChatForm _chatForm;
     BuildForm _buildForm;
-    
+
     public ToolbarControl()
     {
       InitializeComponent();
@@ -62,8 +63,18 @@ namespace OpenWorld.Controls
 
     private void ModeButton_Click(object sender, EventArgs e)
     {
-      MMessageBus.ChangeModeRequest(this, Massive.MAvatar.eMoveMode.Flying);
-      MMessageBus.GravityStateChanged(this, new BooleanEvent(false));
+      if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Flying)
+      {
+        MMessageBus.ChangeModeRequest(this, Massive.MAvatar.eMoveMode.Walking);
+        MMessageBus.GravityStateChanged(this, new BooleanEvent(true));
+      }
+      else
+      {
+        MMessageBus.ChangeModeRequest(this, Massive.MAvatar.eMoveMode.Flying);
+        MMessageBus.GravityStateChanged(this, new BooleanEvent(false));
+      }
+
+      
     }
   }
 }

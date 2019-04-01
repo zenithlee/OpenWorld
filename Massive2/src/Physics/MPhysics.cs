@@ -111,17 +111,17 @@ namespace Massive
     //do all bullet related setup things on the bullet thread
     private void _backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      collisionConf = new DefaultCollisionConfiguration();      
+      collisionConf = new DefaultCollisionConfiguration();
       //try 
       //dispatcher = new CollisionDispatcherMultiThreaded(collisionConf); //crashes
       dispatcher = new CollisionDispatcher(collisionConf);
 
       broadphase = new DbvtBroadphase();
       //ConstraintSolver solver = new MultiBodyConstraintSolver();
-      ConstraintSolver solver = new MultiBodyConstraintSolver();      
+      ConstraintSolver solver = new MultiBodyConstraintSolver();
 
       World = new DiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConf);
-      World.SolverInfo.NumIterations = 8;      
+      World.SolverInfo.NumIterations = 8;
       World.DispatchInfo.UseContinuous = true;
       World.DispatchInfo.UseEpa = false;
 
@@ -162,12 +162,18 @@ namespace Massive
       RaycastsPending.Add(_rayTask);
     }
 
+    bool inside = false;
     public MRaycastTask RayCast(Vector3d From, Vector3d To)
     {
+
       MRaycastTask task = new MRaycastTask();
       task.From = From;
       task.To = To;
       Vector3d Result = To;
+      if (inside == true) return task;
+      inside = true;
+
+
       ClosestRayResultCallback rc = new ClosestRayResultCallback();
       //rc.CollisionFilterMask = CollisionFilterGroups.StaticFilter;
       rc.ClosestHitFraction = 0.8;
@@ -175,18 +181,21 @@ namespace Massive
       rc.RayFromWorld = From;
       rc.RayToWorld = To;
 
-      try { 
-      World.RayTestRef(ref From, ref To, rc);
-      } catch ( Exception e)
-      {
-        Console.WriteLine("MPhysics.RayCast:" +e.Message);
-      }
+      //try
+     // {
+        World.RayTestRef(ref From, ref To, rc);
+      //}
+      //catch (Exception e)
+     // {
+      //  Console.WriteLine("MPhysics.RayCast:" + e.Message);
+      //}
 
       if (rc.HasHit)
       {
         task.Result = true;
         task.Hitpoint = rc.HitPointWorld;
         task.Hitnormal = rc.HitNormalWorld;
+        inside = false;
         return task;
       }
 
@@ -208,7 +217,7 @@ namespace Massive
         task.Hitpoint = cc.HitPointWorld;
         task.Hitnormal = cc.HitNormalWorld;
       }
-
+      inside = false;
       return task;
     }
 
@@ -366,19 +375,19 @@ namespace Massive
         {
           //TODO: unstable
           foreach (CollisionObject co in World.CollisionObjectArray)
-          {  
-            
-            if ( co.UserObject != null)
+          {
+
+            if (co.UserObject != null)
             {
               MSceneObject mso = (MSceneObject)co.UserObject;
-              if ( mso != null)
+              if (mso != null)
               {
                 if (mso.Type == EType.Terrain) continue; //very heavy, rather skip               
               }
             }
-           // if (co.CollisionShape.IsConvex)
+            // if (co.CollisionShape.IsConvex)
             {
-             // Console.WriteLine(co.UserObject.ToString());
+              // Console.WriteLine(co.UserObject.ToString());
               World.DebugDrawObject(co.WorldTransform, co.CollisionShape, Color4.AntiqueWhite);
             }
           }
@@ -393,15 +402,14 @@ namespace Massive
     {
       MPhysicsObject por = new MPhysicsObject(po.Target, po.Name, po.Mass, MPhysicsObject.EShape.ConcaveMesh, false, po.CreateScale);
       po.Target.Modules.Remove(po);
+      po.Target.Notify("PhysicsProxyComplete");
       Globals.Tasks--;
       return po;
     }
 
     public void DoPhysicsUpdate()
     {
-      //BackgroundWorker worker = (BackgroundWorker)sender;
       while (!_backgroundWorker.CancellationPending)
-      //while (Globals.ApplicationExiting == false)
       {
 
         if (Globals.ApplicationExiting == true)
@@ -426,17 +434,17 @@ namespace Massive
           MPhysicsObject po = AddQueue[0];
           AddQueue.RemoveAt(0);
 
-          if ( po.IsProxy == true)
+          if (po.IsProxy == true)
           {
             po = SwapProxy(po);
           }
-          if ((World != null ) && (!World.CollisionObjectArray.Contains(po._rigidBody)))
+          if ((World != null) && (!World.CollisionObjectArray.Contains(po._rigidBody)))
           {
             World.AddRigidBody(po._rigidBody);
           }
         }
 
-        if ((RemoveQueue.Count > 0) && ( World!= null))
+        if ((RemoveQueue.Count > 0) && (World != null))
         {
           MPhysicsObject po = RemoveQueue[0];
           RemoveQueue.RemoveAt(0);
@@ -445,16 +453,16 @@ namespace Massive
 
         if (World != null)
         {
-         // try
-         // {
-            World.StepSimulation(Time.DeltaTime, 10);
-         // }
+          // try
+          // {
+          World.StepSimulation(0.05 , 10);
+          // }
           //catch (Exception e)
-         // {
-           // Console.Error.WriteLine("EXCEPTION: MPhysics StepSimulation : " + e.Message);
-         // }
+          // {
+          // Console.Error.WriteLine("EXCEPTION: MPhysics StepSimulation : " + e.Message);
+          // }
         }
-        Thread.Sleep(3);
+        Thread.Sleep(20);
       }
       Thread.Sleep(100);
       DisposeWorld();

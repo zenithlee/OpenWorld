@@ -66,7 +66,7 @@ namespace ShaderPlay
       if (shader != null)
       {
        string Result= shader.CompileFragment(FragmentShaderEditor.Text);
-        FragmentResult.Text = Result;
+        ResultBox.Text = Result;
        
       }
     }
@@ -79,7 +79,7 @@ namespace ShaderPlay
       if (shader != null)
       {
         string Result = shader.CompileVertexShader(VertexEditor.Text);
-        VertexShaderResult.Text = Result;
+        ResultBox.Text = Result;
        
       }
     }
@@ -92,6 +92,26 @@ namespace ShaderPlay
     private void RotationCheck_CheckedChanged(object sender, EventArgs e)
     {
       renderer.DoRotation = RotationCheck.Checked;
+    }
+
+    private void TriangleButton_CheckedChanged(object sender, EventArgs e)
+    {
+      renderer.SetModel(Renderer.eModels.Triangle);
+    }
+
+    private void CubeButton_CheckedChanged(object sender, EventArgs e)
+    {
+      renderer.SetModel(Renderer.eModels.Cube);
+    }
+
+    private void SphereButton_CheckedChanged(object sender, EventArgs e)
+    {
+      renderer.SetModel(Renderer.eModels.Sphere);
+    }
+
+    private void PlaneButton_CheckedChanged(object sender, EventArgs e)
+    {
+      renderer.SetModel(Renderer.eModels.Plane);
     }
   }
 }

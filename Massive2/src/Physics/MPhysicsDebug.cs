@@ -64,7 +64,7 @@ namespace Massive
         Console.WriteLine(info);
       }
       
-      Helper.CheckGLError(new MObject(MObject.EType.Other, "MPhysicsDebug"));
+      //Helper.CheckGLError(new MObject(MObject.EType.Other, "MPhysicsDebug"));
       int fshader = GL.CreateShader(ShaderType.FragmentShader);
       GL.ShaderSource(fshader, @"#version 430
             out vec4 fragColor;

@@ -35,6 +35,7 @@ namespace Massive.Graphics.Character
     List<BoneMatrix> m_bone_matrices = new List<BoneMatrix>();        
     public MAnimationController _animationController;    
     Matrix4x4[] transforms = new Matrix4x4[MAX_BONES];
+    public Vector3d BoneOffset = Vector3d.Zero;
 
 
     public static Matrix4[] debug_transforms = new Matrix4[MAX_BONES];
@@ -76,6 +77,7 @@ namespace Massive.Graphics.Character
       m.SetMaterial(material);
       //m.Meshes = Meshes;
       m.scene = scene;
+      m.BoneOffset = BoneOffset;
       m.m_global_inverse_transform = m_global_inverse_transform;
       m.m_num_bones = m_num_bones;
       m.m_bone_matrices = m_bone_matrices;
@@ -333,7 +335,17 @@ namespace Massive.Graphics.Character
     public override void Update()
     {
       _animationController.Update();
-      
+      Animation ani = _animationController.GetCurrentAnimation();
+      if (ani != null)
+      {
+        _animationController.TotalTime = ani.DurationInTicks;
+        CalcAnimation2(scene.RootNode, ani, Matrix4x4.Identity);
+        for (uint i = 0; i < m_num_bones; i++)
+        {
+          transforms[i] = m_bone_matrices[(int)i].final_world_transform
+            * Matrix4x4.FromTranslation(new Vector3D((float)BoneOffset.X, (float)BoneOffset.Y, (float)BoneOffset.Z));
+        }
+      }
 
       base.Update();
     }
@@ -354,20 +366,10 @@ namespace Massive.Graphics.Character
         bonesLocation = material.shader.GetLocation("bones");
       }
 
-      Animation ani = _animationController.GetCurrentAnimation();
-      if (ani != null)
-      {
-        _animationController.TotalTime = ani.DurationInTicks;
-        CalcAnimation2(scene.RootNode, ani, Matrix4x4.Identity);
-        for (uint i = 0; i < m_num_bones; i++)
-        {
-          transforms[i] = m_bone_matrices[(int)i].final_world_transform 
-            * Matrix4x4.FromTranslation(new Vector3D((float)Offset.X, (float)Offset.Y, (float)Offset.Z));
-        }
-      }
+     
       
       //upload animated bones to GPU
-      GL.UniformMatrix4(bonesLocation, transforms.Length, true, ref transforms[0].A1);    
+      GL.UniformMatrix4(bonesLocation, transforms.Length, true, ref transforms[0].A1);
 
       base.Render(viewproj, parentmodel);
 

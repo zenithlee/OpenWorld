@@ -12,8 +12,9 @@ namespace Massive.Graphics.Character
     public float FrameCounter = 0;
     public double TotalTime = 5;    
     MAnimatedModel _model;    
-    float BaseSpeed = 1.2f;
+    float BaseSpeed = 100.2f;
     float Speed = 1;
+    Animation CurrentAnimation = null;
 
     public void Setup(MAnimatedModel model)
     {
@@ -28,13 +29,14 @@ namespace Massive.Graphics.Character
 
     public void Update()
     {
-      FrameCounter += BaseSpeed + (float)Speed; //= (float)Time.DeltaTime ;
+      FrameCounter += (BaseSpeed + (float)Speed) * (float)Time.DeltaTime ;
       if (FrameCounter > TotalTime) FrameCounter = 0;
     }
 
     public Animation GetCurrentAnimation()
     {
-      return FindAnimation(_model.scene, sActiveAnimation);
+      //return FindAnimation(_model.scene, sActiveAnimation);
+      return CurrentAnimation;
     }
 
     public Animation FindAnimation(Scene scene, string sName)
@@ -50,25 +52,18 @@ namespace Massive.Graphics.Character
     }
 
     public void PlayAnimation(string sName, float inspeed)
-    {
-      
+    {      
       Speed = inspeed;
-      Animation ani = FindAnimation(_model.scene, sName);
-      if (ani != null)
+      CurrentAnimation = FindAnimation(_model.scene, sName);
+      if (CurrentAnimation != null)
       {
         sActiveAnimation = sName;
-        TotalTime = ani.DurationInTicks;
+        TotalTime = CurrentAnimation.DurationInTicks;
         if (FrameCounter >= TotalTime)
         {
           FrameCounter = 0;
         }
       }
-
-      //if ( _model != null) { 
-      //SetAnimation(sActiveAnimation, Speed);
-      //}
     }
-
-
   }
 }

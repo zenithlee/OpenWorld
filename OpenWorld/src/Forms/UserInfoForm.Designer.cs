@@ -30,6 +30,7 @@
     {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserInfoForm));
       this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+      this.Avatar6 = new System.Windows.Forms.RadioButton();
       this.Avatar5 = new System.Windows.Forms.RadioButton();
       this.Avatar4 = new System.Windows.Forms.RadioButton();
       this.Avatar3 = new System.Windows.Forms.RadioButton();
@@ -53,7 +54,6 @@
       this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
       this.UpdateDetailsButton = new System.Windows.Forms.Button();
       this.CloseButton = new System.Windows.Forms.Button();
-      this.Avatar6 = new System.Windows.Forms.RadioButton();
       this.tableLayoutPanel4.SuspendLayout();
       this.tableLayoutPanel3.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
@@ -83,6 +83,21 @@
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel4.Size = new System.Drawing.Size(390, 58);
       this.tableLayoutPanel4.TabIndex = 13;
+      // 
+      // Avatar6
+      // 
+      this.Avatar6.Appearance = System.Windows.Forms.Appearance.Button;
+      this.Avatar6.AutoSize = true;
+      this.Avatar6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Avatar6.BackgroundImage")));
+      this.Avatar6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+      this.Avatar6.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.Avatar6.Location = new System.Drawing.Point(323, 3);
+      this.Avatar6.Name = "Avatar6";
+      this.Avatar6.Size = new System.Drawing.Size(64, 52);
+      this.Avatar6.TabIndex = 10;
+      this.Avatar6.Text = "6";
+      this.Avatar6.UseVisualStyleBackColor = true;
+      this.Avatar6.CheckedChanged += new System.EventHandler(this.Avatar6_CheckedChanged);
       // 
       // Avatar5
       // 
@@ -416,21 +431,6 @@
       this.CloseButton.TabIndex = 17;
       this.CloseButton.Text = "X";
       this.CloseButton.UseVisualStyleBackColor = false;
-      // 
-      // Avatar6
-      // 
-      this.Avatar6.Appearance = System.Windows.Forms.Appearance.Button;
-      this.Avatar6.AutoSize = true;
-      this.Avatar6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Avatar6.BackgroundImage")));
-      this.Avatar6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-      this.Avatar6.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.Avatar6.Location = new System.Drawing.Point(323, 3);
-      this.Avatar6.Name = "Avatar6";
-      this.Avatar6.Size = new System.Drawing.Size(64, 52);
-      this.Avatar6.TabIndex = 10;
-      this.Avatar6.Text = "6";
-      this.Avatar6.UseVisualStyleBackColor = true;
-      this.Avatar6.CheckedChanged += new System.EventHandler(this.Avatar6_CheckedChanged);
       // 
       // UserInfoForm
       // 

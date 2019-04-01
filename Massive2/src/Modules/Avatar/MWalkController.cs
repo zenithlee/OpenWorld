@@ -14,9 +14,24 @@ namespace Massive
     {
     }
 
+    public override void Bank(double b)
+    {
+      throw new NotImplementedException();
+    }
+
     public override void Brake(double b)
     {
       throw new NotImplementedException();
+    }
+
+    public override bool Equals(object obj)
+    {
+      return base.Equals(obj);
+    }
+
+    public override int GetHashCode()
+    {
+      return base.GetHashCode();
     }
 
     public override void Jump(double b)
@@ -32,6 +47,31 @@ namespace Massive
     public override void MouseWheel(double b)
     {
       Settings.OffsetThirdPerson.Z += b;
+    }
+
+    public override void Pitch(double b)
+    {
+      throw new NotImplementedException();
+    }
+
+    public override void Throttle(double b)
+    {
+      throw new NotImplementedException();
+    }
+
+    public override string ToString()
+    {
+      return base.ToString();
+    }
+
+    public override void Update()
+    {
+      //throw new NotImplementedException();
+    }
+
+    public override void Yaw(double b)
+    {
+      throw new NotImplementedException();
     }
   }
 }

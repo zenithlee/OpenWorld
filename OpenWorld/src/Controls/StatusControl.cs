@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Massive.Events;
+using System.Diagnostics;
 
 namespace OpenWorld.src.Controls
 {
@@ -17,6 +18,9 @@ namespace OpenWorld.src.Controls
   {
     public Color ErrorColor = Color.LightCoral;
     public Color DefaultColor = Color.White;
+
+    Stopwatch _stopwatch = new Stopwatch();
+    long PreviousMS = 0;
 
     public StatusControl()
     {
@@ -29,6 +33,15 @@ namespace OpenWorld.src.Controls
       MMessageBus.InfoEventHandler += MMessageBus_InfoEventHandler;
       MMessageBus.AvatarMovedEvent += MMessageBus_AvatarMovedEvent;
       MMessageBus.UserRegistered += MMessageBus_UserRegistered;
+      MMessageBus.LateUpdateHandler += MMessageBus_LateUpdateHandler;
+      _stopwatch.Start();
+    }
+
+    private void MMessageBus_LateUpdateHandler(object sender, UpdateEvent e)
+    {
+      long t = _stopwatch.ElapsedMilliseconds - PreviousMS;
+      FPSCounterLable.Text = t.ToString();
+      PreviousMS = _stopwatch.ElapsedMilliseconds;
     }
 
     private void MMessageBus_UserRegistered(object sender, ChangeDetailsEvent e)

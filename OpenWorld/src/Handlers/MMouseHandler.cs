@@ -108,7 +108,7 @@ namespace OpenWorld
 
     private void C_MouseMove(object sender, MouseEventArgs e)
     {
-     // Initialize();
+      // Initialize();
 
       if (isDown == true)
       {
@@ -160,10 +160,10 @@ namespace OpenWorld
 
       //Quaterniond rot2 =        
       //Quaterniond.FromEulerAngles(0, dx, 0);
-      Globals.Avatar.SetRotation(rot);      
-      Globals.Avatar.InputRollHDirect(accx*100);
+      Globals.Avatar.SetRotation(rot);
+      Globals.Avatar.InputRollHDirect(accx * 100);
       double dist = Vector3d.Distance(MScene.Camera.transform.Position, MScene.Camera.transform.Position + MScene.Camera.TargetOffset);
-      if (dist < 45)
+      if (dist < 90)
       {
         MScene.Camera.TargetOffset += Globals.LocalUpVector * dy * 0.05;
       }
@@ -182,12 +182,12 @@ namespace OpenWorld
       double dx = (e.X - DownPoint.X) * mult;
 
       //Quaterniond rot = Globals.Avatar.GetTargetRotation()
-        //* Quaterniond.FromEulerAngles(0, -dx * Math.PI / 180.0, 0)
+      //* Quaterniond.FromEulerAngles(0, -dx * Math.PI / 180.0, 0)
       //* Quaterniond.FromEulerAngles(0, 0, dy * Math.PI / 180.0);
 
       //Globals.Avatar.SetRotation(rot);
-      Globals.Avatar.InputRollHDirect(dx * 0.5);
-      Globals.Avatar.InputPitchVDirect(dy * 0.5);
+      Globals.Avatar.InputYawHDirect(-dx * 0.05);
+      Globals.Avatar.InputPitchVDirect(dy * 0.15);
 
       DownPoint = e;
 
@@ -337,7 +337,7 @@ namespace OpenWorld
           else
           if (!mo.OwnerID.Equals(Globals.UserAccount.UserID))
           {
-            MMessageBus.Status(this, "ID:" + mo.Index + " Object " + mo.Name + "," +mo.InstanceID);
+            MMessageBus.Status(this, "ID:" + mo.Index + " Object " + mo.Name + "," + mo.InstanceID);
           }
           // else
           {
@@ -347,7 +347,7 @@ namespace OpenWorld
             MMessageBus.Status(this, "Selected:" + mo.TemplateID + "," + mo.InstanceID);
           }
         }
-        
+
 
         MScene.SelectedObject = mo;
       }
@@ -359,6 +359,8 @@ namespace OpenWorld
 
     private void GlControl1_MouseWheel(object sender, MouseEventArgs e)
     {
+      Globals.Avatar.MouseWheel(e.Delta > 0 ? 1 : -1);
+      /*
       if (MStateMachine.CurrentState == MStateMachine.eStates.Viewing)
       {
         double mult = 1;
@@ -376,6 +378,7 @@ namespace OpenWorld
           Globals.Avatar.InputV(Time.DeltaTime * -200 * mult);
         }
       }
+      */
       //if (Math.Abs(_Scene.camera.Offset.X + _Scene.camera.Offset.Y + _Scene.camera.Offset.Z) < 0.1)
       //{
       //        _Scene.camera.Offset = new Vector3d(1, 1, 1);

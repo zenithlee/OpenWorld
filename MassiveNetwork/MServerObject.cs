@@ -33,7 +33,7 @@ namespace Massive.Network
     public double[] Position = new double[3] { 0, 0, 0 };
     public double[] Rotation = new double[4] { 0, 0, 0, 1 };
     public double[] Scale = new double[3];
-    public double[] Offset = new double[3];
+    public double[] BoneOffset = new double[3];
     public double Radius = 200;
 
     public string Serialize()

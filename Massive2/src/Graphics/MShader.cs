@@ -86,6 +86,13 @@ namespace Massive
       GL.Uniform3(location, ref v);
     }
 
+    public void SetVec4(string name, Vector4 v)
+    {
+      //int location = GL.GetUniformLocation(ProgramID, name);
+      int location = GetLocation(name);
+      GL.Uniform4(location, ref v);
+    }
+
     public void SetVec3d(string name, Vector3d v)
     {
       //int location = GL.GetUniformLocation(ProgramID, name);

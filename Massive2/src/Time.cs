@@ -24,11 +24,11 @@ namespace Massive
     
     public override void Update()
     {
-      FrameCount++;
+      FrameCount++;      
       TotalTime = stopwatch.ElapsedMilliseconds;
       DeltaTimeMS = TotalTime - PreviousTime;
       PreviousTime = TotalTime;
-      DeltaTime = DeltaTimeMS * 0.001;     
+      DeltaTime = DeltaTimeMS * 0.001;
     }
   }
 }

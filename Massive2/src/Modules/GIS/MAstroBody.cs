@@ -38,7 +38,9 @@ namespace Massive.GIS
     public double AvatarDistanceToSurface = double.MaxValue;
     public Vector3d DirectionToAvatar = Vector3d.Zero;
     public int ZoomLevel = 14;
-    
+    public Vector3d CurrentTileIndex;
+    public MTerrainTile CurrentTile;
+
     //distance in m at which physics is generated for a tile. Landing on a tile with no physics means user falls through
     //if they fall through and physics is generated, they will be stuck underground.
     //TODO: either create smaller physics areas that gen faster, or lift user above ground if they're below.
@@ -93,21 +95,21 @@ namespace Massive.GIS
     {
       if (_terrainHandler == null) return;
 
-      Vector3d TilePos = GetTileFromPoint(e.Position);
+      CurrentTileIndex = GetTileFromPoint(e.Position);
       Vector3d LonLat = GetLonLatOnShere(e.Position);
-      //Console.WriteLine(AvatarDistanceToSurface);
-
+      //Console.WriteLine(AvatarDistanceToSurface);      
+      CurrentTile = _terrainHandler.GetTile((int)CurrentTileIndex.X, (int)CurrentTileIndex.Y, ZoomLevel);
       //If we're near enough to a planet to see the surface detail, show any nearby tiles
       if (AvatarDistanceToSurface < DistanceToPlanetThreshold)
       {        
         int NumTiles = Settings.MaxTerrains;
-        _terrainHandler.GetPOI((int)TilePos.X, (int)TilePos.Y, LonLat);
+        _terrainHandler.GetPOI((int)CurrentTileIndex.X, (int)CurrentTileIndex.Y, LonLat);
 
         for (int y = -NumTiles; y <= NumTiles; y++)
         {
           for (int x = -NumTiles; x <= NumTiles; x++)
           {
-            _terrainHandler.UpdateTileMesh((int)TilePos.X + x, (int)TilePos.Y + y, (int)TilePos.Z, LonLat);            
+            _terrainHandler.UpdateTileMesh((int)CurrentTileIndex.X + x, (int)CurrentTileIndex.Y + y, (int)CurrentTileIndex.Z, LonLat);            
           }
         }
       }      

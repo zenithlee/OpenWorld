@@ -88,7 +88,7 @@ namespace Massive
             z);
           //Vector3d PlantingPos = planet.GetNearestPointOnSphere(Treepos, 0);
           Matrix4d TreeScale = Matrix4d.Scale(1+ran.NextDouble(), 1 + ran.NextDouble()*2, 1 + ran.NextDouble());
-          Vector3d PlantingPos = Tile.GetPointOnSurface(Treepos); //; + new Vector3d(r.NextDouble()*5, r.NextDouble() * 5, r.NextDouble()*5);
+          Vector3d PlantingPos = Tile.GetPointOnSurfaceFromGrid(Treepos); //; + new Vector3d(r.NextDouble()*5, r.NextDouble() * 5, r.NextDouble()*5);
           Matrix4d TreePosition = Matrix4d.CreateTranslation(PlantingPos);
           //find point at y with raycast
           Matrix4 final = MTransform.GetFloatMatrix(TreeScale * TreeRotation * TreePosition);
@@ -204,9 +204,9 @@ namespace Massive
       GL.BindBuffer(BufferTarget.ElementArrayBuffer, treemesh.EBO);
 
       GL.GenBuffers(1, out instanceVBO);
-      Helper.CheckGLError(this);      
+      //Helper.CheckGLError(this);      
       UploadBufferFull();
-      Helper.CheckGLError(this);
+      //Helper.CheckGLError(this);
 
       GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
       GL.BindVertexArray(0);
@@ -225,6 +225,7 @@ namespace Massive
 
     void SetupMaterial()
     {
+      /*
       MShader TreeShader = new MShader("TreeShader");
       TreeShader.Load("default_v.glsl",
         "default_f.glsl",
@@ -242,10 +243,10 @@ namespace Massive
       Avatar1Mat.AddShader(TreeShader);
       Avatar1Mat.SetDiffuseTexture(Globals.TexturePool.GetTexture("Textures\\avatar01.jpg"));
       MScene.MaterialRoot.Add(Avatar1Mat);
-     
+     */
 
-      MMaterial InstanceMat = new MMaterial("InstanceMaterial");
-      MShader shader = new MShader("InstanceShader");
+      MMaterial InstanceMat = new MMaterial("ForestMaterialInstanced");
+      MShader shader = new MShader("ForestShaderInstanced");
       //shader.LoadFromString(sVertexShader, sFragmentShader);
       shader.Load("instanced_v.glsl",
         "instanced_f.glsl",
@@ -302,7 +303,7 @@ namespace Massive
 
       material.Render(viewproj, parentmodel);      
       GL.DrawArraysInstanced(PrimitiveType.Triangles, 0, treemesh.Vertices.Length, TotalInstances);      
-      Helper.CheckGLError(this);
+     // Helper.CheckGLError(this);
       GL.BindVertexArray(0);
       material.UnBind();
       base.Render(viewproj, parentmodel);

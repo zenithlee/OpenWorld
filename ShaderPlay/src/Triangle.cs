@@ -8,12 +8,15 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace ShaderPlay
 {
-  public class Triangle
+  public class Triangle : IModel
   {
-    int VBO, VAO, EBO;
+    int VBO = -1;    
+    int EBO = -1;
 
-    public void Setup()
+    public override void Setup()
     {
+      base.Setup();
+
       float[] vertices = {
          0.5f,  0.5f, 0.0f,  // top right
          0.5f, -0.5f, 0.0f,  // bottom right
@@ -24,6 +27,9 @@ namespace ShaderPlay
         0, 1, 3,  // first Triangle
         1, 2, 3   // second Triangle
     };
+      
+      GL.DeleteBuffer(VBO);
+      GL.DeleteBuffer(EBO);
 
       GL.GenVertexArrays(1, out VAO);
       GL.GenBuffers(1, out VBO);
@@ -43,7 +49,7 @@ namespace ShaderPlay
       GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
     }
 
-    public void Render()
+    public override void Render()
     {
       GL.BindVertexArray(VAO);
       GL.DrawElements(BeginMode.Triangles, 6, DrawElementsType.UnsignedInt, 0);

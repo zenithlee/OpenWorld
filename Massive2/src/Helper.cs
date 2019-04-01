@@ -398,6 +398,8 @@ namespace Massive
       if (m.Type == MObject.EType.AnimatedModel)
       {
         t = SpawnAnimatedModel(TargetRoot, mso.TemplateID, mso.OwnerID, mso.Name, Pos);
+        //MAnimatedModel man = (MAnimatedModel)m;
+        //man.BoneOffset = MassiveTools.VectorFromArray(t.BoneOffset);
       }
 
       if (m.Type == MObject.EType.InstanceMesh)
@@ -407,7 +409,6 @@ namespace Massive
 
       t.transform.Position = Pos;
       t.transform.Rotation = Rot;
-      t.Offset = MassiveTools.VectorFromArray(mso.Offset);
 
       m.CopyTo(t);
       t.OwnerID = mso.OwnerID;

@@ -12,9 +12,11 @@ namespace ShaderPlay
 {
   public class MTexture
   {
-    int Texture1ID;
-    int Texture2ID;
-    public TextureWrapMode _TextureWrapMode = TextureWrapMode.Repeat;        
+    int Texture1ID = -1;
+    int Texture2ID = -1;
+    public TextureWrapMode _TextureWrapMode = TextureWrapMode.Repeat;
+    string TextureFile1;
+    string TextureFile2;
 
     public MTexture()
     {    
@@ -46,6 +48,14 @@ namespace ShaderPlay
 
     public void Setup(string path1, string path2)
     {
+      TextureFile1 = path1;
+      TextureFile2 = path2;
+
+      if ( Texture1ID != -1)
+      {
+        GL.DeleteTexture(Texture1ID);
+      }
+
       GL.GenTextures(1, out Texture1ID);
       int width, height;
       var data1 = LoadTextureData(path1, out width, out height);
@@ -59,6 +69,11 @@ namespace ShaderPlay
       GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)OpenTK.Graphics.OpenGL4.TextureWrapMode.ClampToEdge);
       GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)OpenTK.Graphics.OpenGL4.TextureWrapMode.ClampToEdge);
 
+
+      if (Texture2ID != -1)
+      {
+        GL.DeleteTexture(Texture2ID);
+      }
 
       GL.GenTextures(1, out Texture2ID);      
       var data2 = LoadTextureData(path2, out width, out height);
@@ -80,6 +95,18 @@ namespace ShaderPlay
       //      GL.TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, format == GL_RGBA? GL_CLAMP_TO_EDGE : GL_REPEAT);
       //GL.TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
       //GL.TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    }
+
+    public void SetTexture1(string sFile)
+    {
+      TextureFile1 = sFile;
+      Setup(TextureFile1, TextureFile2);
+    }
+
+    public void SetTexture2(string sFile)
+    {
+      TextureFile2 = sFile;
+      Setup(TextureFile1, TextureFile2);
     }
 
     public void Bind()

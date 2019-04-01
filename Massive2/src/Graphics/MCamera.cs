@@ -16,6 +16,8 @@ namespace Massive
   public class MCamera : MSceneObject
   {
     public MSceneObject Focus = new MSceneObject(EType.Null, "CameraFocus");
+    //offset relative to the destination position
+    public Vector3d CameraOffset = Vector3d.Zero;
     public Vector3d TargetOffset = Vector3d.Zero;
     public Vector3d UpVector;
 

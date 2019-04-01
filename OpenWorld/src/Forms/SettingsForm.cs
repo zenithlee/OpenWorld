@@ -77,5 +77,20 @@ namespace OpenWorld.Forms
     {
       Settings.DistanceClippingEnabled = DistanceClippingcheck.Checked;
     }
+
+    private void DrawTreesCheck_CheckedChanged(object sender, EventArgs e)
+    {
+      Settings.DrawTrees = DrawTreesCheck.Checked;
+    }
+
+    private void DrawGrassCheck_CheckedChanged(object sender, EventArgs e)
+    {
+      Settings.DrawGrass = DrawGrassCheck.Checked;
+    }
+
+    private void DrawTerrains_CheckedChanged(object sender, EventArgs e)
+    {
+      Settings.DrawTerrains = DrawTerrains.Checked;
+    }
   }
 }

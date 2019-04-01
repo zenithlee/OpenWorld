@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using Massive.Events;
+using OpenTK;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace Massive
     public const string OWNER_ADMIN = "ADMIN";
     public const string OWNER_MAYOR = "MAYOR";
     public const string OWNER_ASTRONOMER = "ASTRONOMER";
-    public event EventHandler GraphChanged;
+    public event EventHandler GraphChanged;    
     public string Error;
     public bool IsCopy = false; //when true, don't dispose items
 
@@ -198,6 +199,11 @@ namespace Massive
       {
         mo.Setup();
       }
+    }
+
+    public virtual void Notify(string sMessage)
+    {
+      
     }
 
     public virtual void OnPlay()

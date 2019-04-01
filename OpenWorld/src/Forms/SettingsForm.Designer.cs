@@ -31,6 +31,10 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+      this.DrawGrassCheck = new System.Windows.Forms.CheckBox();
+      this.DrawTreesCheck = new System.Windows.Forms.CheckBox();
+      this.DistanceClippingcheck = new System.Windows.Forms.CheckBox();
+      this.FrustrumCullingCheck = new System.Windows.Forms.CheckBox();
       this.Tweak4Label = new System.Windows.Forms.Label();
       this.Tweak3Label = new System.Windows.Forms.Label();
       this.Tweak2Label = new System.Windows.Forms.Label();
@@ -45,8 +49,7 @@
       this.TweakBar2 = new System.Windows.Forms.TrackBar();
       this.Tweak1Label = new System.Windows.Forms.Label();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.FrustrumCullingCheck = new System.Windows.Forms.CheckBox();
-      this.DistanceClippingcheck = new System.Windows.Forms.CheckBox();
+      this.DrawTerrains = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel2.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.TweakBar1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.TweakBar3)).BeginInit();
@@ -59,6 +62,9 @@
       this.tableLayoutPanel2.ColumnCount = 2;
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel2.Controls.Add(this.DrawTerrains, 0, 2);
+      this.tableLayoutPanel2.Controls.Add(this.DrawGrassCheck, 0, 1);
+      this.tableLayoutPanel2.Controls.Add(this.DrawTreesCheck, 0, 0);
       this.tableLayoutPanel2.Controls.Add(this.DistanceClippingcheck, 0, 5);
       this.tableLayoutPanel2.Controls.Add(this.FrustrumCullingCheck, 1, 5);
       this.tableLayoutPanel2.Controls.Add(this.Tweak4Label, 1, 9);
@@ -92,6 +98,66 @@
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel2.Size = new System.Drawing.Size(296, 435);
       this.tableLayoutPanel2.TabIndex = 2;
+      // 
+      // DrawGrassCheck
+      // 
+      this.DrawGrassCheck.AutoSize = true;
+      this.DrawGrassCheck.Checked = true;
+      this.DrawGrassCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.DrawGrassCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.DrawGrassCheck.ForeColor = System.Drawing.Color.White;
+      this.DrawGrassCheck.Location = new System.Drawing.Point(3, 35);
+      this.DrawGrassCheck.Name = "DrawGrassCheck";
+      this.DrawGrassCheck.Size = new System.Drawing.Size(142, 26);
+      this.DrawGrassCheck.TabIndex = 22;
+      this.DrawGrassCheck.Text = "Grass";
+      this.DrawGrassCheck.UseVisualStyleBackColor = true;
+      this.DrawGrassCheck.CheckedChanged += new System.EventHandler(this.DrawGrassCheck_CheckedChanged);
+      // 
+      // DrawTreesCheck
+      // 
+      this.DrawTreesCheck.AutoSize = true;
+      this.DrawTreesCheck.Checked = true;
+      this.DrawTreesCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.DrawTreesCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.DrawTreesCheck.ForeColor = System.Drawing.Color.White;
+      this.DrawTreesCheck.Location = new System.Drawing.Point(3, 3);
+      this.DrawTreesCheck.Name = "DrawTreesCheck";
+      this.DrawTreesCheck.Size = new System.Drawing.Size(142, 26);
+      this.DrawTreesCheck.TabIndex = 21;
+      this.DrawTreesCheck.Text = "Trees";
+      this.DrawTreesCheck.UseVisualStyleBackColor = true;
+      this.DrawTreesCheck.CheckedChanged += new System.EventHandler(this.DrawTreesCheck_CheckedChanged);
+      // 
+      // DistanceClippingcheck
+      // 
+      this.DistanceClippingcheck.AutoSize = true;
+      this.DistanceClippingcheck.Checked = true;
+      this.DistanceClippingcheck.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.DistanceClippingcheck.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.DistanceClippingcheck.ForeColor = System.Drawing.Color.White;
+      this.DistanceClippingcheck.Location = new System.Drawing.Point(3, 163);
+      this.DistanceClippingcheck.Name = "DistanceClippingcheck";
+      this.DistanceClippingcheck.Size = new System.Drawing.Size(142, 26);
+      this.DistanceClippingcheck.TabIndex = 20;
+      this.DistanceClippingcheck.Text = "Distance Clipping";
+      this.DistanceClippingcheck.UseVisualStyleBackColor = true;
+      this.DistanceClippingcheck.CheckedChanged += new System.EventHandler(this.DistanceClippingcheck_CheckedChanged);
+      // 
+      // FrustrumCullingCheck
+      // 
+      this.FrustrumCullingCheck.AutoSize = true;
+      this.FrustrumCullingCheck.Checked = true;
+      this.FrustrumCullingCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.FrustrumCullingCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.FrustrumCullingCheck.ForeColor = System.Drawing.Color.White;
+      this.FrustrumCullingCheck.Location = new System.Drawing.Point(151, 163);
+      this.FrustrumCullingCheck.Name = "FrustrumCullingCheck";
+      this.FrustrumCullingCheck.Size = new System.Drawing.Size(142, 26);
+      this.FrustrumCullingCheck.TabIndex = 19;
+      this.FrustrumCullingCheck.Text = "Frustrum Culling";
+      this.FrustrumCullingCheck.UseVisualStyleBackColor = true;
+      this.FrustrumCullingCheck.CheckedChanged += new System.EventHandler(this.FrustrumCullingCheck_CheckedChanged);
       // 
       // Tweak4Label
       // 
@@ -251,35 +317,20 @@
       this.Tweak1Label.Text = "0";
       this.Tweak1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
-      // FrustrumCullingCheck
+      // DrawTerrains
       // 
-      this.FrustrumCullingCheck.AutoSize = true;
-      this.FrustrumCullingCheck.Checked = true;
-      this.FrustrumCullingCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.FrustrumCullingCheck.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.FrustrumCullingCheck.ForeColor = System.Drawing.Color.White;
-      this.FrustrumCullingCheck.Location = new System.Drawing.Point(151, 163);
-      this.FrustrumCullingCheck.Name = "FrustrumCullingCheck";
-      this.FrustrumCullingCheck.Size = new System.Drawing.Size(142, 26);
-      this.FrustrumCullingCheck.TabIndex = 19;
-      this.FrustrumCullingCheck.Text = "Frustrum Culling";
-      this.FrustrumCullingCheck.UseVisualStyleBackColor = true;
-      this.FrustrumCullingCheck.CheckedChanged += new System.EventHandler(this.FrustrumCullingCheck_CheckedChanged);
-      // 
-      // DistanceClippingcheck
-      // 
-      this.DistanceClippingcheck.AutoSize = true;
-      this.DistanceClippingcheck.Checked = true;
-      this.DistanceClippingcheck.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.DistanceClippingcheck.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.DistanceClippingcheck.ForeColor = System.Drawing.Color.White;
-      this.DistanceClippingcheck.Location = new System.Drawing.Point(3, 163);
-      this.DistanceClippingcheck.Name = "DistanceClippingcheck";
-      this.DistanceClippingcheck.Size = new System.Drawing.Size(142, 26);
-      this.DistanceClippingcheck.TabIndex = 20;
-      this.DistanceClippingcheck.Text = "Distance Clipping";
-      this.DistanceClippingcheck.UseVisualStyleBackColor = true;
-      this.DistanceClippingcheck.CheckedChanged += new System.EventHandler(this.DistanceClippingcheck_CheckedChanged);
+      this.DrawTerrains.AutoSize = true;
+      this.DrawTerrains.Checked = true;
+      this.DrawTerrains.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.DrawTerrains.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.DrawTerrains.ForeColor = System.Drawing.Color.White;
+      this.DrawTerrains.Location = new System.Drawing.Point(3, 67);
+      this.DrawTerrains.Name = "DrawTerrains";
+      this.DrawTerrains.Size = new System.Drawing.Size(142, 26);
+      this.DrawTerrains.TabIndex = 23;
+      this.DrawTerrains.Text = "Terrains";
+      this.DrawTerrains.UseVisualStyleBackColor = true;
+      this.DrawTerrains.CheckedChanged += new System.EventHandler(this.DrawTerrains_CheckedChanged);
       // 
       // SettingsForm
       // 
@@ -321,5 +372,8 @@
     private System.Windows.Forms.Label Tweak1Label;
     private System.Windows.Forms.CheckBox FrustrumCullingCheck;
     private System.Windows.Forms.CheckBox DistanceClippingcheck;
+    private System.Windows.Forms.CheckBox DrawTreesCheck;
+    private System.Windows.Forms.CheckBox DrawGrassCheck;
+    private System.Windows.Forms.CheckBox DrawTerrains;
   }
 }

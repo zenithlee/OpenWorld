@@ -13,6 +13,7 @@ namespace Massive
     public Vector3d Position = Vector3d.Zero;
     public Vector3d WorldPosition = Vector3d.Zero;
     public Quaterniond Rotation = Quaterniond.Identity;
+    public Quaterniond RotationOffset = Quaterniond.Identity;
     public Vector3d Scale = Vector3d.One;
 
     public MTransform() : base(EType.Transform, "Transform")
@@ -49,9 +50,9 @@ namespace Massive
     {
       Matrix4d model = Matrix4d.Identity;
       model =
-        Matrix4d.Scale(Scale) *
-        Matrix4d.CreateFromQuaternion(Rotation) *
-      Matrix4d.CreateTranslation(Position);      
+        Matrix4d.Scale(Scale) 
+        * Matrix4d.CreateFromQuaternion(Rotation * RotationOffset) 
+        * Matrix4d.CreateTranslation(Position);      
         
       return model;
     }

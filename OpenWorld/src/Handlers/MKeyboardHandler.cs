@@ -195,11 +195,11 @@ namespace OpenWorld.Handlers
       {
         if (ShiftDown == true)
         {
-          Globals.Avatar.Run(mult *1.5 * 0.1);
+          Globals.Avatar.Run(mult * 0.02);
         }
         else
         {
-          Globals.Avatar.Walk(mult * 0.1);
+          Globals.Avatar.Walk(mult * 0.01);
           //Globals.Avatar.InputV(Time.DeltaTime * mult);
         }
 
@@ -241,7 +241,7 @@ namespace OpenWorld.Handlers
         {
           Globals.Avatar.Turn(-Time.DeltaTime * (1.0 / mult) * 100);
         }
-          
+
       }
     }
 
@@ -262,26 +262,31 @@ namespace OpenWorld.Handlers
         Globals.Avatar.Jump(mult * 40);
       }
 
+      if (KeyState[(int)Keys.R])
+      {
+        //Globals.Avatar.InputB1(BaseEnergy * mult);
+        Globals.Avatar.Controller.Throttle(mult * 0.5);
+      }
+
+      if (KeyState[(int)Keys.F])
+      {
+        //Globals.Avatar.InputB1(BaseEnergy * -mult );
+        Globals.Avatar.Controller.Throttle(-mult * 0.5);
+      }
+
       if (KeyState[(int)Keys.W])
       {
-        //Globals.Avatar.InputPitchV(Time.DeltaTime * 50);
-        Globals.Avatar.InputB1(mult * 2);
-        Globals.Avatar.Throttle = 1;
+        Globals.Avatar.Controller.Pitch(BaseEnergy * 0.01);
       }
-      else
-      {
-        Globals.Avatar.Throttle = 0;
-      }
+
       if (KeyState[(int)Keys.S])
       {
-        //Globals.Avatar.InputB1();
-        Globals.Avatar.Brake( mult * BaseEnergy *0.1);
+        Globals.Avatar.Controller.Pitch(-BaseEnergy * 0.01);
       }
 
       if (KeyState[(int)Keys.Up])
       {
-        Globals.Avatar.InputPitchV( BaseEnergy);
-
+        Globals.Avatar.InputPitchV(BaseEnergy);
       }
 
       if (KeyState[(int)Keys.Down])
@@ -291,16 +296,18 @@ namespace OpenWorld.Handlers
 
       if (KeyState[(int)Keys.Q])
       {
-        Globals.Avatar.InputRollHDirect(-BaseEnergy * mult * 0.05);
+        // Globals.Avatar.InputRollHDirect(-BaseEnergy * mult * 0.05);
+        Globals.Avatar.Controller.Yaw(BaseEnergy * 0.01);
       }
       if (KeyState[(int)Keys.E])
       {
-        Globals.Avatar.InputRollHDirect( BaseEnergy * mult * 0.05);
+        //Globals.Avatar.InputRollHDirect( BaseEnergy * mult * 0.05);
+        Globals.Avatar.Controller.Yaw(-BaseEnergy * 0.01);
       }
 
       if (KeyState[(int)Keys.Left])
       {
-        Globals.Avatar.InputRollHDirect( -BaseEnergy);
+        Globals.Avatar.InputRollHDirect(-BaseEnergy);
       }
       if (KeyState[(int)Keys.Right])
       {
@@ -309,11 +316,13 @@ namespace OpenWorld.Handlers
 
       if (KeyState[(int)Keys.A])
       {
-        Globals.Avatar.InputYawHDirect(BaseEnergy * mult * 0.01);
+        //Globals.Avatar.InputYawHDirect(BaseEnergy * mult * 0.01);
+        Globals.Avatar.Controller.Bank(-BaseEnergy * mult * 0.06);
       }
       if (KeyState[(int)Keys.D])
       {
-        Globals.Avatar.InputYawHDirect(-BaseEnergy * mult * 0.01);
+        //Globals.Avatar.InputYawHDirect(-BaseEnergy * mult * 0.01);
+        Globals.Avatar.Controller.Bank(BaseEnergy * mult * 0.06);
       }
     }
 

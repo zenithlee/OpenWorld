@@ -1,5 +1,6 @@
 ﻿using Massive;
 using Massive.Events;
+using Massive.Graphics.Character;
 using Massive.Network;
 using Massive.Tools;
 using OpenTK;
@@ -39,7 +40,7 @@ namespace OpenWorld.Handlers
       m.OwnerID = e.UserID;
       m.TextureID = bb.MaterialID;
       m.Name = Globals.UserAccount.UserName;
-      m.Offset = bb.Offset;
+      MScene.Camera.CameraOffset = MassiveTools.VectorFromArray(bb.BoneOffset);
       m.Position = Globals.UserAccount.CurrentPosition;
       m.Rotation = MassiveTools.ArrayFromQuaterniond(Globals.Avatar.GetRotation());
       Spawn(m);
@@ -85,6 +86,8 @@ namespace OpenWorld.Handlers
       if ( bb.Type == MBuildParts.MAnimatedModel)
       {
         o = Helper.CreateAnimatedModel(MScene.TemplateRoot, TemplateID, bb.Model, Vector3d.Zero);
+        MAnimatedModel man = (MAnimatedModel)o;
+        man.BoneOffset = MassiveTools.VectorFromArray(bb.BoneOffset);
       }
 
       if (bb.Type == MBuildParts.MModel)
@@ -124,6 +127,7 @@ namespace OpenWorld.Handlers
       o.TemplateID = TemplateID;
       o.InstanceID = TemplateID;
       o.IsTransparent = bb.IsTransparent;
+      o.transform.RotationOffset = Quaterniond.FromEulerAngles(MassiveTools.VectorFromArray(bb.RotationOffset));
       o.Setup();
 
       AddSubmodules(bb, o);
@@ -133,6 +137,7 @@ namespace OpenWorld.Handlers
 
     /// <summary>
     /// Submodules offer extra functionality for e.g. user interaction, linking click handlers to widgets
+    /// We don't want to copy their instance, because each has unique values, e.g. door state.
     /// </summary>
     /// <param name="bb"></param>
     /// <param name="o"></param>
@@ -217,12 +222,12 @@ namespace OpenWorld.Handlers
         if (mo.InstanceID == Globals.UserAccount.UserID)
         {
           Globals.Avatar.SetSceneObject(mo);
+          MBuildingBlock bb = MBuildParts.GetBlock(mo.TemplateID);
+          MScene.Camera.CameraOffset = MassiveTools.VectorFromArray(bb.BoneOffset);
           MMessageBus.AvatarChanged(this, Globals.UserAccount.UserID, mo.TemplateID);
-        }
+        }     
      
-     
-        SetMaterial(mo, m.TextureID);
-     
+        SetMaterial(mo, m.TextureID);    
         
         MMessageBus.Created(this, mo);
       }

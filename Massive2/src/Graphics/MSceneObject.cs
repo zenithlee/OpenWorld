@@ -26,7 +26,7 @@ namespace Massive
     public bool Culled { get; set; } =false;
     public bool Clipped { get; set; } = false;
 
-    public Vector3d Offset;
+   // public Vector3d Offset;
 
     // public MTransform transform { get => _transform; set => _transform = value; }
     public TexturedVertex[] Vertices = new TexturedVertex[0];
@@ -64,6 +64,12 @@ namespace Massive
       base.Setup();
     }
 
+    /// <summary>
+    /// prepare matrices for rendering
+    /// TODO: Optimize calcs only when dirty
+    /// </summary>
+    /// <param name="viewproj"></param>
+    /// <param name="parentmodel"></param>
     public void CalculateDrawMatrices(Matrix4d viewproj, Matrix4d parentmodel)
     {
       WorldTransform = transform.GetMatrix() * parentmodel;
@@ -95,6 +101,7 @@ namespace Massive
       {
         if (material != null)
         {
+          material.IsUsed = true;
           material.Bind();
           if (material.shader != null)
           {
@@ -232,6 +239,9 @@ namespace Massive
 
       MSceneObject mo = (MSceneObject)m1;
       mo.transform.Scale = transform.Scale;
+      mo.transform.RotationOffset = transform.RotationOffset;
+      
+      //we don't want to use the template position, since these will be set by the world map
       //mo.transform.Position = transform.Position;
       //mo.transform.Rotation = transform.Rotation;
       mo.SetMaterial(material);

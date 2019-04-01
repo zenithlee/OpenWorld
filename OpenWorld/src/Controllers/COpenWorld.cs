@@ -60,7 +60,7 @@ namespace OpenWorld.Controllers
       Globals._scene = new MScene(true);
       _spawnHandler = new MSpawnHandler();
       _deleteHandler = new MDeleteHandler();
-      _cameraHandler = new MCameraHandler();
+      
       _teleportHandler = new MTeleportHandler();
       _textureHandler = new MTextureHandler();
       _lightHandler = new MLightHandler();
@@ -73,7 +73,7 @@ namespace OpenWorld.Controllers
 
 
       Globals._scene.SetupInitialObjects();
-
+      _cameraHandler = new MCameraHandler();
       _buildParts = new MBuildParts();
       _buildParts.Setup();
 

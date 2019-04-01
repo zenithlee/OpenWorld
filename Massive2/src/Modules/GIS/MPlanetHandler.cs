@@ -54,7 +54,7 @@ namespace Massive
         , false, 0, false, true));
       //VX = 3.256023326434234E+01 VY = -2.128637611764578E+01 VZ = 5.328388929915358E-01
 
-      Bodies.Add(new MAstroBody("Venus", "The planet Venus", 48.685E+23,
+      Bodies.Add(new MAstroBody("Venus", "The planet Venus. Friggin awesom.", 48.685E+23,
         new Vector3d(-1.048122216556790E+08, 2.393654051492437E+07, -6.939236908324338E+06) * 1000,
          new Vector3d(6051.8, 6051.8, 6051.8) * ScaleFactor,
          "Textures\\Planets\\2k_venus.jpg"
@@ -67,19 +67,19 @@ namespace Massive
         true, (6365) * ScaleFactor, false, false));
       //VX = -2.999254798461512E+01 VY = 2.409743982501453E+00 VZ = -3.489312789986800E+00
 
-      Bodies.Add(new MAstroBody("Mars", "The planet Mars", 6.4185E+23,
+      Bodies.Add(new MAstroBody("Mars", "The planet Mars. Soft and chewy.", 6.4185E+23,
         new Vector3d(1.995782587374064E+8, -5.523248829579433E+7, 2.040911708145680E+7) * 1000,
         new Vector3d(3389.9, 3389.9, 3389.9) * ScaleFactor, "Textures\\Planets\\2k_mars.jpg"
         , false, 0, false, true));
       //VX= 7.888925502949942E+00 VY= 2.512145341232943E+01 VZ=-1.428163670266684E-01
 
-      Bodies.Add(new MAstroBody("Jupiter", "The planet Jupiter", 1898.13E+24,
+      Bodies.Add(new MAstroBody("Jupiter", "The planet Jupiter, by Jupiter", 1898.13E+24,
         new Vector3d(6.889448949554296E+08, 2.740877921731672E+08, 4.453849463134830E+07) * 1000,
         new Vector3d(71492, 71492, 71492) * ScaleFactor,
         "Textures\\Planets\\2k_jupiter.jpg"
         , false, 0, false, true));
 
-      Bodies.Add(new MAstroBody("Saturn", "The planet Saturn", 5.68319E+26,
+      Bodies.Add(new MAstroBody("Saturn", "The planet Saturn. The laziest planet in the sol system", 5.68319E+26,
         new Vector3d(1.177516875361957E+09, 7.071279503136320E+08, 3.202538221937501E+07) * 1000,
         new Vector3d(60268, 60268, 60268) * ScaleFactor,
         "Textures\\Planets\\2k_saturn.jpg",

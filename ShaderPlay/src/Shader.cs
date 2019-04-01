@@ -11,12 +11,17 @@ namespace ShaderPlay
     string Name = "";
     public string PathToFragmentShader;
     public string PathToVertexShader;
-    int fragmentShader = 0;
-    int vertexShader = 0;
+    public string PathToTesselationControl;
+    public string PathToTesselationEval;
+    public string PathToTesselationCompute;
 
+    int fragmentShader = -1;
+    int vertexShader = -1;
+    int tessc = -1;
+    int tesse = -1;
 
     private int programID;
-    public int ProgramID { get => programID; set => programID = value; }    
+    public int ProgramID { get => programID; set => programID = value; }
 
     private string textureFile;
     public string TextureFile { get => textureFile; set => textureFile = value; }
@@ -25,7 +30,9 @@ namespace ShaderPlay
     {
       Name = _name;
 
-      Load(@"shaders\vs.glsl", @"shaders\fs.glsl");
+      Load(@"shaders\default_vs.glsl", @"shaders\default_fs.glsl");
+      //Load(@"shaders\grass\grass.vert", @"shaders\grass\grass.frag"
+///, @"shaders\grass\grass.tesc", @"shaders\grass\grass.tese");
       Bind();
       SetInt("texturemap1", 0);
       SetInt("texturemap2", 1);
@@ -37,7 +44,7 @@ namespace ShaderPlay
       string sResult = "OK";
       GL.DeleteShader(fragmentShader);
       fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
-      GL.ShaderSource(fragmentShader,sData);
+      GL.ShaderSource(fragmentShader, sData);
       GL.CompileShader(fragmentShader);
       var info = GL.GetShaderInfoLog(fragmentShader);
       if (!string.IsNullOrWhiteSpace(info))
@@ -47,7 +54,7 @@ namespace ShaderPlay
       }
       int num = Link();
 
-      return "ProgramID:" + num + ":" + sResult;
+      return "Fragment Shader:" + sResult + "\r\nProgramID:" + num;
     }
 
     public string CompileVertexShader(string sData)
@@ -65,7 +72,7 @@ namespace ShaderPlay
       }
       int num = Link();
 
-      return "ProgramID:" + num + ":" + sResult;
+      return "Vertex Shader:" + sResult + "\r\nProgramID:" + num;
     }
 
     public int Link()
@@ -88,10 +95,14 @@ namespace ShaderPlay
       return ProgramID;
     }
 
-    public int Load(string sPathVert, string sPathFrag)
+    public int Load(string sPathVert, string sPathFrag,
+      string sTessControl = "", string sTessEval = "", string sCompute = "")
     {
       PathToFragmentShader = sPathFrag;
       PathToVertexShader = sPathVert;
+      PathToTesselationControl = sTessControl;
+      PathToTesselationEval = sTessEval;
+      PathToTesselationCompute = sCompute;
 
       ProgramID = GL.CreateProgram();
 
@@ -113,7 +124,40 @@ namespace ShaderPlay
       if (!string.IsNullOrWhiteSpace(info))
         Debug.WriteLine($"GL.CompileShader had info log: {info}");
 
+      if (!string.IsNullOrEmpty(PathToTesselationControl))
+      {
+        string sTessC = File.ReadAllText(PathToTesselationControl);
+        tessc = GL.CreateShader(ShaderType.TessControlShader);
+        GL.ShaderSource(tessc, sTessC);
+        GL.CompileShader(tessc);
+        info = GL.GetShaderInfoLog(fragmentShader);
+        if (!string.IsNullOrWhiteSpace(info))
+          Debug.WriteLine($"GL.CompileShader had info log: {info}");
+      }
+      else
+      {
+        GL.DeleteShader(tessc);
+        tessc = -1;
+      }
 
+      if (!string.IsNullOrEmpty(PathToTesselationEval))
+      {
+        string sTessE = File.ReadAllText(PathToTesselationEval);
+        tesse = GL.CreateShader(ShaderType.TessEvaluationShader);
+        GL.ShaderSource(tesse, sTessE);
+        GL.CompileShader(tesse);
+        info = GL.GetShaderInfoLog(fragmentShader);
+        if (!string.IsNullOrWhiteSpace(info))
+          Debug.WriteLine($"GL.CompileShader had info log: {info}");
+      }
+      else
+      {
+        GL.DeleteShader(tesse);
+        tesse = -1;
+      }
+
+      GL.AttachShader(ProgramID, tessc);
+      GL.AttachShader(ProgramID, tesse);
       GL.AttachShader(ProgramID, vertexShader);
       GL.AttachShader(ProgramID, fragmentShader);
       GL.LinkProgram(ProgramID);
@@ -124,6 +168,8 @@ namespace ShaderPlay
         Debug.WriteLine(info);
         Console.Error.Write(info);
       }
+
+
 
       GL.DetachShader(ProgramID, vertexShader);
       GL.DetachShader(ProgramID, fragmentShader);
