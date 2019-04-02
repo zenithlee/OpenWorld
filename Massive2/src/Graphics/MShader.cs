@@ -29,6 +29,10 @@ namespace Massive
 
     public string VertexShaderPath { get; set; }
     public string FragmentShaderPath { get; set; }
+    public string FunctionsShaderPath { get; set; }
+    public string VertexShaderCode;
+    public string FragmentShaderCode;
+    public string FragmentFunctionsShaderCode;
 
     public string EvalShaderPath { get; set; }
     public string ControlShaderPath { get; set; }
@@ -38,8 +42,8 @@ namespace Massive
     }
 
     public int GetLocation(string sName)
-    {      
-       return GL.GetUniformLocation(ProgramID, sName);        
+    {
+      return GL.GetUniformLocation(ProgramID, sName);
     }
 
     public void Bind()
@@ -102,14 +106,14 @@ namespace Massive
     }
 
     public void SetMat4(string sPropName, Matrix4 d)
-    {      
+    {
       int location = GetLocation(sPropName);
       GL.UniformMatrix4(location, false, ref d);
     }
 
     public void SetMatrices(string sPropName, Matrix4[] matrices)
     {
-      int location = GetLocation(sPropName);      
+      int location = GetLocation(sPropName);
       GL.UniformMatrix4(location, matrices.Length, true, ref matrices[0].Row0.X);
     }
 
@@ -129,35 +133,66 @@ namespace Massive
       }
     }
 
-    public int Compile()
+    public string Recompile()
     {
+      string sResult = "OK";
       if (ProgramID != 0)
       {
         GL.DeleteProgram(ProgramID);
       }
 
       ProgramID = GL.CreateProgram();
-
       int vertexShader = GL.CreateShader(ShaderType.VertexShader);
+      GL.ShaderSource(vertexShader, VertexShaderCode);
+      GL.CompileShader(vertexShader);
+      sResult += GL.GetShaderInfoLog(vertexShader);
+
+      int fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
+
+      string Combined = FragmentShaderCode.Replace("#include \"functions_f.glsl\";", FragmentFunctionsShaderCode);
+      GL.ShaderSource(fragmentShader, Combined);
+      GL.CompileShader(fragmentShader);
+      sResult += GL.GetShaderInfoLog(fragmentShader);
+
+      //==================
+
+      GL.AttachShader(ProgramID, vertexShader);
+      GL.AttachShader(ProgramID, fragmentShader);
+
+      GL.LinkProgram(ProgramID);
+
+      sResult += GL.GetProgramInfoLog(ProgramID);      
+
+      GL.UseProgram(0);
+      GL.DetachShader(ProgramID, vertexShader);
+      GL.DetachShader(ProgramID, fragmentShader);
+      GL.DeleteShader(vertexShader);
+      GL.DeleteShader(fragmentShader);
+
+      sResult += ". Program:" + ProgramID;
+
+      Bind();
+      SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
+      SetInt("material.specular", MShader.LOCATION_SPECULAR);
+      SetInt("material.multitex", MShader.LOCATION_MULTITEX);
+      SetInt("material.normalmap", MShader.LOCATION_NORMALMAP);
+      SetInt("material.shadowMap", MShader.LOCATION_SHADOWMAP);
+
+      return sResult;
+    }
+
+    public int Compile()
+    {      
       string sVertexPath = Path.Combine(MFileSystem.ShadersPath, VertexShaderPath);
       if (!File.Exists(sVertexPath))
       {
-        Log(vertexShader + " : File not found:" + sVertexPath + ". Needs AppPathConfig?");
+        Log(" : File not found:" + sVertexPath + ". Needs AppPathConfig?");
       }
       else
       {
-        GL.ShaderSource(vertexShader, File.ReadAllText(Path.Combine(MFileSystem.ShadersPath, VertexShaderPath)));
-        GL.CompileShader(vertexShader);
+        VertexShaderCode = File.ReadAllText(Path.Combine(MFileSystem.ShadersPath, VertexShaderPath));        
       }
-
-      var info = GL.GetShaderInfoLog(vertexShader);
-      if (!string.IsNullOrWhiteSpace(info))
-      {
-        Log(this.Name);
-        Log(info);
-      }
-
-      int fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
+      
       string sFragmentPath = Path.Combine(MFileSystem.ShadersPath, FragmentShaderPath);
       if (!File.Exists(sFragmentPath))
       {
@@ -165,82 +200,20 @@ namespace Massive
       }
       else
       {
-        GL.ShaderSource(fragmentShader, File.ReadAllText(Path.Combine(MFileSystem.ShadersPath, FragmentShaderPath)));
-        GL.CompileShader(fragmentShader);
+        FragmentShaderCode = File.ReadAllText(Path.Combine(MFileSystem.ShadersPath, FragmentShaderPath));      
       }
 
-      info = GL.GetShaderInfoLog(fragmentShader);
-      if (!string.IsNullOrWhiteSpace(info))
+      string sFunctionPath = Path.Combine(MFileSystem.ShadersPath, FunctionsShaderPath);
+      if (!File.Exists(sFunctionPath))
       {
-        Log(this.Name);
-        Console.WriteLine($"GL.CompileShader had info log: {info}");
-        Log(info);
-      }
-
-      /*
-      int EvalShader = GL.CreateShader(ShaderType.TessEvaluationShader);
-      string sEvalPath = Path.Combine(Globals.ResourcePath, EvalShaderPath);
-      if (!File.Exists(sEvalPath))
-      {
-        Log(sEvalPath + " : File not found");
+        Log(sFunctionPath + " : File not found");
       }
       else
-      {
-        GL.ShaderSource(EvalShader, File.ReadAllText(Path.Combine(Globals.ResourcePath, EvalShaderPath)));
-        GL.CompileShader(EvalShader);
-      }
-      info = GL.GetShaderInfoLog(EvalShader);
-      if (!string.IsNullOrWhiteSpace(info))
-      {
-        Log(this.Name);
-        Console.WriteLine($"GL.CompileShader had info log: {info}");
-        Log(info);
+      {        
+        FragmentFunctionsShaderCode = File.ReadAllText(sFunctionPath);
       }
 
-
-      int ControlShader = GL.CreateShader(ShaderType.TessControlShader);      
-      string sControlPath = Path.Combine(Globals.ResourcePath, ControlShaderPath);
-      if (!File.Exists(sControlPath))
-      {
-        Log(sControlPath + " : File not found");
-      }
-      else
-      {
-        GL.ShaderSource(ControlShader, File.ReadAllText(Path.Combine(Globals.ResourcePath, ControlShaderPath)));
-        GL.CompileShader(ControlShader);
-      }
-      info = GL.GetShaderInfoLog(ControlShader);
-      if (!string.IsNullOrWhiteSpace(info))
-      {
-        Log(this.Name);
-        Console.WriteLine($"GL.CompileShader had info log: {info}");
-        Log(info);
-      }
-      */
-
-
-      GL.AttachShader(ProgramID, vertexShader);
-      //GL.AttachShader(ProgramID, ControlShader);
-      //GL.AttachShader(ProgramID, EvalShader);      
-      GL.AttachShader(ProgramID, fragmentShader);      
-
-      GL.LinkProgram(ProgramID);
-
-      info = GL.GetProgramInfoLog(ProgramID);
-      if (!string.IsNullOrWhiteSpace(info))
-      {
-        Console.Error.WriteLine(info);
-        Log(info);
-      }
-
-
-
-
-      GL.UseProgram(0);
-      GL.DetachShader(ProgramID, vertexShader);
-      GL.DetachShader(ProgramID, fragmentShader);
-      GL.DeleteShader(vertexShader);
-      GL.DeleteShader(fragmentShader);
+      Error = Recompile();
       return ProgramID;
     }
 
@@ -250,6 +223,7 @@ namespace Massive
       FragmentShaderPath = sPathFrag;
       EvalShaderPath = sPathEval;
       ControlShaderPath = sPathControl;
+      FunctionsShaderPath = "Common\\functions_f.glsl";
 
       return Compile();
     }

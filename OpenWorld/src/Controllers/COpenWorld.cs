@@ -170,11 +170,10 @@ namespace OpenWorld.Controllers
       if (MStateMachine.CurrentState == MStateMachine.eStates.Setup)
       {
         CheckSetupComplete();
-      }
-
-      
+      }      
 
       Globals._scene.Update();
+      _cameraHandler.Update();
     }
 
     public void Render()

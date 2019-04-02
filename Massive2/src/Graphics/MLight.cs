@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using Massive.Tools;
 
 /// <summary>
 /// A directional light that casts shadows
@@ -18,7 +19,9 @@ namespace Massive
 {
   public class MLight : MSceneObject
   {
+    MSceneObject LightSphere;
     public Vector3d TargetVector;
+    public Vector3 LightDirection;
     int depthMapFBO;
     public int depthMap;
     private float nearPlane = 10.5f;
@@ -36,6 +39,9 @@ namespace Massive
 
     private Vector3 ambient = new Vector3(0.35f, 0.35f, 0.33f);
     public Vector3 Ambient { get => ambient; set => ambient = value; }
+
+    private Vector3 diffuse = new Vector3(0.35f, 0.35f, 0.33f);
+    public Vector3 Diffuse { get => diffuse; set => diffuse = value; }
 
     private Vector3 specular = new Vector3(0.7f, 0.7f, 0.7f);
     public Vector3 Specular { get => specular; set => specular = value; }
@@ -65,8 +71,11 @@ namespace Massive
     public void Bind(MMaterial mat)
     {
       mat.shader.SetBool("ShadowEnabled", Shadows);
+      
+      mat.shader.SetVec3("dirLight.direction", LightDirection);
       mat.shader.SetVec3("dirLight.specular", Specular);
       mat.shader.SetVec3("dirLight.ambient", Ambient);
+      mat.shader.SetVec3("dirLight.diffuse", Diffuse);
       mat.shader.SetVec3("lightColor", new Vector3(Color.R, Color.G, Color.B));      
       Vector3d deltaLight = transform.Position - Globals.GlobalOffset;
       mat.shader.SetVec3("lightPos", new Vector3((float)deltaLight.X, (float)deltaLight.Y, (float)deltaLight.Z));
@@ -76,6 +85,7 @@ namespace Massive
     new public void LookAt(Vector3d target)
     {
       TargetVector = target;
+      LightDirection = MassiveTools.Vector3FromVector3d((this.transform.Position - TargetVector).Normalized());
     }
     
     public override void Render(Matrix4d viewproj, Matrix4d parentmodel)
@@ -89,10 +99,10 @@ namespace Massive
         GL.Enable(EnableCap.DepthTest);
       }
 
-      MSceneObject mo = (MSceneObject)FindModuleByName("LightSphere");
-      if (mo != null)
+      
+      if (LightSphere != null)
       {
-        mo.transform.Position = transform.Position + new Vector3d(0, -5, 0) ;
+        LightSphere.transform.Position = transform.Position + new Vector3d(0, -5, 0) ;
         base.Render(viewproj, parentmodel);
       }
     }
@@ -150,6 +160,7 @@ namespace Massive
       GL.ReadBuffer(ReadBufferMode.None);
       GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
 
+      LightSphere = (MSceneObject)FindModuleByName("LightSphere");
       base.Setup();
     }
 

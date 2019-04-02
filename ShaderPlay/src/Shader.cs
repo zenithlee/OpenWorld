@@ -192,7 +192,7 @@ namespace ShaderPlay
 
       //SetInt("texturemap1", t1Location);
       //SetInt("texturemap2", t2Location);
-      SetInt("shadowMap", 1);
+      //SetInt("shadowMap", 1);
     }
 
     public void SetInt(string name, int value)

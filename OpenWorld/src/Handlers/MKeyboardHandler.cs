@@ -151,7 +151,7 @@ namespace OpenWorld.Handlers
 
       if (Control.ModifierKeys == Keys.Control)
       {
-        mult *= 1000;
+        mult *= 100;
       }
 
       if (Control.ModifierKeys == (Keys.Control | Keys.Shift))
@@ -195,11 +195,11 @@ namespace OpenWorld.Handlers
       {
         if (ShiftDown == true)
         {
-          Globals.Avatar.Run(mult * 0.02);
+          Globals.Avatar.Run(mult * 0.025);
         }
         else
         {
-          Globals.Avatar.Walk(mult * 0.01);
+          Globals.Avatar.Walk(mult * 0.022);
           //Globals.Avatar.InputV(Time.DeltaTime * mult);
         }
 
@@ -212,7 +212,7 @@ namespace OpenWorld.Handlers
         }
         else
         {
-          Globals.Avatar.Turn(Time.DeltaTime * (1.0 / mult) * 100);
+          Globals.Avatar.Turn(0.01* (1.0 / mult) * 100);
         }
         //Globals.Avatar.InputYawH(Time.DeltaTime * (1.0/mult) *100);
       }
@@ -239,7 +239,7 @@ namespace OpenWorld.Handlers
         }
         else
         {
-          Globals.Avatar.Turn(-Time.DeltaTime * (1.0 / mult) * 100);
+          Globals.Avatar.Turn(-0.01* (1.0 / mult) * 100);
         }
 
       }

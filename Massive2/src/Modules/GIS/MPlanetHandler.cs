@@ -39,6 +39,15 @@ namespace Massive
       _Instance = this;
     }
 
+    public static MAstroBody Get(string sName)
+    {
+      foreach( MAstroBody m in Bodies)
+      {
+        if (m.Name == sName) return m;
+      }
+      return null;
+    }
+
     public override void Setup()
     {
       //TODO:

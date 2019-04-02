@@ -119,6 +119,7 @@ namespace Massive
       }
     }
 
+    //Do not use in a loop as it is quite slow
     public MObject FindModuleByName(string sName)
     {
       if (Name == sName) return this;

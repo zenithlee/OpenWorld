@@ -1,6 +1,7 @@
 ﻿using Massive;
 using Massive.Events;
 using OpenWorld.Forms;
+using OpenWorld.src.Forms;
 using System;
 using System.Windows.Forms;
 
@@ -75,6 +76,12 @@ namespace OpenWorld.Controls
       }
 
       
+    }
+
+    private void ShaderEditorButton_Click(object sender, EventArgs e)
+    {
+      ShaderEditorForm se = new ShaderEditorForm();
+      se.Show();
     }
   }
 }

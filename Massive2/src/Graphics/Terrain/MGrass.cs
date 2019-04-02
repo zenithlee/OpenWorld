@@ -178,10 +178,10 @@ namespace Massive
             ;
           //if (yv < 0.01) continue;
 
-          TreeScale = Matrix4d.Scale(0.03 + 0.06 * yv, 0.01 + yv * 0.14 * MaxHeight, 0.03 + 0.06 * yv);
+          TreeScale = Matrix4d.Scale(0.03 + 0.06 * yv, 0.01 + Math.Abs(yv) * 0.17 * MaxHeight, 0.03 + 0.06 * yv);
 
-          PlantingPos.X += MPerlin.Noise(PlantingPos.X * 4.0, 0, PlantingPos.Z * 4.1) * 1.1;
-          PlantingPos.Z += MPerlin.Noise(PlantingPos.X * 3.8, 0, PlantingPos.Z * 4.2) * 1.1;
+          PlantingPos.X += MPerlin.Noise(PlantingPos.X * 4.0, 0, PlantingPos.Z * 2.0) * 1.1;
+          PlantingPos.Z += MPerlin.Noise(PlantingPos.X * 4.0, 0, PlantingPos.Z * 2.0) * 1.1;
           PlantingPos = Tile.GetInterpolatedPointOnSurfaceFromGrid2(PlantingPos);
 
           TreePosition = Matrix4d.CreateTranslation(PlantingPos);
@@ -212,15 +212,13 @@ namespace Massive
 
       //int i = 0;
       TotalInstances = 0;
-
-
-
+      
       Vector3d AP = Globals.Avatar.GetPosition();
       // Console.WriteLine(AP);
 
       Barycentric bary = new Barycentric(Tile.Boundary.TL, Tile.Boundary.BR, Tile.Boundary.TR, AP);
 
-      PlantPatch(bary, 64 * 64, 4, 1.6);
+      PlantPatch(bary, 64 * 64, 2, 1.2);
       PlantPatch(bary, 32 * 32, 8, 0.3);
 
       // Console.WriteLine(bary.ToString());
@@ -333,7 +331,7 @@ namespace Massive
 
     void SetupTree()
     {
-      grass = new MModel(EType.Model, "InstanceGrass");
+      grass = new MModel(EType.Model, "InstanceGrassModel");
       grass.DistanceThreshold = 15000;
       grass.Load(TreeModel);
       treemesh = (MMesh)grass.FindModuleByType(EType.Mesh);
@@ -344,15 +342,15 @@ namespace Massive
 
     void SetupMaterial()
     {   
-      MMaterial InstanceMat = new MMaterial("InstanceMaterial");
-      MShader shader = new MShader("InstanceShader");
+      MMaterial InstanceMat = new MMaterial("InstanceGrassMaterial");
+      MShader shader = new MShader("InstanceGrassShader");
       //shader.LoadFromString(sVertexShader, sFragmentShader);
       shader.Load("instanced_v.glsl",
         "instanced_f.glsl",
         "", ""
         );
       shader.Bind();
-      shader.SetFloat("Fade", 49);
+      shader.SetFloat("Fade", 68);
       shader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
       shader.SetInt("material.specular", MShader.LOCATION_SPECULAR);
       shader.SetInt("material.multitex", MShader.LOCATION_MULTITEX);
@@ -361,7 +359,8 @@ namespace Massive
       InstanceMat.AddShader(shader);
       MTexture GrassTex = Globals.TexturePool.GetTexture(TreeTexture);
       GrassTex._TextureWrapMode = TextureWrapMode.ClampToBorder;
-      InstanceMat.SetDiffuseTexture(GrassTex);
+      GrassTex.DoAssign = true;
+      InstanceMat.SetDiffuseTexture(GrassTex);      
       this.SetMaterial(InstanceMat);
       grass.SetMaterial(InstanceMat);
       MScene.MaterialRoot.Add(InstanceMat);
@@ -387,17 +386,20 @@ namespace Massive
       if (Globals.ShaderOverride != null)
       {
         temp = Globals.ShaderOverride;
+        temp.SetInt("HasBones", 0);
       }
       else
       {
+        material.IsUsed = true;
+        material.Render(viewproj, parentmodel);
         material.Bind();
+        material.shader.SetFloat("Fade", 68);
         //49 6
-        
+
         temp.SetBool("ShadowEnabled", CastsShadow);
       }
       temp.SetMat4("mvp", mvp);
       temp.SetMat4("model", modelMatrix);
-
 
       GL.BindVertexArray(treemesh.VAO);
       lock (matlocker)
@@ -408,8 +410,11 @@ namespace Massive
       GL.DrawArraysInstanced(PrimitiveType.Triangles, 0, treemesh.Vertices.Length * 3, TotalInstances);
       // Helper.CheckGLError(this);
       GL.BindVertexArray(0);
-      material.UnBind();
-      base.Render(viewproj, parentmodel);
+      if (Globals.ShaderOverride == null)
+      {
+        material.UnBind();
+      }
+      //base.Render(viewproj, parentmodel);
     }
   }
 }

@@ -43,6 +43,17 @@ namespace Massive
     {
       Instance = this;
       MMessageBus.GravityStateHandler += MMessageBus_GravityStateHandler;
+      MMessageBus.EarlyUpdateHandler += MMessageBus_LateUpdateHandler;
+
+    }
+
+    private void MMessageBus_LateUpdateHandler(object sender, UpdateEvent e)
+    {
+      if (World == null) return;
+      lock (World)
+      {
+        World.StepSimulation(0.15, 3);
+      }
     }
 
     private void MMessageBus_GravityStateHandler(object sender, BooleanEvent e)
@@ -135,7 +146,7 @@ namespace Massive
       _boxBoundMin = -_boxBoundMax;
       CollisionTester = new BoxShape(_boxBoundMax);
 
-      DoPhysicsUpdate();
+      UpdatePhysics();
     }
 
     public void SetGravity(Vector3d g)
@@ -182,11 +193,11 @@ namespace Massive
       rc.RayToWorld = To;
 
       //try
-     // {
-        World.RayTestRef(ref From, ref To, rc);
+      // {
+      World.RayTestRef(ref From, ref To, rc);
       //}
       //catch (Exception e)
-     // {
+      // {
       //  Console.WriteLine("MPhysics.RayCast:" + e.Message);
       //}
 
@@ -231,7 +242,10 @@ namespace Massive
       rc.RayFromWorld = task.From;
       rc.RayToWorld = task.To;
 
-      World.RayTestRef(ref task.From, ref task.To, rc);
+      lock (World)
+      {
+        World.RayTestRef(ref task.From, ref task.To, rc);
+      }
 
       if (rc.HasHit)
       {
@@ -251,7 +265,10 @@ namespace Massive
       cc.HitPointWorld = task.From;
       Matrix4d mf = Matrix4d.CreateTranslation(task.From);
       Matrix4d mt = Matrix4d.CreateTranslation(task.To);
-      World.ConvexSweepTest(CollisionTester, mf, mt, cc);
+      lock (World)
+      {
+        World.ConvexSweepTest(CollisionTester, mf, mt, cc);
+      }
 
       if (cc.HasHit == true)
       { //task.info = cc.HitCollisionObject.UserObject;
@@ -407,7 +424,7 @@ namespace Massive
       return po;
     }
 
-    public void DoPhysicsUpdate()
+    public void UpdatePhysics()
     {
       while (!_backgroundWorker.CancellationPending)
       {
@@ -440,7 +457,10 @@ namespace Massive
           }
           if ((World != null) && (!World.CollisionObjectArray.Contains(po._rigidBody)))
           {
-            World.AddRigidBody(po._rigidBody);
+            lock (World)
+            {
+              World.AddRigidBody(po._rigidBody);
+            }
           }
         }
 
@@ -448,21 +468,24 @@ namespace Massive
         {
           MPhysicsObject po = RemoveQueue[0];
           RemoveQueue.RemoveAt(0);
-          World.RemoveRigidBody(po._rigidBody);
+          lock (World)
+          {
+            World.RemoveRigidBody(po._rigidBody);
+          }
         }
 
         if (World != null)
         {
           // try
           // {
-          World.StepSimulation(0.05 , 10);
+          //World.StepSimulation(0.15 , 3);
           // }
           //catch (Exception e)
           // {
           // Console.Error.WriteLine("EXCEPTION: MPhysics StepSimulation : " + e.Message);
           // }
         }
-        Thread.Sleep(20);
+        Thread.Sleep(15);
       }
       Thread.Sleep(100);
       DisposeWorld();

@@ -36,7 +36,7 @@ namespace OpenWorld.Handlers
     public MCameraHandler()
       :base(EType.Other, "MCameraHandler")
     {
-      MScene.UtilityRoot.Add(this);
+      //MScene.UtilityRoot.Add(this);
       _camera = MScene.Camera;
 
       Globals.Network.TeleportHandler += Network_TeleportHandler;
@@ -51,7 +51,7 @@ namespace OpenWorld.Handlers
 
     private void MMessageBus_UpdateHandler(object sender, UpdateEvent e)
     {
-      Update();
+     // Update();
     }
 
     private void Network_TeleportHandler(object sender, MoveEvent e)
@@ -144,12 +144,12 @@ namespace OpenWorld.Handlers
       double mult = 10.25;
       if (Globals.Avatar.MoveState == MAvatar.eMoveState.Run)
       {
-        mult = 2;
+        mult = 9;
       }
 
       if (Globals.Avatar.GetMoveMode() == MAvatar.eMoveMode.Flying)
       {
-        mult = 1;
+        mult = 7;
       }
 
       if (dist > 1000)
@@ -158,21 +158,30 @@ namespace OpenWorld.Handlers
       }
       //{
       //dist = MathHelper.Clamp(Speed * dist, 1, 10);
+      /*
+      MScene.Camera.transform.Position = RenderedPosition;
+
+      MScene.Camera.Focus.transform.Position = MScene.Camera.transform.Position + Globals.Avatar.Forward() * 10
+        + MScene.Camera.TargetOffset
+        ;
+        */
+     
       MScene.Camera.transform.Position = Extensions.SmoothStep(MScene.Camera.transform.Position,
         RenderedPosition, mult * 0.05);
       MScene.Camera.Focus.transform.Position = Extensions.SmoothStep(MScene.Camera.Focus.transform.Position, 
         MScene.Camera.transform.Position + Globals.Avatar.Forward() * 10
-        + MScene.Camera.TargetOffset, mult * 0.1);
-      
+        + MScene.Camera.TargetOffset, mult * 0.05);
+     
+
       // }
       //else
-/*
-      MScene.Camera.transform.Position = Vector3d.Lerp(MScene.Camera.transform.Position,
-        RenderedPosition, mult * Time.DeltaTime);
-      MScene.Camera.Focus.transform.Position = Vector3d.Lerp(MScene.Camera.Focus.transform.Position,
-        MScene.Camera.transform.Position + Globals.Avatar.Forward() * 10
-        + MScene.Camera.TargetOffset, mult * Time.DeltaTime);
-        */
+      /*
+            MScene.Camera.transform.Position = Vector3d.Lerp(MScene.Camera.transform.Position,
+              RenderedPosition, mult * Time.DeltaTime);
+            MScene.Camera.Focus.transform.Position = Vector3d.Lerp(MScene.Camera.Focus.transform.Position,
+              MScene.Camera.transform.Position + Globals.Avatar.Forward() * 10
+              + MScene.Camera.TargetOffset, mult * Time.DeltaTime);
+              */
       {
         //MScene.Camera.transform.Position = RenderedPosition;        
         //MScene.Camera.Focus.transform.Position = AP + Globals.Avatar.Forward() * 10
@@ -189,7 +198,7 @@ namespace OpenWorld.Handlers
         TargetUp = Vector3d.UnitY;
       }
 
-      MScene.Camera.UpVector = Vector3d.Lerp(upv, TargetUp, Time.DeltaTime * Speed * 1);
+      MScene.Camera.UpVector = Vector3d.Lerp(upv, TargetUp, 0.01 * Speed * 1);
     }
 
     /// <summary>

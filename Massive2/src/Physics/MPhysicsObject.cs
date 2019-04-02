@@ -222,11 +222,11 @@ namespace Massive
 
       if ( _rigidBody.IsStaticObject== false)
       {
-        _rigidBody.AngularVelocity = Vector3d.Clamp(_rigidBody.AngularVelocity, -VelocityLimit, VelocityLimit);        
+       // _rigidBody.AngularVelocity = Vector3d.Clamp(_rigidBody.AngularVelocity, -VelocityLimit, VelocityLimit);        
       }
 
-      Matrix4d m = _rigidBody.CenterOfMassTransform;
-      Target.transform.Position = m.ExtractTranslation(); //broken in bullet
+      Matrix4d m = _rigidBody.InterpolationWorldTransform;
+      Target.transform.Position = m.ExtractTranslation(); 
       //Target.transform.Position = _rigidBody.CenterOfMassPosition;
       Target.transform.Rotation = m.ExtractRotation();
 
@@ -619,7 +619,7 @@ namespace Massive
       {
         return new Vector3d(0, 0, 0);
       }
-      return _rigidBody.CenterOfMassPosition;
+      return _rigidBody.WorldTransform.ExtractTranslation();
     }
 
     public Quaterniond GetRotation()
@@ -675,6 +675,8 @@ namespace Massive
         Vector3d delta = OldPos.ExtractTranslation() - po.GetPosition();
         po.SetPosition(po.GetPosition() + delta);
       }
+
+      Target.transform.Position = GetPosition();
 
       //MScene.Physics.World.UpdateSingleAabb(_rigidBody);
 

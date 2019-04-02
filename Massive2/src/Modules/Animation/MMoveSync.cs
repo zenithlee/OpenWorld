@@ -14,7 +14,7 @@ namespace Massive
     Vector3d StartPosition;
     Vector3d TargetPosition;
     Quaterniond TargetRotation;
-    public double Speed = 4;
+    public double Speed = 5;
     double Start = 0;
     double Value = 0;
     MPhysicsObject po;

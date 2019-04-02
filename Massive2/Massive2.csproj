@@ -145,6 +145,7 @@
     <Compile Include="src\Graphics\Terrain\MGrassPlanter.cs" />
     <Compile Include="src\Graphics\TexturedVertex.cs" />
     <Compile Include="src\Modules\Avatar\MAvatarSound.cs" />
+    <Compile Include="src\Modules\GIS\MClimate.cs" />
     <Compile Include="src\Modules\Widgets\MLinker.cs" />
     <Compile Include="src\Modules\Widgets\MTeleporter.cs" />
     <Compile Include="src\MScene.cs" />

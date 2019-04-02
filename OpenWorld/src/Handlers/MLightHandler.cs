@@ -1,11 +1,15 @@
 ﻿using Massive;
 using Massive.Events;
+using Massive.GIS;
 using OpenTK;
 
 namespace OpenWorld.Handlers
 {
   public class MLightHandler
   {
+    MLight light;
+    MSceneObject Sun;
+    
     public MLightHandler()
     {
       MMessageBus.TeleportCompleteHandler += MMessageBus_TeleportCompleteHandler;
@@ -18,26 +22,42 @@ namespace OpenWorld.Handlers
       MLight light = (MLight)MScene.UtilityRoot.FindModuleByType(MObject.EType.DirectionalLight);
       if (light == null) return;
 
+      if ( Sun == null )
+      {
+        Sun  = (MSceneObject)MScene.AstroRoot.FindModuleByName("Sol");
+        if ( Sun == null)  return;
+      }
+
+      Vector3d dir = Sun.transform.Position - e.Position;
+      dir.Normalize();
+
+      Vector3d TargetPos = e.Position + dir * 20;
+
       
       MMoveSync ms = null;
       MObject ms0 = light.FindModuleByType(MObject.EType.MoveSync);
       if (ms == null)
       {
-        ms = new MMoveSync(light, e.Position
-          + Globals.LocalUpVector * 5
-          + Globals.LocalUpRotation() * new Vector3d(10, 10, 0), Quaterniond.Identity);
+        // ms = new MMoveSync(light, e.Position
+        // + Globals.LocalUpVector * 5
+        //+ Globals.LocalUpRotation() * new Vector3d(10, 10, 0), Quaterniond.Identity);
+        ms = new MMoveSync(light, TargetPos, Quaterniond.Identity);
+        ms.Speed = 1;
+        light.Add(ms);
       }
       else
       {
         ms = (MMoveSync)ms0;
+        ms.SetTarget(TargetPos, Quaterniond.Identity);
       }
-      light.Add(ms);
+
+      
       /*
       light.transform.Position = e.Position
           + Globals.LocalUpVector * 5
           + Globals.LocalUpRotation() * new Vector3d(10, 10, 0);
           */
-      light.LookAt(Globals.Avatar.GetPosition());
+      light.LookAt(e.Position);
       //light.DebugDepth = true;
     }
 
@@ -53,7 +73,11 @@ namespace OpenWorld.Handlers
 
     void MoveLightNearAvatar(Vector3d Position)
     {
-      MLight light = (MLight)MScene.UtilityRoot.FindModuleByType(MObject.EType.DirectionalLight);
+      if ( light == null)
+      {
+        light = (MLight)MScene.UtilityRoot.FindModuleByType(MObject.EType.DirectionalLight);
+      }
+      
       if (light != null)
       {
         MPlanetHandler._Instance.Update();

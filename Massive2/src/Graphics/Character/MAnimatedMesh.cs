@@ -100,7 +100,7 @@ namespace Massive.Graphics.Character
     public override void Render(Matrix4d viewproj, Matrix4d parentmodel)
     {
       base.Render(viewproj, parentmodel);
-      Helper.CheckGLError(this);
+      //Helper.CheckGLError(this);
     }   
 
   }

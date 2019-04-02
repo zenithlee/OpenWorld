@@ -17,7 +17,7 @@ namespace Massive
   {
     Matrix4[] mats;
     MModel tree;
-    MMesh treemesh;    
+    MMesh treemesh;
     MTerrainTile Tile;
     bool Planted = true;//start as planted to prevent premature building
 
@@ -31,16 +31,17 @@ namespace Massive
 
     public MForest() : base(EType.Other, "Forest")
     {
-      mats = new Matrix4[Settings.MaxTreesPerTerrain];      
+      mats = new Matrix4[Settings.MaxTreesPerTerrain];
     }
 
     public override void Dispose()
     {
       GL.DeleteBuffer(instanceVBO);
-      if ( treemesh != null ){
+      if (treemesh != null)
+      {
         treemesh.Dispose();
       }
-      if ( tree != null)
+      if (tree != null)
       {
         tree.Dispose();
       }
@@ -65,7 +66,7 @@ namespace Massive
 
       for (int z = 0; z < tile.z_res - 1; z++)
       {
-        for (int x = 0; x < tile.x_res - 1; x++)          
+        for (int x = 0; x < tile.x_res - 1; x++)
         {
           float[] c = tex.GetPixel(x, z);
           float r = c[0];
@@ -87,7 +88,7 @@ namespace Massive
             0,
             z);
           //Vector3d PlantingPos = planet.GetNearestPointOnSphere(Treepos, 0);
-          Matrix4d TreeScale = Matrix4d.Scale(1+ran.NextDouble(), 1 + ran.NextDouble()*2, 1 + ran.NextDouble());
+          Matrix4d TreeScale = Matrix4d.Scale(1 + ran.NextDouble(), 1 + ran.NextDouble() * 2, 1 + ran.NextDouble());
           Vector3d PlantingPos = Tile.GetPointOnSurfaceFromGrid(Treepos); //; + new Vector3d(r.NextDouble()*5, r.NextDouble() * 5, r.NextDouble()*5);
           Matrix4d TreePosition = Matrix4d.CreateTranslation(PlantingPos);
           //find point at y with raycast
@@ -101,7 +102,7 @@ namespace Massive
 
       for (int j = TotalInstances; j < Settings.MaxTreesPerTerrain; j++)
       {
-        Matrix4 final = Matrix4.CreateTranslation(j, 0, 0) ;
+        Matrix4 final = Matrix4.CreateTranslation(j, 0, 0);
         mats[j] = final;
       }
 
@@ -124,7 +125,7 @@ namespace Massive
       GL.BindBuffer(BufferTarget.ArrayBuffer, instanceVBO);
       GL.BufferData(BufferTarget.ArrayBuffer, sizeofmat * Settings.MaxTreesPerTerrain, mats, BufferUsageHint.StaticDraw);
       //GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)0, sizeofmat * MaxInstances, mats);
-      
+
       Matrix4 mat = new Matrix4();
       int mat4size = Marshal.SizeOf(mat);
 
@@ -144,14 +145,14 @@ namespace Massive
       GL.VertexAttribDivisor(4, 1);
       GL.VertexAttribDivisor(5, 1);
       GL.VertexAttribDivisor(6, 1);
-     
+
     }
 
     public override void Setup()
     {
       base.Setup();
       SetupTree();
-      SetupMaterial();     
+      SetupMaterial();
 
       float w = 0.5f;
 
@@ -246,34 +247,39 @@ namespace Massive
      */
 
       MMaterial InstanceMat = new MMaterial("ForestMaterialInstanced");
-      MShader shader = new MShader("ForestShaderInstanced");
-      //shader.LoadFromString(sVertexShader, sFragmentShader);
-      shader.Load("instanced_v.glsl",
-        "instanced_f.glsl",
-        "", ""
-        );
-      shader.Bind();
-      shader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
-      shader.SetInt("material.specular", MShader.LOCATION_SPECULAR);
-      shader.SetInt("material.multitex", MShader.LOCATION_MULTITEX);
-      shader.SetInt("material.normalmap", MShader.LOCATION_NORMALMAP);
-      shader.SetInt("material.shadowMap", MShader.LOCATION_SHADOWMAP);
+      MShader shader = (MShader)MScene.MaterialRoot.FindModuleByName("ForestShaderInstanced");
+      if (shader == null)
+      {
+        shader = new MShader("ForestShaderInstanced");
+        //shader.LoadFromString(sVertexShader, sFragmentShader);
+        shader.Load("instanced_v.glsl",
+          "instanced_f.glsl",
+          "", ""
+          );
+        shader.Bind();
+        shader.SetInt("material.diffuse", MShader.LOCATION_DIFFUSE);
+        shader.SetInt("material.specular", MShader.LOCATION_SPECULAR);
+        shader.SetInt("material.multitex", MShader.LOCATION_MULTITEX);
+        shader.SetInt("material.normalmap", MShader.LOCATION_NORMALMAP);
+        shader.SetInt("material.shadowMap", MShader.LOCATION_SHADOWMAP);        
+      }
       InstanceMat.AddShader(shader);
       InstanceMat.SetDiffuseTexture(Globals.TexturePool.GetTexture(TreeTexture));
       this.SetMaterial(InstanceMat);
       tree.SetMaterial(InstanceMat);
-
-    }   
+      MScene.MaterialRoot.Add(InstanceMat);
+    }
 
     public override void Render(Matrix4d viewproj, Matrix4d parentmodel)
     {
       if (Settings.DrawTrees == false) return;
       //if (Globals.ShaderOverride != null) return;
       if (DistanceFromAvatar > DistanceThreshold) return;
-      if ( tree != null) { 
-      tree.transform.Position = this.transform.Position;
+      if (tree != null)
+      {
+        tree.transform.Position = this.transform.Position;
       }
-      if ( Planted == false)
+      if (Planted == false)
       {
         Setup();
         Planted = true;
@@ -282,7 +288,7 @@ namespace Massive
       CalculateDrawMatrices(viewproj, parentmodel);
 
       MShader temp = material.shader;
-      if ( Globals.ShaderOverride != null)
+      if (Globals.ShaderOverride != null)
       {
         temp = Globals.ShaderOverride;
       }
@@ -290,20 +296,20 @@ namespace Massive
       {
         material.Bind();
       }
-      
+
       temp.SetMat4("mvp", mvp);
       temp.SetMat4("model", modelMatrix);
       //material.shader.SetBool("selected", Selected);
       temp.SetBool("ShadowEnabled", CastsShadow);
-      
+
       GL.BindVertexArray(treemesh.VAO);
       //GL.BindBuffer(BufferTarget.ElementArrayBuffer, treemesh.EBO);      
 
-      UploadBufferFull();      
+      UploadBufferFull();
 
-      material.Render(viewproj, parentmodel);      
-      GL.DrawArraysInstanced(PrimitiveType.Triangles, 0, treemesh.Vertices.Length, TotalInstances);      
-     // Helper.CheckGLError(this);
+      material.Render(viewproj, parentmodel);
+      GL.DrawArraysInstanced(PrimitiveType.Triangles, 0, treemesh.Vertices.Length, TotalInstances);
+      // Helper.CheckGLError(this);
       GL.BindVertexArray(0);
       material.UnBind();
       base.Render(viewproj, parentmodel);

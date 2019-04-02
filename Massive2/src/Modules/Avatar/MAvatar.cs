@@ -213,7 +213,8 @@ namespace Massive
       if (_physics == null) return;
       _physics.SetActive(true);
       // ph.Thrust.Z = v * 2;
-      Vector3d vo = -MScene.Camera.transform.Forward() * v; //OPENGL camera has inverse z      
+      //Vector3d vo = -MScene.Camera.transform.Forward() * v; //OPENGL camera has inverse z      
+      Vector3d vo = Forward() * v; //OPENGL camera has inverse z      
       _physics._rigidBody.ApplyCentralImpulse(vo);
       //_physics._rigidBody.ApplyTorque(vo);
 
@@ -393,6 +394,7 @@ namespace Massive
       {
         MoveState = eMoveState.Idle;
       }
+      //CurrentSpeed = 1;
       switch (MoveState)
       {
         case eMoveState.Idle:
@@ -448,7 +450,7 @@ namespace Massive
         if (_physics != null)
         {
           //Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, Time.DeltaTime * 15);
-          Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, 0.2);
+          Quaterniond rot = Quaterniond.Slerp(GetRotation(), TargetRotation, 0.01 * 15);
           _physics.SetRotation(rot);
           //_physics.SetRotation(TargetRotation);
         }

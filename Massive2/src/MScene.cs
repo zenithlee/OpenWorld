@@ -361,15 +361,17 @@ namespace Massive
 
       //Console.WriteLine(Globals.Tasks);
 
-      UtilityRoot.Update();
-      ModelRoot.Update();
+
+      MMessageBus.NotifyEarlyUpdate(this);
       if (Background.Modules.Count > 0)
       {
         Background.Update();
         Background2.Update();
       }
+      ModelRoot.Update();
+      UtilityRoot.Update();
 
-     // MMessageBus.NotifyUpdate(this);
+      // MMessageBus.NotifyUpdate(this);
       Overlay.Update();
       MMessageBus.NotifyLateUpdate(this);
     }
@@ -447,6 +449,7 @@ namespace Massive
       {
         GL.Enable(EnableCap.CullFace);
         GL.CullFace(CullFaceMode.Back);
+        //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
         Globals.RenderPass = Globals.eRenderPass.ShadowDepth;
         //============================
         //render depthmap from light using depth shader        
@@ -457,8 +460,8 @@ namespace Massive
         GL.DepthFunc(DepthFunction.Less);
         GL.Enable(EnableCap.DepthTest);
        
-        Background.Render(lightmatrix, offsetmat);
-        GL.Clear(ClearBufferMask.DepthBufferBit);
+        //Background.Render(lightmatrix, offsetmat);
+        //GL.Clear(ClearBufferMask.DepthBufferBit);
         Background2.Render(lightmatrix, offsetmat);        
         ModelRoot.Render(lightmatrix, offsetmat);
         Globals.RenderPass = Globals.eRenderPass.Normal;

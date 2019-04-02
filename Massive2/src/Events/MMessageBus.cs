@@ -84,6 +84,7 @@ namespace Massive.Events
     /////////////// RENDERING ////////////////
     public static event EventHandler<InfoEvent> DisableRender;
     public static event EventHandler<UpdateEvent> UpdateHandler;
+    public static event EventHandler<UpdateEvent> EarlyUpdateHandler;
     public static event EventHandler<UpdateEvent> LateUpdateHandler;
 
     // User Details
@@ -149,12 +150,21 @@ namespace Massive.Events
       }
     }
 
+    public static void NotifyEarlyUpdate(object sender)
+    {
+      //GUIEvent(LateUpdateHandler, sender, new UpdateEvent(Time.DeltaTime));
+      if (EarlyUpdateHandler != null)
+      {
+        EarlyUpdateHandler(sender, new UpdateEvent(0));
+      }
+    }
+
     public static void NotifyLateUpdate(object sender)
     {
       //GUIEvent(LateUpdateHandler, sender, new UpdateEvent(Time.DeltaTime));
       if (LateUpdateHandler != null)
       {
-        LateUpdateHandler(sender, new UpdateEvent(Time.DeltaTime));
+        LateUpdateHandler(sender, new UpdateEvent(0));
       }
     }
 

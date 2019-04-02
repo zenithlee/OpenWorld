@@ -21,6 +21,7 @@ namespace OpenWorld.src.Controls
 
     Stopwatch _stopwatch = new Stopwatch();
     long PreviousMS = 0;
+    int Counter = 0;
 
     public StatusControl()
     {
@@ -40,8 +41,15 @@ namespace OpenWorld.src.Controls
     private void MMessageBus_LateUpdateHandler(object sender, UpdateEvent e)
     {
       long t = _stopwatch.ElapsedMilliseconds - PreviousMS;
-      FPSCounterLable.Text = t.ToString();
       PreviousMS = _stopwatch.ElapsedMilliseconds;
+
+      Counter++;
+      if ( Counter > 100)
+      {
+        Counter = 0;
+        FPSCounterLable.Text = t.ToString();
+      }
+      
     }
 
     private void MMessageBus_UserRegistered(object sender, ChangeDetailsEvent e)

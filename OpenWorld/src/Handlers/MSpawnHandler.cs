@@ -109,12 +109,12 @@ namespace OpenWorld.Handlers
       {
         MPhysicsObject mpo = new MPhysicsObject(o, TemplateID + "_physics", bb.Weight, shape,
           true, size);
-        mpo.SetSleep(15);
+        mpo.SetSleep(5);
         mpo.SetFriction(0);
         if (shape != MPhysicsObject.EShape.Sphere)
         {
           mpo.SetAngularFactor(0.0, 0.0, 0.0);
-          mpo.SetDamping(0.7, 0.5);
+          mpo.SetDamping(0.1, 0.1);
           mpo.SetRestitution(0.5);
         }
         else

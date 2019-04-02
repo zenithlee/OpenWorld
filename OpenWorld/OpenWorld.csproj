@@ -37,6 +37,9 @@
     <ApplicationIcon>sun.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FastColoredTextBox">
+      <HintPath>..\dlls\64\FastColoredTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\dlls\64\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -207,6 +210,12 @@
     <Compile Include="src\Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Forms\ShaderEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\ShaderEditorForm.Designer.cs">
+      <DependentUpon>ShaderEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Forms\TeleporterConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -329,6 +338,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\ShaderEditorForm.resx">
+      <DependentUpon>ShaderEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\TeleporterConfigForm.resx">
       <DependentUpon>TeleporterConfigForm.cs</DependentUpon>

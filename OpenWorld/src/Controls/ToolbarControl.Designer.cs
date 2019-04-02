@@ -31,6 +31,7 @@
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToolbarControl));
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this.ModeButton = new System.Windows.Forms.Button();
       this.DebugButton = new System.Windows.Forms.Button();
       this.MapButton = new System.Windows.Forms.Button();
       this.HelpButton = new System.Windows.Forms.Button();
@@ -39,7 +40,7 @@
       this.BuildButton = new System.Windows.Forms.Button();
       this.ChatButton = new System.Windows.Forms.Button();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.ModeButton = new System.Windows.Forms.Button();
+      this.ShaderEditorButton = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -47,8 +48,9 @@
       // 
       this.tableLayoutPanel1.ColumnCount = 1;
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel1.Controls.Add(this.ShaderEditorButton, 0, 6);
       this.tableLayoutPanel1.Controls.Add(this.ModeButton, 0, 4);
-      this.tableLayoutPanel1.Controls.Add(this.DebugButton, 0, 7);
+      this.tableLayoutPanel1.Controls.Add(this.DebugButton, 0, 5);
       this.tableLayoutPanel1.Controls.Add(this.MapButton, 0, 3);
       this.tableLayoutPanel1.Controls.Add(this.HelpButton, 0, 10);
       this.tableLayoutPanel1.Controls.Add(this.AssetsButton, 0, 2);
@@ -74,12 +76,26 @@
       this.tableLayoutPanel1.Size = new System.Drawing.Size(38, 388);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
+      // ModeButton
+      // 
+      this.ModeButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ModeButton.BackgroundImage")));
+      this.ModeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.ModeButton.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ModeButton.Location = new System.Drawing.Point(0, 128);
+      this.ModeButton.Margin = new System.Windows.Forms.Padding(0);
+      this.ModeButton.Name = "ModeButton";
+      this.ModeButton.Size = new System.Drawing.Size(38, 32);
+      this.ModeButton.TabIndex = 7;
+      this.toolTip1.SetToolTip(this.ModeButton, "Chat with others");
+      this.ModeButton.UseVisualStyleBackColor = true;
+      this.ModeButton.Click += new System.EventHandler(this.ModeButton_Click);
+      // 
       // DebugButton
       // 
       this.DebugButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("DebugButton.BackgroundImage")));
       this.DebugButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
       this.DebugButton.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.DebugButton.Location = new System.Drawing.Point(0, 224);
+      this.DebugButton.Location = new System.Drawing.Point(0, 160);
       this.DebugButton.Margin = new System.Windows.Forms.Padding(0);
       this.DebugButton.Name = "DebugButton";
       this.DebugButton.Size = new System.Drawing.Size(38, 32);
@@ -172,19 +188,19 @@
       this.ChatButton.UseVisualStyleBackColor = true;
       this.ChatButton.Click += new System.EventHandler(this.ChatButton_Click);
       // 
-      // ModeButton
+      // ShaderEditorButton
       // 
-      this.ModeButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ModeButton.BackgroundImage")));
-      this.ModeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.ModeButton.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.ModeButton.Location = new System.Drawing.Point(0, 128);
-      this.ModeButton.Margin = new System.Windows.Forms.Padding(0);
-      this.ModeButton.Name = "ModeButton";
-      this.ModeButton.Size = new System.Drawing.Size(38, 32);
-      this.ModeButton.TabIndex = 7;
-      this.toolTip1.SetToolTip(this.ModeButton, "Chat with others");
-      this.ModeButton.UseVisualStyleBackColor = true;
-      this.ModeButton.Click += new System.EventHandler(this.ModeButton_Click);
+      this.ShaderEditorButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ShaderEditorButton.BackgroundImage")));
+      this.ShaderEditorButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.ShaderEditorButton.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ShaderEditorButton.Location = new System.Drawing.Point(0, 192);
+      this.ShaderEditorButton.Margin = new System.Windows.Forms.Padding(0);
+      this.ShaderEditorButton.Name = "ShaderEditorButton";
+      this.ShaderEditorButton.Size = new System.Drawing.Size(38, 32);
+      this.ShaderEditorButton.TabIndex = 8;
+      this.toolTip1.SetToolTip(this.ShaderEditorButton, "Chat with others");
+      this.ShaderEditorButton.UseVisualStyleBackColor = true;
+      this.ShaderEditorButton.Click += new System.EventHandler(this.ShaderEditorButton_Click);
       // 
       // ToolbarControl
       // 
@@ -210,5 +226,6 @@
     private System.Windows.Forms.Button MapButton;
     private System.Windows.Forms.Button DebugButton;
     private System.Windows.Forms.Button ModeButton;
+    private System.Windows.Forms.Button ShaderEditorButton;
   }
 }
